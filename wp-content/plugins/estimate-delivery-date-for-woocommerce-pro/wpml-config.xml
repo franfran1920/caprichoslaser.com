@@ -1,0 +1,21 @@
+<wpml-config>
+<admin-texts>
+        <key name="pi_general_date_format"/>
+</admin-texts>
+<custom-fields>
+ <custom-field action="copy">pisol_edd_disable_estimate</custom-field>
+ <custom-field action="copy">product_preparation_time</custom-field>
+ <custom-field action="copy">product_preparation_time_max</custom-field>
+ <custom-field action="copy">pisol_enable_exact_date</custom-field>
+ <custom-field action="copy">pisol_exact_availability_date</custom-field>
+ <custom-field action="copy">pisol_edd_extra_time_as</custom-field>
+ <custom-field action="copy">out_of_stock_product_preparation_time</custom-field>
+ <custom-field action="copy">out_of_stock_product_preparation_time_min</custom-field>
+ <custom-field action="copy">out_of_stock_product_preparation_time_max</custom-field>
+ <custom-field action="copy">pisol_exact_lot_arrival_date</custom-field>
+ <custom-field action="copy">pisol_edd_use_variation_preparation_time</custom-field>
+ <custom-field action="copy">pisol_edd_disable_variation_estimate</custom-field>
+ <custom-field action="copy">pisol_preparation_days</custom-field>
+ <custom-field action="copy">pisol_preparation_days_max</custom-field>
+</custom-fields>
+</wpml-config>

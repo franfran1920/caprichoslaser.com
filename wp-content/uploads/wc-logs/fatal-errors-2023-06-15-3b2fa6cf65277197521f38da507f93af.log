@@ -1,0 +1,314 @@
+2023-06-15T05:22:20+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 81920 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor/composer/ClassLoader.php en la línea 223
+
+2023-06-15T08:51:25+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(139): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T08:51:44+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(139): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T08:51:49+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(139): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T09:04:18+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T09:04:23+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T09:04:31+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(139): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T09:06:45+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T09:07:04+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/edit.php(407): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T09:08:22+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 118784 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/MiniCart.php en la línea 297
+
+2023-06-15T09:20:22+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/values/robots/user-agent-list.php en la línea 87
+
+2023-06-15T09:21:13+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 655360 bytes) in /var/www/html/caprichoslaser.com/wp-includes/pomo/mo.php on line 302
+
+2023-06-15T09:21:15+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-includes/blocks/blocks-json.php en la línea 1
+
+2023-06-15T09:22:39+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 126976 bytes) en /var/www/html/caprichoslaser.com/wp-includes/class-wp-styles.php en la línea 350
+
+2023-06-15T09:22:46+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/FeaturedCategory.php en la línea 1
+
+2023-06-15T09:23:24+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 163840 bytes) en /var/www/html/caprichoslaser.com/wp-includes/functions.php en la línea 649
+
+2023-06-15T09:23:30+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/integrations/admin/first-time-configuration-integration.php en la línea 483
+
+2023-06-15T09:25:35+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 655360 bytes) in /var/www/html/caprichoslaser.com/wp-includes/pomo/mo.php on line 302
+
+2023-06-15T09:26:17+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/integrations/exclude-oembed-cache-post-type.php en la línea 29
+
+2023-06-15T09:33:50+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/integrations/admin/first-time-configuration-integration.php en la línea 483
+
+2023-06-15T09:33:55+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/integrations/admin/first-time-configuration-integration.php en la línea 483
+
+2023-06-15T09:34:00+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/CheckoutActionsBlock.php en la línea 1
+
+2023-06-15T09:34:08+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor-prefixed/doctrine/orm/lib/Doctrine/ORM/Query/SqlWalker.php en la línea 1212
+
+2023-06-15T09:34:20+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce/i18n/states.php en la línea 1789
+
+2023-06-15T09:34:38+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 16384 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor-prefixed/doctrine/orm/lib/Doctrine/ORM/Query/SqlWalker.php en la línea 1044
+
+2023-06-15T09:34:39+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/integrations/admin/integrations-page.php en la línea 1
+
+2023-06-15T13:44:11+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) en /var/www/html/caprichoslaser.com/wp-includes/functions.php en la línea 649
+
+2023-06-15T15:07:18+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce/includes/shipping/flat-rate/includes/settings-flat-rate.php en la línea 1
+
+2023-06-15T15:13:23+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/inc/class-wpseo-admin-bar-menu.php en la línea 778
+
+2023-06-15T15:19:46+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/elementor/includes/fonts.php en la línea 575
+
+2023-06-15T15:26:16+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-product-reviews-controller.php en la línea 1
+
+2023-06-15T15:26:28+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/routes/first-time-configuration-route.php en la línea 1
+
+2023-06-15T15:39:24+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/integrations/front-end/redirects.php en la línea 1
+
+2023-06-15T15:53:58+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 163840 bytes) en /var/www/html/caprichoslaser.com/wp-includes/functions.php en la línea 649
+
+2023-06-15T15:53:58+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor-prefixed/doctrine/orm/lib/Doctrine/ORM/Query/SqlWalker.php en la línea 1259
+
+2023-06-15T15:55:15+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 12288 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor-prefixed/doctrine/orm/lib/Doctrine/ORM/Query/SqlWalker.php en la línea 600
+
+2023-06-15T15:56:37+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 163840 bytes) en /var/www/html/caprichoslaser.com/wp-includes/functions.php en la línea 649
+
+2023-06-15T15:56:45+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 1429504 bytes) en /var/www/html/caprichoslaser.com/wp-content/themes/astra/inc/builder/controllers/class-astra-builder-ui-controller.php en la línea 39
+
+2023-06-15T15:56:52+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 81920 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor/composer/ClassLoader.php en la línea 223
+
+2023-06-15T15:57:50+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) en /var/www/html/caprichoslaser.com/wp-includes/blocks/blocks-json.php en la línea 1
+
+2023-06-15T16:02:32+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 1429504 bytes) en /var/www/html/caprichoslaser.com/wp-content/themes/astra/inc/builder/controllers/class-astra-builder-ui-controller.php en la línea 39
+
+2023-06-15T16:08:07+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 1429504 bytes) en /var/www/html/caprichoslaser.com/wp-content/themes/astra/assets/svg/svgs.json en la línea 1
+
+2023-06-15T16:08:16+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 1429504 bytes) en /var/www/html/caprichoslaser.com/wp-content/themes/astra/inc/builder/controllers/class-astra-builder-ui-controller.php en la línea 39
+
+2023-06-15T16:11:40+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 1429504 bytes) en /var/www/html/caprichoslaser.com/wp-content/themes/astra/inc/builder/controllers/class-astra-builder-ui-controller.php en la línea 39
+
+2023-06-15T16:20:47+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 49152 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/elementor/includes/fonts.php en la línea 1554
+
+2023-06-15T16:21:24+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/repositories/indexable-cleanup-repository.php en la línea 1
+
+2023-06-15T16:37:44+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-admin/menu.php en la línea 230
+
+2023-06-15T16:37:48+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/wordpress-seo/src/integrations/alerts/abstract-dismissable-alert.php en la línea 29
+
+2023-06-15T16:38:43+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) en /var/www/html/caprichoslaser.com/wp-includes/blocks/blocks-json.php en la línea 1
+
+2023-06-15T16:39:03+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) en /var/www/html/caprichoslaser.com/wp-includes/blocks/blocks-json.php en la línea 1
+
+2023-06-15T16:42:56+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-includes/blocks/blocks-json.php en la línea 1
+
+2023-06-15T16:42:57+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-includes/blocks/blocks-json.php en la línea 1
+
+2023-06-15T16:44:09+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor-prefixed/doctrine/orm/lib/Doctrine/ORM/Query/SqlWalker.php en la línea 83
+
+2023-06-15T16:44:13+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-includes/blocks/blocks-json.php en la línea 1
+
+2023-06-15T16:48:58+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-includes/blocks/blocks-json.php en la línea 1
+
+2023-06-15T16:49:08+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 163840 bytes) en /var/www/html/caprichoslaser.com/wp-includes/functions.php en la línea 651
+
+2023-06-15T16:49:12+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 544768 bytes) en /var/www/html/caprichoslaser.com/wp-includes/pomo/streams.php en la línea 229
+
+2023-06-15T17:07:51+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/featured-category.asset.php en la línea 1
+
+2023-06-15T17:20:26+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 81920 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor/composer/ClassLoader.php en la línea 223
+
+2023-06-15T17:25:20+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 1429504 bytes) en /var/www/html/caprichoslaser.com/wp-content/themes/astra/inc/builder/controllers/class-astra-builder-ui-controller.php en la línea 39
+
+2023-06-15T18:40:11+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:40:16+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:40:21+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:40:26+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:40:30+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:40:36+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(137): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:40:39+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(137): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips-desactivado/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:41:23+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:41:28+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/plugins.php(605): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:41:48+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(137): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:41:51+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(137): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:41:57+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(137): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-06-15T18:42:01+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(137): require_once('/var/www/html/c...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+

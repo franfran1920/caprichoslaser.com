@@ -1,0 +1,8 @@
+2023-06-03T16:45:03+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 131072 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/elementor/includes/fonts.php en la línea 658
+
+2023-06-03T16:49:45+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) en /var/www/html/caprichoslaser.com/wp-admin/includes/media.php en la línea 1998
+
+2023-06-03T17:14:52+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor-prefixed/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php en la línea 830
+
+2023-06-03T17:15:23+00:00 CRITICAL Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) en /var/www/html/caprichoslaser.com/wp-content/plugins/mailpoet/vendor-prefixed/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php en la línea 558
+

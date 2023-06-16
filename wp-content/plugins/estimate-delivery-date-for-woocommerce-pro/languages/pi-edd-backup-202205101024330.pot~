@@ -1,0 +1,783 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Language: \n"
+"POT-Creation-Date: 2021-02-24 03:56+0000\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: admin/class-variable.php:19
+msgid " Disable estimate for this variation"
+msgstr ""
+
+#: public/class-order-display.php:42 public/class-order-display.php:68
+msgid "&#128652;"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:75 admin/class-pi-edd-pro-woo.php:222
+msgid "(Don't show estimate)"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:75 admin/class-pi-edd-pro-woo.php:222
+msgid "(Show estimate)"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:176
+msgid ""
+"<a href=\"https://www.piwebsolution.com/woocommerce-estimated-delivery-date-"
+"per-product/#Out_of_stock_product_Available_on_back_order\" "
+"target=\"_blank\">click to Read more</a>"
+msgstr ""
+
+#: admin/class-variable.php:87
+msgid ""
+"<a href=\"https://www.piwebsolution.com/woocommerce-estimated-delivery-date-"
+"per-product/#Out_of_stock_product_Available_on_back_order\" "
+"target=\"_blank\">Read more</a>"
+msgstr ""
+
+#: admin/class-dynamic-shipping-method.php:102
+msgid "Add Dynamic Method"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:121
+msgid ""
+"Add estimate date for each of the shipping method below their name on "
+"cart/checkout page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:107
+msgid "Add estimate date for each product in stored order and email"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:35
+msgid "Advance setting"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:25
+msgid "After add to cart button"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:27
+msgid "After add to cart form"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:30
+msgid "After Image"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:31
+msgid "After price"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:30
+msgid "After title"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:63 admin/class-pi-edd-message.php:75
+msgid "Ajax will help you avoid caching"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:41 admin/class-pi-edd-design.php:49
+#: admin/class-pi-edd-design.php:57
+msgid "Background color of message"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:24
+msgid "Basic setting"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:25
+msgid "Before add to cart button"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:26
+msgid "Before add to cart form"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:113
+msgid "Calculation method used for order estimate"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:113
+msgid ""
+"Calculation method used for showing overall order estimate  <a href=\"https:"
+"//www.piwebsolution.com/woocommerce-estimated-delivery-date-per-"
+"product/#Overall_order_estimate_date_calculation_option\" target=\"_blank\">"
+"Read more..</a>"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:55
+msgid "Cart / Checkout page design"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:85
+msgid "Cart / Checkout page setting"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:82
+msgid ""
+"Check this if you don't want to show estimate date for this particular "
+"product"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:60
+msgid "Date format"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:60
+msgid "Date format for the estimate date"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:54
+msgid "Default shipping zone"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:20
+msgid "Design"
+msgstr ""
+
+#: admin/class-bulk-edit-product.php:11 admin/class-pi-edd-pro-woo.php:86
+msgid "Disable estimate"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:79
+msgid "Disable estimate for this product"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:68 admin/class-pi-edd-pro-woo.php:284
+msgid "Disabled"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:282
+msgid "Disabled (G)"
+msgstr ""
+
+#: admin/class-dynamic-shipping-method.php:19
+msgid "Dynamic Method"
+msgstr ""
+
+#: admin/class-bulk-edit-product.php:10 admin/class-pi-edd-option.php:52
+#: admin/class-pi-edd-pro-woo.php:87
+msgid "Enable estimate"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:129
+msgid "Enable special message to show for same day delivery"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:133
+msgid "Enable special message to show for Tomorrow estimate"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:68 admin/class-pi-edd-pro-woo.php:286
+msgid "Enabled"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:282
+msgid "Enabled (G)"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:131
+msgid ""
+"Enter the Max number of days it take to prepare this product leave empty if "
+"you only want min preparation time "
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:116
+msgid "Enter the Min number of days it take to prepare this product"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:234
+msgid "Enter the number of days it take to prepare this product"
+msgstr ""
+
+#: admin/class-pi-edd-menu.php:37
+msgid "Estimate Date"
+msgstr ""
+
+#. Name of the plugin
+msgid "Estimate delivery date for Woocommerce Pro"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:139
+msgid "Estimate message shown when product is out of stock"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:137
+msgid ""
+"Estimate msg for out of stock product / Variable product estimate when no "
+"estimate selected"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:69 admin/class-pi-edd-message.php:83
+msgid "Estimate position on single product page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:101
+msgid "Estimated date, Wording on cart / checkout page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:103
+msgid "Estimated date, Wording on cart / checkout page, for date range"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:79
+msgid "Estimated date, Wording on category / shop page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:81
+msgid "Estimated date, Wording on category / shop page, for date range"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:65
+msgid "Estimated date, Wording on product page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:67
+msgid "Estimated date, Wording on product page, for date range"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:145 admin/class-variable.php:60
+msgid ""
+"Exact Product availability date (Preparation time will be added to this date)"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:157 admin/class-variable.php:74
+#: admin/partials/preparation-time.php:25
+msgid "Extra time added to preparation time (when product goes out of stock)"
+msgstr ""
+
+#: admin/class-bulk-edit-product.php:12
+msgid "Follow Global Estimate"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:68
+msgid "Global setting of enabled/disabled for all product"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.piwebsolution.com/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://www.piwebsolution.com/cart/?add-to-cart=879"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:63
+msgid "Icon for message"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:65
+msgid ""
+"Icon short code will only work on the Product page and product archive page "
+"message"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:139 admin/class-variable.php:54
+msgid ""
+"If product will be available to you in future at some fixed date then use "
+"this option to insert that exact date, preparation time will be added to "
+"this "
+msgstr ""
+
+#: admin/class-pi-edd-option.php:64
+msgid ""
+"If the order is placed before this time then you can ship the product today, "
+"and so today will be counted in calculating the estimate, and if the order "
+"is placed after this time then the shipping can be done next date, so today "
+"will not be counted for estimate calculation, if you leave this blank "
+"counting will be done from next date"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:66
+msgid ""
+"If you don't want to show estimate for the product on back order you can do "
+"using this option"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:77
+msgid ""
+"If you enable this then it will show the estimate of the first variation on "
+"the archive page, if disabled it will not show estimate for variable product "
+"on archive page"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:136 admin/class-variable.php:48
+msgid "Insert exact product arrival date"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:107
+msgid ""
+"It will add estimate for each product in : order stored in backend, order "
+"email send to admin and customer"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:64
+msgid ""
+"Last shipping time of the day (order coming after this time will be shipped "
+"next date)"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:63 admin/class-pi-edd-message.php:75
+msgid "Load estimate by Ajax"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:122
+msgid "Max Product preparation days"
+msgstr ""
+
+#: admin/class-variable.php:41
+msgid "Max product preparation days"
+msgstr ""
+
+#: admin/class-pi-edd-shipping.php:103
+msgid "Maximum shipping days"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:141
+msgid "Message shown when user has not selected any variation"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:123
+msgid ""
+"Message template to show range of estimated time below each shipping method"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:107
+msgid "Min Product preparation days"
+msgstr ""
+
+#: admin/class-variable.php:32
+msgid "Min product preparation days"
+msgstr ""
+
+#: admin/class-pi-edd-shipping.php:97
+msgid "Minimum shipping days"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:105
+msgid "Order detail and Order email"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:115
+msgid "Overall estimate wording"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:117
+msgid "Overall estimate wording for range"
+msgstr ""
+
+#. Author of the plugin
+msgid "PI Websolution"
+msgstr ""
+
+#: pi-edd.php:68
+msgid ""
+"Please Install and Activate WooCommerce plugin, without that this plugin "
+"cant work"
+msgstr ""
+
+#: pi-edd.php:49
+msgid ""
+"Please uninstall the FREE version of Estimate delivery date for Woocommerce "
+"then activate the PRO version"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:83
+msgid "Position on category / shop page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:69
+msgid "Position on single product page"
+msgstr ""
+
+#: admin/class-variable.php:132
+msgid "Preparation days:"
+msgstr ""
+
+#: admin/partials/preparation-time.php:16
+msgid "Product preparation days"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:225 admin/class-variable.php:26
+msgid "Product preparation time"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:56
+msgid "Range of delivery date"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:131
+msgid "Same day delivery message"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:150 admin/class-variable.php:65
+msgid ""
+"Select a date when this product will be available with you for dispatch, "
+"based on that it will show the estimate date, once you add date in this it "
+"plugin will use it for estimate calculation and ignore the above "
+"\"preparation time\" and \"out of stock time\""
+msgstr ""
+
+#: admin/class-pi-edd-holidays.php:30
+msgid "Select all the holidays"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:58
+msgid "Select the shipping method with minimum or maximum delivery time"
+msgstr ""
+
+#: admin/class-pi-edd-holidays.php:88
+msgid "Selected holiday dates"
+msgstr ""
+
+#: admin/class-dynamic-shipping-method.php:69
+msgid ""
+"Set Min Max shipping days for the dynamically added shipping methods <a "
+"href=\"https://www.youtube.com/watch?v=UVfrIsdO4q0&feature=emb_title\" "
+"target=\"_blank\">check out the video on how to use this feature</a>"
+msgstr ""
+
+#: admin/class-pi-edd-shipping.php:77
+msgid ""
+"Set Minimum and Maximum Shipping days for each of the Shipping methods, in "
+"each of the Shipping Zones"
+msgstr ""
+
+#: admin/partials/preparation-time.php:4
+msgid "Set preparation time from shipping class"
+msgstr ""
+
+#: admin/class-pi-edd-shipping.php:19
+msgid "Shipping days"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:47
+msgid "Shop / Category page design"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:71
+msgid "Shop / Category page setting"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:56
+msgid ""
+"Show a range of delivery date if you have more then one shipping class for "
+"that shipping zone (If the 2 dates in the range are coming same then it will "
+"show the single date estimate)"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:143
+msgid "Show default estimate for the variable product "
+msgstr ""
+
+#: admin/class-pi-edd-message.php:87
+msgid "Show estimate date on cart page for each product"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:89
+msgid "Show estimate date on checkout page for each product"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:61
+msgid "Show estimate date on product page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:73
+msgid "Show estimate date on shop page or product category page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:109
+msgid "Show estimate for complete order in order email"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:111
+msgid "Show estimate for complete order in order success page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:99
+msgid "Show estimate for complete order on cart page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:97
+msgid "Show estimate for complete order on checkout page"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:66
+msgid "Show estimate for product on back order"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:87
+msgid "Show estimate on cart page for each product"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:89
+msgid "Show estimate on checkout page for each product"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:73
+msgid "Show estimate on product loop page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:61
+msgid "Show estimate on single product page"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:119
+msgid "Show estimated time below each shipping methods on cart/checkout"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:58
+msgid "Show the best/worst estimate delivery time"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:77
+msgid "Show Variable product estimate on archive page"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:39
+msgid "Single product page design"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:59
+msgid "Single product page setting"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:127
+msgid "Special wording when estimate comes out to be Today/Tomorrow"
+msgstr ""
+
+#: admin/class-pi-edd-shipping.php:84
+msgid "Step 1<hr> Select a shipping zone to edit"
+msgstr ""
+
+#: admin/class-pi-edd-shipping.php:88
+msgid "Step 2<hr> Select a shipping method to edit"
+msgstr ""
+
+#: admin/class-pi-edd-shipping.php:92
+msgid "Step 3<hr> Set Min and Max Shipping days"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:45 admin/class-pi-edd-design.php:53
+#: admin/class-pi-edd-design.php:61
+msgid "Text alignment"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:43 admin/class-pi-edd-design.php:51
+#: admin/class-pi-edd-design.php:59
+msgid "Text color of message"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:131 admin/class-pi-edd-message.php:135
+msgid ""
+"This message will be shown as estimate, when the min and max estimate date "
+"is same and that date is today itself (that is for same day delivery) you "
+"can use icon here {icon}"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:141
+msgid ""
+"This message will be shown on variable product page when user has not "
+"selected any variation"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:139
+msgid "This message will be shown when product is out of stock"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:125
+msgid ""
+"This message will be used when the min and max estimate is same date, and "
+"using the range template will be useless <strong>(E.g this will be meaning "
+"less Delivery by 3rd Mach - 3rd March) so we use this template</strong>, use "
+"short code {date} or {days}"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:54
+msgid ""
+"This shipping zone will be used as default to calculate the estimated "
+"delivery time, till user select there shipping address <strong>This is use "
+"full when WooCommerce Cant detect user shipping zone based on their IP, so "
+"instead of showing no date till user add full address, this will show the "
+"estimate based on the default zone, as estimate will change as the user "
+"select his zone</strong>"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:125
+msgid "This template is used when Min and Max estimate date are same"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:133
+msgid ""
+"This will allow you to show special message when the delivery estimate for "
+"tomorrow"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:129
+msgid ""
+"This will allow you to show special message when the delivery estimate is "
+"same day"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:166 admin/class-variable.php:77
+msgid ""
+"This will be added in the normal product preparation time when product is "
+"out of stock and you are allowing back-order "
+msgstr ""
+
+#: admin/class-pi-edd-message.php:123
+msgid ""
+"This will be shown below each shipping method name on cart/checkout page, "
+"using short code {min_date}, {min_days}, {max_date}, {max_days} to show "
+"estimate as number of days count"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:101
+msgid ""
+"This will be shown besides the estimated date on cart or checkout page, PRO "
+"version allows you to show more custom message using short code {date}, "
+"{days} to show estimate as number of days count"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:79
+msgid ""
+"This will be shown besides the estimated date on category or shop page, PRO "
+"version allows you to show more custom message using short code {date}, "
+"{days} to show estimate as number of days count, {icon}"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:65
+msgid ""
+"This will be shown besides the estimated date on single product page, PRO "
+"version allows you to show more custom message using short code {date}, "
+"{days} to show estimate as number of days count, {icon}"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:103
+msgid ""
+"This will be shown besides the estimated date range on cart or checkout page "
+"when showing date range, PRO version allows you to show more custom message "
+"using short code {min_date}, {max_date}, {min_days} or {max_days} as "
+"estimate in terms of days count"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:81
+msgid ""
+"This will be shown besides the estimated date range on category or shop page "
+"when showing date range, PRO version allows you to show more custom message "
+"using short code {min_date}, {max_date},  {min_days} or {max_days} as "
+"estimate in terms of days count, {icon}"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:67
+msgid ""
+"This will be shown besides the estimated date range on single product page "
+"when showing date range, PRO version allows you to show more custom message "
+"using short code {min_date}, {max_date}, {min_days} or {max_days} as "
+"estimate in terms of days count, {icon}"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:121
+msgid ""
+"This will show the estimated time for each shipping method in a zone just "
+"below their name, so the user can select the based needed method for faster "
+"delivery"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:115
+msgid ""
+"This will show the overall estimate of the order on checkout page and order "
+"email, and stored in the order using short code {date}, {days} to show "
+"estimate as number of days count"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:117
+msgid ""
+"This will show the overall estimate of the order on checkout page and order "
+"email, and stored in the order, using short code {min_date}, {min_days}, "
+"{max_date}, {max_days} to show estimate as number of days count"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:135
+msgid "Tomorrow delivery message"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:85
+#, php-format
+msgid "Use Global Option %s"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:94
+msgid "Use Product variation preparation time"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:52
+msgid "Using this you can disable the estimate without disabling the plugin"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:171 admin/class-variable.php:82
+msgid ""
+"When the next lot of product will arrive (used when product is on back-order)"
+" (Preparation time will be added to this date)"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:143
+msgid ""
+"When user first lands on the variable product page and no variation is "
+"selected then show this estimate"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:97 admin/class-pi-edd-message.php:99
+msgid ""
+"When you enable this it will show the estimate time for the complete cart, "
+"(it takes estimate of all the product in cart and show the largest date as "
+"the estimate,<strong>if estimate date of Product A = March 5, Product B = "
+"March 7 the the estimate of complete cart will be March 7</strong>)"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:109
+msgid ""
+"When you enable this it will show the estimate time for the complete order "
+"in order email, (it takes estimate of all the product in cart and show the "
+"largest date as the estimate,<strong>if estimate date of Product A = March 5,"
+" Product B = March 7 the the estimate of complete cart will be March "
+"7</strong>)"
+msgstr ""
+
+#: admin/class-pi-edd-message.php:111
+msgid ""
+"When you enable this it will show the estimate time for the complete order "
+"on order success page, (it takes estimate of all the product in cart and "
+"show the largest date as the estimate,<strong>if estimate date of Product A "
+"= March 5, Product B = March 7 the the estimate of complete cart will be "
+"March 7</strong>)"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"WooCommerce Estimated delivery date per product, You don't have to set dates "
+"in each product, just add it in shipping method, based on shipping days and "
+"product preparation days it shows estimated shipping date per product and "
+"also considers holidays"
+msgstr ""
+
+#: admin/class-pi-edd-design.php:65
+msgid "You can add this icon in message as short code {icon}"
+msgstr ""
+
+#: admin/class-pi-edd-option.php:68
+msgid ""
+"You can make estimate as enabled or disabled for all the products, then you "
+"can go inside each of the product and overwrite the global enabled or "
+"disabled option"
+msgstr ""
+
+#: admin/class-pi-edd-pro-woo.php:97
+msgid ""
+"You can set different preparation time for each of the variation (use only "
+"for variable products, that too if you want to set different preparation "
+"time for each variation)"
+msgstr ""
