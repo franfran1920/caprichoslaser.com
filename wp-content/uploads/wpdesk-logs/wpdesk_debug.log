@@ -1,0 +1,2 @@
+[2023-06-18 15:28:26] wpdesk.DEBUG: Sender payload: {"click_action":"plugin_deactivation","plugin":"flexible-invoices\/flexible-invoices.php","plugin_name":"Flexible Invoices for WooCommerce and WordPress","reason":"temporary_deactivation"} {"source":"wpdesk-sender"} []
+[2023-06-18 15:28:27] wpdesk.DEBUG: Sender response: {"headers":[],"body":"","response":{"code":false,"message":false},"cookies":[],"http_response":null} {"source":"wpdesk-sender"} []
