@@ -16,6 +16,9 @@
         var lookuptable = wapf_lookup_tables[args[0]];
         var tableValues = [], prev = lookuptable;
         for(var i = 1; i < args.length; i++) {
+
+            if( args[i] === '[qty]' ) return WAPF.Util.getQty($parent);
+
             var v = WAPF.Util.getFieldValue($parent.find('.input-'+args[i]));
             if(v == '') return 0;
             var n = findNearest(v,prev);

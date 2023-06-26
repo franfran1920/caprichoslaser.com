@@ -179,8 +179,9 @@ namespace SW_WAPF_PRO\Includes\Classes {
                     $tax_enabled = wc_tax_enabled();
                 }
 
-				if( empty( $price ) || $price < 0 || ! $tax_enabled )
-					return $price;
+				if( empty( $price ) || $price < 0 || ! $tax_enabled ) {
+                    return apply_filters( 'wapf/pricing/price_with_tax', $price, $price, $product, $for_page );
+                }
 
 				if( is_int( $product ) )
 					$product = wc_get_product( $product );
@@ -189,12 +190,14 @@ namespace SW_WAPF_PRO\Includes\Classes {
 
 				if($for_page === 'cart') {
 					if( get_option('woocommerce_tax_display_cart') === 'incl' )
-						return wc_get_price_including_tax($product, $args);
+                        $price_with_tax = wc_get_price_including_tax($product, $args);
 					else
-						return wc_get_price_excluding_tax($product, $args);
+                        $price_with_tax = wc_get_price_excluding_tax($product, $args);
 				}
 				else
-					return wc_get_price_to_display($product, $args);
+                    $price_with_tax = wc_get_price_to_display($product, $args);
+
+                return apply_filters( 'wapf/pricing/price_with_tax', $price_with_tax, $price, $product, $for_page );
 
 		}
 

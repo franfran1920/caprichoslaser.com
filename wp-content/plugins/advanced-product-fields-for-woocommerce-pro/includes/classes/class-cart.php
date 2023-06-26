@@ -292,7 +292,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 
         private static function validate_quantity_swatch( Field $field, $value ) {
 
-            $total = array_sum( $value );
+            $total = array_sum( (array) $value );
 
             if(isset($field->options['min_choices']) && $field->options['min_choices'] != '' && $total < floatval($field->options['min_choices']) )
                 return sprintf(__( '"%s" requires a minimum of %s choices.', 'sw-wapf' ), $field->get_label(), $field->options['min_choices']);

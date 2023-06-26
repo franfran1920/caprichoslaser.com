@@ -222,6 +222,18 @@ class Settings {
 			// get order ID
 			if ( ! empty( $_POST['order_id'] ) ) {
 				$order_id = sanitize_text_field( $_POST['order_id'] );
+				
+				if ( $document_type == 'credit-note' ) {
+					// get last refund ID of the order if available
+					$refund = wc_get_orders(
+						array(
+							'type'   => 'shop_order_refund',
+							'parent' => $order_id,
+							'limit'  => 1,
+						)
+					);
+					$order_id = ! empty( $refund ) ? $refund[0]->get_id() : $order_id;
+				}
 			} else {
 				// default to last order
 				$default_order_id = wc_get_orders( apply_filters( 'wpo_wcpdf_preview_default_order_id_query_args', array(
@@ -269,7 +281,7 @@ class Settings {
 					
 					do_action( 'wpo_wcpdf_preview_after_reload_settings' );
 				}
-
+				
 				$document = wcpdf_get_document( $document_type, $order );
 
 				if ( $document ) {

@@ -3,7 +3,7 @@ Contributors: mailpoet, woocommerce, automattic
 Tags: email, email marketing, post notification, woocommerce emails, email automation, newsletter, newsletter builder, newsletter subscribers
 Requires at least: 6.0
 Tested up to: 6.2
-Stable tag: 4.18.1
+Stable tag: 4.19.0
 Requires PHP: 7.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -11,14 +11,6 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Send beautiful newsletters from WordPress. Collect subscribers with signup forms, automate your emails for WooCommerce, blog post notifications & more
 
 == Description ==
-
-= Get 40% off all annual plans and upgrades =
-
-Get 40% off all MailPoet annual plans and upgrades – no coupon required. Offer starts at 2 pm UTC on Wednesday, June 14, 2023, and ends at 2 pm UTC on Monday, June 19, 2023. Terms and conditions apply.
-
-[Pick a plan and save](https://account.mailpoet.com/?billing=yearly&ref=sale-june-2023-wporg&utm_source=wordpress.org&utm_medium=description&utm_campaign=sale_june_2023)
-
-= What is MailPoet? =
 
 Use MailPoet to create, send, manage, and grow your email marketing campaigns – all without leaving your WordPress dashboard.
 
@@ -226,6 +218,13 @@ Check our [Knowledge Base](https://kb.mailpoet.com) or contact us through our [s
 6. WooCommerce emails
 
 == Changelog ==
+
+= 4.19.0 - 2023-06-19 =
+* Added: Automation templates for abandoned cart and first-time buyers;
+* Added: option to filter Automations triggers based on subscriber, customer, or order properties;
+* Updated: minimum required WooCommerce version to 7.6.0;
+* Fixed: depreciation notice in PHP 8 (thank you Drivingralle);
+* Fixed: exporting dynamic segments with custom fields.
 
 = 4.18.1 - 2023-06-12 =
 * Fixed: rarely the last page before sending the email can fail to load;

@@ -133,7 +133,7 @@ msgstr ""
 msgid "Disabled dates"
 msgstr ""
 
-msgid "Use format mm-dd-yyyy or mm-dd for yearly recurring dates. Separate multiple dates with a comma."
+msgid "Use format mm-dd-yyyy or mm-dd for yearly recurring dates. Separate multiple dates with a comma. Specify date ranges with a space between the start and end date."
 msgstr ""
 
 msgid "Which dates can't be selected?"
@@ -212,6 +212,9 @@ msgid "Returns how many items are selected in a multi-select field (such as chec
 msgstr ""
 
 msgid "The ID of the field you want to count the selected items of."
+msgstr ""
+
+msgid "Sums all given quantities of a field with multiple quantity number boxes."
 msgstr ""
 
 msgid "Returns the cosine of the specified angle."

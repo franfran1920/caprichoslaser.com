@@ -1105,6 +1105,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
         #region Private Helpers
 
 	    private function make_unique(&$fg) {
+
 		    $fg->id = null;
 
 		    $id_map = [];
@@ -1135,6 +1136,12 @@ namespace SW_WAPF_PRO\Includes\Controllers {
                             }
                         } else if( $f2->pricing->type === 'fx' ) {
                             $f2->pricing->amount = str_replace($old_id, $new_id, '' . $f2->pricing->amount);
+                        }
+                    }
+
+                    if( $f2->type === 'calc' ) {
+                        if( ! empty( $f2->options['formula'] ) ) {
+                            $f2->options['formula'] = str_replace( $old_id, $new_id, '' . $f2->options['formula'] );
                         }
                     }
 

@@ -74,12 +74,15 @@ class CustomerFieldsFactory {
         ),
         new Field(
           'woocommerce:customer:billing-country',
-          Field::TYPE_STRING,
+          Field::TYPE_ENUM,
           __('Billing country', 'mailpoet'),
           function (CustomerPayload $payload) {
             $customer = $payload->getCustomer();
             return $customer ? $customer->get_billing_country() : null;
-          }
+          },
+          [
+            'options' => $this->getBillingCountryOptions(),
+          ]
         ),
         new Field(
           'woocommerce:customer:shipping-company',
@@ -128,16 +131,35 @@ class CustomerFieldsFactory {
         ),
         new Field(
           'woocommerce:customer:shipping-country',
-          Field::TYPE_STRING,
+          Field::TYPE_ENUM,
           __('Shipping country', 'mailpoet'),
           function (CustomerPayload $payload) {
             $customer = $payload->getCustomer();
             return $customer ? $customer->get_shipping_country() : null;
-          }
+          },
+          [
+            'options' => $this->getShippingCountryOptions(),
+          ]
         ),
       ],
       $this->customerOrderFieldsFactory->getFields(),
       $this->customerReviewFieldsFactory->getFields()
     );
+  }
+
+  private function getBillingCountryOptions(): array {
+    $options = [];
+    foreach (WC()->countries->get_allowed_countries() as $code => $name) {
+      $options[] = ['id' => $code, 'name' => $name];
+    }
+    return $options;
+  }
+
+  private function getShippingCountryOptions(): array {
+    $options = [];
+    foreach (WC()->countries->get_shipping_countries() as $code => $name) {
+      $options[] = ['id' => $code, 'name' => $name];
+    }
+    return $options;
   }
 }

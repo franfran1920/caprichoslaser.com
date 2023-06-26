@@ -522,7 +522,7 @@ class Main {
 		// * UNLESS the ‘UPLOADS’ constant is defined in wp-config (http://codex.wordpress.org/Editing_wp-config.php#Moving_uploads_folder)
 		//
 		// May also be overridden by the wpo_wcpdf_tmp_path filter
-		
+
 		$wp_upload_base = $this->get_wp_upload_base();
 		if( $wp_upload_base ) {
 			if( $append_random_string && $code = $this->get_random_string() ) {
@@ -634,9 +634,6 @@ class Main {
 			$this->copy_fonts( $fonts_path );
 
 			// save to cache
-			if ( get_transient( 'wpo_wcpdf_subfolder_fonts_has_files' ) !== false ) {
-				delete_transient( 'wpo_wcpdf_subfolder_fonts_has_files' );
-			}
 			set_transient( 'wpo_wcpdf_subfolder_fonts_has_files', 'yes' , DAY_IN_SECONDS );
 		}
 	}
@@ -1233,19 +1230,32 @@ class Main {
 	public function log_document_creation_trigger_to_order_meta( $document, $trigger, $force = false ) {
 		if ( $trigger == 'bulk' && property_exists( $document, 'order_ids' ) && ! empty( $document->order_ids ) ) { // bulk document
 			$order_ids = $document->order_ids;
-		} else {
+		} elseif ( ! is_null( $document->order ) && is_callable( [ $document->order, 'get_id' ] ) ) {
 			$order_ids = [ $document->order->get_id() ];
+		} elseif ( isset( $_REQUEST['order_id'] ) ) {
+			$order_ids = [ absint( $_REQUEST['order_id'] ) ];
+		} else {
+			$order_ids = [];
 		}
 		
-		foreach ( $order_ids as $order_id ) {
-			$order = wc_get_order( $order_id );
-			if ( ! empty( $order ) ) { 
-				$type   = $document->get_type();
-				$status = $order->get_meta( "_wcpdf_{$type}_creation_trigger" );
-				 
-				if ( true == $force || empty( $status ) ) {
-					$order->update_meta_data( "_wcpdf_{$type}_creation_trigger", $trigger );
-					$order->save_meta_data();
+		if ( ! empty( $order_ids ) ) {
+			foreach ( $order_ids as $order_id ) {
+				$order = wc_get_order( $order_id );				
+				if ( ! empty( $order ) ) { 					
+					if ( is_callable( [ $document, 'get_type' ] ) && $document->get_type() == 'credit-note' && is_callable( [ $order, 'get_parent_id' ] ) ) {
+						$order = wc_get_order( $order->get_parent_id() );
+					}
+					
+					if ( empty( $order ) ) {
+						continue;
+					}
+					
+					$status = $order->get_meta( "_wcpdf_{$document->slug}_creation_trigger" );
+					 
+					if ( true == $force || empty( $status ) ) {
+						$order->update_meta_data( "_wcpdf_{$document->slug}_creation_trigger", $trigger );
+						$order->save_meta_data();
+					}
 				}
 			}
 		}
