@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit732ff4eab86f9b83a8b5ef3c63e09b61
+class ComposerStaticInit6eab9727f53200a7246e87f496849472
 {
     public static $files = array (
         '3773ef3f09c37da5478d578e32b03a4b' => __DIR__ . '/..' . '/automattic/jetpack-assets/actions.php',
@@ -271,6 +271,8 @@ class ComposerStaticInit732ff4eab86f9b83a8b5ef3c63e09b61
         'WCPay\\MultiCurrency\\Currency' => __DIR__ . '/../..' . '/includes/multi-currency/Currency.php',
         'WCPay\\MultiCurrency\\CurrencySwitcherBlock' => __DIR__ . '/../..' . '/includes/multi-currency/CurrencySwitcherBlock.php',
         'WCPay\\MultiCurrency\\CurrencySwitcherWidget' => __DIR__ . '/../..' . '/includes/multi-currency/CurrencySwitcherWidget.php',
+        'WCPay\\MultiCurrency\\Exceptions\\InvalidCurrencyException' => __DIR__ . '/../..' . '/includes/multi-currency/Exceptions/InvalidCurrencyException.php',
+        'WCPay\\MultiCurrency\\Exceptions\\InvalidCurrencyRateException' => __DIR__ . '/../..' . '/includes/multi-currency/Exceptions/InvalidCurrencyRateException.php',
         'WCPay\\MultiCurrency\\FrontendCurrencies' => __DIR__ . '/../..' . '/includes/multi-currency/FrontendCurrencies.php',
         'WCPay\\MultiCurrency\\FrontendPrices' => __DIR__ . '/../..' . '/includes/multi-currency/FrontendPrices.php',
         'WCPay\\MultiCurrency\\Geolocation' => __DIR__ . '/../..' . '/includes/multi-currency/Geolocation.php',
@@ -289,9 +291,9 @@ class ComposerStaticInit732ff4eab86f9b83a8b5ef3c63e09b61
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit732ff4eab86f9b83a8b5ef3c63e09b61::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit732ff4eab86f9b83a8b5ef3c63e09b61::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit732ff4eab86f9b83a8b5ef3c63e09b61::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6eab9727f53200a7246e87f496849472::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6eab9727f53200a7246e87f496849472::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit6eab9727f53200a7246e87f496849472::$classMap;
 
         }, null, ClassLoader::class);
     }

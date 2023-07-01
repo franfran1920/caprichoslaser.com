@@ -236,6 +236,8 @@ return array(
     'WCPay\\MultiCurrency\\Currency' => $baseDir . '/includes/multi-currency/Currency.php',
     'WCPay\\MultiCurrency\\CurrencySwitcherBlock' => $baseDir . '/includes/multi-currency/CurrencySwitcherBlock.php',
     'WCPay\\MultiCurrency\\CurrencySwitcherWidget' => $baseDir . '/includes/multi-currency/CurrencySwitcherWidget.php',
+    'WCPay\\MultiCurrency\\Exceptions\\InvalidCurrencyException' => $baseDir . '/includes/multi-currency/Exceptions/InvalidCurrencyException.php',
+    'WCPay\\MultiCurrency\\Exceptions\\InvalidCurrencyRateException' => $baseDir . '/includes/multi-currency/Exceptions/InvalidCurrencyRateException.php',
     'WCPay\\MultiCurrency\\FrontendCurrencies' => $baseDir . '/includes/multi-currency/FrontendCurrencies.php',
     'WCPay\\MultiCurrency\\FrontendPrices' => $baseDir . '/includes/multi-currency/FrontendPrices.php',
     'WCPay\\MultiCurrency\\Geolocation' => $baseDir . '/includes/multi-currency/Geolocation.php',
