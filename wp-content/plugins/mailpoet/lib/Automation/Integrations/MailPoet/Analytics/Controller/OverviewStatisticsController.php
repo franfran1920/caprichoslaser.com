@@ -14,7 +14,7 @@ use MailPoet\Entities\StatisticsOpenEntity;
 use MailPoet\Newsletter\NewslettersRepository;
 use MailPoet\Newsletter\Statistics\NewsletterStatisticsRepository;
 use MailPoet\Newsletter\Statistics\WooCommerceRevenue;
-use MailPoet\WooCommerce\Helper;
+use MailPoet\Newsletter\Url as NewsletterUrl;
 
 class OverviewStatisticsController {
   /** @var NewslettersRepository */
@@ -23,37 +23,29 @@ class OverviewStatisticsController {
   /** @var NewsletterStatisticsRepository */
   private $newsletterStatisticsRepository;
 
-  /** @var Helper */
-  private $wooCommerceHelper;
+  /** @var NewsletterUrl */
+  private $newsletterUrl;
 
   public function __construct(
     NewslettersRepository $newslettersRepository,
     NewsletterStatisticsRepository $newsletterStatisticsRepository,
-    Helper $wooCommerceHelper
+    NewsletterUrl $newsletterUrl
   ) {
     $this->newslettersRepository = $newslettersRepository;
     $this->newsletterStatisticsRepository = $newsletterStatisticsRepository;
-    $this->wooCommerceHelper = $wooCommerceHelper;
+    $this->newsletterUrl = $newsletterUrl;
   }
 
   public function getStatisticsForAutomation(Automation $automation, Query $query): array {
     $emails = $this->getEmailsFromAutomation($automation);
-    $formattedEmptyRevenue = $this->wooCommerceHelper->getRawPrice(
-      0,
-      [
-        'currency' => $this->wooCommerceHelper->getWoocommerceCurrency(),
-      ]
-    );
     $data = [
-      'total' => ['current' => 0, 'previous' => 0],
+      'sent' => ['current' => 0, 'previous' => 0],
       'opened' => ['current' => 0, 'previous' => 0],
       'clicked' => ['current' => 0, 'previous' => 0],
       'orders' => ['current' => 0, 'previous' => 0],
+      'unsubscribed' => ['current' => 0, 'previous' => 0],
       'revenue' => ['current' => 0, 'previous' => 0],
-      'revenue_formatted' => [
-        'current' => $formattedEmptyRevenue,
-        'previous' => $formattedEmptyRevenue,
-      ],
+      'emails' => [],
     ];
     if (!$emails) {
       return $data;
@@ -72,12 +64,24 @@ class OverviewStatisticsController {
       $query->getPrimaryBefore(),
       $requiredData
     );
-    foreach ($currentStatistics as $statistic) {
-      $data['total']['current'] += $statistic->getTotalSentCount();
+    foreach ($currentStatistics as $newsletterId => $statistic) {
+      $data['sent']['current'] += $statistic->getTotalSentCount();
       $data['opened']['current'] += $statistic->getOpenCount();
       $data['clicked']['current'] += $statistic->getClickCount();
+      $data['unsubscribed']['current'] += $statistic->getUnsubscribeCount();
       $data['orders']['current'] += $statistic->getWooCommerceRevenue() ? $statistic->getWooCommerceRevenue()->getOrdersCount() : 0;
       $data['revenue']['current'] += $statistic->getWooCommerceRevenue() ? $statistic->getWooCommerceRevenue()->getValue() : 0;
+      $newsletter = $this->newslettersRepository->findOneById($newsletterId);
+      $data['emails'][$newsletterId]['id'] = $newsletterId;
+      $data['emails'][$newsletterId]['name'] = $newsletter ? $newsletter->getSubject() : '';
+      $data['emails'][$newsletterId]['sent']['current'] = $statistic->getTotalSentCount();
+      $data['emails'][$newsletterId]['opened']['current'] = $statistic->getOpenCount();
+      $data['emails'][$newsletterId]['clicked']['current'] = $statistic->getClickCount();
+      $data['emails'][$newsletterId]['unsubscribed']['current'] = $statistic->getUnsubscribeCount();
+      $data['emails'][$newsletterId]['orders']['current'] = $statistic->getWooCommerceRevenue() ? $statistic->getWooCommerceRevenue()->getOrdersCount() : 0;
+      $data['emails'][$newsletterId]['revenue']['current'] = $statistic->getWooCommerceRevenue() ? $statistic->getWooCommerceRevenue()->getValue() : 0;
+      $data['emails'][$newsletterId]['previewUrl'] = $newsletter ? $this->newsletterUrl->getViewInBrowserUrl($newsletter) : '';
+      $data['emails'][$newsletterId]['order'] = count($data['emails']);
     }
 
     $previousStatistics = $this->newsletterStatisticsRepository->getBatchStatistics(
@@ -87,27 +91,24 @@ class OverviewStatisticsController {
       $requiredData
     );
 
-    foreach ($previousStatistics as $statistic) {
-      $data['total']['previous'] += $statistic->getTotalSentCount();
+    foreach ($previousStatistics as $newsletterId => $statistic) {
+      $data['sent']['previous'] += $statistic->getTotalSentCount();
       $data['opened']['previous'] += $statistic->getOpenCount();
       $data['clicked']['previous'] += $statistic->getClickCount();
+      $data['unsubscribed']['previous'] += $statistic->getUnsubscribeCount();
       $data['orders']['previous'] += $statistic->getWooCommerceRevenue() ? $statistic->getWooCommerceRevenue()->getOrdersCount() : 0;
       $data['revenue']['previous'] += $statistic->getWooCommerceRevenue() ? $statistic->getWooCommerceRevenue()->getValue() : 0;
+      $data['emails'][$newsletterId]['sent']['previous'] = $statistic->getTotalSentCount();
+      $data['emails'][$newsletterId]['opened']['previous'] = $statistic->getOpenCount();
+      $data['emails'][$newsletterId]['clicked']['previous'] = $statistic->getClickCount();
+      $data['emails'][$newsletterId]['unsubscribed']['previous'] = $statistic->getUnsubscribeCount();
+      $data['emails'][$newsletterId]['orders']['previous'] = $statistic->getWooCommerceRevenue() ? $statistic->getWooCommerceRevenue()->getOrdersCount() : 0;
+      $data['emails'][$newsletterId]['revenue']['previous'] = $statistic->getWooCommerceRevenue() ? $statistic->getWooCommerceRevenue()->getValue() : 0;
     }
 
-    $data['revenue_formatted']['current'] = $this->wooCommerceHelper->getRawPrice(
-      $data['revenue']['current'],
-      [
-        'currency' => $this->wooCommerceHelper->getWoocommerceCurrency(),
-      ]
-    );
-
-    $data['revenue_formatted']['previous'] = $this->wooCommerceHelper->getRawPrice(
-      $data['revenue']['previous'],
-      [
-        'currency' => $this->wooCommerceHelper->getWoocommerceCurrency(),
-      ]
-    );
+    usort($data['emails'], function ($a, $b) {
+      return $a['order'] <=> $b['order'];
+    });
 
     return $data;
   }

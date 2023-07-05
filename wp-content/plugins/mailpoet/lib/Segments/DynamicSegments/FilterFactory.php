@@ -23,6 +23,7 @@ use MailPoet\Segments\DynamicSegments\Filters\UserRole;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceAverageSpent;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceCategory;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceCountry;
+use MailPoet\Segments\DynamicSegments\Filters\WooCommerceCustomerTextField;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceMembership;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceNumberOfOrders;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceProduct;
@@ -99,6 +100,9 @@ class FilterFactory {
   /** @var WooCommerceUsedPaymentMethod */
   private $wooCommerceUsedPaymentMethod;
 
+  /** @var WooCommerceCustomerTextField */
+  private $wooCommerceCustomerTextField;
+
   public function __construct(
     EmailAction $emailAction,
     EmailActionClickAny $emailActionClickAny,
@@ -107,6 +111,7 @@ class FilterFactory {
     WooCommerceProduct $wooCommerceProduct,
     WooCommerceCategory $wooCommerceCategory,
     WooCommerceCountry $wooCommerceCountry,
+    WooCommerceCustomerTextField $wooCommerceCustomerTextField,
     EmailOpensAbsoluteCountAction $emailOpensAbsoluteCount,
     WooCommerceNumberOfOrders $wooCommerceNumberOfOrders,
     WooCommerceTotalSpent $wooCommerceTotalSpent,
@@ -145,6 +150,7 @@ class FilterFactory {
     $this->subscribedViaForm = $subscribedViaForm;
     $this->wooCommerceAverageSpent = $wooCommerceAverageSpent;
     $this->wooCommerceUsedPaymentMethod = $wooCommerceUsedPaymentMethod;
+    $this->wooCommerceCustomerTextField = $wooCommerceCustomerTextField;
   }
 
   public function getFilterForFilterEntity(DynamicSegmentFilterEntity $filter): Filter {
@@ -234,6 +240,8 @@ class FilterFactory {
       return $this->wooCommerceAverageSpent;
     } elseif ($action === WooCommerceUsedPaymentMethod::ACTION) {
       return $this->wooCommerceUsedPaymentMethod;
+    } elseif (in_array($action, WooCommerceCustomerTextField::ACTIONS)) {
+      return $this->wooCommerceCustomerTextField;
     }
     return $this->wooCommerceCategory;
   }
