@@ -1585,6 +1585,37 @@ class Helpers
         return $result;
     }
     
+    /**
+     * Checking the current code is run inside specified function
+     *
+     * @param string $function_name Function name
+     * @param int $backtrace_limit The number of stack frames that is tested backwards.
+     *
+     * @return bool
+     */
+    public static function isRunningInsideFunction( $function_name, $backtrace_limit = 10 )
+    {
+        if ( empty($function_name) ) {
+            return false;
+        }
+        if ( intval( $backtrace_limit ) <= 0 ) {
+            $backtrace_limit = 10;
+        }
+        $result = false;
+        $backtrace = self::debugBacktrace( 0, $backtrace_limit );
+        if ( !empty($backtrace) ) {
+            foreach ( $backtrace as $item ) {
+                
+                if ( isset( $item['function'] ) && $item['function'] === $function_name ) {
+                    $result = true;
+                    break;
+                }
+            
+            }
+        }
+        return $result;
+    }
+    
     private static function debugBacktrace( $options, $limit )
     {
         return debug_backtrace( $options, $limit );
@@ -1861,6 +1892,81 @@ class Helpers
             'h6'   => array(),
         ) );
         return $content;
+    }
+    
+    /**
+     * Remove Greek accents
+     *
+     * @param string $text The text to process.
+     *
+     * @return string
+     */
+    public static function removeGreekAccents( $text )
+    {
+        $chars = array(
+            'Ά' => 'Α',
+            'ά' => 'α',
+            'Έ' => 'Ε',
+            'έ' => 'α',
+            'Ί' => 'Ι',
+            'ί' => 'ι',
+            'ΐ' => 'ϊ',
+            'Ύ' => 'Υ',
+            'ύ' => 'υ',
+            'ΰ' => 'ϋ',
+            'Ή' => 'Η',
+            'ή' => 'η',
+            'Ό' => 'Ο',
+            'ό' => 'ο',
+            'Ώ' => 'Ω',
+            'ώ' => 'ω',
+        );
+        return strtr( $text, $chars );
+    }
+    
+    /**
+     * Test if phrase contains blacklisted term
+     *
+     * @param string $phrase Search phrase.
+     *
+     * @return bool
+     */
+    public static function phraseContainsBlacklistedTerm( $phrase )
+    {
+        $blacklistedTerms = apply_filters( 'dgwt/wcas/blacklisted_terms', array() );
+        if ( is_array( $blacklistedTerms ) ) {
+            foreach ( $blacklistedTerms as $term ) {
+                if ( mb_stripos( $phrase, $term ) !== false ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Get specific label of the post type
+     *
+     * @param string|WP_Post_Type $postType
+     * @param string $label
+     *
+     * @return string
+     */
+    public static function getPostTypeLabel( $postType, $label )
+    {
+        $text = '';
+        $obj = null;
+        $label = sanitize_key( $label );
+        if ( is_string( $postType ) ) {
+            $obj = get_post_type_object( $postType );
+        }
+        if ( is_object( $postType ) && is_a( $postType, 'WP_Post_Type' ) ) {
+            $obj = $postType;
+        }
+        if ( !empty($obj->labels) && !empty($obj->labels->{$label}) ) {
+            $text = $obj->labels->{$label};
+        }
+        return $text;
     }
 
 }

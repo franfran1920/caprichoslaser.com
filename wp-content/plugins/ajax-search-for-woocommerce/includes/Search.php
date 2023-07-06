@@ -2,6 +2,7 @@
 
 namespace DgoraWcas;
 
+use  DgoraWcas\Engines\TNTSearchMySQL\Indexer\Builder ;
 use  DgoraWcas\Engines\TNTSearchMySQL\SearchQuery\SearchResultsPageQuery ;
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) {

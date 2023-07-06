@@ -21,6 +21,7 @@ class Solver
         $this->solveMedicorCoreScrips();
         $this->solveGeoTargetingWPScripts();
         $this->solveEmptyImages();
+        $this->solveAntiSpamCleanTalk();
     }
     
     /**
@@ -123,6 +124,42 @@ class Solver
             PHP_INT_MAX - 5,
             4
         );
+    }
+    
+    /**
+     * Preventing the Anti-Spam by CleanTalk plugin from securing our search form
+     *
+     * Plugin URL: https://wordpress.org/plugins/cleantalk-spam-protect/
+     *
+     * @return void
+     */
+    public function solveAntiSpamCleanTalk()
+    {
+        global  $apbct ;
+        if ( !defined( 'APBCT_VERSION' ) ) {
+            return;
+        }
+        // The problem occurs when the "Test default WordPress search form for spam" option is "on".
+        if ( isset( $apbct->settings['forms__search_test'] ) && !$apbct->settings['forms__search_test'] ) {
+            return;
+        }
+        /**
+         * In the cleantalk-spam-protect/js/apbct-public-bundle.min.js file, the plugin skips protection
+         * of the form when it has the "proinput" class (this is the class of another search plugin).
+         * We use this to make it applicable to our search engine as well.
+         */
+        add_action( 'wp_footer', function () {
+            ?>
+			<script>
+				var dgwtWsasForms = document.querySelectorAll('.dgwt-wcas-search-wrapp');
+				if (dgwtWsasForms.length > 0) {
+					dgwtWsasForms.forEach(function (form) {
+						form.classList.add('proinput');
+					});
+				}
+			</script>
+			<?php 
+        } );
     }
 
 }

@@ -92,7 +92,7 @@ add_action( 'wp_footer', function () {
 				// Open overlay automatically
 				$('#et_top_search #et_search_icon, #et_top_search_mob #et_search_icon').on('click', function () {
 					if ($(window).width() <= 980) {
-						var $handler = $('.et_search_outer .js-dgwt-wcas-enable-mobile-form');
+						var $handler = $('.js-dgwt-wcas-enable-mobile-form');
 						if ($handler.length) {
 							$handler[0].click();
 						}
@@ -101,6 +101,10 @@ add_action( 'wp_footer', function () {
 							var $closeBtn = $('.et_close_search_field');
 							if ($closeBtn.length) {
 								$closeBtn.click();
+							}
+							var $closeBtn2 = $('.dm-search-box .close');
+							if ($closeBtn2.length) {
+								$closeBtn2.click();
 							}
 						}, 1100)
 					}

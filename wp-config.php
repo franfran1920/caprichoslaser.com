@@ -29,10 +29,10 @@
 define( 'DB_NAME', 'caprichoslaser' );
 
 /** Database username */
-define( 'DB_USER', 'franfran1920' );
+define( 'DB_USER', 'capriUser' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'diesinueve19' );
+define( 'DB_PASSWORD', 'teg6czq_qat1kmy6UNB' );
 
 /** Database hostname */
 define( 'DB_HOST', 'localhost' );

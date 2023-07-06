@@ -188,6 +188,17 @@ class Search
         }
         
         $keyword = apply_filters( 'dgwt/wcas/phrase', $keyword );
+        // Break early if keyword contains blacklisted phrase.
+        if ( Helpers::phraseContainsBlacklistedTerm( $keyword ) ) {
+            
+            if ( $return ) {
+                return $this->getEmptyOutput();
+            } else {
+                echo  json_encode( Helpers::noResultsSuggestion( $this->getEmptyOutput() ) ) ;
+                die;
+            }
+        
+        }
         /* SEARCH IN WOO CATEGORIES */
         
         if ( $context === 'autocomplete' && array_key_exists( 'tax_product_cat', $this->groups ) ) {
@@ -519,7 +530,7 @@ class Search
             
             if ( $i < $limit ) {
                 $catName = html_entity_decode( $cat->name );
-                $pos = strpos( mb_strtolower( $catName ), mb_strtolower( $keywordUnslashed ) );
+                $pos = strpos( mb_strtolower( remove_accents( Helpers::removeGreekAccents( $catName ) ) ), mb_strtolower( remove_accents( Helpers::removeGreekAccents( $keywordUnslashed ) ) ) );
                 
                 if ( $pos !== false ) {
                     $results['total']++;
@@ -576,7 +587,7 @@ class Search
             
             if ( $i < $limit ) {
                 $tagName = html_entity_decode( $tag->name );
-                $pos = strpos( mb_strtolower( $tagName ), mb_strtolower( $keywordUnslashed ) );
+                $pos = strpos( mb_strtolower( remove_accents( Helpers::removeGreekAccents( $tagName ) ) ), mb_strtolower( remove_accents( Helpers::removeGreekAccents( $keywordUnslashed ) ) ) );
                 
                 if ( $pos !== false ) {
                     $results['total']++;
@@ -753,6 +764,14 @@ class Search
         }
         $query->set( 'dgwt_wcas', $query->query_vars['s'] );
         $phrase = $query->query_vars['s'];
+        // Break early if keyword contains blacklisted phrase.
+        
+        if ( Helpers::phraseContainsBlacklistedTerm( $phrase ) ) {
+            header( 'X-Robots-Tag: noindex' );
+            http_response_code( 400 );
+            exit;
+        }
+        
         $orderby = 'post__in';
         $order = 'desc';
         if ( !empty($query->query_vars['orderby']) ) {
@@ -1048,6 +1067,23 @@ class Search
         }
         
         return $url;
+    }
+    
+    /**
+     * Get empty search output
+     *
+     * @return array
+     */
+    private function getEmptyOutput()
+    {
+        $output = array(
+            'engine'      => 'free',
+            'suggestions' => array(),
+            'time'        => '0 sec',
+            'total'       => 0,
+            'v'           => DGWT_WCAS_VERSION,
+        );
+        return $output;
     }
 
 }

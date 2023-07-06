@@ -2078,3 +2078,14 @@ html:not(.dgwt-wcas-overlay-mobile-on) .dgwt-wcas-search-wrapp.dgwt-wcas-layout-
 .elementor-widget-fibosearch-posts::after {
 	content: "" !important;
 }
+
+.dgwt-wcas-posts-results-grid {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 20px;
+	justify-content: flex-start;
+}
+.dgwt-wcas-posts-results-grid-item {
+	width: calc(25% - 15px);
+	margin-bottom: 30px;
+}

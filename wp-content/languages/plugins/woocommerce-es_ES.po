@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-06-14 08:23:18+0000\n"
+"PO-Revision-Date: 2023-06-28 10:00:56+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,23 @@ msgstr ""
 "X-Generator: GlotPress/4.0.0-alpha.4\n"
 "Language: es\n"
 "Project-Id-Version: Plugins - WooCommerce - Stable (latest release)\n"
+
+#: templates/checkout/form-verify-email.php:50
+msgid "Verify"
+msgstr "Verificar"
+
+#. translators: 1: opening login link 2: closing login link
+#: templates/checkout/form-verify-email.php:36
+msgid "To view this page, you must either %1$slogin%2$s or verify the email address associated with the order."
+msgstr "Para ver esta página debes, o %1$sacceder%2$s o verificar la dirección de correo electrónico asociada con el pedido."
+
+#: templates/checkout/form-verify-email.php:29
+msgid "We were unable to verify the email address you provided. Please try again."
+msgstr "No hemos podido verificar la dirección de correo electrónico que has facilitado. Por favor, inténtalo de nuevo."
+
+#: includes/shortcodes/class-wc-shortcode-checkout.php:304
+msgid "Please log in to your account to view this order."
+msgstr "Por favor, accede a tu cuenta para ver este pedido."
 
 #: packages/woocommerce-blocks/assets/js/blocks/mini-cart/mini-cart-contents/inner-blocks/mini-cart-title-label-block/block.json
 #: packages/woocommerce-blocks/build/inner-blocks/mini-cart-title-label-block/block.json
@@ -2074,7 +2091,7 @@ msgstr "Añadir precios"
 msgid "Add price to all variations that don't have a price"
 msgstr "Añadir precio a todas las variaciones que no tienen precio"
 
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:194
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:179
 msgid " says"
 msgstr " dice"
 
@@ -8803,12 +8820,15 @@ msgid "Your cart is currently empty!"
 msgstr "¡Tu carrito actualmente está vacío!"
 
 #: templates/cart/cart.php:28
+#: packages/woocommerce-blocks/build/attribute-filter-frontend.js:15
 #: packages/woocommerce-blocks/build/cart-blocks/cart-line-items--mini-cart-contents-block/products-table-frontend.js:21
 #: packages/woocommerce-blocks/build/cart.js:61
 #: packages/woocommerce-blocks/build/mini-cart-contents.js:21
-#: packages/woocommerce-blocks/build/rating-filter-frontend.js:21
-#: packages/woocommerce-blocks/build/vendors--attribute-filter-wrapper--stock-filter-wrapper-frontend.js:5
+#: packages/woocommerce-blocks/build/rating-filter-frontend.js:13
+#: packages/woocommerce-blocks/build/stock-filter-frontend.js:15
+#: packages/woocommerce-blocks/build/vendors--attribute-filter-wrapper-frontend.js:5
 #: packages/woocommerce-blocks/build/vendors--rating-filter-wrapper-frontend.js:5
+#: packages/woocommerce-blocks/build/vendors--stock-filter-wrapper-frontend.js:5
 #: packages/woocommerce-blocks/build/wc-blocks-vendors.js:5
 msgid "Remove item"
 msgstr "Eliminar artículo"
@@ -18040,8 +18060,8 @@ msgid "Add shipping"
 msgstr "Añadir envío"
 
 #. translators: 1: product ID 2: quantity in stock
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:356
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:504
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:341
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:489
 msgid "The stock has not been updated because the value has changed since editing. Product %1$d has %2$d units in stock."
 msgstr "No se ha actualizado el inventario debido a que el valor cambió mientras se modificaba. El producto %1$d tiene %2$d existencias en el inventario."
 
@@ -20208,15 +20228,18 @@ msgstr "Visita el soporte al cliente premium"
 #: includes/class-wc-form-handler.php:1130
 #: packages/woocommerce-blocks/build/active-filters-frontend.js:3
 #: packages/woocommerce-blocks/build/all-products-frontend.js:1
+#: packages/woocommerce-blocks/build/attribute-filter-frontend.js:1
 #: packages/woocommerce-blocks/build/cart-frontend.js:1
 #: packages/woocommerce-blocks/build/cart.js:5
 #: packages/woocommerce-blocks/build/checkout-frontend.js:1
 #: packages/woocommerce-blocks/build/checkout.js:5
 #: packages/woocommerce-blocks/build/filter-wrapper-frontend.js:1
 #: packages/woocommerce-blocks/build/mini-cart-component-frontend.js:1
+#: packages/woocommerce-blocks/build/price-filter-frontend.js:1
 #: packages/woocommerce-blocks/build/rating-filter-frontend.js:1
 #: packages/woocommerce-blocks/build/reviews-frontend.js:1
 #: packages/woocommerce-blocks/build/single-product.js:6
+#: packages/woocommerce-blocks/build/stock-filter-frontend.js:1
 msgid "Error:"
 msgstr "Error:"
 
@@ -22298,8 +22321,11 @@ msgstr "&infin;"
 #. translators: %s number of products.
 #: includes/admin/reports/class-wc-report-stock.php:154
 #: includes/widgets/class-wc-widget-product-tag-cloud.php:91
-#: packages/woocommerce-blocks/build/attribute-filter-wrapper--stock-filter-wrapper-frontend.js:11
+#: packages/woocommerce-blocks/build/attribute-filter-frontend.js:3
+#: packages/woocommerce-blocks/build/attribute-filter-wrapper-frontend.js:13
 #: packages/woocommerce-blocks/build/attribute-filter.js:4
+#: packages/woocommerce-blocks/build/stock-filter-frontend.js:3
+#: packages/woocommerce-blocks/build/stock-filter-wrapper-frontend.js:7
 #: packages/woocommerce-blocks/build/stock-filter.js:3
 msgid "%s product"
 msgid_plural "%s products"
@@ -26611,13 +26637,13 @@ msgid "Last page"
 msgstr "Última página"
 
 #: includes/admin/settings/views/html-settings-tax.php:144
-#: packages/woocommerce-blocks/build/all-products-frontend.js:9
+#: packages/woocommerce-blocks/build/all-products-frontend.js:7
 #: packages/woocommerce-blocks/build/all-products.js:36
 msgid "Next page"
 msgstr "Página siguiente"
 
 #: includes/admin/settings/views/html-settings-tax.php:127
-#: packages/woocommerce-blocks/build/all-products-frontend.js:3
+#: packages/woocommerce-blocks/build/all-products-frontend.js:1
 #: packages/woocommerce-blocks/build/all-products.js:30
 msgid "Previous page"
 msgstr "Página anterior"
@@ -27125,6 +27151,7 @@ msgstr "Cambio de contraseña"
 #: includes/admin/class-wc-admin-setup-wizard.php:2238
 #: includes/admin/meta-boxes/class-wc-meta-box-order-data.php:92
 #: includes/class-wc-countries.php:1644 includes/class-wc-form-handler.php:271
+#: templates/checkout/form-verify-email.php:44
 #: templates/myaccount/form-edit-account.php:43
 #: templates/myaccount/form-login.php:86
 #: assets/client/admin/chunks/profile-wizard.js:1
@@ -27233,7 +27260,7 @@ msgid "Ship to a different address?"
 msgstr "¿Enviar a una dirección diferente?"
 
 #: includes/class-wc-query.php:124
-#: includes/shortcodes/class-wc-shortcode-checkout.php:196
+#: includes/shortcodes/class-wc-shortcode-checkout.php:208
 msgid "Pay for order"
 msgstr "Pagar por el pedido"
 
@@ -27687,7 +27714,7 @@ msgid "Sort by popularity"
 msgstr "Ordenar por popularidad"
 
 #: includes/wc-template-functions.php:1485
-#: packages/woocommerce-blocks/build/all-products-frontend.js:9
+#: packages/woocommerce-blocks/build/all-products-frontend.js:7
 #: packages/woocommerce-blocks/build/all-products.js:36
 #: packages/woocommerce-blocks/build/catalog-sorting.js:1
 msgid "Default sorting"
@@ -27967,7 +27994,7 @@ msgstr "Introduce un usuario o correo electrónico."
 msgid "Log in"
 msgstr "Acceder"
 
-#: includes/shortcodes/class-wc-shortcode-checkout.php:313
+#: includes/shortcodes/class-wc-shortcode-checkout.php:356
 msgid "The order totals have been updated. Please confirm your order by pressing the \"Place order\" button at the bottom of the page."
 msgstr "El total del pedido se ha actualizado. Por favor, confirma tu pedido pulsando el botón de «Realizar pedido» de la parte inferior de la página."
 
@@ -27980,13 +28007,13 @@ msgid "Order number:"
 msgstr "Número del pedido:"
 
 #: includes/shortcodes/class-wc-shortcode-checkout.php:92
-#: includes/shortcodes/class-wc-shortcode-checkout.php:238
+#: includes/shortcodes/class-wc-shortcode-checkout.php:250
 msgid "Sorry, this order is invalid and cannot be paid for."
 msgstr "Lo siento, este pedido no es válido y no puede pagarse."
 
 #. translators: %s: order status
 #: includes/shortcodes/class-wc-shortcode-checkout.php:122
-#: includes/shortcodes/class-wc-shortcode-checkout.php:235
+#: includes/shortcodes/class-wc-shortcode-checkout.php:247
 msgid "This order&rsquo;s status is &ldquo;%s&rdquo;&mdash;it cannot be paid for. Please contact us if you need assistance."
 msgstr "El estado de este pedido es «%s». No se ha podido pagar. Por favor, ponte en contacto con nosotros si necesitas ayuda."
 
@@ -29111,7 +29138,7 @@ msgid "No products found in trash"
 msgstr "No se han encontrado productos en la papelera"
 
 #: includes/class-wc-post-types.php:334
-#: packages/woocommerce-blocks/build/all-products-frontend.js:9
+#: packages/woocommerce-blocks/build/all-products-frontend.js:7
 #: packages/woocommerce-blocks/build/all-products.js:36
 msgid "No products found"
 msgstr "No se han encontrado productos"
@@ -29132,7 +29159,7 @@ msgid "New product"
 msgstr "Nuevo producto"
 
 #: includes/class-wc-post-types.php:329
-#: includes/tracks/events/class-wc-products-tracking.php:136
+#: includes/tracks/events/class-wc-products-tracking.php:138
 msgid "Edit product"
 msgstr "Editar producto"
 
@@ -29499,7 +29526,7 @@ msgstr "Lo siento, has alcanzado el límite de descargas para este archivo"
 #: includes/class-wc-download-handler.php:155
 #: includes/class-wc-form-handler.php:755
 #: includes/data-stores/abstract-wc-order-data-store-cpt.php:120
-#: includes/shortcodes/class-wc-shortcode-checkout.php:241
+#: includes/shortcodes/class-wc-shortcode-checkout.php:253
 #: includes/shortcodes/class-wc-shortcode-my-account.php:138
 #: includes/wc-order-functions.php:692
 msgid "Invalid order."
@@ -29822,9 +29849,9 @@ msgstr "%s ha sido eliminado de tu carrito ya que no está disponible para la ve
 #. translators: %d is the page number (1, 2, 3...).
 #: includes/class-wc-breadcrumb.php:377
 #: includes/class-wc-template-loader.php:547
+#: packages/woocommerce-blocks/build/all-products-frontend.js:3
 #: packages/woocommerce-blocks/build/all-products-frontend.js:5
 #: packages/woocommerce-blocks/build/all-products-frontend.js:7
-#: packages/woocommerce-blocks/build/all-products-frontend.js:9
 #: packages/woocommerce-blocks/build/all-products.js:32
 #: packages/woocommerce-blocks/build/all-products.js:34
 #: packages/woocommerce-blocks/build/all-products.js:36
@@ -31756,7 +31783,7 @@ msgstr "Ordenar por más reciente"
 #: includes/widgets/class-wc-widget-rating-filter.php:27
 #: packages/woocommerce-blocks/src/StoreApi/Schemas/V1/ProductCollectionDataSchema.php:84
 #: packages/woocommerce-blocks/assets/js/blocks/products/edit.js:46
-#: packages/woocommerce-blocks/build/all-products-frontend.js:9
+#: packages/woocommerce-blocks/build/all-products-frontend.js:7
 #: packages/woocommerce-blocks/build/all-products.js:36
 #: packages/woocommerce-blocks/build/all-products.js:38
 msgid "Average rating"
@@ -32191,18 +32218,22 @@ msgstr "Buscar producto"
 #. translators: Reset button text for filters.
 #: includes/admin/reports/class-wc-report-sales-by-product.php:208
 #: assets/client/admin/components/index.js:2
-#: packages/woocommerce-blocks/build/attribute-filter-wrapper--stock-filter-wrapper-frontend.js:3
+#: packages/woocommerce-blocks/build/attribute-filter-frontend.js:5
+#: packages/woocommerce-blocks/build/attribute-filter-wrapper-frontend.js:15
 #: packages/woocommerce-blocks/build/attribute-filter.js:6
 #: packages/woocommerce-blocks/build/cart-blocks/order-summary-shipping-frontend.js:11
 #: packages/woocommerce-blocks/build/checkout-blocks/billing-address--checkout-blocks/shipping-address-frontend.js:3
 #: packages/woocommerce-blocks/build/checkout-blocks/order-summary-shipping-frontend.js:11
 #: packages/woocommerce-blocks/build/featured-category.js:11
 #: packages/woocommerce-blocks/build/featured-product.js:11
+#: packages/woocommerce-blocks/build/price-filter-frontend.js:3
 #: packages/woocommerce-blocks/build/price-filter-wrapper-frontend.js:3
 #: packages/woocommerce-blocks/build/price-filter.js:3
 #: packages/woocommerce-blocks/build/rating-filter-frontend.js:3
-#: packages/woocommerce-blocks/build/rating-filter-wrapper-frontend.js:3
+#: packages/woocommerce-blocks/build/rating-filter-wrapper-frontend.js:11
 #: packages/woocommerce-blocks/build/rating-filter.js:3
+#: packages/woocommerce-blocks/build/stock-filter-frontend.js:5
+#: packages/woocommerce-blocks/build/stock-filter-wrapper-frontend.js:9
 #: packages/woocommerce-blocks/build/stock-filter.js:5
 #: packages/woocommerce-blocks/build/wc-blocks-vendors.js:7
 msgid "Reset"
@@ -33486,7 +33517,7 @@ msgstr "SKU se refiere a una unidad de almacenamiento de inventario, un identifi
 msgid "Stock Keeping Unit"
 msgstr "Unidad de salvaguarda de inventario"
 
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:126
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:111
 #: includes/admin/settings/class-wc-settings-advanced.php:27
 #: src/Admin/Features/ProductBlockEditor/Init.php:447
 #: src/Admin/Features/ProductBlockEditor/Init.php:566
@@ -33495,7 +33526,7 @@ msgstr "Unidad de salvaguarda de inventario"
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:120
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:105
 #: includes/class-wc-post-types.php:377
 #: src/Admin/API/Reports/Products/Controller.php:401
 #: src/Admin/ReportCSVEmail.php:41 src/Internal/Admin/Analytics.php:239
@@ -33507,14 +33538,14 @@ msgstr "Avanzado"
 msgid "Variations"
 msgstr "Variaciones"
 
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:108
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:93
 msgid "Linked Products"
 msgstr "Productos relacionados"
 
 #: includes/admin/class-wc-admin-setup-wizard.php:241
 #: includes/admin/class-wc-admin-setup-wizard.php:1020
 #: includes/admin/meta-boxes/class-wc-meta-box-order-data.php:472
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:102
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:87
 #: includes/admin/meta-boxes/views/html-order-shipping.php:22
 #: includes/admin/meta-boxes/views/html-product-data-variations.php:104
 #: includes/admin/settings/class-wc-settings-shipping.php:27
@@ -33544,7 +33575,7 @@ msgstr "Productos relacionados"
 msgid "Shipping"
 msgstr "Envío"
 
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:96
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:81
 #: includes/admin/meta-boxes/views/html-product-data-variations.php:96
 #: includes/admin/settings/class-wc-settings-products.php:42
 #: includes/admin/settings/class-wc-settings-products.php:224
@@ -33554,11 +33585,11 @@ msgstr "Envío"
 msgid "Inventory"
 msgstr "Inventario"
 
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:71
+#: includes/admin/wc-admin-functions.php:587
 msgid "Downloadable products give access to a file upon purchase."
 msgstr "Los productos descargables dan acceso a un archivo después de la compra."
 
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:64
+#: includes/admin/wc-admin-functions.php:580
 msgid "Virtual products are intangible and are not shipped."
 msgstr "Los productos virtuales son intangibles y no se envían."
 
@@ -33780,17 +33811,21 @@ msgstr "Teléfono"
 #. translators: Submit button text for filters.
 #: includes/admin/meta-boxes/class-wc-meta-box-order-actions.php:56
 #: includes/widgets/class-wc-widget-layered-nav.php:288
-#: packages/woocommerce-blocks/build/attribute-filter-wrapper--stock-filter-wrapper-frontend.js:5
+#: packages/woocommerce-blocks/build/attribute-filter-frontend.js:7
+#: packages/woocommerce-blocks/build/attribute-filter-wrapper-frontend.js:17
 #: packages/woocommerce-blocks/build/attribute-filter.js:8
 #: packages/woocommerce-blocks/build/cart-blocks/order-summary-coupon-form-frontend.js:5
 #: packages/woocommerce-blocks/build/cart.js:39
 #: packages/woocommerce-blocks/build/checkout-blocks/order-summary-coupon-form-frontend.js:5
 #: packages/woocommerce-blocks/build/checkout.js:29
+#: packages/woocommerce-blocks/build/price-filter-frontend.js:5
 #: packages/woocommerce-blocks/build/price-filter-wrapper-frontend.js:5
 #: packages/woocommerce-blocks/build/price-filter.js:5
 #: packages/woocommerce-blocks/build/rating-filter-frontend.js:5
-#: packages/woocommerce-blocks/build/rating-filter-wrapper-frontend.js:5
+#: packages/woocommerce-blocks/build/rating-filter-wrapper-frontend.js:13
 #: packages/woocommerce-blocks/build/rating-filter.js:5
+#: packages/woocommerce-blocks/build/stock-filter-frontend.js:7
+#: packages/woocommerce-blocks/build/stock-filter-wrapper-frontend.js:11
 #: packages/woocommerce-blocks/build/stock-filter.js:7
 msgid "Apply"
 msgstr "Aplicar"
@@ -33936,7 +33971,7 @@ msgstr "Restricción de uso"
 
 #: includes/admin/meta-boxes/class-wc-meta-box-coupon-data.php:48
 #: includes/admin/meta-boxes/class-wc-meta-box-order-data.php:255
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:90
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:75
 #: includes/admin/settings/class-wc-settings-general.php:24
 #: includes/admin/settings/class-wc-settings-page.php:173
 #: includes/admin/settings/class-wc-settings-products.php:41
@@ -34866,14 +34901,14 @@ msgid "Toggle featured"
 msgstr "Marcar como destacado"
 
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:365
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:70
 #: includes/admin/meta-boxes/views/html-variation-admin.php:100
+#: includes/admin/wc-admin-functions.php:586
 msgid "Downloadable"
 msgstr "Descargable"
 
 #: includes/admin/list-tables/class-wc-admin-list-table-products.php:369
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:63
 #: includes/admin/meta-boxes/views/html-variation-admin.php:104
+#: includes/admin/wc-admin-functions.php:579
 msgid "Virtual"
 msgstr "Virtual"
 
@@ -35752,7 +35787,7 @@ msgstr "Ordenar por"
 
 #: includes/admin/class-wc-admin-menus.php:77
 #: includes/admin/importers/class-wc-product-csv-importer-controller.php:740
-#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:114
+#: includes/admin/meta-boxes/class-wc-meta-box-product-data.php:99
 #: includes/admin/views/html-admin-page-product-export.php:41
 #: includes/react-admin/connect-existing-pages.php:298
 #: src/Admin/Features/Navigation/CoreMenu.php:238
@@ -36297,8 +36332,8 @@ msgstr "Descripción"
 #: packages/woocommerce-blocks/build/active-filters-wrapper-frontend.js:3
 #: packages/woocommerce-blocks/build/active-filters.js:15
 #: packages/woocommerce-blocks/build/all-reviews.js:9
-#: packages/woocommerce-blocks/build/rating-filter-frontend.js:13
-#: packages/woocommerce-blocks/build/rating-filter-wrapper-frontend.js:13
+#: packages/woocommerce-blocks/build/rating-filter-frontend.js:17
+#: packages/woocommerce-blocks/build/rating-filter-wrapper-frontend.js:5
 #: packages/woocommerce-blocks/build/rating-filter.js:13
 #: packages/woocommerce-blocks/build/reviews-by-category.js:14
 #: packages/woocommerce-blocks/build/reviews-by-product.js:18

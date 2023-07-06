@@ -53,7 +53,8 @@ class DetailsBox
                 if ( !empty($item['value']) ) {
                     $suggestionValue = sanitize_text_field( $item['value'] );
                 }
-                $parts = explode( '__', $item['objectID'] );
+                $objectID = sanitize_text_field( $item['objectID'] );
+                $parts = explode( '__', $objectID );
                 $type = ( !empty($parts[0]) ? sanitize_key( $parts[0] ) : '' );
                 
                 if ( $type === 'taxonomy' ) {
@@ -82,7 +83,7 @@ class DetailsBox
                     }
                     
                     $items[] = array(
-                        'objectID' => $item['objectID'],
+                        'objectID' => $objectID,
                         'html'     => $productDetails['html'],
                         'price'    => $productDetails['price'],
                     );
@@ -91,7 +92,7 @@ class DetailsBox
                 // Get taxonomy details
                 if ( !empty($termID) && !empty($taxonomy) ) {
                     $items[] = array(
-                        'objectID' => $item['objectID'],
+                        'objectID' => $objectID,
                         'html'     => $this->getTaxonomyDetails( $termID, $taxonomy, $suggestionValue ),
                     );
                 }
@@ -116,8 +117,10 @@ class DetailsBox
         
         if ( $variationID ) {
             $product = new ProductVariation( $variationID );
+            $type = 'product_variation';
         } else {
             $product = new Product( $productID );
+            $type = 'product';
         }
         
         $details = array(
@@ -134,7 +137,7 @@ class DetailsBox
             'ID'                => $product->getID(),
             'name'              => $product->getName(),
             'desc'              => $product->getDescription( 'details-panel' ),
-            'link'              => $product->getPermalink(),
+            'link'              => apply_filters( "dgwt/wcas/suggestion_details/{$type}/url", $product->getPermalink(), $product ),
             'imageSrc'          => $product->getThumbnailSrc( $thumbSize ),
             'imageSrcset'       => ( $responsiveImages ? $product->getThumbnailSrcset( $thumbSize ) : '' ),
             'imageSizes'        => ( $responsiveImages ? $product->getThumbnailSizes( $thumbSize ) : '' ),
@@ -233,7 +236,7 @@ class DetailsBox
                     $vars = array(
                         'ID'          => $product->getID(),
                         'name'        => $product->getName(),
-                        'link'        => $product->getPermalink(),
+                        'link'        => apply_filters( 'dgwt/wcas/suggestion_details/term_product/url', $product->getPermalink(), $product ),
                         'imageSrc'    => $product->getThumbnailSrc( $thumbSize ),
                         'imageSrcset' => ( $responsiveImages ? $product->getThumbnailSrcset( $thumbSize ) : '' ),
                         'imageSizes'  => ( $responsiveImages ? $product->getThumbnailSizes( $thumbSize ) : '' ),
@@ -256,6 +259,7 @@ class DetailsBox
             
             if ( $showMore ) {
                 $showMoreUrl = get_term_link( $termID, $taxonomy );
+                $showMoreUrl = apply_filters( 'dgwt/wcas/suggestion_details/term_products/show_more_url', $showMoreUrl, get_term( $termID, $taxonomy ) );
                 echo  '<a class="dgwt-wcas-details-more-products" href="' . esc_url( $showMoreUrl ) . '">' . esc_html( Helpers::getLabel( 'show_more_details' ) ) . ' (' . $totalProducts . ')</a>' ;
             }
             

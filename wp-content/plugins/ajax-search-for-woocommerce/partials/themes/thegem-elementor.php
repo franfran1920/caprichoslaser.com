@@ -1,4 +1,7 @@
 <?php
+
+use DgoraWcas\Helpers;
+
 // Exit if accessed directly
 if ( ! defined( 'DGWT_WCAS_FILE' ) ) {
 	exit;
@@ -111,6 +114,25 @@ add_action( 'init', function () {
 		} );
 	}
 } );
+
+/**
+ * Forcing our engine to run when WooCommerce >> Shop grid >> Layout Type is "Products Grid".
+ */
+add_filter( 'dgwt/wcas/helpers/is_search_query', function ( $enabled, $query ) {
+	if (
+		$query->get( 'post_type' ) &&
+		is_string( $query->get( 'post_type' ) ) &&
+		$query->get( 'post_type' ) === 'product' &&
+		is_string( $query->get( 's' ) ) &&
+		strlen( $query->get( 's' ) ) > 0 &&
+		Helpers::isRunningInsideFunction( 'thegem_extended_products_get_posts', 25 )
+	) {
+		$enabled = true;
+	}
+
+	return $enabled;
+}, 10, 2 );
+
 
 add_action( 'wp_head', function () {
 	$headerSource = thegem_get_option( 'header_source', 'default' );
