@@ -180,3 +180,11 @@ require_once ASTRA_THEME_DIR . 'inc/core/markup/class-astra-markup.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-filters.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-hooks.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-functions.php';
+
+/* *****  descripción categorías debajo de productos ****** */
+
+remove_action( 'woocommerce_archive_description','woocommerce_taxonomy_archive_description', 10 );
+
+add_action( 'woocommerce_after_shop_loop', 'woocommerce_taxonomy_archive_description' );
+
+/* ****** descripción categorías debajo de productos ****** */
