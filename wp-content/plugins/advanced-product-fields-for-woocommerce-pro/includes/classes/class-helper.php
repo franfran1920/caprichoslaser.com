@@ -78,6 +78,35 @@ namespace SW_WAPF_PRO\Includes\Classes {
 
 		#region String functions
 
+        public static function sanitize_textfield_without_tags( $str ) {
+
+            if ( is_object( $str ) || is_array( $str ) ) {
+                return '';
+            }
+
+            $str = (string) $str;
+
+            $filtered = wp_check_invalid_utf8( $str );
+
+            $filtered = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $str );
+
+            $filtered = preg_replace( '/[\r\n\t ]+/', ' ', $filtered );
+
+            $filtered = trim( $filtered );
+
+            $found = false;
+            while ( preg_match( '/%[a-f0-9]{2}/i', $filtered, $match ) ) {
+                $filtered = str_replace( $match[0], '', $filtered );
+                $found    = true;
+            }
+
+            if ( $found ) {
+                $filtered = trim( preg_replace( '/ +/', ' ', $filtered ) );
+            }
+
+            return $filtered;
+        }
+
 		public static function string_to_date($str) {
 			$split = explode('-',$str);
 			if(sizeof($split) === 2) $str .= ('-' . date('Y'));

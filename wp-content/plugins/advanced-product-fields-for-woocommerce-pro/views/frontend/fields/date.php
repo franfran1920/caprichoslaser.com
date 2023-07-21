@@ -57,7 +57,7 @@ if($model['is_edit']) {
 							<?php if($disable_past) { ?>
                             if(date < today) return false;
 							<?php } ?>
-                            return WAPF.Filter.apply('date/selectable',true,{date: date, offset: offset,field:$this, today:today,isToday:isToday});
+                            return WAPF.Filter.apply('date/selectable', true, { date: date, offset: offset,field:$this, today:today,isToday:isToday } );
                         }
                     }
                 });

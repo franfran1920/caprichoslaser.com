@@ -32,6 +32,7 @@ use MailPoet\Segments\DynamicSegments\Filters\WooCommerceSingleOrderValue;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceSubscription;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceTotalSpent;
 use MailPoet\Segments\DynamicSegments\Filters\WooCommerceUsedPaymentMethod;
+use MailPoet\Segments\DynamicSegments\Filters\WooCommerceUsedShippingMethod;
 
 class FilterFactory {
   /** @var EmailAction */
@@ -100,6 +101,9 @@ class FilterFactory {
   /** @var WooCommerceUsedPaymentMethod */
   private $wooCommerceUsedPaymentMethod;
 
+  /** @var WooCommerceUsedShippingMethod */
+  private $wooCommerceUsedShippingMethod;
+
   /** @var WooCommerceCustomerTextField */
   private $wooCommerceCustomerTextField;
 
@@ -126,6 +130,7 @@ class FilterFactory {
     WooCommerceSingleOrderValue $wooCommerceSingleOrderValue,
     WooCommerceAverageSpent $wooCommerceAverageSpent,
     WooCommerceUsedPaymentMethod $wooCommerceUsedPaymentMethod,
+    WooCommerceUsedShippingMethod $wooCommerceUsedShippingMethod,
     SubscriberTextField $subscriberTextField
   ) {
     $this->emailAction = $emailAction;
@@ -150,6 +155,7 @@ class FilterFactory {
     $this->subscribedViaForm = $subscribedViaForm;
     $this->wooCommerceAverageSpent = $wooCommerceAverageSpent;
     $this->wooCommerceUsedPaymentMethod = $wooCommerceUsedPaymentMethod;
+    $this->wooCommerceUsedShippingMethod = $wooCommerceUsedShippingMethod;
     $this->wooCommerceCustomerTextField = $wooCommerceCustomerTextField;
   }
 
@@ -240,6 +246,8 @@ class FilterFactory {
       return $this->wooCommerceAverageSpent;
     } elseif ($action === WooCommerceUsedPaymentMethod::ACTION) {
       return $this->wooCommerceUsedPaymentMethod;
+    } elseif ($action === WooCommerceUsedShippingMethod::ACTION) {
+      return $this->wooCommerceUsedShippingMethod;
     } elseif (in_array($action, WooCommerceCustomerTextField::ACTIONS)) {
       return $this->wooCommerceCustomerTextField;
     }

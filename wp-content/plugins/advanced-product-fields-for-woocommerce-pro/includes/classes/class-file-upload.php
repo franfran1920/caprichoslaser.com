@@ -4,9 +4,6 @@ namespace SW_WAPF_PRO\Includes\Classes {
 
 	use SW_WAPF_PRO\Includes\Models\Field;
 
-	if(!defined('ABSPATH'))
-		exit;
-
 	class File_Upload {
 
 		private static $field_for_upload = null;

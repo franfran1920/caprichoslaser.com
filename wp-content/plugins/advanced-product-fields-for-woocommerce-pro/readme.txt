@@ -6,8 +6,8 @@ Tested up to: 6.2.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 2.7.1
-Build: {build}
+Stable tag: 2.7.2
+Build: 13650
 
 Customize WooCommerce product pages with extra form fields ( = product add-ons). This is the premium version.
 
@@ -16,6 +16,9 @@ Customize WooCommerce product pages with extra form fields ( = product add-ons).
 The premium version of Advanced Product Fields for WooCommerce.
 
 == Changelog ==
+
+= version 2.7.2 =
+ * Fix: fixed an issue with some formulas not saving correctly.
 
 = version 2.7.1 =
  * New: ability to use "[qty]" shortcode in lookuptable formulas.

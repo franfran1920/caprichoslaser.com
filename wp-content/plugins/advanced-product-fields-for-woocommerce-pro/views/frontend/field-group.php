@@ -43,6 +43,7 @@
 
 	        continue;
 	    }
+
 	    if($field->type === 'sectionend') {
 
 	        if( $section_has_buttons === $open_sections) {

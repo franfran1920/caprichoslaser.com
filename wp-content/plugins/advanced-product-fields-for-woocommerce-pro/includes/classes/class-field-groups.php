@@ -201,7 +201,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
                             $choice['pricing_type'] = sanitize_text_field($raw_choice['pricing_type']);
                         if(isset($raw_choice['pricing_amount']))
                             $choice['pricing_amount'] = $choice['pricing_type'] === 'fx' ?
-		                        sanitize_text_field($raw_choice['pricing_amount']) :
+                                Helper::sanitize_textfield_without_tags( $raw_choice['pricing_amount'] ) :
 		                        floatval(Helper::normalize_string_decimal($raw_choice['pricing_amount']));
                         if(isset($raw_choice['color']))
                             $choice['color'] = sanitize_text_field($raw_choice['color']);
@@ -243,9 +243,17 @@ namespace SW_WAPF_PRO\Includes\Classes {
 	            }
 
                 foreach($raw_field as $k => $v) {
-                    if( in_array($k, ['id','key','label','description','default','placeholder','choices','conditionals','type','required','options','p_content','image','attachment','class','width','pricing','parent_clone','clone','hide_cart','hide_checkout','hide_order']) )
+
+                    $key = sanitize_text_field( $k );
+
+                    if( in_array($key, ['id','key','label','description','default','placeholder','choices','conditionals','type','required','options','p_content','image','attachment','class','width','pricing','parent_clone','clone','hide_cart','hide_checkout','hide_order']) )
                         continue;
-                    $field->options[sanitize_text_field($k)] = sanitize_textarea_field($v);
+
+                    switch( $key ) {
+                        case 'formula': $field->options[ $key ] = Helper::sanitize_textfield_without_tags( $v ); break;
+                        default: $field->options[ $key ] = sanitize_textarea_field( $v ); break;
+                    }
+
                 }
 
 
@@ -267,7 +275,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 	                $field->pricing->type = sanitize_text_field($raw_field['pricing']['type']);
 
 	                $field->pricing->amount = $field->pricing->type === 'fx' ?
-		                sanitize_text_field($raw_field['pricing']['amount']) :
+                        Helper::sanitize_textfield_without_tags( $raw_field['pricing']['amount'] ) :
 		                floatval(Helper::normalize_string_decimal($raw_field['pricing']['amount']));
                 }
 

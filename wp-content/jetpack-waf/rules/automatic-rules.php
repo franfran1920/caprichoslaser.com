@@ -195,29 +195,6 @@ error_log( 'Rule ' . $rule->id . ' failed: ' . $t );
 } catch ( \Exception $e ) {
 error_log( 'Rule ' . $rule->id . ' failed: ' . $e );
 }
-$rule = (object) array( 'id' => 99110013, 'reason' => '', 'tags' => array (
-) );
-try {
-if($waf->match_targets(array (
-),array (
-  'request_cookies_names' => 
-  array (
-    'only' => 
-    array (
-      0 => '/^\\d+$/',
-    ),
-    'count' => true,
-  ),
-),'ge','5',false,false)) {
-$waf->inc_var('tx.anomaly_score_pl1',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
-$rule->reason = 'request for cookie based shell found and blocked';
-return $waf->block('block',$rule->id,$rule->reason,403);
-}
-} catch ( \Throwable $t ) {
-error_log( 'Rule ' . $rule->id . ' failed: ' . $t );
-} catch ( \Exception $e ) {
-error_log( 'Rule ' . $rule->id . ' failed: ' . $e );
-}
 $rule = (object) array( 'id' => 99110016, 'reason' => '', 'tags' => array (
 ) );
 try {
@@ -779,6 +756,38 @@ $waf->set_var('tx.outbound_anomaly_score_pl3','0');
 $waf->set_var('tx.outbound_anomaly_score_pl4','0');
 $waf->set_var('tx.sql_error_match','0');
 $waf->set_var('tx.allowed_methods','GET HEAD POST OPTIONS PUT DELETE PATCH PURGE');
+$rule = (object) array( 'id' => 99100020, 'reason' => '', 'tags' => array (
+) );
+try {
+if($waf->match_targets(array (
+),array (
+  'request_filename' => 
+  array (
+  ),
+),'rx','#/wp-admin/admin-ajax.php#Ds',false,false)) {
+if($waf->match_targets(array (
+),array (
+  'args' => 
+  array (
+    'only' => 
+    array (
+      0 => '/^\\s*action$/',
+    ),
+  ),
+),'rx','#elementor_ajax#Ds',false,false)) {
+$waf->flag_target_for_removal('id','941110','args','actions');
+$waf->flag_target_for_removal('id','941120','args','actions');
+$waf->flag_target_for_removal('id','941140','args','actions');
+$waf->flag_target_for_removal('id','941160','args','actions');
+$waf->flag_target_for_removal('id','941170','args','actions');
+$waf->flag_target_for_removal('id','941210','args','actions');
+}
+}
+} catch ( \Throwable $t ) {
+error_log( 'Rule ' . $rule->id . ' failed: ' . $t );
+} catch ( \Exception $e ) {
+error_log( 'Rule ' . $rule->id . ' failed: ' . $e );
+}
 $rule = (object) array( 'id' => 99110008, 'reason' => '', 'tags' => array (
 ) );
 try {
@@ -2142,7 +2151,7 @@ $rule = (object) array( 'id' => 941110, 'reason' => '', 'tags' => array (
 ) );
 try {
 if($waf->match_targets(array (
-),array (
+),$waf->update_targets(array (
   'request_cookies' => 
   array (
     'except' => 
@@ -2170,7 +2179,7 @@ if($waf->match_targets(array (
   'args' => 
   array (
   ),
-),'rx','#(?i)<script[^>]*>[\\s\\S]*?#Ds',false,true)) {
+), $rule->id, $rule->tags),'rx','#(?i)<script[^>]*>[\\s\\S]*?#Ds',false,true)) {
 $waf->inc_var('tx.xss_score',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $waf->inc_var('tx.anomaly_score_pl1',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $rule->reason = 'XSS Filter - Category 1: Script Tag Vector Matched Data: '.htmlentities($waf->get_var('tx.0'), ENT_QUOTES, 'UTF-8') .' found within '. htmlentities($waf->matched_var_name, ENT_QUOTES, 'UTF-8') .': '. htmlentities($waf->matched_var, ENT_QUOTES, 'UTF-8') ;
@@ -2192,7 +2201,7 @@ $rule = (object) array( 'id' => 941140, 'reason' => '', 'tags' => array (
 ) );
 try {
 if($waf->match_targets(array (
-),array (
+),$waf->update_targets(array (
   'request_cookies' => 
   array (
     'except' => 
@@ -2217,7 +2226,7 @@ if($waf->match_targets(array (
   'args' => 
   array (
   ),
-),'rx','#(?i)[a-z]+=(?:[^:=]+:.+;)*?[^:=]+:url\\(javascript#Ds',false,true)) {
+), $rule->id, $rule->tags),'rx','#(?i)[a-z]+=(?:[^:=]+:.+;)*?[^:=]+:url\\(javascript#Ds',false,true)) {
 $waf->inc_var('tx.xss_score',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $waf->inc_var('tx.anomaly_score_pl1',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $rule->reason = 'XSS Filter - Category 4: Javascript URI Vector Matched Data: '.htmlentities($waf->get_var('tx.0'), ENT_QUOTES, 'UTF-8') .' found within '. htmlentities($waf->matched_var_name, ENT_QUOTES, 'UTF-8') .': '. htmlentities($waf->matched_var, ENT_QUOTES, 'UTF-8') ;
@@ -2239,7 +2248,7 @@ $rule = (object) array( 'id' => 941170, 'reason' => '', 'tags' => array (
 ) );
 try {
 if($waf->match_targets(array (
-),array (
+),$waf->update_targets(array (
   'request_cookies' => 
   array (
     'except' => 
@@ -2264,7 +2273,7 @@ if($waf->match_targets(array (
   'args' => 
   array (
   ),
-),'rx','#(?i)(?:\\W|^)(?:javascript:(?:[\\s\\S]+[=\\x5c\\(\\[\\.<]|[\\s\\S]*?(?:\\bname\\b|\\x5c[ux]\\d))|data:(?:(?:[a-z]\\w+/\\w[\\w+-]+\\w)?[;,]|[\\s\\S]*?;[\\s\\S]*?\\b(?:base64|charset=)|[\\s\\S]*?,[\\s\\S]*?<[\\s\\S]*?\\w[\\s\\S]*?>))|@\\W*?i\\W*?m\\W*?p\\W*?o\\W*?r\\W*?t\\W*?(?:/\\*[\\s\\S]*?)?(?:[\\"\']|\\W*?u\\W*?r\\W*?l[\\s\\S]*?\\()|[^-]*?-\\W*?m\\W*?o\\W*?z\\W*?-\\W*?b\\W*?i\\W*?n\\W*?d\\W*?i\\W*?n\\W*?g[^:]*?:\\W*?u\\W*?r\\W*?l[\\s\\S]*?\\(#Ds',false,true)) {
+), $rule->id, $rule->tags),'rx','#(?i)(?:\\W|^)(?:javascript:(?:[\\s\\S]+[=\\x5c\\(\\[\\.<]|[\\s\\S]*?(?:\\bname\\b|\\x5c[ux]\\d))|data:(?:(?:[a-z]\\w+/\\w[\\w+-]+\\w)?[;,]|[\\s\\S]*?;[\\s\\S]*?\\b(?:base64|charset=)|[\\s\\S]*?,[\\s\\S]*?<[\\s\\S]*?\\w[\\s\\S]*?>))|@\\W*?i\\W*?m\\W*?p\\W*?o\\W*?r\\W*?t\\W*?(?:/\\*[\\s\\S]*?)?(?:[\\"\']|\\W*?u\\W*?r\\W*?l[\\s\\S]*?\\()|[^-]*?-\\W*?m\\W*?o\\W*?z\\W*?-\\W*?b\\W*?i\\W*?n\\W*?d\\W*?i\\W*?n\\W*?g[^:]*?:\\W*?u\\W*?r\\W*?l[\\s\\S]*?\\(#Ds',false,true)) {
 $waf->inc_var('tx.xss_score',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $waf->inc_var('tx.anomaly_score_pl1',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $rule->reason = 'NoScript XSS InjectionChecker: Attribute Injection Matched Data: '.htmlentities($waf->get_var('tx.0'), ENT_QUOTES, 'UTF-8') .' found within '. htmlentities($waf->matched_var_name, ENT_QUOTES, 'UTF-8') .': '. htmlentities($waf->matched_var, ENT_QUOTES, 'UTF-8') ;
@@ -2286,7 +2295,7 @@ $rule = (object) array( 'id' => 941210, 'reason' => '', 'tags' => array (
 ) );
 try {
 if($waf->match_targets(array (
-),array (
+),$waf->update_targets(array (
   'request_cookies' => 
   array (
     'except' => 
@@ -2303,7 +2312,7 @@ if($waf->match_targets(array (
   'args' => 
   array (
   ),
-),'rx','#(?i:(?:j|&\\#x?0*(?:74|4A|106|6A);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:a|&\\#x?0*(?:65|41|97|61);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:v|&\\#x?0*(?:86|56|118|76);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:a|&\\#x?0*(?:65|41|97|61);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:s|&\\#x?0*(?:83|53|115|73);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:c|&\\#x?0*(?:67|43|99|63);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:r|&\\#x?0*(?:82|52|114|72);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:i|&\\#x?0*(?:73|49|105|69);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:p|&\\#x?0*(?:80|50|112|70);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:t|&\\#x?0*(?:84|54|116|74);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?::|&(?:\\#x?0*(?:58|3A);?|colon;)).)#Ds',false,true)) {
+), $rule->id, $rule->tags),'rx','#(?i:(?:j|&\\#x?0*(?:74|4A|106|6A);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:a|&\\#x?0*(?:65|41|97|61);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:v|&\\#x?0*(?:86|56|118|76);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:a|&\\#x?0*(?:65|41|97|61);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:s|&\\#x?0*(?:83|53|115|73);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:c|&\\#x?0*(?:67|43|99|63);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:r|&\\#x?0*(?:82|52|114|72);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:i|&\\#x?0*(?:73|49|105|69);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:p|&\\#x?0*(?:80|50|112|70);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?:t|&\\#x?0*(?:84|54|116|74);?)(?:\\t|&(?:\\#x?0*(?:9|13|10|A|D);?|tab;|newline;))*(?::|&(?:\\#x?0*(?:58|3A);?|colon;)).)#Ds',false,true)) {
 $waf->inc_var('tx.xss_score',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $waf->inc_var('tx.anomaly_score_pl1',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $rule->reason = 'IE XSS Filters - Attack Detected Matched Data: '.htmlentities($waf->get_var('tx.0'), ENT_QUOTES, 'UTF-8') .' found within '. htmlentities($waf->matched_var_name, ENT_QUOTES, 'UTF-8') .': '. htmlentities($waf->matched_var, ENT_QUOTES, 'UTF-8') ;
@@ -2364,7 +2373,7 @@ $rule = (object) array( 'id' => 941120, 'reason' => '', 'tags' => array (
 ) );
 try {
 if($waf->match_targets(array (
-),array (
+),$waf->update_targets(array (
   'request_cookies' => 
   array (
     'except' => 
@@ -2389,7 +2398,7 @@ if($waf->match_targets(array (
   'args' => 
   array (
   ),
-),'rx','#(?i)[\\s\\"\'`;\\/0-9=\\x0B\\x09\\x0C\\x3B\\x2C\\x28\\x3B]on[a-zA-Z]{3,25}[\\s\\x0B\\x09\\x0C\\x3B\\x2C\\x28\\x3B]*?=[^=]#Ds',false,true)) {
+), $rule->id, $rule->tags),'rx','#(?i)[\\s\\"\'`;\\/0-9=\\x0B\\x09\\x0C\\x3B\\x2C\\x28\\x3B]on[a-zA-Z]{3,25}[\\s\\x0B\\x09\\x0C\\x3B\\x2C\\x28\\x3B]*?=[^=]#Ds',false,true)) {
 $waf->inc_var('tx.xss_score',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $waf->inc_var('tx.anomaly_score_pl2',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $rule->reason = 'XSS Filter - Category 2: Event Handler Vector Matched Data: '.htmlentities($waf->get_var('tx.0'), ENT_QUOTES, 'UTF-8') .' found within '. htmlentities($waf->matched_var_name, ENT_QUOTES, 'UTF-8') .': '. htmlentities($waf->matched_var, ENT_QUOTES, 'UTF-8') ;
