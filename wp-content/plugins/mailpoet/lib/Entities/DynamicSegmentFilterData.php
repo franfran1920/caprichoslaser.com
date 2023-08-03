@@ -13,6 +13,7 @@ use MailPoetVendor\Doctrine\ORM\Mapping as ORM;
  * @ORM\Embeddable()
  */
 class DynamicSegmentFilterData {
+  const TYPE_AUTOMATIONS = 'automations';
   const TYPE_USER_ROLE = 'userRole';
   const TYPE_EMAIL = 'email';
   const TYPE_WOOCOMMERCE = 'woocommerce';
@@ -44,6 +45,9 @@ class DynamicSegmentFilterData {
     DynamicSegmentFilterData::OPERATOR_ENDS_WITH,
     DynamicSegmentFilterData::OPERATOR_NOT_ENDS_WITH,
   ];
+
+  public const TIMEFRAME_ALL_TIME = 'allTime';
+  public const TIMEFRAME_IN_THE_LAST = 'inTheLast';
 
   /**
    * @ORM\Column(type="serialized_array")

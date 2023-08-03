@@ -15,7 +15,7 @@ class CartContext
     /**
      * @var CartCustomer
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @var array
@@ -95,7 +95,7 @@ class CartContext
     /**
      * @return CartCustomer
      */
-    public function getCustomer(): CartCustomer
+    public function getCustomer()
     {
         return $this->customer;
     }
@@ -161,7 +161,7 @@ class CartContext
     /**
      * @param WcCustomerSessionFacade $sessionFacade
      */
-    public function withSession(WcCustomerSessionFacade $sessionFacade)
+    public function withSession($sessionFacade)
     {
         if ($sessionFacade instanceof WcCustomerSessionFacade) {
             $this->sessionFacade = $sessionFacade;
@@ -171,7 +171,7 @@ class CartContext
     /**
      * @return WcCustomerSessionFacade
      */
-    public function getSession(): WcCustomerSessionFacade
+    public function getSession()
     {
         return $this->sessionFacade;
     }

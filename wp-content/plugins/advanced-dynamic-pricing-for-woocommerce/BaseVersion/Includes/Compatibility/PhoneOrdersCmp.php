@@ -140,4 +140,12 @@ class PhoneOrdersCmp
             $woocsCmp->modifyContext($this->context);
         }
     }
+
+    public function allowCartItemWithPriceUpdatedManuallyToParticipateInCalculation()
+    {
+        return apply_filters(
+            "adp_po_allow_cart_item_with_price_updated_manually_to_participate_in_calculations",
+            false
+        );
+    }
 }

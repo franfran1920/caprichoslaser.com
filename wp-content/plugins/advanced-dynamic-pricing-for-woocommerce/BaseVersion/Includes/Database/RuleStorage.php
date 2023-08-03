@@ -1050,9 +1050,9 @@ class RuleStorage
             } elseif ($giftMode === "giftable_products_in_rotation") {
                 $gift->setChoices(array((new GiftChoice())->setType(new GiftChoiceTypeEnum(GiftChoiceTypeEnum::PRODUCT))->setValues($giftValues)));
                 $gift->setMode(GiftModeEnum::GIFTABLE_PRODUCTS_ROTATION());
-            } elseif ($giftMode === "giftable_products_in_random") { // removed
+            } elseif ($giftMode === "giftable_products_in_random") {
                 $gift->setChoices(array((new GiftChoice())->setType(new GiftChoiceTypeEnum(GiftChoiceTypeEnum::PRODUCT))->setValues($giftValues)));
-                $gift->setMode(GiftModeEnum::GIFTABLE_PRODUCTS_ROTATION()); // replaced with "giftable_products_in_rotation"
+                $gift->setMode(GiftModeEnum::GIFTABLE_PRODUCTS_IN_RANDOM());
             } elseif ($giftMode === "allow_to_choose") {
                 $gift->setChoices(array((new GiftChoice())->setType(new GiftChoiceTypeEnum(GiftChoiceTypeEnum::PRODUCT))->setValues($giftValues)));
                 $gift->setMode(GiftModeEnum::ALLOW_TO_CHOOSE());

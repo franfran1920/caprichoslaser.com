@@ -97,6 +97,7 @@ class WC_Payments_UPE_Checkout extends WC_Payments_Checkout {
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts_for_zero_order_total' ], 11 );
+		add_action( 'woocommerce_email_before_order_table', [ $this->gateway, 'set_payment_method_title_for_email' ], 10, 3 );
 	}
 
 	/**
@@ -200,7 +201,6 @@ class WC_Payments_UPE_Checkout extends WC_Payments_Checkout {
 				$payment_fields['orderReturnURL'] = esc_url_raw(
 					add_query_arg(
 						[
-							'order_id'          => $order_id,
 							'wc_payment_method' => UPE_Payment_Gateway::GATEWAY_ID,
 							'_wpnonce'          => wp_create_nonce( 'wcpay_process_redirect_order_nonce' ),
 						],
@@ -247,6 +247,7 @@ class WC_Payments_UPE_Checkout extends WC_Payments_Checkout {
 				'title'          => $payment_method->get_title(),
 				'icon'           => $payment_method->get_icon(),
 				'showSaveOption' => $this->should_upe_payment_method_show_save_option( $payment_method ),
+				'countries'      => $payment_method->get_countries(),
 			];
 
 			if ( WC_Payments_Features::is_upe_split_enabled() || WC_Payments_Features::is_upe_deferred_intent_enabled() ) {
@@ -257,7 +258,7 @@ class WC_Payments_UPE_Checkout extends WC_Payments_Checkout {
 					$payment_method->get_testing_instructions(),
 					[
 						'strong' => '<strong>',
-						'a'      => '<a href="https://woocommerce.com/document/payments/testing/#test-cards" target="_blank">',
+						'a'      => '<a href="https://woocommerce.com/document/woocommerce-payments/testing-and-troubleshooting/testing/#test-cards" target="_blank">',
 					]
 				);
 			}
@@ -331,7 +332,7 @@ class WC_Payments_UPE_Checkout extends WC_Payments_Checkout {
 							$testing_instructions,
 							[
 								'strong' => '<strong>',
-								'a'      => '<a href="https://woocommerce.com/document/payments/testing/#test-cards" target="_blank">',
+								'a'      => '<a href="https://woocommerce.com/document/woocommerce-payments/testing-and-troubleshooting/testing/#test-cards" target="_blank">',
 							]
 						);
 					}

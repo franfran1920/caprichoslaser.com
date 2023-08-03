@@ -253,6 +253,12 @@ class GiftStrategy
                 $newGiftChoice->setMethod(new GiftChoiceMethodEnum(GiftChoiceMethodEnum::IN_LIST));
                 $newGiftChoices = array($newGiftChoice);
                 break;
+            } elseif ($giftChoice->getType()->equals(GiftChoiceTypeEnum::PRODUCT())) {
+                if ($gift->getMode()->equals(GiftModeEnum::GIFTABLE_PRODUCTS_IN_RANDOM())) {
+                    $values = $giftChoice->getValues();
+                    shuffle($values);
+                    $giftChoice->setValues($values);
+                }
             }
 
             $newGiftChoices[] = $giftChoice;

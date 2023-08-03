@@ -627,7 +627,7 @@ defined('ABSPATH') or exit;
                 <span class="dashicons dashicons-menu"></span>
             </div>
 
-            <div class="wdp-column">
+            <div class="wdp-column wdp-condition-field-value">
                 <select multiple
                         data-list="user_roles"
                         data-field="preloaded"

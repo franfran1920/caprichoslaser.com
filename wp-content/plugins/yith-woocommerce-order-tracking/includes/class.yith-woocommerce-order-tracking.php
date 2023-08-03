@@ -16,7 +16,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 	 *
 	 * @class  YITH_WooCommerce_Order_Tracking
 	 * @since  1.0.0
-	 * @author YITH
+	 * @author YITH <plugins@yithemes.com>
 	 */
 	class YITH_WooCommerce_Order_Tracking {
 
@@ -68,7 +68,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * Initialize plugin and registers actions and filters to be used
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -118,6 +117,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			add_action( 'woocommerce_my_account_my_orders_actions', array( $this, 'show_picked_up_icon_on_orders' ), 99, 2 );
 
 			add_action( 'woocommerce_admin_field_carriers_list', array( $this, 'show_carriers_settings' ) );
+
 		}
 
 		/**
@@ -159,6 +159,8 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 				'admin-tabs'       => $admin_tabs,
 				'options-path'     => YITH_YWOT_DIR . '/plugin-options',
 				'class'            => yith_set_wrapper_class(),
+				'is_free'          => defined( 'YITH_YWOT_FREE_INIT' ),
+				'is_premium'       => defined( 'YITH_YWOT_PREMIUM' ),
 				'premium_tab'      => array(
 					'landing_page_url'          => $this->get_premium_landing_uri(),
 					'premium_features'          => array(
@@ -215,7 +217,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * Get the premium landing uri
 		 *
 		 * @since   1.0.0
-		 * @author  Andrea Grillo <andrea.grillo@yithemes.com>
 		 * @return  string The premium landing link
 		 */
 		public function get_premium_landing_uri() {
@@ -234,7 +235,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * Add scripts
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 */
 		public function enqueue_scripts() {
 			global $post, $pagenow;
@@ -287,7 +287,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 *  Add a metabox on backend order page, to be filled with order tracking information
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -301,7 +300,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param WP_Post $post the order object that is currently shown.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -371,7 +369,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param int $post_id post id being created.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -395,7 +392,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param array $data post meta for current order.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 *
 		 * @return bool
 		 */
@@ -412,7 +408,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param string $pattern  text pattern to be used.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 */
 		public function get_picked_up_message( $data, $pattern = '' ) {
 			if ( ! isset( $pattern ) || ( 0 === strlen( $pattern ) ) ) {
@@ -449,7 +444,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param string $css_class CSS classes.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 */
 		public function show_picked_up_icon( $data, $css_class = '' ) {
 			if ( ! $this->is_order_picked_up( $data ) ) {
@@ -480,7 +474,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param string $column the column of backend order table being elaborated.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -508,7 +501,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param int $post_id  the post id whom order tracking information should be saved.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -545,7 +537,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param string   $prefix  Prefix to be shown before custom text.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -572,7 +563,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @param WC_Order $order the order whose tracking information have to be shown.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -599,7 +589,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * Add callback to show shipping details on order page, in the position choosen from plugin settings
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 * @access public
 		 * @return void
 		 */
@@ -638,8 +627,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 *
 		 * Load the carriers tab template on admin page
 		 *
-		 * @since    1.0
-		 * @author   YITH
+		 * @since  1.0
 		 * @return void
 		 */
 		public function show_carriers_settings() {

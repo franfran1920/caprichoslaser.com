@@ -1,0 +1,40 @@
+2023-07-30T11:32:37+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/index.php(137): require_once('...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-07-30T12:01:33+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/users.php(530): require_once('...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-07-30T12:01:41+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/users.php(530): require_once('...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+
+2023-07-30T12:01:44+00:00 CRITICAL Uncaught Error: Call to a member function is_order_page() on bool in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php:31
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(308): WPO\WC\PDF_Invoices\Assets->backend_scripts_styles()
+#1 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters()
+#2 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#3 /var/www/html/caprichoslaser.com/wp-admin/admin-header.php(118): do_action()
+#4 /var/www/html/caprichoslaser.com/wp-admin/users.php(530): require_once('...')
+#5 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-pdf-invoices-packing-slips/includes/class-wcpdf-assets.php en la línea 31
+

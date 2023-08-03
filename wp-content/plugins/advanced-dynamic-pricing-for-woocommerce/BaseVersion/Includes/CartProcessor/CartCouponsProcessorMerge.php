@@ -52,9 +52,15 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
 
     protected $wcCouponExternalExcludeCodes = [];
 
+    protected const CONFIG_TRY_TO_LOAD_WC_COUPONS_OPTION = 'try_to_load_wc_coupons_when_adapting_pricing_coupons';
+    protected $config = [];
+
     public function __construct($deprecated = null)
     {
         $this->context = adp_context();
+        $this->config = [
+            self::CONFIG_TRY_TO_LOAD_WC_COUPONS_OPTION => true
+        ];
         $this->purge();
     }
 
@@ -95,6 +101,13 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
     public function init()
     {
 
+    }
+
+    public function prepareConfig()
+    {
+        if ( $this->context->getOption('external_cart_coupons_behavior') === "best_between_coupon_and_rule" ) {
+            $this->config[self::CONFIG_TRY_TO_LOAD_WC_COUPONS_OPTION] = false;
+        }
     }
 
     public function sanitize(WC_Cart $wcCart)
@@ -320,6 +333,10 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
 
     protected function addExternalWcCouponWithSameCodeIfPossible(Cart $cart, WC_Cart $wcCart, string $couponCode)
     {
+        if ( $this->config[self::CONFIG_TRY_TO_LOAD_WC_COUPONS_OPTION] === false ) {
+            return;
+        }
+
         $wcCoupon = $this->loadWcCouponByCode($couponCode);
 
         if ($this->isWcCouponValid($cart, $wcCart, $wcCoupon)) {
@@ -362,6 +379,10 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
      */
     public function getCouponData($couponData, $couponCode, $wcCoupon)
     {
+        if (!is_string($couponCode)) {
+            return $couponData;
+        }
+
         if ($couponCode === "") {
             return $couponData;
         }

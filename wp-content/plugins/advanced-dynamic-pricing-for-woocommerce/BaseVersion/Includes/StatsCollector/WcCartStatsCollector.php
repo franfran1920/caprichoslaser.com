@@ -2,6 +2,7 @@
 
 namespace ADP\BaseVersion\Includes\StatsCollector;
 
+use ADP\BaseVersion\Includes\CartProcessor\CartCouponsProcessorMerge\MergeCoupon\IMergeAdpCoupon;
 use ADP\BaseVersion\Includes\Core\Cart\ShippingAdjustment;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Database\Models\Order;
@@ -10,6 +11,7 @@ use ADP\BaseVersion\Includes\Database\Repository\OrderItemRepository;
 use ADP\BaseVersion\Includes\Database\Repository\OrderItemRepositoryInterface;
 use ADP\BaseVersion\Includes\Database\Repository\OrderRepository;
 use ADP\BaseVersion\Includes\Database\Repository\OrderRepositoryInterface;
+use ADP\BaseVersion\Includes\WC\WcAdpMergedCouponHelper;
 use ADP\BaseVersion\Includes\WC\WcCustomerSessionFacade;
 use \ADP\BaseVersion\Includes\WC\WcCartItemFacade;
 use WC_Cart;
@@ -258,11 +260,44 @@ class WcCartStatsCollector
             }
         }
 
-        $this->injectWcCartCouponStats($wc, $orderStats);
+        if ( $this->context->isUseMergedCoupons() ) {
+            $this->injectWcCartMergedCouponStats($wc, $orderStats);
+        } else {
+            $this->injectWcCartCouponStats($wc, $orderStats);
+        }
+
         $this->injectWcCartFeeStats($wc, $orderStats);
         $this->injectWcCartShippingStats($wc, $orderStats);
 
         return array($orderStats, $productStats);
+    }
+
+    /**
+     * @param WooCommerce $wc
+     * @param array $orderStats
+     */
+    private function injectWcCartMergedCouponStats($wc, array &$orderStats)
+    {
+        foreach ($wc->cart->applied_coupons as $couponCode) {
+            $mergedCoupon = WcAdpMergedCouponHelper::loadOfCouponCode($couponCode);
+
+            foreach ($mergedCoupon->getParts() as $internalCoupon) {
+                if ($internalCoupon instanceof IMergeAdpCoupon) {
+                    $ruleId = $internalCoupon->ruleId();
+                    $value = wc_remove_number_precision_deep(array_sum($internalCoupon->totalsPerItem()));
+
+                    if (!isset($orderStats[$ruleId])) {
+                        $orderStats[$ruleId] = array();
+                    }
+
+                    if (!isset($orderStats[$ruleId]['extra'])) {
+                        $orderStats[$ruleId]['extra'] = 0.0;
+                    }
+
+                    $orderStats[$ruleId]['extra'] += $value;
+                }
+            }
+        }
     }
 
     /**

@@ -38,7 +38,16 @@ jQuery( document ).ready( function ( $ ) {
 			type: 'POST',
 			success: function ( response ) {
 				if ( response.success ) {
-					jQuery( '.wdp_bulk_table_content' ).replaceWith( response.data )
+          jQuery('.wdp_bulk_table_content').each(function (_, item) {
+            let jQItem = jQuery(item);
+            let availableIds = JSON.parse(jQItem.attr('data-available-ids'));
+
+            if (availableIds.indexOf(parseInt(product_id)) === -1) {
+              return;
+            }
+
+            jQItem.html(jQuery(response.data).children())
+          });
           init_custom_event();
 					if ( product_id === variable_id ) {
 						variable_bulk_table = response.data;

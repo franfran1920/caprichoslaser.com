@@ -431,7 +431,7 @@ class Cart
     /**
      * @return CartContext
      */
-    public function getContext(): CartContext
+    public function getContext()
     {
         return $this->cartContext;
     }

@@ -13,7 +13,7 @@ if ( ! class_exists( 'YIT_Assets' ) ) {
 	/**
 	 * YIT_Assets class.
 	 *
-	 * @author     Leanza Francesco <leanzafrancesco@gmail.com>
+	 * @author     YITH <plugins@yithemes.com>
 	 */
 	class YIT_Assets {
 		/**

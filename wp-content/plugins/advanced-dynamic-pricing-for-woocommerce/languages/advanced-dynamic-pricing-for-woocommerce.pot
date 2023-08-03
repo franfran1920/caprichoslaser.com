@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Dynamic Pricing for WooCommerce (Pro)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-20 11:55+0000\n"
+"POT-Creation-Date: 2023-07-31 04:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -347,8 +347,8 @@ msgid "Applied to visible products"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:332
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:354
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:413
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:358
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:417
 #: BaseVersion/views/admin_page/tabs/rules.php:109
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:19
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:38
@@ -359,7 +359,7 @@ msgstr ""
 msgid "Apply at first to:"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:387
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:391
 msgid "Apply pricing rules to backend orders"
 msgstr ""
 
@@ -384,7 +384,7 @@ msgstr ""
 msgid "Apply to unmodified cart"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:355
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:359
 msgid "Apply to unmodified cart items only"
 msgstr ""
 
@@ -467,6 +467,10 @@ msgstr ""
 
 #: BaseVersion/Includes/CustomizerExtensions/CustomizerExtensions.php:192
 msgid "Below product summary"
+msgstr ""
+
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:337
+msgid "Best between coupon and rule"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:263
@@ -881,23 +885,23 @@ msgstr ""
 msgid "Detailed information about plugin settings"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:341
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:363
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:416
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:345
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:367
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:420
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:27
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:46
 msgid "Disable all if any of cart items updated"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:337
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:359
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:414
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:341
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:363
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:418
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:23
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:42
 msgid "Disable all if any rule applied"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:374
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:378
 msgid "Disable external coupons"
 msgstr ""
 
@@ -907,7 +911,7 @@ msgstr ""
 msgid "Disable rule if it runs longer than X seconds"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:402
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:406
 #: BaseVersion/views/admin_page/tabs/options/disable_shipping_calc_during_process.php:7
 #: BaseVersion/views/admin_page/tabs/options/disable_shipping_calc_during_process.php:12
 msgid "Disable shipping calculation"
@@ -986,7 +990,7 @@ msgstr ""
 msgid "Don't apply discount if product is already on sale"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:376
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:380
 msgid "Don't disable"
 msgstr ""
 
@@ -1094,7 +1098,7 @@ msgstr ""
 msgid "Export settings"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:411
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:415
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:9
 msgid "External coupons"
 msgstr ""
@@ -1103,7 +1107,7 @@ msgstr ""
 msgid "External coupons|Cart coupons"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:352
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:356
 msgid "External coupons|Product coupons"
 msgstr ""
 
@@ -1235,7 +1239,7 @@ msgid "from"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:212
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:396
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:400
 msgid "From {{price}} {{price_suffix}}"
 msgstr ""
 
@@ -1320,11 +1324,11 @@ msgstr ""
 msgid "https://algolplus.com/"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:379
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:383
 msgid "If any of cart items updated"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:377
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:381
 msgid "If any rule applied"
 msgstr ""
 
@@ -1720,8 +1724,8 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: BaseVersion/Includes/AdminExtensions/AdminPage.php:65
-#: BaseVersion/Includes/AdminExtensions/AdminPage.php:66
+#: BaseVersion/Includes/AdminExtensions/AdminPage.php:72
+#: BaseVersion/Includes/AdminExtensions/AdminPage.php:73
 #: BaseVersion/Includes/AdminExtensions/WcProductPageExtensions.php:70
 msgid "Pricing Rules"
 msgstr ""
@@ -2027,7 +2031,7 @@ msgstr ""
 msgid "Remove rule?"
 msgstr ""
 
-#: BaseVersion/Includes/CartProcessor/CartProcessor.php:865
+#: BaseVersion/Includes/CartProcessor/CartProcessor.php:876
 msgid "Removed {{qty}} free {{product_name}}"
 msgstr ""
 
@@ -2041,12 +2045,12 @@ msgid "Replace price with lowest bulk price"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:208
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:392
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:396
 msgid "Replace price with lowest bulk price|Enable"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:213
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:397
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:401
 msgid "Replace price with lowest bulk price|Output template"
 msgstr ""
 
@@ -2422,16 +2426,16 @@ msgstr ""
 msgid "Slug"
 msgstr ""
 
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessorMerge.php:554
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:680
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:842
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessorMerge.php:575
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:685
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:847
 msgid "Sorry, coupons are disabled for these products."
 msgstr ""
 
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessorMerge.php:511
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessorMerge.php:517
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:519
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:525
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessorMerge.php:532
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessorMerge.php:538
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:524
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:530
 msgid "Sorry, this coupon is not applicable to cart."
 msgstr ""
 
@@ -2491,7 +2495,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:407
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:411
 #: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:7
 #: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:17
 msgid "Support Product only rules"
@@ -2661,12 +2665,12 @@ msgstr ""
 msgid "View %s rules for the product"
 msgstr ""
 
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessorMerge.php:423
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:345
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessorMerge.php:444
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:350
 msgid "WDP Coupon"
 msgstr ""
 
-#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:370
+#: BaseVersion/Includes/CartProcessor/CartCouponsProcessor.php:375
 msgid "WDP Coupon (exact item application)"
 msgstr ""
 

@@ -43,4 +43,8 @@ class WooCommerce {
   public function wcGetOrder($order = false) {
     return wc_get_order($order);
   }
+
+  public function wcGetOrderStatusName(string $status): string {
+    return wc_get_order_status_name($status);
+  }
 }

@@ -79,6 +79,11 @@ class CartCouponsProcessor implements ICartCouponsProcessor
         $this->replaceNotices();
     }
 
+    public function prepareConfig()
+    {
+
+    }
+
     /**
      * @param Cart $cart
      */

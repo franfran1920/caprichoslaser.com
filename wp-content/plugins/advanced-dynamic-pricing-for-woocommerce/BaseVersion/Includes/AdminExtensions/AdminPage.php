@@ -47,6 +47,13 @@ class AdminPage
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
         add_filter('script_loader_src', array($this, 'doNotLoadExternalSelect2'), PHP_INT_MAX, 2);
         add_filter('script_loader_src', array($this, 'doNotLoadExternalPostbox'), PHP_INT_MAX, 2);
+
+        add_action('admin_enqueue_scripts', function () {
+            if (adp_context()->isPluginAdminPage()) {
+                wp_deregister_script('wc-enhanced-select');
+                wp_deregister_script('selectWoo');
+            }
+        }, 100, 0);
     }
 
     public function registerAjax()

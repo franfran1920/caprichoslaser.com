@@ -334,6 +334,10 @@ class OptionsInstaller
                         "Apply to unmodified cart",
                         'advanced-dynamic-pricing-for-woocommerce'
                     ),
+                    "best_between_coupon_and_rule"         => __(
+                        "Best between coupon and rule",
+                        'advanced-dynamic-pricing-for-woocommerce'
+                    ),
                     "disable_if_any_rule_applied"          => __(
                         "Disable all if any rule applied",
                         'advanced-dynamic-pricing-for-woocommerce'

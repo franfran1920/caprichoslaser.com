@@ -4,8 +4,8 @@ Donate link: https://paypal.me/ipprokaev/0usd
 Tags: woocommerce, discounts, deals, dynamic pricing, pricing deals, bulk discount, pricing rule
 Requires PHP: 7.0
 Requires at least: 4.8
-Tested up to: 6.2
-Stable tag: 4.4.2
+Tested up to: 6.3
+Stable tag: 4.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,17 @@ You should be PHP programmer to do it. [Please, review sample addon and adapt it
 
 == Changelog ==
 
+= 4.4.3 - 2023-07-31 =
+* Bug fixed - multiple attributes worked incorrectly inside product filter
+* Bug fixed - WooCommerce coupons caused "500 error" during checkout
+* Bug fixed - conflict(empty cart) with Product Feed PRO for WooCommerce, by AdTribes.io
+* Bug fixed - conflict(empty discount) with Points and Rewards for WooCommerce, by WPSwings
+* Bug fixed - fee removed if user edited order using plugin "Phone Orders PRO"
+* Bug fixed - section Limits didn't work when the rule applied as coupon
+* Bug fixed - single quote soubled in discount name , section "Cart Adjustment"
+* Bug fixed - missed order stats if applied coupons were merged
+* Added compatibility with "Points and Rewards for WooCommerce", by WP Swings
+ 
 = 4.4.2 - 2023-06-21 =
 * Bug fixed - free shipping ignored if it was added by WooCommerce сoupon
 * Bug fixed - import CSV failed if field "To range" was empty for bulk rule

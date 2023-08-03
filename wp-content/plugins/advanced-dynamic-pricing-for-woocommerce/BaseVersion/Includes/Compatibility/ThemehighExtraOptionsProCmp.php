@@ -56,8 +56,11 @@ class ThemehighExtraOptionsProCmp
             }
 
             if (is_string($price)) {
-                $price = str_replace($this->context->priceSettings->getThousandSeparator(), "", $price);
-                $price = str_replace($this->context->priceSettings->getDecimalSeparator(), ".", $price);
+                if (apply_filters('adp_format_thwepo_price_corresponding_to_wc_price_settings', true)) {
+                    $price = str_replace($this->context->priceSettings->getThousandSeparator(), "", $price);
+                    $price = str_replace($this->context->priceSettings->getDecimalSeparator(), ".", $price);
+                }
+
                 $price = (float)$price;
             }
 

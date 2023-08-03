@@ -101,12 +101,7 @@ class FreeAutoAddItemsController
             return;
         }
 
-        $existingHashes = array();
-        foreach ($this->cart->getFreeItems() as $freeCartItem) {
-            if ( ! $freeCartItem->isSelected()) {
-                $existingHashes[] = $freeCartItem->getAssociatedGiftHash();
-            }
-        }
+        $existingHashes = $this->calculateExistingHashesForItemStubs();
 
         foreach ($this->cart->getContext()->getCustomer()->getRemovedFreeItemsList() as $removedFreeItems) {
             $qty  = $removedFreeItems->getTotalQty();
@@ -135,7 +130,21 @@ class FreeAutoAddItemsController
         }
     }
 
+    /**
+     * @return array<int, string>
+     */
+    protected function calculateExistingHashesForItemStubs(): array
+    {
+        $existingHashes = [];
 
+        foreach ($this->cart->getFreeItems() as $freeCartItem) {
+            if (!$freeCartItem->isSelected()) {
+                $existingHashes[] = $freeCartItem->getAssociatedGiftHash();
+            }
+        }
+
+        return $existingHashes;
+    }
 
 
     /**
@@ -153,8 +162,12 @@ class FreeAutoAddItemsController
         if ($facade->isFreeItem() && ! $facade->isSelectedFreeCartItem()) {
             /** @var CartCustomer $customer */
             $customer         = $this->cart->getContext()->getCustomer();
-            $removedFreeItems = $customer->getRemovedFreeItems($facade->getAssociatedHash());
-            $removedFreeItems->add($facade->getFreeCartItemHash(), $facade->getQty());
+
+            $this->recalculateStoredFreeItemsAfterQtyUpdate(
+                $facade,
+                $facade->getQty(),
+                0
+            );
 
             $wcSessionFacade = $this->cart->getContext()->getSession();
             if ($wcSessionFacade->isValid()) {
@@ -164,6 +177,22 @@ class FreeAutoAddItemsController
         }
     }
 
+    protected function recalculateStoredFreeItemsAfterQtyUpdate(
+        WcCartItemFacade $facade,
+        float $oldQuantity,
+        float $quantity
+    ) {
+        $customer = $this->cart->getContext()->getCustomer();
+        $removedFreeItems = $customer->getRemovedFreeItems($facade->getAssociatedHash());
+        $deletedQty = $removedFreeItems->get($facade->getFreeCartItemHash());
+        $deletedQty = max(floatval(0), $deletedQty + $oldQuantity - $quantity);
+
+        if ( $deletedQty !== 0.0 ) {
+            $removedFreeItems->set($facade->getFreeCartItemHash(), $deletedQty);
+        } else {
+            $removedFreeItems->remove($facade->getFreeCartItemHash());
+        }
+    }
 
     /**
      * @param string $cartItemKey
@@ -191,11 +220,14 @@ class FreeAutoAddItemsController
         $itemFacade = new WcCartItemFacade($this->context, $wcCart->cart_contents[$cartItemKey], $cartItemKey);
 
         if ($itemFacade->isFreeItem() && ! $itemFacade->isSelectedFreeCartItem()) {
+            /** @var CartCustomer $customer */
             $customer         = $this->cart->getContext()->getCustomer();
-            $removedFreeItems = $customer->getRemovedFreeItems($itemFacade->getAssociatedHash());
-            $deletedQty       = $removedFreeItems->get($itemFacade->getFreeCartItemHash());
-            $deletedQty       = max(floatval(0), $deletedQty + $oldQuantity - $quantity);
-            $removedFreeItems->set($itemFacade->getFreeCartItemHash(), $deletedQty);
+
+            $this->recalculateStoredFreeItemsAfterQtyUpdate(
+                $itemFacade,
+                $oldQuantity,
+                $quantity
+            );
 
             $wcSessionFacade = $this->cart->getContext()->getSession();
             if ($wcSessionFacade->isValid()) {

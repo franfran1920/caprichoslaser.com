@@ -8,14 +8,15 @@ if (!defined('ABSPATH')) exit;
 use MailPoet\Entities\DynamicSegmentFilterData;
 use MailPoet\Entities\DynamicSegmentFilterEntity;
 use MailPoet\Segments\DynamicSegments\Exceptions\InvalidFilterException;
+use MailPoet\Segments\DynamicSegments\Filters\AutomationsEvents;
 use MailPoet\Segments\DynamicSegments\Filters\EmailAction;
 use MailPoet\Segments\DynamicSegments\Filters\EmailActionClickAny;
 use MailPoet\Segments\DynamicSegments\Filters\EmailOpensAbsoluteCountAction;
 use MailPoet\Segments\DynamicSegments\Filters\Filter;
 use MailPoet\Segments\DynamicSegments\Filters\MailPoetCustomFields;
+use MailPoet\Segments\DynamicSegments\Filters\SubscriberDateField;
 use MailPoet\Segments\DynamicSegments\Filters\SubscriberScore;
 use MailPoet\Segments\DynamicSegments\Filters\SubscriberSegment;
-use MailPoet\Segments\DynamicSegments\Filters\SubscriberSubscribedDate;
 use MailPoet\Segments\DynamicSegments\Filters\SubscriberSubscribedViaForm;
 use MailPoet\Segments\DynamicSegments\Filters\SubscriberTag;
 use MailPoet\Segments\DynamicSegments\Filters\SubscriberTextField;
@@ -74,9 +75,6 @@ class FilterFactory {
   /** @var EmailOpensAbsoluteCountAction */
   private $emailOpensAbsoluteCount;
 
-  /** @var SubscriberSubscribedDate */
-  private $subscriberSubscribedDate;
-
   /** @var SubscriberScore */
   private $subscriberScore;
 
@@ -107,6 +105,12 @@ class FilterFactory {
   /** @var WooCommerceCustomerTextField */
   private $wooCommerceCustomerTextField;
 
+  /** @var SubscriberDateField */
+  private $subscriberDateField;
+
+  /** @var AutomationsEvents */
+  private $automationsEvents;
+
   public function __construct(
     EmailAction $emailAction,
     EmailActionClickAny $emailActionClickAny,
@@ -122,7 +126,6 @@ class FilterFactory {
     WooCommerceMembership $wooCommerceMembership,
     WooCommercePurchaseDate $wooCommercePurchaseDate,
     WooCommerceSubscription $wooCommerceSubscription,
-    SubscriberSubscribedDate $subscriberSubscribedDate,
     SubscriberScore $subscriberScore,
     SubscriberTag $subscriberTag,
     SubscriberSegment $subscriberSegment,
@@ -131,7 +134,9 @@ class FilterFactory {
     WooCommerceAverageSpent $wooCommerceAverageSpent,
     WooCommerceUsedPaymentMethod $wooCommerceUsedPaymentMethod,
     WooCommerceUsedShippingMethod $wooCommerceUsedShippingMethod,
-    SubscriberTextField $subscriberTextField
+    SubscriberTextField $subscriberTextField,
+    SubscriberDateField $subscriberDateField,
+    AutomationsEvents $automationsEvents
   ) {
     $this->emailAction = $emailAction;
     $this->userRole = $userRole;
@@ -144,7 +149,6 @@ class FilterFactory {
     $this->wooCommerceSubscription = $wooCommerceSubscription;
     $this->emailOpensAbsoluteCount = $emailOpensAbsoluteCount;
     $this->wooCommerceTotalSpent = $wooCommerceTotalSpent;
-    $this->subscriberSubscribedDate = $subscriberSubscribedDate;
     $this->subscriberScore = $subscriberScore;
     $this->subscriberTag = $subscriberTag;
     $this->mailPoetCustomFields = $mailPoetCustomFields;
@@ -157,6 +161,8 @@ class FilterFactory {
     $this->wooCommerceUsedPaymentMethod = $wooCommerceUsedPaymentMethod;
     $this->wooCommerceUsedShippingMethod = $wooCommerceUsedShippingMethod;
     $this->wooCommerceCustomerTextField = $wooCommerceCustomerTextField;
+    $this->automationsEvents = $automationsEvents;
+    $this->subscriberDateField = $subscriberDateField;
   }
 
   public function getFilterForFilterEntity(DynamicSegmentFilterEntity $filter): Filter {
@@ -164,6 +170,8 @@ class FilterFactory {
     $filterType = $filterData->getFilterType();
     $action = $filterData->getAction();
     switch ($filterType) {
+      case DynamicSegmentFilterData::TYPE_AUTOMATIONS:
+        return $this->automationsEvents;
       case DynamicSegmentFilterData::TYPE_USER_ROLE:
         return $this->userRole($action);
       case DynamicSegmentFilterData::TYPE_EMAIL:
@@ -182,12 +190,10 @@ class FilterFactory {
   /**
    * @param ?string $action
    *
-   * @return MailPoetCustomFields|SubscriberScore|SubscriberSegment|SubscriberSubscribedDate|UserRole|SubscriberTag|SubscriberTextField|SubscriberSubscribedViaForm
+   * @return MailPoetCustomFields|SubscriberScore|SubscriberSegment|UserRole|SubscriberTag|SubscriberTextField|SubscriberSubscribedViaForm|SubscriberDateField
    */
   private function userRole(?string $action) {
-    if ($action === SubscriberSubscribedDate::TYPE) {
-      return $this->subscriberSubscribedDate;
-    } elseif ($action === SubscriberScore::TYPE) {
+    if ($action === SubscriberScore::TYPE) {
       return $this->subscriberScore;
     } elseif ($action === MailPoetCustomFields::TYPE) {
       return $this->mailPoetCustomFields;
@@ -199,6 +205,8 @@ class FilterFactory {
       return $this->subscribedViaForm;
     } elseif (in_array($action, SubscriberTextField::TYPES)) {
       return $this->subscriberTextField;
+    } elseif (in_array($action, SubscriberDateField::TYPES)) {
+      return $this->subscriberDateField;
     }
     return $this->userRole;
   }

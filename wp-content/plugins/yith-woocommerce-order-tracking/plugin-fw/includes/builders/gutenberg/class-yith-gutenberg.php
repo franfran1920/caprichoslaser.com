@@ -13,7 +13,7 @@ if ( ! class_exists( 'YITH_Gutenberg' ) ) {
 	/**
 	 * YITH_Gutenberg class.
 	 *
-	 * @author  Andrea Grillo <andrea.grillo@yithemes.com>
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class YITH_Gutenberg {
 		/**

@@ -218,6 +218,10 @@ class Rule
             $value = stripslashes($value);
         }) : null;
 
+        $rule['cart_adjustments'] ? array_walk($rule['cart_adjustments'], function (&$value) {
+            $value = stripslashes_deep($value);
+        }) : null;
+
         $rule['condition_message'] ? array_walk($rule['condition_message'], function (&$value) {
             $value = stripslashes_deep($value);
         }) : null;

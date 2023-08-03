@@ -350,30 +350,30 @@ class ProductFiltering
             $operationValuesCustomAttrs[$attributeName][] = $term_obj->name;
         }
 
-        $isProductHasAttrsId = true;
+        $isProductHasAttrsId = false;
         foreach ($operationValuesTax as $attributeName => $tmpAttrIds) {
             if (
                 (
-                    ! isset($attrIds[$attributeName])
-                    || ! count(array_intersect($tmpAttrIds, $attrIds[$attributeName]))
+                    isset($attrIds[$attributeName])
+                    && count(array_intersect($tmpAttrIds, $attrIds[$attributeName]))
                 )
-                && (
-                    ! isset($attrIds[wc_attribute_taxonomy_name($attributeName)])
-                    || ! count(array_intersect($tmpAttrIds, $attrIds[wc_attribute_taxonomy_name($attributeName)]))
+                || (
+                    isset($attrIds[wc_attribute_taxonomy_name($attributeName)])
+                    && count(array_intersect($tmpAttrIds, $attrIds[wc_attribute_taxonomy_name($attributeName)]))
                 )
             ) {
-                $isProductHasAttrsId = false;
+                $isProductHasAttrsId = true;
                 break;
             }
         }
 
-        $isProductHasAttrsCustom = true;
+        $isProductHasAttrsCustom = false;
         foreach ($operationValuesCustomAttrs as $attributeName => $tmp_attr_names) {
             if (
-                ! isset($attrCustom[$attributeName])
-                || ! count(array_intersect($tmp_attr_names, $attrCustom[$attributeName]))
+                isset($attrCustom[$attributeName])
+                && count(array_intersect($tmp_attr_names, $attrCustom[$attributeName]))
             ) {
-                $isProductHasAttrsCustom = false;
+                $isProductHasAttrsCustom = true;
                 break;
             }
         }

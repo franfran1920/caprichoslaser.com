@@ -3,6 +3,7 @@
 namespace ADP\BaseVersion\Includes\CartProcessor;
 
 use ADP\BaseVersion\Includes\Compatibility\MixAndMatchCmp;
+use ADP\BaseVersion\Includes\Compatibility\PointsAndRewardsForWoocommerceCmp;
 use ADP\BaseVersion\Includes\Compatibility\WcSubscriptionsCmp;
 use ADP\BaseVersion\Includes\Compatibility\WpcBundleCmp;
 use ADP\BaseVersion\Includes\Compatibility\YithBundlesCmp;
@@ -195,9 +196,17 @@ class CartBuilder
 
         $adpCoupons = $cart->getContext()->getSession()->getAdpCoupons();
 
-        foreach ($wcCart->get_coupons() as $wcCoupon) {
+        $pointAndRewardsCmp = new PointsAndRewardsForWoocommerceCmp();
+
+        foreach ($wcCart->get_coupons() as $codeAsKey => $wcCoupon) {
             /** @var $wcCoupon WC_Coupon */
             $couponCode = $wcCoupon->get_code('edit');
+
+            if ($pointAndRewardsCmp->isActive()
+                && $pointAndRewardsCmp->isPointsAndRewardsCoupon($codeAsKey, $wcCoupon)
+            ) {
+                $couponCode = $pointAndRewardsCmp->getPointsAndRewardsCoupon($codeAsKey, $wcCoupon);
+            }
 
             if ( $this->context->isUseMergedCoupons() ) {
                 $mergedCoupon = WcAdpMergedCouponHelper::loadOfCoupon($wcCoupon);

@@ -8,6 +8,8 @@ interface ICartCouponsProcessor
 {
     public function init();
 
+    public function prepareConfig();
+
     public function installActions();
 
     public function sanitize(\WC_Cart $wcCart);

@@ -626,6 +626,26 @@ jQuery(document).ready(function ($) {
         });
       }
 
+      let roleRows = $form.find('.wdp-role-discounts .wdp-role-discount');
+      if ( roleRows.length ) {
+        roleRows.each(function (index) {
+          //Check if values in filters are present
+          let roleSelects = $(this).find('.wdp-column.wdp-condition-field-value');
+          if (roleSelects.length) {
+            let $selectedOptions = roleSelects.find('.select2-selection__choice');
+            if (!$selectedOptions.length && !roleSelects.find(".select2-hidden-accessible").prop('disabled')) {
+              beforeSendValidation = false;
+              let $attachErrorTo = $(this).find('.select2.select2-container').first();
+              if (!$attachErrorTo.next('.products-filter__error-wrapper').length) {
+                let $elEmptyValue = $("<div class=\"products-filter__error-wrapper\"><span class=\"products-filter__onempty-error\"></span></div>");
+                $attachErrorTo.after($elEmptyValue);
+                $('.products-filter__onempty-error').text('You must select at least one value');
+              }
+            }
+          }
+        });
+      }
+
       setTimeout( function() {
         //remove errors
         var $all_filters = $('.wdp-product-filter-container .wdp-row.wdp-filter-item');
@@ -641,6 +661,13 @@ jQuery(document).ready(function ($) {
           remove_user_input_errors( $selectValuesField, '.products-filter__error-wrapper' );
           let searchIn = $( value ).find( '.two-on-two-column.left-column' );
           remove_user_input_errors( searchIn, '.products-filter__error-wrapper' );
+        } );
+
+        $('.wdp-role-discounts .wdp-role-discount').each(function (key, value) {
+          let $selectValuesField = $(value).find('.wdp-column.wdp-condition-field-value');
+          remove_user_input_errors($selectValuesField, '.products-filter__error-wrapper');
+          let searchIn = $(value).find('.two-on-two-column.left-column');
+          remove_user_input_errors(searchIn, '.products-filter__error-wrapper');
         } );
       }, 5000 );
       if ( beforeSendValidation ) {
@@ -2325,7 +2352,7 @@ jQuery(document).ready(function ($) {
 				);
 
 				$product_filter.find('.wdp-condition-field-sub select').prop("disabled", true);
-			} else if ( value === "allow_to_choose" || value === "giftable_products" || value === "require_to_choose" || value === "giftable_products_in_rotation" ) {
+			} else if ( value === "allow_to_choose" || value === "giftable_products" || value === "require_to_choose" || value === "giftable_products_in_rotation" || value === "giftable_products_in_random" ) {
         if (addProductData && addProductData.data_list && addProductData.data_list !== "giftable_products") {
           addProductData = {};
         }
@@ -3088,7 +3115,7 @@ jQuery(document).ready(function ($) {
 					$preview.on('mouseup', function (e) {
 						e.stopPropagation();
 					});
-					
+
 					$option.append($preview);
 					return $option;
 				  }
