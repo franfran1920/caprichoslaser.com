@@ -972,7 +972,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 			            'id'                    => 'accept',
 			            'label'                 => __('Accepted file types','sw-wapf'),
 			            'description'           => __('What file types can be uploaded?','sw-wapf'),
-			            'note'                  => __('Ffor security reasons, you should limit the allowed file types here.'),
+			            'note'                  => __('For security reasons, you should limit the allowed file types here.'),
 			            'options'               => $allowed_file_types,
 			            'select2'               => true,
 		            ],

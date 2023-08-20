@@ -44,8 +44,7 @@ if ( ! class_exists( 'YIT_Assets' ) ) {
 		 */
 		private function __construct() {
 			$this->version = yith_plugin_fw_get_version();
-			add_action( 'admin_enqueue_scripts', array( $this, 'register_common_scripts' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'register_common_scripts' ) );
+			add_action( 'init', array( $this, 'register_common_scripts' ) );
 			add_action( 'elementor/editor/before_enqueue_styles', array( $this, 'register_common_scripts' ) );
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'register_styles_and_scripts' ) );

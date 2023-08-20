@@ -639,6 +639,24 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 		}
 
 		/**
+		 * Get CSS classes of the panel content.
+		 *
+		 * @return string
+		 * @since 4.4.0
+		 */
+		public function get_panel_content_classes(): string {
+			return implode(
+				' ',
+				array_filter(
+					array(
+						'yith-plugin-fw__panel__content',
+						$this->has_panel_header_nav() ? 'yith-plugin-fw__panel__content--has-header-nav' : '',
+					)
+				)
+			);
+		}
+
+		/**
 		 * Print the panel content page.
 		 *
 		 * @since 4.0.0
@@ -667,6 +685,39 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 					)
 				);
 			}
+		}
+
+		/**
+		 * Maybe print the header nav.
+		 *
+		 * @return bool
+		 * @since 4.4.0
+		 */
+		public function has_panel_header_nav(): bool {
+			return $this->get_sub_tabs() && 'horizontal' === $this->get_sub_tabs_nav_layout();
+		}
+
+		/**
+		 * Maybe print the header nav.
+		 *
+		 * @since 4.4.0
+		 */
+		public function render_panel_header_nav() {
+			if ( ! $this->has_panel_header_nav() ) {
+				return;
+			}
+			$this->get_template(
+				'panel-header-nav.php',
+				array(
+					'panel'    => $this,
+					'nav_args' => array(
+						'current_tab'     => $this->get_current_tab(),
+						'current_sub_tab' => $this->get_current_sub_tab(),
+						'page'            => $this->settings['page'],
+						'parent_page'     => $this->settings['parent_page'],
+					),
+				)
+			);
 		}
 
 		/**
@@ -1578,33 +1629,63 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 		}
 
 		/**
+		 * Return the sub-tabs options
+		 *
+		 * @param array|bool $tab the tab; if not set it'll be the current tab.
+		 *
+		 * @since    4.4.0
+		 * @return array
+		 */
+		protected function get_sub_tabs_options( $tab = false ): array {
+			if ( false === $tab ) {
+				$tab = $this->get_current_tab();
+			}
+
+			if ( is_string( $tab ) ) {
+				$main_array_options  = $this->get_main_array_options();
+				$current_tab_options = $main_array_options[ $tab ] ?? array();
+				if ( $current_tab_options ) {
+					$tab = array( $tab => $current_tab_options );
+				}
+			}
+
+			$tab_options = ! ! $tab && is_array( $tab ) ? current( $tab ) : false;
+			$first       = ! ! $tab_options && is_array( $tab_options ) ? current( $tab_options ) : false;
+			if ( $first && is_array( $first ) && isset( $first['type'] ) && 'multi_tab' === $first['type'] ) {
+				return $first;
+			}
+
+			return array();
+		}
+
+		/**
+		 * Return the sub-tabs layout
+		 *
+		 * @param array|bool $tab the tab; if not set it'll be the current tab.
+		 *
+		 * @since    4.4.0
+		 * @return string
+		 */
+		public function get_sub_tabs_nav_layout( $tab = false ): string {
+			$options = $this->get_sub_tabs_options( $tab );
+			$allowed = array( 'vertical', 'horizontal' );
+			$layout  = $options['nav-layout'] ?? '';
+
+			return in_array( $layout, $allowed, true ) ? $layout : 'vertical';
+		}
+
+		/**
 		 * Return the sub-tabs array of a specific tab
 		 *
-		 * @param array|bool $_tab the tab; if not set it'll be the current tab.
+		 * @param array|bool $tab the tab; if not set it'll be the current tab.
 		 *
 		 * @since    3.4.0
 		 * @return array Sub-tabs array.
 		 */
-		public function get_sub_tabs( $_tab = false ) {
-			if ( false === $_tab ) {
-				$_tab = $this->get_current_tab();
-			}
+		public function get_sub_tabs( $tab = false ): array {
+			$options = $this->get_sub_tabs_options( $tab );
 
-			if ( is_string( $_tab ) ) {
-				$main_array_options  = $this->get_main_array_options();
-				$current_tab_options = $main_array_options[ $_tab ] ?? array();
-				if ( $current_tab_options ) {
-					$_tab = array( $_tab => $current_tab_options );
-				}
-			}
-
-			$_tab_options = ! ! $_tab && is_array( $_tab ) ? current( $_tab ) : false;
-			$_first       = ! ! $_tab_options && is_array( $_tab_options ) ? current( $_tab_options ) : false;
-			if ( $_first && is_array( $_first ) && isset( $_first['type'] ) && 'multi_tab' === $_first['type'] && ! empty( $_first['sub-tabs'] ) ) {
-				return $_first['sub-tabs'];
-			}
-
-			return array();
+			return $options['sub-tabs'] ?? array();
 		}
 
 		/**
@@ -1631,7 +1712,6 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 			return $key;
 		}
 
-
 		/**
 		 * Set an array with all default options
 		 * put default options in an array
@@ -1656,7 +1736,6 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 
 			return $default_options;
 		}
-
 
 		/**
 		 * Get the title of the tab

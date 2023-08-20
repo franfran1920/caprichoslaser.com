@@ -107,10 +107,10 @@ namespace SW_WAPF_PRO\Includes\Classes {
             return $filtered;
         }
 
-		public static function string_to_date($str) {
+		public static function string_to_date($str, $format = 'm-d-Y' ) {
 			$split = explode('-',$str);
 			if(sizeof($split) === 2) $str .= ('-' . date('Y'));
-			$day = \DateTime::createFromFormat('m-d-Y',$str, wp_timezone());
+			$day = \DateTime::createFromFormat($format,$str , wp_timezone());
 			$day->setTime(0,0,0);
 			return $day;
 		}

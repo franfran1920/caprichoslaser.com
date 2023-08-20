@@ -2,11 +2,11 @@
 Contributors: studiowombat,maartenbelmans
 Tags: woocommerce, custom fields, product, addon, acf
 Requires at least: 4.7
-Tested up to: 6.2.2
+Tested up to: 6.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 2.7.2
+Stable tag: 2.7.3
 Build: 13650
 
 Customize WooCommerce product pages with extra form fields ( = product add-ons). This is the premium version.
@@ -17,7 +17,10 @@ The premium version of Advanced Product Fields for WooCommerce.
 
 == Changelog ==
 
-= version 2.7.2 =
+= version 2.7.3 =
+ * Fix: fixed an issue with file upload fields in combination with repeatable sections.
+ * Fix: fixed a bug with WooCommerce's "Order Again" functionality when adding a 2nd product to cart without any options.
+ = version 2.7.2 =
  * Fix: fixed an issue with some formulas not saving correctly.
 
 = version 2.7.1 =

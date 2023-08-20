@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define Constants
  */
-define( 'ASTRA_THEME_VERSION', '4.1.6' );
+define( 'ASTRA_THEME_VERSION', '4.2.1' );
 define( 'ASTRA_THEME_SETTINGS', 'astra-settings' );
 define( 'ASTRA_THEME_DIR', trailingslashit( get_template_directory() ) );
 define( 'ASTRA_THEME_URI', trailingslashit( esc_url( get_template_directory_uri() ) ) );
@@ -180,11 +180,3 @@ require_once ASTRA_THEME_DIR . 'inc/core/markup/class-astra-markup.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-filters.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-hooks.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-functions.php';
-
-/* *****  descripción categorías debajo de productos ****** */
-
-remove_action( 'woocommerce_archive_description','woocommerce_taxonomy_archive_description', 10 );
-
-add_action( 'woocommerce_after_shop_loop', 'woocommerce_taxonomy_archive_description' );
-
-/* ****** descripción categorías debajo de productos ****** */

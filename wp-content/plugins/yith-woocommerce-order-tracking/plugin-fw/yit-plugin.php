@@ -295,3 +295,8 @@ if ( ! function_exists( 'yith_plugin_fw_print_deactivation_message' ) ) {
 }
 
 add_action( 'admin_notices', 'yith_plugin_fw_print_deactivation_message' );
+
+/**
+ * Action triggered after the Plugin Framework initialization finishes.
+ */
+do_action( 'yith_plugin_fw_loaded' );

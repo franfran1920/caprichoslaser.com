@@ -133,9 +133,12 @@ if(File_Upload::can_upload()) {
                     window.initWapfFileUpload['<?php echo $field_id; ?>']('<?php echo $field_id; ?>');
 
                     $(document).on('wapf/cloned', function(e,fieldId,idx,$clone) {
+                        // Skip non file fields
                         var isSection = $('.field-'+fieldId).hasClass('wapf-section');
-                        if(!isSection && fieldId !== '<?php echo $field_id;?>') return;
+                        if(!isSection && fieldId !== '<?php echo $field_id;?>') return; // this is not about a file field, so stop.
                         var $f = $clone.find((isSection ? '.field-<?php echo $field_id;?> ' : '')+'input');
+                        // the file field is not in this section, so stop too
+                        if( !$f.length ) return;
                         // repeated file fields don't need the previous file value so clear it and remove relevant HTML.
                         $f.val('');
                         var newId = '<?php echo $field_id;?>_clone_' + idx;

@@ -762,6 +762,8 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 
 		    $meta_data = $order_item->get_meta('_wapf_meta');
 
+            $cart_item_data['wapf_order_again'] = true;
+
 		    if( is_array( $meta_data ) && isset( $meta_data['fields'] ) ) {
 
 			    $wapf = [];
@@ -786,11 +788,12 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 				    $wapf[] = $cart_field;
 			    }
 
-			    if(!empty($wapf)) {
+
+
+			    if( ! empty( $wapf ) ) {
 				    $cart_item_data['wapf'] = $wapf;
 				    $cart_item_data['wapf_key'] = $this->generate_cart_item_id($order_item->get_product_id(),$order_item->get_variation_id(),$wapf);
 				    $cart_item_data['wapf_field_groups'] = Enumerable::from($groups)->select(function($x){return $x->id;})->toArray();
-				    $cart_item_data['wapf_order_again'] = true;
 			    }
 		    }
 

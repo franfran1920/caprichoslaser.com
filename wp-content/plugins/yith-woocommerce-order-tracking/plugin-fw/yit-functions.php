@@ -1368,11 +1368,6 @@ if ( ! function_exists( 'yith_plugin_fw_gutenberg_add_blocks' ) ) {
 		if ( yith_plugin_fw_is_gutenberg_enabled() ) {
 			// Add blocks.
 			$added = YITH_Gutenberg()->add_blocks( $blocks );
-
-			// Add blocks arguments.
-			if ( $added ) {
-				YITH_Gutenberg()->set_block_args( $blocks );
-			}
 		}
 
 		return $added;
