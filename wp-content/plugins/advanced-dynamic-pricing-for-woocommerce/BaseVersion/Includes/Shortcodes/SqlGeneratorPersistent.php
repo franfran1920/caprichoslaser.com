@@ -227,7 +227,17 @@ class SqlGeneratorPersistent
 
     protected function genSqlProduct_categories($categories, $comparisonMethod = ComparisonMethods::IN_LIST)
     {
-        return $this->genSqlByTermIds('product_cat', $categories, $comparisonMethod);
+        $categoriesWithChildCategories = array();
+
+        foreach ($categories as $category) {
+            $categoriesWithChildCategories[] = $category;
+            $children = get_term_children($category, 'product_cat');
+            if ($children && !is_wp_error($children)) {
+                $categoriesWithChildCategories = array_merge($categoriesWithChildCategories, $children);
+            }
+        }
+
+        return $this->genSqlByTermIds('product_cat', $categoriesWithChildCategories, $comparisonMethod);
     }
 
     protected function genSqlProduct_category_slug($categorySlugs, $comparisonMethod = ComparisonMethods::IN_LIST)

@@ -10,6 +10,8 @@ use ADP\BaseVersion\Includes\Database\Models\Rule;
 use ADP\BaseVersion\Includes\Database\Repository\RuleRepository;
 use ADP\BaseVersion\Includes\Enums\RuleTypeEnum;
 use ADP\Factory;
+use ADP\BaseVersion\Includes\Database\Repository\ThemeModificationsRepository;
+use ADP\BaseVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties;
 
 defined('ABSPATH') or exit;
 
@@ -490,6 +492,40 @@ class UpdateFunctions
         $cnxt->getCompatibilitySettings()->set("dont_apply_discount_to_addons", $cnxt->getOption("dont_apply_discount_to_addons"));
         $cnxt->getCompatibilitySettings()->set("enable_wc_product_bundles_cmp", $cnxt->getOption("enable_wc_product_bundles_cmp"));
         $cnxt->getCompatibilitySettings()->save();
+    }
+
+    public static function migratethemeOptionsTo_4_4_3()
+    {
+        $themeModificationsRepository = new ThemeModificationsRepository();
+        $attrOptions = $themeModificationsRepository->getModifications();
+        $options = $attrOptions[AdvertisingThemeProperties::KEY] ?? [];
+
+        $context  = new Context();
+        $settings = $context->getSettings();
+
+        $keys = [
+            'is_enable_cart_amount_saved'          => AdvertisingThemeProperties\CartMenu::KEY,
+            'is_enable_minicart_amount_saved'      => AdvertisingThemeProperties\MiniCartMenu::KEY,
+            'is_enable_checkout_amount_saved'      => AdvertisingThemeProperties\CheckoutMenu::KEY,
+            'is_enable_backend_order_amount_saved' => "wdp_discount_message-edit-order",
+        ];
+
+        if( class_exists('\ADP\ProVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\EmailOrderMenu')
+         && class_exists('\ADP\ProVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\OrderPageMenu') ) {
+
+            $keys = array_merge($keys, [
+            'is_enable_order_amount_saved'
+                => \ADP\ProVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\OrderPageMenu::KEY,
+            'is_enable_email_order_amount_saved'
+                => \ADP\ProVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\EmailOrderMenu::KEY,
+            ]);
+        }
+
+        foreach($keys as $newOptionName => $key) {
+            $enable = $options[$key]['enable'] ?? false;
+            $settings->set($newOptionName, $enable);
+        }
+        $settings->save();
     }
 }
 

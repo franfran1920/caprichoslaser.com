@@ -275,7 +275,7 @@ jQuery(document).ready(function ($) {
           add_product_filter(new_rule.find('.wdp-filter-block'));
         }
 
-        new_rule.removeClass('not-initialized')
+        new_rule.removeClass('not-initialized');
     }
 
 	wpc_postboxes._on_expand = function (new_rule, data) {
@@ -283,6 +283,7 @@ jQuery(document).ready(function ($) {
 		new_rule.find('.rule-date-from-to input[name="rule[additional][date_from]"]').datepicker( "option", "disabled", false ).css("background-color", "white");
 		new_rule.find('.rule-date-from-to input[name="rule[additional][date_to]"]').datepicker( "option", "disabled", false ).css("background-color", "white");
 		finishLoadRule(new_rule, data);
+		new_rule.find('.wdp-title').focus();
 	};
 
 	wpc_postboxes._on_close = function (new_rule, data) {
@@ -290,6 +291,24 @@ jQuery(document).ready(function ($) {
     new_rule.find('.rule-date-from-to input[name="rule[additional][date_from]"]').datepicker( "option", "disabled", true ).css("background-color", "#f0f0f1");
     new_rule.find('.rule-date-from-to input[name="rule[additional][date_to]"]').datepicker( "option", "disabled", true ).css("background-color", "#f0f0f1");
 	};
+
+	// create new rule when click 'Add rule' button
+	$('.add-rule').click(function (e) {
+		e.preventDefault();
+		// $('.wdp-count-all-rules').text(Number($('.wdp-count-all-rules').text()) + 1);
+		// $('.wdp-count-active-rules').text(Number($('.wdp-count-active-rules').text()) + 1);
+		var new_rule = add_rule();
+		new_rule.find('.rule-trigger-coupon-code input').prop('readonly', false);
+		new_rule.find('.rule-date-from-to input[name="rule[additional][date_from]"]').datepicker( "option", "disabled", false ).css("background-color", "white");
+		new_rule.find('.rule-date-from-to input[name="rule[additional][date_to]"]').datepicker( "option", "disabled", false ).css("background-color", "white");
+		finishLoadRule(new_rule);
+		if(new_rule.find('.wdp-discount-type').length) {
+			new_rule.find('.wdp-discount-type').show();
+			new_rule.find('.wdp-add-condition, .replace-adjustments').hide();
+		}
+		new_rule.find('.wdp-title').focus();
+		$("html, body").animate({ scrollTop: $(document).height() }, "slow"); //scroll to bottom
+	});
 
     // load saved rules
     if (wdp_data.rules) {
@@ -328,23 +347,10 @@ jQuery(document).ready(function ($) {
                 add_product_filter(new_rule.find('.wdp-filter-block'), filter_data);
             }
 
-        }
+        } else if(!wdp_data.rules.length) {
+			$('.add-rule').first().click();
+		}
     }
-
-    // create new rule when click 'Add rule' button
-    $('.add-rule').click(function (e) {
-        e.preventDefault();
-        // $('.wdp-count-all-rules').text(Number($('.wdp-count-all-rules').text()) + 1);
-        // $('.wdp-count-active-rules').text(Number($('.wdp-count-active-rules').text()) + 1);
-        var new_rule = add_rule();
-        new_rule.find('.rule-trigger-coupon-code input').prop('readonly', false);
-        new_rule.find('.rule-date-from-to input[name="rule[additional][date_from]"]').datepicker( "option", "disabled", false ).css("background-color", "white");
-        new_rule.find('.rule-date-from-to input[name="rule[additional][date_to]"]').datepicker( "option", "disabled", false ).css("background-color", "white");
-        finishLoadRule(new_rule);
-        new_rule.find('.wdp-discount-type-selector').show();
-        new_rule.find('.wdp-title').focus();
-      $("html, body").animate({ scrollTop: $(document).height() }, "slow"); //scroll to bottom
-    });
 
     /* Template functions */
 
@@ -684,7 +690,7 @@ jQuery(document).ready(function ($) {
             $form.find('.rule-id').val(id);
 
             $form.removeClass('dirty');
-            $form.find( '.wdp-discount-type-selector').hide();
+            // $form.find( '.wdp-discount-type-selector').hide();
             $form.removeClass('disabled-by-plugin');
             $form.find('.wdp-disabled-automatically-prefix').hide();
           },
@@ -1036,39 +1042,83 @@ jQuery(document).ready(function ($) {
             add_condition($(this));
         });
 
-        new_rule.find('select[name="discount-type"]').change(function(){
-          resetAll(new_rule);
-          switch($(this).val()){
-            case '0':
-              (new RuleBlocks(new_rule)).updateView();
-              $(this).parent().find('a').hide(0);
-              break;
-            case 'product_discount':
-              show_product_discount_type(this, new_rule);
-              break;
-            case 'gifts_discount':
-              show_gifts_discount_type(this, new_rule);
-              break;
-            case 'pro_bogo_discount':
-              show_pro_bogo_discount_type(this, new_rule);
-              break;
-            case 'bogo_discount':
-              show_bogo_discount_type(this, new_rule);
-              break;
-            case 'bulk_discount':
-              show_bulk_discount_type(this, new_rule);
-              break;
-            case 'role_bulk_discount':
-              show_role_bulk_discount_type(this, new_rule);
-              break;
-            case 'role_discount':
-              show_role_discount_type(this, new_rule);
-              break;
-            case 'cart_discount':
-              show_cart_discount_type(this, new_rule);
-              break;
-          }
+        new_rule.find('.wdp-add-popular-condition').click(function () {
+            var data = {
+                type: $(this).data('condition-type'),
+                options: {
+                    comparison_value: $(this).data('condition-value'),
+                },
+                data_list: {},
+            };
+
+            var rule = $(this).closest('.postbox');
+            var rule_id = rule.find('.rule-id').val();
+
+            if(rule_id == '') {
+                var $condition_type_selector = rule.find('.wdp-condition-field-type select').first();
+                $condition_type_selector.val(data.type);
+                update_condition_fields($condition_type_selector, data);
+            } else {
+                add_condition($(this), data);
+            }
         });
+
+		new_rule.find('[data-discount-type]').click(function (e) {
+			e.preventDefault();
+			new_rule.find('.wdp-discount-type').hide();
+			resetAll(new_rule);
+			switch($(this).data('discount-type')){
+			  case '0':
+				(new RuleBlocks(new_rule)).updateView();
+				$(this).parent().find('a').hide(0);
+				break;
+			  case 'product_discount':
+				show_product_discount_type(this, new_rule);
+				break;
+			  case 'gifts_discount':
+				show_gifts_discount_type(this, new_rule);
+				break;
+			  case 'pro_bogo_discount':
+				show_pro_bogo_discount_type(this, new_rule);
+				break;
+			  case 'bogo_discount':
+				show_bogo_discount_type(this, new_rule);
+				break;
+			  case 'bulk_discount':
+				show_bulk_discount_type(this, new_rule);
+				break;
+			  case 'role_bulk_discount':
+				show_role_bulk_discount_type(this, new_rule);
+				break;
+			  case 'role_discount':
+				show_role_discount_type(this, new_rule);
+				break;
+			  case 'cart_discount':
+				show_cart_discount_type(this, new_rule);
+				break;
+
+			  case '':
+				var skip = new_rule.find('[name="discount_type_skip"]:checked').val();
+				if(skip) {
+					$('.wdp-discount-type').remove();
+					let params = {
+						action: 'wdp_ajax',
+						method: 'skip_discount_type',
+					};
+					params[wdp_data.security_query_arg] = wdp_data.security;
+					$.post(
+						ajaxurl,
+						params,
+						function (response) {
+
+						},
+						'json'
+					);
+				}
+				break;
+			}
+			new_rule.find('.wdp-add-condition, .replace-adjustments').show();
+		});
 
         // Add discount message
         new_rule.find('.wdp-btn-add-discount-message').click(function () {
@@ -3613,78 +3663,6 @@ jQuery(document).ready(function ($) {
 
   });
 
-  $('.wdp-rebuild-run').click(function () {
-    progressParentBlock.start();
-    progress.start();
-
-    $("#progress_div").show();
-    disableControls();
-    $("#rules-action-controls button").attr("disabled", "disabled");
-
-    let props = {
-      action: 'wdp_ajax',
-      method: 'start_partial_' + $('select[name=recalculace_selector]').val(),
-    };
-    props[wdp_data.security_query_arg] = wdp_data.security;
-
-    let requestPromise = $.post({
-      url: ajaxurl,
-      data: props,
-      dataType: 'json'
-    });
-
-    async function runPartial(data, textStatus, jqXHR) {
-      let totalCount = typeof data.data !== 'undefined' && typeof data.data.count !== 'undefined' ? data.data.count : null;
-
-      if (!totalCount) {
-        progress.setProgress(100);
-        $("#progress_div").hide();
-        enableControls();
-        return;
-      }
-
-      const PAGE_SIZE = 100;
-
-      for (let i = 0; i < totalCount; i += PAGE_SIZE) {
-        let props = {
-          action: 'wdp_ajax',
-          method: 'partial_' + $('select[name=recalculace_selector]').val(),
-          from: i,
-          count: PAGE_SIZE
-        };
-        props[wdp_data.security_query_arg] = wdp_data.security;
-
-        let responseData = await $.post({
-          url: ajaxurl,
-          data: props,
-          dataType: 'json',
-        });
-
-        if ( typeof responseData.success === 'undefined' || !responseData.success) {
-          let msg = "The operation is failed";
-          if ( typeof responseData.data !== 'undefined' && responseData.data ) {
-            msg += ' : ' + responseData.data;
-          }
-          progressParentBlock.setNotification(msg, true, 3.5);
-
-          $("#progress_div").hide();
-          enableControls();
-          return;
-        }
-
-        let percent = ((i + PAGE_SIZE) < totalCount) ? ((i + PAGE_SIZE) / totalCount) * 100 : 100;
-        percent = Math.round(percent);
-        progress.setProgress(percent);
-      }
-      progressParentBlock.setNotification('The operation is completed', false, 2.5);
-
-      $("#progress_div").hide();
-      enableControls();
-    }
-
-    requestPromise.then(runPartial);
-  });
-
   $('#bulk-action').submit(function (e) {
     let form = $(this)
     $('.bulk-action-mark').each(function () {
@@ -3707,132 +3685,15 @@ jQuery(document).ready(function ($) {
     });
   })
 
-  let ProgressBar = (function () {
-    function ProgressBar(element) {
-      this.el = element;
-      this.subscribers = [];
-      this.init();
-    }
-
-    ProgressBar.prototype.init = function () {
-      this.el.css("width", "100%")
-        .css("background", "#292929")
-        .css("border", "1px solid #111")
-        .css("border-radius", "5px")
-        .css("overflow", "hidden")
-        .css("box-shadow", "0 0 5px #333")
-        .css("float", "right");
-
-      let subElement = $("<div></div>");
-      subElement.css("height", "100%")
-        .css("color", "#fff")
-        .css("text-align", "right")
-        .css("font-size", "12px")
-        .css("line-height", "22px")
-        .css("text-align", "right")
-        .css("background-color", "#1a82f7")
-        .css("background", "-webkit-gradient(linear, 0% 0%, 0% 100%, from(#0099FF), to(#1a82f7))")
-        .css("background", "-webkit-linear-gradient(top, #0099FF, #1a82f7)")
-        .css("background", "-moz-linear-gradient(top, #0099FF, #1a82f7)")
-        .css("background", "-ms-linear-gradient(top, #0099FF, #1a82f7)")
-        .css("background", "-o-linear-gradient(top, #0099FF, #1a82f7)");
-
-      this.el.append(subElement);
-      this.setProgress(0);
-    }
-
-    ProgressBar.prototype.start = function () {
-      this.setProgress(0);
-    }
-
-    ProgressBar.prototype.finish = function () {
-      this.setProgress(100);
-    }
-
-    ProgressBar.prototype.setProgress = function (percent) {
-      if (percent === 0) {
-        this.el.find('div').html(percent + "%&nbsp;").animate({width: 0}, 0);
-      } else {
-        var progressBarWidth = percent * this.el.width() / 100;
-        this.el.find('div').html(percent + "%&nbsp;").animate({width: progressBarWidth}, 200);
-      }
-
-      this.__notify(percent);
-    }
-
-    ProgressBar.prototype.addSubscriber = function (sub) {
-      this.subscribers.push(sub);
-    }
-
-    ProgressBar.prototype.__notify = function (percent) {
-      for (let i in this.subscribers) {
-        let subscriber = this.subscribers[i];
-        subscriber.react(percent);
-      }
-    }
-
-    return ProgressBar;
-  })();
-
-  let ProgressBarBlock = (function () {
-    function ProgressBarBlock(element) {
-      this.el = element;
-      this.el.hide();
-      this.hideTimer = null;
-    }
-
-    ProgressBarBlock.prototype.react = function (percent) {
-      if (this.hideTimer) {
-        clearTimeout(this.hideTimer);
-        this.hideTimer = null;
-      }
-
-      if (percent === 100) {
-        let that = this;
-        this.hideTimer = setTimeout(function () {
-          that.el.hide();
-        }, 2000);
-      }
-    }
-
-    ProgressBarBlock.prototype.start = function () {
-      this.el.show();
-    }
-
-    ProgressBarBlock.prototype.setError = function (msg) {
-      let errorEl = $(`<div id="progress-error-msg" style="color: red;">${msg}</div>`);
-      this.el.append(errorEl);
-
-      let that = this;
-      setTimeout(function () {
-        that.el.hide();
-        errorEl.remove();
-      }, 2000);
-    }
-
-    ProgressBarBlock.prototype.setNotification = function (msg, isErr, durationSec) {
-      let notificationEl = $(`<div id="progress-notification-msg" style="color: ${isErr ? 'red' : 'green'};">${msg}</div>`);
-      this.el.append(notificationEl);
-
-      let that = this;
-      setTimeout(function () {
-        that.el.hide();
-        notificationEl.remove();
-      }, durationSec * 1000);
-    }
-
-    return ProgressBarBlock;
-  })();
-
-  let progress = new ProgressBar($("#progressBar"));
-  let progressParentBlock = new ProgressBarBlock($("#progressBarBlock"));
-  progress.addSubscriber(progressParentBlock);
-
   $('#bulk-action').submit(function (e) {
     if ($('#bulk-action-selector').val() === 'delete') {
       return confirm(wdp_data.labels.are_you_sure_to_delete_selected_rules)
     }
   })
+
+  $(document).on('click', '.wdp-description-cut',function() {
+      $(this).closest('.wdp-description').toggleClass('wdp-description_visible');
+  });
 });
 
 let RuleBlocks = (function () {

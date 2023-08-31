@@ -182,17 +182,7 @@ class CacheHelper
         $productMeta = self::cacheGet($productId, self::GROUP_VARIATION_PROD_DATA_CACHE);
 
         if (false === $productMeta) {
-            $productMeta = get_post_meta($productId);
-            array_walk($productMeta, function (&$item) {
-                if (is_array($item)) {
-                    $item = reset($item);
-                }
-
-                $item = maybe_unserialize($item);
-
-                return $item;
-            });
-
+            $productMeta = Database::getOnlyRequiredProductPostMetaData((int)$productId);
             self::cacheSet($productId, $productMeta, self::GROUP_VARIATION_PROD_DATA_CACHE);
         }
 

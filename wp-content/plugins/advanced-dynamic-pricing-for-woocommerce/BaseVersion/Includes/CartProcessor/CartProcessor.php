@@ -328,6 +328,9 @@ class CartProcessor
 
         if (count(array_filter($wcCart->get_cart_contents())) === 0) {
             $this->cartBuilder->addOriginCoupons($cart, $wcCart);
+
+            $this->modifySessionIfCartIsEmpty($cart, $wcCart);
+
             return $cart;
         }
 
@@ -440,8 +443,8 @@ class CartProcessor
                     } elseif ( ! isset($product->get_changes()['price'])) {
                         self::setProductPriceDependsOnPriceMode($product);
                     } elseif (($tmCmp = new TmExtraOptionsCmp()) && $tmCmp->isActive() && ($item = $facade->createItem()) && count($item->getAddons()) > 0) {
-                        self::setProductPriceDependsOnPriceMode($product);
-                        $facade->setInitialCustomPrice(floatval($product->get_price('edit')) + $item->getAddonsAmount());
+                        $productExt = new ProductExtension($product);
+                        $facade->setInitialCustomPrice(floatval($productExt->getProductPriceDependsOnPriceMode()) + $item->getAddonsAmount());
                     } else {
                         $facade->setInitialCustomPrice($product->get_price('edit'));
                     }
@@ -1250,6 +1253,15 @@ class CartProcessor
         $sessionFacade = $cart->getContext()->getSession();
 
         $sessionFacade->insertInitialTotals($initialTotals);
+        $sessionFacade->push();
+    }
+
+    protected function modifySessionIfCartIsEmpty($cart, \WC_Cart $wcCart)
+    {
+        /** @var Cart $cart */
+
+        $sessionFacade = $cart->getContext()->getSession();
+        $sessionFacade->setRemovedFreeItemsList([]);
         $sessionFacade->push();
     }
 

@@ -44,12 +44,9 @@ class WpmlCmp
 
     public function modifyContext(Context $context)
     {
-        /** Convert from WPML language code to locale */
-        if (defined('ICL_LANGUAGE_CODE') && function_exists("icl_get_languages_locales")) {
-            $locales = icl_get_languages_locales();
-            if (isset($locales[ICL_LANGUAGE_CODE])) {
-                $context->setLanguage(new Context\Language($locales[ICL_LANGUAGE_CODE]));
-            }
+        if($this->sitepress) {
+            $locale = $this->sitepress->get_locale($this->sitepress->get_this_lang());
+            $context->setLanguage(new Context\Language($locale));
         }
 
     }
@@ -63,23 +60,16 @@ class WpmlCmp
 
     public function preloadedListLanguages($list)
     {
-        if ( ! function_exists("icl_get_languages_locales") || ! function_exists("icl_get_languages_codes")) {
-            return $list;
-        }
-
-        $list = [];
-        $locales = icl_get_languages_locales();
-        $labels  = icl_get_languages_codes();
-
-        foreach ($labels as $label => $wpmlCode) {
-            if ($code = $locales[$wpmlCode] ?? "") {
+        if($this->sitepress) {
+            $list = [];
+            $languages = $this->sitepress->get_languages();
+            foreach ($languages as $lang) {
                 $list[] = [
-                    'id'   => $code,
-                    'text' => $label,
+                    'id'   => $lang['default_locale'],
+                    'text' => $lang['english_name'],
                 ];
             }
         }
-
         return $list;
     }
 

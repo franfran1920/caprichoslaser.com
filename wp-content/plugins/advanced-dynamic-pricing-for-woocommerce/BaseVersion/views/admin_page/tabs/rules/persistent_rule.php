@@ -1,6 +1,7 @@
 <?php
 
 use ADP\BaseVersion\Includes\Enums\RuleTypeEnum;
+use ADP\BaseVersion\Includes\Helpers\Helpers;
 
 defined('ABSPATH') or exit;
 
@@ -10,11 +11,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
 
 ?>
 
-<form class="postbox closed not-initialized" data-index="{r}">
-    <div style="float: left; margin: 20px 10px;">
-        <input type="checkbox" class="bulk-action-mark">
-    </div>
-
+<form class="wdp-ruleitem wdp-ruleitem-{rule_type} postbox closed not-initialized" data-index="{r}">
     <input type="hidden" name="action" value="wdp_ajax">
     <input type="hidden" name="method" value="save_rule">
     <input type="hidden" name="rule[priority]" value="{p}" class="rule-priority"/>
@@ -33,31 +30,30 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
     <input type="hidden" name="rule[additional][blocks][conditions][isOpen]" value="0">
     <input type="hidden" name="rule[additional][blocks][limits][isOpen]" value="0">
 
-    <button type="button" class="handlediv" aria-expanded="false">
-        <span class="screen-reader-text"><?php _e('Expand', 'advanced-dynamic-pricing-for-woocommerce') ?></span>
-        <span class="toggle-indicator" aria-hidden="true"
-              title="<?php _e('Expand', 'advanced-dynamic-pricing-for-woocommerce') ?>"></span>
-    </button>
-
-    <div class="wdp-actions">
-        <button type="button" class="button-link wdp_copy_rule">
-            <span class="screen-reader-text"><?php _e('Clone', 'advanced-dynamic-pricing-for-woocommerce') ?>
-                <span data-wdp-title></span></span>
-            <span class="dashicons dashicons-admin-page"
-                  title="<?php _e('Clone', 'advanced-dynamic-pricing-for-woocommerce') ?>"></span>
-        </button>
-        <button type="button" class="button-link wdp_remove_rule">
-            <span class="screen-reader-text"><?php _e('Delete', 'advanced-dynamic-pricing-for-woocommerce') ?>
-                <span data-wdp-title></span></span>
-            <span class="dashicons dashicons-no-alt"
-                  title="<?php _e('Delete', 'advanced-dynamic-pricing-for-woocommerce') ?>"></span>
-        </button>
-        <div class="rule-id-badge wdp-list-item-id-badge">
-            <label><?php _e('#', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
-            <label class="rule-id"></label>
+    <div class="wdp-ruleitem-row hndle ui-sortable-handle">
+        <div class="rule-type-bage">
+            <input type="checkbox" class="bulk-action-mark">
         </div>
 
-        <div style="float: right;margin: 10px" class="rule-type">
+        <h2>
+            <div class="wdp-column wdp-field-enabled">
+                <select name="rule[enabled]" data-role="flipswitch" data-mini="true">
+                    <option value="off">Off</option>
+                    <option value="on" selected>On</option>
+                </select>
+            </div>
+            <div class="wdp-disabled-automatically-prefix">[disabled automatically]</div>
+            <span data-wdp-title></span>
+        </h2>
+
+        <div class="rule-date-from-to">
+            <span><?php _e('From', 'advanced-dynamic-pricing-for-woocommerce') ?></span>
+            <input style="max-width: 100px;" class="datepicker" name="rule[additional][date_from]" type="text">
+            <span><?php _e('To', 'advanced-dynamic-pricing-for-woocommerce') ?></span>
+            <input style="max-width: 100px;" class="datepicker" name="rule[additional][date_to]" type="text">
+        </div>
+
+        <div class="rule-type">
             <span><?php _e('Rule type', 'advanced-dynamic-pricing-for-woocommerce') ?></span>
             <select name="rule[rule_type]">
                 <option value="<?php echo RuleTypeEnum::PERSISTENT()->getValue() ?>">
@@ -69,26 +65,31 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
             </select>
         </div>
 
-        <div style="float: right;margin: 10px" class="rule-date-from-to">
-            <span><?php _e('From', 'advanced-dynamic-pricing-for-woocommerce') ?></span>
-            <input style="max-width: 100px;" class="datepicker" name="rule[additional][date_from]" type="text">
-            <span><?php _e('To', 'advanced-dynamic-pricing-for-woocommerce') ?></span>
-            <input style="max-width: 100px;" class="datepicker" name="rule[additional][date_to]" type="text">
+        <div class="rule-id-badge wdp-list-item-id-badge">
+            <label><?php _e('#', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
+            <label class="rule-id"></label>
         </div>
 
-        <div class="rule-type-bage"></div>
+        <button type="button" class="button-link wdp_remove_rule">
+            <span class="screen-reader-text"><?php _e('Delete', 'advanced-dynamic-pricing-for-woocommerce') ?>
+                </span>
+            <span class="dashicons dashicons-no-alt"
+                  title="<?php _e('Delete', 'advanced-dynamic-pricing-for-woocommerce') ?>"></span>
+        </button>
+
+        <button type="button" class="button-link wdp_copy_rule">
+            <span class="screen-reader-text"><?php _e('Clone', 'advanced-dynamic-pricing-for-woocommerce') ?>
+                </span>
+            <span class="dashicons dashicons-admin-page"
+                  title="<?php _e('Clone', 'advanced-dynamic-pricing-for-woocommerce') ?>"></span>
+        </button>
+
+        <button type="button" class="handlediv" aria-expanded="false">
+            <span class="screen-reader-text"><?php _e('Expand', 'advanced-dynamic-pricing-for-woocommerce') ?></span>
+            <span class="toggle-indicator" aria-hidden="true"
+                title="<?php _e('Expand', 'advanced-dynamic-pricing-for-woocommerce') ?>"></span>
+        </button>
     </div>
-
-    <h2 class="hndle ui-sortable-handle">
-        <div class="wdp-column wdp-field-enabled">
-            <select name="rule[enabled]" data-role="flipswitch" data-mini="true">
-                <option value="off">Off</option>
-                <option value="on" selected>On</option>
-            </select>
-        </div>
-        <div class="wdp-disabled-automatically-prefix">[disabled automatically]</div>
-        <span data-wdp-title></span>&nbsp;
-    </h2>
     <!-- <div style="clear: both;"></div> -->
     <div class="inside">
         <div class="wdp-row wdp-options">
@@ -105,7 +106,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                     <label>
                         <input type="checkbox"
                                name="rule[additional][is_replace]">
-                        <?php _e("Don't modify product prices and show discount as coupon",
+                        <?php _e("Add products to cart at normal cost and show discount as coupon",
                             'advanced-dynamic-pricing-for-woocommerce') ?>
                     </label>
                     <input type="text" name="rule[additional][replace_name]"
@@ -118,7 +119,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
 
         <div class="wdp-block wdp-filter-block wdp-row" style="display: none;">
             <div class="wdp-column wdp-column-help">
-                <label><?php _e('Filter by products', 'advanced-dynamic-pricing-for-woocommerce'); ?></label><br>
+                <label><?php Helpers::ruleFilterLabel('Filter by products', 'advanced-dynamic-pricing-for-woocommerce'); ?></label><br>
                 <label class="wdp-filter-warning" style="color:red"><?php _e('If you add many lines to this section – you will create product bundle',
                         'advanced-dynamic-pricing-for-woocommerce'); ?></label>
                 <p class="wdp-rule-help">
@@ -142,7 +143,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
 
         <div class="wdp-block wdp-product-adjustments wdp-row" style="display: none;">
             <div class="wdp-column wdp-column-help">
-                <label><?php _e('Product discounts', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
+                <label><?php Helpers::ruleFilterLabel('Product discounts', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
                 <p class="wdp-rule-help">
                 <?php
                         echo sprintf(
@@ -189,6 +190,9 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                     <div class="wdp-column">
                         <input name="rule[product_adjustments][total][value]" class="adjustment-total-value"
                                type="number" placeholder="0.00" min="0" step="any">
+                        <span class="wdp-product-adjustments-total-value-note">
+                            <?php _e('To increase the price, make a negative discount', 'advanced-dynamic-pricing-for-woocommerce') ?>
+                        </span>
                     </div>
                 </div>
 
@@ -198,7 +202,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                     <div>
                         <div style="display: inline-block;margin: 0 10px 0 0;">
                             <label>
-                                <?php _e('Max discount sum:', 'advanced-dynamic-pricing-for-woocommerce') ?>
+                                <?php _e('Limit discount to amount:', 'advanced-dynamic-pricing-for-woocommerce') ?>
                                 <input style="display: inline-block; width: 200px;"
                                        name="rule[product_adjustments][max_discount_sum]" type="number"
                                        class="product-adjustments-max-discount" placeholder="0.00" min="0" step="any"/>
@@ -230,7 +234,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                        name="rule[sortable_blocks_priority][]" value="bulk-adjustments">
                 <div class="wdp-row">
                     <div class="wdp-column wdp-column-help">
-                        <label><?php _e('Bulk mode', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
+                        <label><?php Helpers::ruleFilterLabel('Bulk mode', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
                         <p class="wdp-rule-help">
                         <?php
                             echo sprintf(
@@ -322,7 +326,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
 
         <div class="wdp-block wdp-get-products-block wdp-get-products-options wdp-row" style="display: none;">
             <div class="wdp-column wdp-column-help">
-                <label><?php _e('Free products.', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
+                <label><?php Helpers::ruleFilterLabel('Free products.', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
                 <p class="wdp-rule-help">
                 <?php
                     echo sprintf(
@@ -541,16 +545,74 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
 
         <div class="wdp-block wdp-conditions wdp-sortable wdp-row" style="display: none;">
             <div class="wdp-column wdp-column-help">
-                <label><?php _e('Conditions', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
+                <label><?php Helpers::ruleFilterLabel('Conditions', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
                 <p class="wdp-rule-help">
                 <?php
                     echo sprintf(
                         wp_kses(
                                 __('Select a cart condition that would trigger a rule execution.', 'advanced-dynamic-pricing-for-woocommerce')
-                                .'<br><a href="%s">' .__('Read docs', 'advanced-dynamic-pricing-for-woocommerce') .'</a>',
-                            array('br' => array(), 'a' => array('href' =>array()))
+                                .'<br><a href="%s" target="_blank">' .__('Read docs', 'advanced-dynamic-pricing-for-woocommerce') .'</a>',
+                            array('br' => array(), 'a' => array('href' =>array(), 'target' => array()))
                         ),
                         esc_url('https://docs.algolplus.com/algol_pricing/cart-conditions-free/')
+                    );
+                ?>
+                </p>
+                <h4 style="margin-bottom: 0px;"><?php _e('Popular conditions:',
+                            'advanced-dynamic-pricing-for-woocommerce'); ?></h4>
+                <div class="wdp-description ">
+                    <div class="wdp-description-content">
+                        <ul class="wdp-rule-help" style="column-count: 2;">
+                            <?php 
+                            $mostPopularConditions = [
+                                \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\CartSubtotal::class
+                                    => __('Subtotal', 
+                                            'advanced-dynamic-pricing-for-woocommerce'), //(Cart Condition "Subtotal (excl. VAT)”)
+                                \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\CustomerRole::class
+                                    => __('Role', 
+                                            'advanced-dynamic-pricing-for-woocommerce'),
+                                \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\Date::class
+                                    => __('Date', 
+                                            'advanced-dynamic-pricing-for-woocommerce'),
+                                \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\CustomerOrderCount::class
+                                    => __('First Order', 
+                                            'advanced-dynamic-pricing-for-woocommerce'),
+                                \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\ShippingCountry::class
+                                    => __('Shipping Country', 
+                                            'advanced-dynamic-pricing-for-woocommerce'),
+                                \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\ProductsAll::class
+                                    => __('Product in the Cart', 
+                                            'advanced-dynamic-pricing-for-woocommerce'),
+                            ];
+
+                            foreach($mostPopularConditions as $impl => $name) {?>
+                                <li>
+                                    <span class="wdp-add-popular-condition wdp-link" 
+                                        data-condition-type="<?php echo $impl::getType() ?>"
+                                        <?php if($impl === \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\CustomerOrderCount::class) {?>
+                                            data-condition-value="1"
+                                        <?php } ?>
+                                    >
+                                        <?php echo $name ?>
+                                </span>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="wdp-description-cut">
+                        <span class="wdp-description-cut-more wdp-link">More</span>
+                        <span class="wdp-description-cut-less wdp-link">Less</span>
+                    </div>
+                </div>
+                <p class="wdp-rule-help">
+                    <?php
+                    echo sprintf(
+                        wp_kses(
+                                __('Didn’t find a necessary condition?', 'advanced-dynamic-pricing-for-woocommerce')
+                                .'<br><a href="%s" target="_blank">' .__('Program your own custom condition', 'advanced-dynamic-pricing-for-woocommerce') .'</a>',
+                            array('br' => array(), 'a' => array('href' =>array(), 'target' => array()))
+                        ),
+                        esc_url('https://docs.algolplus.com/algol_pricing/program-custom-condition/')
                     );
                     ?>
                 </p>
@@ -576,7 +638,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
 
         <div class="wdp-block wdp-limits wdp-sortable wdp-row" style="display: none;">
             <div class="wdp-column wdp-column-help">
-                <label><?php _e('Limits', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
+                <label><?php Helpers::ruleFilterLabel('Limits', 'advanced-dynamic-pricing-for-woocommerce'); ?></label>
                 <p class="wdp-rule-help">
                 <?php
                     echo sprintf(

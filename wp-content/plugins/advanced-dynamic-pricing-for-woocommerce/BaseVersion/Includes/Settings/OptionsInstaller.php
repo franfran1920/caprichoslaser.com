@@ -246,6 +246,12 @@ class OptionsInstaller
             ),
 
             $builder::boolean(
+                'create_blank_rule',
+                false,
+                __('Create a blank rule', 'advanced-dynamic-pricing-for-woocommerce')
+            ),
+
+            $builder::boolean(
                 'show_debug_bar',
                 false,
                 __('Show debug panel at bottom of the page', 'advanced-dynamic-pricing-for-woocommerce')
@@ -421,6 +427,11 @@ class OptionsInstaller
                         'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 "apply"
+            ),
+            $builder::boolean(
+                'readonly_price_for_free_products', 
+                true,
+                __('Read-only quantity for free products', 'advanced-dynamic-pricing-for-woocommerce')
             )
         );
 

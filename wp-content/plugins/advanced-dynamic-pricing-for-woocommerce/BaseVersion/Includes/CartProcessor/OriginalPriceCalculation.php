@@ -91,7 +91,27 @@ class OriginalPriceCalculation
             $this->priceToAdjust             = $product->get_price('edit');
             $this->trdPartyAdjustmentsAmount = 0.0;
             $this->basePrice                 = $this->priceToAdjust;
-        } elseif (!(($tmCmp = new TmExtraOptionsCmp()) && $tmCmp->isActive()) && $wcCartItem->getInitialCustomPrice()) {
+        } elseif (($tmCmp = new TmExtraOptionsCmp()) && $tmCmp->isActive() && $wcCartItem->getInitialCustomPrice()) {
+            $this->priceToAdjust = $wcCartItem->getInitialCustomPrice();
+
+            try {
+                $reflection = new ReflectionClass($product);
+                $property = $reflection->getProperty('changes');
+                $property->setAccessible(true);
+                $changes = $property->getValue($product);
+                $property->setValue($product, array());
+            } catch (ReflectionException $exception) {
+                $property = null;
+            }
+
+            $this->trdPartyAdjustmentsAmount = 0;
+            $productExt = new ProductExtension($product);
+            $this->basePrice = $productExt->getProductPriceDependsOnPriceMode();
+
+            if (isset($property, $changes)) {
+                $property->setValue($product, $changes);
+            }
+        } elseif ($wcCartItem->getInitialCustomPrice()) {
             $this->priceToAdjust = $this->getPrice($product, $wcCartItem, $prodPropsWithFilters, true);
 
             try {

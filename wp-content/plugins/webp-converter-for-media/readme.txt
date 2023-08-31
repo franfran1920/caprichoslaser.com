@@ -5,7 +5,7 @@ Tags: convert webp, webp, optimize images, image optimization, compress images
 Requires at least: 4.9
 Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 5.9.5
+Stable tag: 5.9.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -375,6 +375,11 @@ Current list of supported CDN servers:
 4. Optimization statistics of Media Library
 
 == Changelog ==
+
+= 5.9.6 (2023-08-25) =
+* `[Changed]` Maximum weight of supported files from 25 MB to 32 MB
+* `[Added]` Displaying image in its original format by adding "?original" suffix to image URL
+* `[Added]` Removing converted WebP files after deleting WebP format from "Supported output formats" list
 
 = 5.9.5 (2023-07-31) =
 * `[Changed]` Error message for bypassing_apache error in server configuration

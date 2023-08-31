@@ -14,6 +14,7 @@ class OrderItemRepository implements OrderItemRepositoryInterface {
 
         $data = array_merge(array(
             'order_id'      => 0,
+            'order_item_id' => 0,
             'product_id'    => 0,
             'rule_id'       => 0,
             'amount'        => 0.0,

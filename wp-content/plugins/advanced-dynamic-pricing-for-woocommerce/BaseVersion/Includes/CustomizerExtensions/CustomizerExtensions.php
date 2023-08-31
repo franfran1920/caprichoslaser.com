@@ -600,15 +600,6 @@ class CustomizerExtensions
                 'title'    => __('Cart', 'advanced-dynamic-pricing-for-woocommerce'),
                 'priority' => 10,
                 'options'  => array(
-                    'enable'   => array(
-                        'label'             => __('Enable amount saved', 'advanced-dynamic-pricing-for-woocommerce'),
-                        'default'           => false,
-                        'priority'          => 5,
-                        'control_type'      => 'checkbox',
-                        'sanitize_callback' => 'wc_string_to_bool',
-
-                        'apply_type' => 'filter',
-                    ),
                     'position' => array(
                         'label'        => __('Position of amount saved', 'advanced-dynamic-pricing-for-woocommerce'),
                         'default'      => "woocommerce_cart_totals_before_order_total",
@@ -630,15 +621,6 @@ class CustomizerExtensions
                 'title'    => __('Mini Cart', 'advanced-dynamic-pricing-for-woocommerce'),
                 'priority' => 15,
                 'options'  => array(
-                    'enable'   => array(
-                        'label'             => __('Enable amount saved', 'advanced-dynamic-pricing-for-woocommerce'),
-                        'default'           => false,
-                        'priority'          => 5,
-                        'control_type'      => 'checkbox',
-                        'sanitize_callback' => 'wc_string_to_bool',
-
-                        'apply_type' => 'filter',
-                    ),
                     'position' => array(
                         'label'        => __('Position of amount saved', 'advanced-dynamic-pricing-for-woocommerce'),
                         'default'      => "woocommerce_mini_cart_contents",
@@ -660,15 +642,6 @@ class CustomizerExtensions
                 'title'    => __('Checkout', 'advanced-dynamic-pricing-for-woocommerce'),
                 'priority' => 20,
                 'options'  => array(
-                    'enable'   => array(
-                        'label'             => __('Enable amount saved', 'advanced-dynamic-pricing-for-woocommerce'),
-                        'default'           => false,
-                        'priority'          => 5,
-                        'control_type'      => 'checkbox',
-                        'sanitize_callback' => 'wc_string_to_bool',
-
-                        'apply_type' => 'filter',
-                    ),
                     'position' => array(
                         'label'        => __('Position of amount saved', 'advanced-dynamic-pricing-for-woocommerce'),
                         'default'      => "woocommerce_review_order_before_order_total",
@@ -684,29 +657,6 @@ class CustomizerExtensions
                                 'woocommerce_review_order_after_order_total'    => __('After order total',
                                     'advanced-dynamic-pricing-for-woocommerce'),
                             )),
-                        'priority'     => 10,
-
-                        'apply_type' => 'filter',
-                    ),
-                )
-            ),
-            AdvertisingThemeProperties\EditOrderMenu::KEY => array(
-                'title'    => __('Edit backend order', 'advanced-dynamic-pricing-for-woocommerce'),
-                'priority' => 45,
-                'options'  => array(
-                    'enable'   => array(
-                        'label'             => __('Enable amount saved', 'advanced-dynamic-pricing-for-woocommerce'),
-                        'default'           => false,
-                        'priority'          => 5,
-                        'control_type'      => 'checkbox',
-                        'sanitize_callback' => 'wc_string_to_bool',
-
-                        'apply_type' => 'filter',
-                    ),
-                    'position' => array(
-                        'label'        => '',
-                        'default'      => "woocommerce_admin_order_totals_after_tax",
-                        'control_type' => 'hidden',
                         'priority'     => 10,
 
                         'apply_type' => 'filter',
@@ -945,22 +895,14 @@ class CustomizerExtensions
 
         $obj                            = $themeProperties->advertisingThemeProperties->cart;
         $data                           = $props[$themeProperties->advertisingThemeProperties::KEY][$obj::KEY];
-        $obj->isEnableAmountSaved       = $data['enable'];
         $obj->positionAmountSavedAction = $data['position'];
 
         $obj                            = $themeProperties->advertisingThemeProperties->miniCart;
         $data                           = $props[$themeProperties->advertisingThemeProperties::KEY][$obj::KEY];
-        $obj->isEnableAmountSaved       = $data['enable'];
         $obj->positionAmountSavedAction = $data['position'];
 
         $obj                            = $themeProperties->advertisingThemeProperties->checkout;
         $data                           = $props[$themeProperties->advertisingThemeProperties::KEY][$obj::KEY];
-        $obj->isEnableAmountSaved       = $data['enable'];
-        $obj->positionAmountSavedAction = $data['position'];
-
-        $obj                            = $themeProperties->advertisingThemeProperties->editOrder;
-        $data                           = $props[$themeProperties->advertisingThemeProperties::KEY][$obj::KEY];
-        $obj->isEnableAmountSaved       = $data['enable'];
         $obj->positionAmountSavedAction = $data['position'];
 
         return $themeProperties;

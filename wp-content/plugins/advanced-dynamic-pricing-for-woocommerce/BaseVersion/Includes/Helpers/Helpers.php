@@ -538,4 +538,33 @@ class Helpers
 
         return ! empty($termPermalink) && ! is_wp_error($termPermalink) ? $termPermalink : '';
     }
+
+    public static function ruleFilterLabel($name, $domain = 'advanced-dynamic-pricing-for-woocommerce') {
+        $map = [
+            'Filter by products' => 'product_filter',
+            'Product discounts'  => 'product_discount',
+            'Role discounts'     => 'role_discount',
+            'Bulk mode'          => 'bulk',
+            'Free products.'     => 'free_product',
+            'Auto add to cart.'  => 'auto_add_to_cart',
+            'Cart adjustments'   => 'cart_adjustment',
+            'Conditions'         => 'cart_condition',
+            'Discount messages'  => 'advertising',
+            'Offer to buy more'  => 'offer_to_buy_more',
+            'Limits'             => 'limits',
+        ];
+
+        if(array_key_exists($name, $map)) {
+            $path = WC_ADP_PLUGIN_URL."/BaseVersion/assets/images/".$map[$name].".svg";
+            echo "<img src=\"{$path}\" class=\"wdp-filter-img\">";
+            /*?>
+            <span class="wdp-filter-img-wrapper">
+                <?php include(WC_ADP_PLUGIN_PATH."/BaseVersion/assets/images/".$map[$name].".svg") ?>
+            </span>
+            <?php*/
+        }
+        echo "<div class=\"wdp-filter-title\">";
+        _e($name, $domain);
+        echo "</div>";
+    }
 }

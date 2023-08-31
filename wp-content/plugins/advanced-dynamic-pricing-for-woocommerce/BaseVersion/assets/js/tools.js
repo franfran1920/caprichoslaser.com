@@ -23,6 +23,12 @@ jQuery(document).ready(function () {
       window.open(ajaxurl + '?action=export-csv-bulk-ranges' + '&' + wdpTools.security_param + '=' + wdpTools.security, '_blank')
     });
 
+    jQuery( '.wdp-export-json-settings' ).click(function () {
+
+      var export_select = jQuery('#wdp-export-select').val();
+      window.open(ajaxurl + '?action=export-json-settings' + '&' + 'export_select=' +export_select + '&' + wdpTools.security_param + '=' + wdpTools.security, '_blank')
+    });
+
     setTimeout( function () {
       if ( window.location.hash.indexOf( 'section' ) !== - 1 ) {
         jQuery( '.section_choice[href="' + window.location.hash + '"]' ).click();

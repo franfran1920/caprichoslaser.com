@@ -72,4 +72,42 @@ class Database
 
         return $required_data;
     }
+
+    public static function getOnlyRequiredProductPostMetaData(int $productId)
+    {
+        global $wpdb;
+
+        $requiredKeys = array(
+            '_sale_price',
+            '_regular_price',
+            '_sale_price_dates_from',
+            '_sale_price_dates_to',
+            '_tax_status',
+            '_tax_class',
+            '_sku',
+        );
+        $requiredKeys = "'" . implode("','", $requiredKeys) . "'";
+
+        $metaList = $wpdb->get_results($wpdb->prepare("
+			SELECT post_id, meta_key, meta_value
+			FROM $wpdb->postmeta
+			WHERE
+				post_id = %d
+				AND
+				(meta_key IN ( $requiredKeys ) OR meta_key LIKE 'attribute_%')
+			", $productId)
+            , ARRAY_A);
+
+        $postData = $wpdb->get_row(
+            $wpdb->prepare("SELECT * FROM $wpdb->posts WHERE ID = %d", $productId)
+        );
+        $postData->meta = [];
+
+        foreach ($metaList as $row) {
+            $postData->meta[$row['meta_key']] = maybe_unserialize($row['meta_value']);
+        }
+
+        return $postData;
+    }
+
 }

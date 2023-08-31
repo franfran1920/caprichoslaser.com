@@ -6,7 +6,6 @@ use ADP\BaseVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\Car
 use ADP\BaseVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\CheckoutMenu;
 use ADP\BaseVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\GlobalMenu;
 use ADP\BaseVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\MiniCartMenu;
-use ADP\BaseVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties\EditOrderMenu;
 
 defined('ABSPATH') or exit;
 
@@ -35,17 +34,11 @@ class AdvertisingThemeProperties
      */
     public $checkout;
 
-    /**
-     * @var EditOrderMenu
-     */
-    public $editOrder;
-
     public function __construct()
     {
         $this->global       = new GlobalMenu();
         $this->cart         = new CartMenu();
         $this->miniCart     = new MiniCartMenu();
         $this->checkout     = new CheckoutMenu();
-        $this->editOrder    = new EditOrderMenu();
     }
 }

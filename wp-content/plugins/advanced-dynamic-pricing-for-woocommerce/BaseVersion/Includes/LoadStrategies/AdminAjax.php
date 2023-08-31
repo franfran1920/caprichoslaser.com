@@ -85,6 +85,7 @@ class AdminAjax implements LoadStrategy
         $cartExtensions = new CartExtensions();
         $cartExtensions->hideCouponWordInTotals();
         $cartExtensions->removeDeleteLinkForAdpCoupons();
+        $cartExtensions->readOnlyPriceForFreeProducts();
 
         $metaBoxes = new MetaBoxes();
         $metaBoxes->register();

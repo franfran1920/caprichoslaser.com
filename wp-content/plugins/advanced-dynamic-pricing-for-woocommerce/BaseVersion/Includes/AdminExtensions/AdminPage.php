@@ -83,6 +83,7 @@ class AdminPage
 
         $tabs        = $this->tabs;
         $current_tab = $this->currentTab;
+        $options     = $this->context->getSettings();
         include WC_ADP_PLUGIN_VIEWS_PATH . 'admin_page/admin_page.php';
     }
 
@@ -141,6 +142,13 @@ class AdminPage
         wp_enqueue_style('wdp_datetimepicker-styles',
             $baseVersionUrl . 'assets/datetimepicker/jquery.datetimepicker.min.css', array());
 
+        wp_enqueue_script('wdp_cache_recalculation', $baseVersionUrl . 'assets/js/cache-recalculation.js', array('jquery'), WC_ADP_VERSION);
+
+        $wdp_data = array(
+            'security'           => wp_create_nonce(Ajax::SECURITY_ACTION),
+            'security_query_arg' => Ajax::SECURITY_QUERY_ARG,
+        );
+        wp_localize_script('wdp_cache_recalculation', 'wdp_cache_recalculation_data', $wdp_data);
 
         $this->currentTab->enqueueScripts();
     }

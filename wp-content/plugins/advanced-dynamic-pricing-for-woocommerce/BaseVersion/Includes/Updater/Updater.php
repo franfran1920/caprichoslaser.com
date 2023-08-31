@@ -46,6 +46,9 @@ class Updater
             'migrateSummaryTo_4_1_6',
             'migrateCompatibilityOptionsTo_4_1_6'
         ),
+        '4.4.3' => array(
+            'migratethemeOptionsTo_4_4_3',
+        )
     );
 
     public static function update()

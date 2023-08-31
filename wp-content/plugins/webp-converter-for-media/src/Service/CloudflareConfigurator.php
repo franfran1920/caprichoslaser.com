@@ -7,7 +7,6 @@ use WebpConverter\PluginData;
 use WebpConverter\PluginInfo;
 use WebpConverter\Settings\Option\CloudflareApiTokenOption;
 use WebpConverter\Settings\Option\CloudflareZoneIdOption;
-use WebpConverter\Settings\Option\LoaderTypeOption;
 
 /**
  * Manages the cache configuration for Cloudflare CDN.

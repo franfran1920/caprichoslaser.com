@@ -36,13 +36,17 @@ var wpc_postboxes;
 		 *
 		 * @returns {void}
 		 */
-		handle_click : function () {
+		handle_click : function (e) {
 			var $el = $( this ),
 				p = $el.parent( '.postbox' ),
 				id = p.attr( 'id' ),
 				ariaExpandedValue;
 
 			if ( 'dashboard_browser_nag' === id ) {
+				return;
+			}
+
+			if($(e.target).closest('input, select, button').length && !$(e.target).closest('.handlediv').length) {
 				return;
 			}
 

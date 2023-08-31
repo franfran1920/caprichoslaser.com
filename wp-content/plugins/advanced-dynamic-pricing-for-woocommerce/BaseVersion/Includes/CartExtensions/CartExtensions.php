@@ -7,6 +7,7 @@ use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Database\Repository\RuleRepository;
 use ADP\BaseVersion\Includes\Database\Repository\RuleRepositoryInterface;
 use ADP\BaseVersion\Includes\WC\WcAdpMergedCouponHelper;
+use ADP\BaseVersion\Includes\WC\WcCartItemFacade;
 use WC_Coupon;
 
 defined('ABSPATH') or exit;
@@ -201,6 +202,25 @@ class CartExtensions
                 array('wc-cart'),
                 WC_ADP_VERSION
             );
+        }
+    }
+
+    public function readOnlyPriceForFreeProducts()
+    {
+        if ($this->context->getOption('readonly_price_for_free_products')) {
+            add_filter('woocommerce_cart_item_quantity', function ($productQuantity, $cartItemKey, $cartItem) {
+                $wcCartItem = new WcCartItemFacade($this->context, $cartItem, $cartItemKey);
+
+                if ($wcCartItem->isFreeItem()) {
+                    $productQuantity = sprintf(
+                        '%1$s <input type="hidden" name="cart[%2$s][qty]" value="%1$s" />',
+                        $cartItem['quantity'],
+                        $cartItemKey
+                    );
+                }
+
+                return $productQuantity;
+            }, 10, 3);
         }
     }
 }

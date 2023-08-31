@@ -62,6 +62,7 @@ class Loader
             $keys[] = '_wdp_initial_tax';
             $keys[] = '_wdp_rules';
             $keys[] = '_wdp_free_shipping';
+            $keys[] = '_wdp_cart_item_key';
 
             return $keys;
         }, 10, 1 );

@@ -3,6 +3,7 @@
 namespace ADP\BaseVersion\Includes\ProductExtensions;
 
 use ADP\BaseVersion\Includes\Context;
+use ReflectionException;
 
 defined('ABSPATH') or exit;
 
@@ -43,10 +44,45 @@ class ProductExtension
 
     public function setCustomPrice($price)
     {
-        if ( $price === null ) {
+        if ($price === null) {
             $this->product->adpCustomInitialPrice = null;
         } else {
             $this->product->adpCustomInitialPrice = (float)$price;
         }
+    }
+
+    public function getProductPriceDependsOnPriceMode()
+    {
+        $product = $this->product;
+        $priceMode = $this->context->getOption('discount_for_onsale');
+        $initialPrice = $product->get_price('edit');
+
+        try {
+            $reflection = new \ReflectionClass($product);
+            $property = $reflection->getProperty('changes');
+            $property->setAccessible(true);
+            $changes = $property->getValue($product);
+            if ( isset($changes['price']) ) {
+                $initialPrice = $changes['price'];
+                unset($changes['price']);
+            }
+            $property->setValue($product, $changes);
+        } catch (ReflectionException $exception) {
+            $property = null;
+        }
+
+        if ($product->is_on_sale('edit')) {
+            if ('sale_price' === $priceMode || 'discount_sale' === $priceMode) {
+                $price = $product->get_sale_price('edit');
+            } else {
+                $price = $product->get_regular_price('edit');
+            }
+        } else {
+            $price = $product->get_price('edit');
+        }
+
+        $product->set_price($initialPrice);
+
+        return $price;
     }
 }

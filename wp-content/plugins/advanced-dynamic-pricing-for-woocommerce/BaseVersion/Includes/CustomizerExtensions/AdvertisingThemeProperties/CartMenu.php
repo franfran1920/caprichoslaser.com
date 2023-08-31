@@ -11,11 +11,6 @@ class CartMenu
     const KEY = AdvertisingThemeProperties::KEY . "-cart";
 
     /**
-     * @var bool
-     */
-    public $isEnableAmountSaved;
-
-    /**
      * @var string
      */
     public $positionAmountSavedAction;

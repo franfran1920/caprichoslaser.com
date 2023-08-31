@@ -28,3 +28,59 @@
     text-align: left;
     width: 30%;
 }
+
+.wdp-settings-search-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+.wdp-settings-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.wcp_tabs_container_list {
+    display: inline-flex;
+}
+
+.wdp-settings-wrapper .hide {
+    display: none;
+}
+
+.search-match {
+    color: white;
+    background-color: red;
+}
+
+.wdp-settings-search-results-wrapper .empty-results {
+    margin-top: 10px;
+}
+
+.wdp-settings-search {
+    position: relative;
+}
+
+.wdp-settings-search input {
+    padding: 0 30px;
+}
+
+.wdp-settings-search .dashicons-search {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: #777;
+}
+
+.wdp-settings-search .dashicons-dismiss {
+    position: absolute;
+    top: 7px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #777;
+}
+
+.wdp-settings-search .hide {
+    display: none;
+}

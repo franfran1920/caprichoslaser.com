@@ -20,7 +20,7 @@ defined('ABSPATH') or exit;
 <div id="poststuff">
 
     <div class="wdp-list-container" id="rules-action-controls">
-        <div class="wdp-row" style="margin: 0;">
+        <div class="wdp-row">
         <div class="wdp-column wdp-column-max-content wdp-row" style="flex-direction: column">
                 <ul class="subsubsub" style="margin-top: auto;">
                     <li>
@@ -42,37 +42,9 @@ defined('ABSPATH') or exit;
                         </a>
                     </li>
                 </ul>
-                <button class="button add-rule wdp-addlist-item loading">
-                    <?php _e('Add rule', 'advanced-dynamic-pricing-for-woocommerce'); ?>
-                </button>
             </div>
 
             <div class="wdp-wrapper wdp-column wdp-column-max-content" style="margin-left: auto;">
-                <div style="display: inline-block; width: 100%;">
-                    <div id="progressBarBlock" style="padding: 0; width: 100%;">
-                        <div id="progressBar"></div>
-                    </div>
-                </div>
-                <?php if($options->getOption('support_shortcode_products_on_sale') || $options->getOption('support_shortcode_products_bogo') || $options->getOption('support_persistence_rules')): ?>
-                <div class="wdp-row" style="margin: 5px 0;">
-                    <div class="wdp-column">
-                        <select name="recalculace_selector">
-                            <?php if($options->getOption('support_persistence_rules')): ?>
-                                <option value="recalculate_persistence_cache"><?php _e('Recalculate Product only rules cache', 'advanced-dynamic-pricing-for-woocommerce'); ?></option>
-                            <?php endif;
-                            if($options->getOption('support_shortcode_products_on_sale')): ?>
-                                <option value="rebuild_onsale_list"><?php _e('Update Onsale List', 'advanced-dynamic-pricing-for-woocommerce'); ?></option>
-                            <?php endif;
-                            if($options->getOption('support_shortcode_products_bogo')): ?>
-                                <option value="rebuild_bogo_list"><?php _e('Update Bogo List', 'advanced-dynamic-pricing-for-woocommerce'); ?></option>
-                            <?php endif;?>
-                        </select>
-                    </div>
-                    <div class="wdp-column">
-                        <button type="button" class="button wdp-rebuild-run"><?php _e('Run', 'advanced-dynamic-pricing-for-woocommerce') ?></button>
-                    </div>
-                </div>
-                <?php endif; ?>
                 <form id="search-rules" method="get">
                     <input type="hidden" name="page" value="<?php echo $page; ?>">
                     <input type="hidden" name="tab" value="<?php echo $tab; ?>">
@@ -92,8 +64,8 @@ defined('ABSPATH') or exit;
         </div>
     <?php endif; ?>
 
-    <div style="clear: both;">
-        <div style="float: left; margin: 5px 0;">
+    <div style="clear: both; margin: 5px 0;">
+        <div style="float: left; margin: 5px 0; width: 39px; text-align: center;">
             <input type="checkbox" id="bulk-action-select-all">
         </div>
 
@@ -109,7 +81,7 @@ defined('ABSPATH') or exit;
             <button type="submit" class="button"><?php _e('Apply', 'advanced-dynamic-pricing-for-woocommerce') ?></button>
         </form>
 
-        <form id="rules-filter" method="get" style="float: right; margin: 5px">
+        <form id="rules-filter" method="get" style="float: right;">
             <input type="hidden" name="page" value="<?php echo $page; ?>"/>
             <input type="hidden" name="tab" value="<?php echo $tab; ?>"/>
             <?php echo $pagination; ?>

@@ -108,6 +108,7 @@ class ClientCommon implements LoadStrategy
         $cartExtensions->attachCssClassToGiftedCartItems();
         $cartExtensions->fillCartItemWhenOrderAgain();
         $cartExtensions->forceCartUpdateForShipping();
+        $cartExtensions->readOnlyPriceForFreeProducts();
 
         /** @see Functions::install() */
         Factory::callStaticMethod("Functions", 'install', $engine);

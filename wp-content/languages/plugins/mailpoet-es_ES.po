@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-08-21 12:11:04+0000\n"
+"PO-Revision-Date: 2023-08-28 14:21:31+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -83,96 +83,96 @@ msgstr ""
 
 #: views/segments/translations.html:140
 msgid "Last sending date"
-msgstr ""
+msgstr "Última fecha de envío"
 
 #: views/segments/translations.html:139
 msgid "Last purchase date"
-msgstr ""
+msgstr "Última fecha de compra"
 
 #: views/segments/translations.html:138
 msgid "Last page view date"
-msgstr ""
+msgstr "Fecha de la última página vista"
 
 #: views/segments/translations.html:137
 msgid "Last open date"
-msgstr ""
+msgstr "Última fecha de apertura"
 
 #: views/segments/translations.html:136
 msgid "Last engagement date"
-msgstr ""
+msgstr "Última fecha de participación"
 
 #: views/segments/translations.html:135
 msgid "Last click date"
-msgstr ""
+msgstr "Fecha del último clic"
 
 #: lib/Automation/Integrations/MailPoet/Analytics/Endpoints/AutomationFlowEndpoint.php:57
 msgid "The automation did not exist in the selected time span"
-msgstr ""
+msgstr "La automatización no existía en el intervalo de tiempo seleccionado"
 
 #: views/segments/translations.html:148
 msgid "on or after"
-msgstr ""
+msgstr "en o después"
 
 #: views/segments/translations.html:146
 msgid "on or before"
-msgstr ""
+msgstr "en o antes"
 
 #: lib/Config/Menu.php:394
 msgctxt "lists per page (screen options)"
 msgid "Number of lists per page"
-msgstr ""
+msgstr "Número de listas por página"
 
 #: lib/API/JSON/v1/Subscribers.php:273
 msgid "This tag does not exist."
-msgstr ""
+msgstr "Esta etiqueta no existe."
 
 #: views/subscribers/subscribers.html:163
 msgid "Remove tag..."
-msgstr ""
+msgstr "Quitar etiqueta..."
 
 #: views/subscribers/subscribers.html:162
 msgid "Add tag..."
-msgstr ""
+msgstr "Añadir etiqueta..."
 
 #: views/subscribers/subscribers.html:161
 msgid "Tag <strong>%1$s</strong> was removed from %2$d subscribers."
-msgstr ""
+msgstr "Se ha eliminado la etiqueta <strong>%1$s</strong> de los suscriptores de %2$d."
 
 #: views/subscribers/subscribers.html:160
 msgid "Tag <strong>%1$s</strong> was added to %2$d subscribers."
-msgstr ""
+msgstr "Se ha añadido la etiqueta <strong>%1$s</strong> a los suscriptores de %2$d."
 
 #: views/segments/translations.html:198
 msgid "Search automations"
-msgstr ""
+msgstr "Buscar automatizaciones"
 
 #: views/segments/translations.html:197
 msgid "exited automation"
-msgstr ""
+msgstr "salió de la automatización"
 
 #: views/segments/translations.html:196
 msgid "entered automation"
-msgstr ""
+msgstr "entró en la automatización"
 
 #: views/form/editor.html:141
 msgid "Select specific categories"
-msgstr ""
+msgstr "Seleccionar categorías específicas"
 
 #: views/form/editor.html:140
 msgid "Select specific tags"
-msgstr ""
+msgstr "Selecciona etiquetas específicas"
 
 #: views/form/editor.html:139
 msgid "Display on all post/product tag archives"
-msgstr ""
+msgstr "Mostrar en todos los archivos de etiquetas de entrada/producto"
 
 #: views/form/editor.html:137
 msgid "Display on all post/product category archives"
-msgstr ""
+msgstr "Mostrar en todos los archivos de categoría de entrada/producto"
 
 #: views/form/editor.html:98
 msgid "Display on the homepage"
-msgstr ""
+msgstr "Mostrar en la página de inicio"
 
 #: views/segments/translations.html:234
 msgid "Search shipping methods"
@@ -2059,7 +2059,7 @@ msgid "Can't unsubscribe from a WordPress Users list with ID %d."
 msgstr "No se puede anular la suscripción a una lista de usuarios de WordPress con ID %d."
 
 #. translators: %s is the error message.
-#: lib/API/JSON/v1/Settings.php:462
+#: lib/API/JSON/v1/Settings.php:459
 msgid "Unable to deactivate re-engagement emails: %s"
 msgstr "No se pueden desactivar los correos electrónicos de reenganche: %s"
 
@@ -2107,7 +2107,7 @@ msgstr "Versión"
 msgid "WP Cron / Action Scheduler Status"
 msgstr "Cron de WP / Estado del programador de acciones"
 
-#: lib/Subscribers/SubscriberListingRepository.php:318
+#: lib/Subscribers/SubscriberListingRepository.php:336
 msgid "All Tags"
 msgstr "Todas las etiquetas"
 
@@ -3113,7 +3113,7 @@ msgstr "en los últimos"
 #: views/segments/translations.html:110
 msgctxt "The result will be \"in the last 5 days\""
 msgid "{timeframe} {days} days"
-msgstr ""
+msgstr "{timeframe} {days} días"
 
 #: views/segments/translations.html:109
 msgctxt "The result will be \"more than 20 opens\""
@@ -8187,7 +8187,7 @@ msgstr "Por favor, deja el primer campo vacío."
 
 #: views/segments/translations.html:19 views/subscribers/subscribers.html:69
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:128
-#: lib/Subscribers/SubscriberListingRepository.php:231
+#: lib/Subscribers/SubscriberListingRepository.php:253
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:196
 msgid "Bounced"
 msgstr "Rebotados"
@@ -8196,7 +8196,7 @@ msgstr "Rebotados"
 #: views/subscribers/importExport/import.html:130
 #: views/subscribers/subscribers.html:68
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:124
-#: lib/Subscribers/SubscriberListingRepository.php:226
+#: lib/Subscribers/SubscriberListingRepository.php:248
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:208
 msgid "Inactive"
 msgstr "Inactivo"
@@ -8205,14 +8205,14 @@ msgstr "Inactivo"
 #: views/subscribers/importExport/import.html:129
 #: views/subscribers/subscribers.html:67
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:120
-#: lib/Subscribers/SubscriberListingRepository.php:221
+#: lib/Subscribers/SubscriberListingRepository.php:243
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:188
 msgid "Unsubscribed"
 msgstr "Dados de baja"
 
 #: views/segments/translations.html:16 views/subscribers/subscribers.html:65
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:116
-#: lib/Subscribers/SubscriberListingRepository.php:216
+#: lib/Subscribers/SubscriberListingRepository.php:238
 msgid "Unconfirmed"
 msgstr "No confirmados"
 
@@ -8220,7 +8220,7 @@ msgstr "No confirmados"
 #: views/subscribers/importExport/import.html:128
 #: views/subscribers/subscribers.html:66
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:112
-#: lib/Subscribers/SubscriberListingRepository.php:211
+#: lib/Subscribers/SubscriberListingRepository.php:233
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:180
 msgid "Subscribed"
 msgstr "Suscrito"
@@ -8621,13 +8621,13 @@ msgstr "Haz clic aquí para ver los medios."
 #. translators: %s is the number of subscribers without a segment.
 #. translators: %s is the number of subscribers without a list.
 #: lib/Models/Subscriber.php:172
-#: lib/Subscribers/SubscriberListingRepository.php:261
+#: lib/Subscribers/SubscriberListingRepository.php:283
 msgid "Subscribers without a list (%s)"
 msgstr "Suscriptores sin lista (%s)"
 
 #: lib/Models/Subscriber.php:163
 #: lib/Newsletter/Listing/NewsletterListingRepository.php:62
-#: lib/Subscribers/SubscriberListingRepository.php:275
+#: lib/Subscribers/SubscriberListingRepository.php:297
 msgid "All Lists"
 msgstr "Todas las listas"
 
@@ -8805,7 +8805,7 @@ msgstr "Página de ejemplo para previsualizar tu formulario"
 #: lib/Form/Listing/FormListingRepository.php:36
 #: lib/Newsletter/Listing/NewsletterListingRepository.php:174
 #: lib/Segments/SegmentListingRepository.php:99
-#: lib/Subscribers/SubscriberListingRepository.php:236
+#: lib/Subscribers/SubscriberListingRepository.php:258
 msgid "Trash"
 msgstr "Papelera"
 
@@ -8813,7 +8813,7 @@ msgstr "Papelera"
 #: lib/Newsletter/Listing/NewsletterListingRepository.php:106
 #: lib/Newsletter/Sending/ScheduledTaskSubscribersListingRepository.php:48
 #: lib/Segments/SegmentListingRepository.php:94
-#: lib/Subscribers/SubscriberListingRepository.php:206
+#: lib/Subscribers/SubscriberListingRepository.php:228
 msgid "All"
 msgstr "Todos"
 

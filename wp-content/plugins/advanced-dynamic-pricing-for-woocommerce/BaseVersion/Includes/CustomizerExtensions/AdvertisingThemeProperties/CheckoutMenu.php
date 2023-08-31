@@ -11,11 +11,6 @@ class CheckoutMenu
     const KEY = AdvertisingThemeProperties::KEY . "-checkout";
 
     /**
-     * @var bool
-     */
-    public $isEnableAmountSaved;
-
-    /**
      * @var string
      */
     public $positionAmountSavedAction;

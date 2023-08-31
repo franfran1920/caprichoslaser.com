@@ -395,6 +395,14 @@ WHERE products.post_type IN ('product','product_variation') AND CONCAT(fields.me
         }, $users);
     }
 
+    public function ajax_skip_discount_type() {
+        $settings = $this->context->getSettings();
+        $settings->set('create_blank_rule', true);
+        $settings->save();
+
+        wp_send_json_success();
+    }
+
     public function ajax_save_rule()
     {
         if ( ! isset($_POST['rule'])) {

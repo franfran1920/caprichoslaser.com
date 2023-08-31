@@ -92,6 +92,32 @@ class Tools implements AdminTabInterface
         die();
     }
 
+    public function exportJsonSettings()
+    {
+        $this->checkNonceOrDie();
+        header("Content-type: application/json");
+        header("Expires: 0");
+        header("Content-Disposition: attachment; filename=advanced-dynamic-json-{$export}.json");
+
+        $export = $_REQUEST['export_select'] ?? false;
+
+        if($export === false) {
+            die();
+        }
+
+        $this->prepareExportGroups();
+
+        $items = array();
+        foreach ($this->groups as $group) {
+            foreach ($group['items'] as $key => $item) {
+                $items[$key] = $item;
+            }
+        }
+        
+        echo array_key_exists($export, $items) ? json_encode($items[$export]['data']) : '';
+        die();
+    }
+
     public function migrateCommonToProductOnly() {
         $this->checkNonceOrDie();
 
@@ -420,7 +446,7 @@ class Tools implements AdminTabInterface
 
     public function registerAjax()
     {
-
+        add_action('wp_ajax_export-json-settings', array($this, "exportJsonSettings"));
     }
 
     public function renderToolsTemplate($template, $data)
@@ -450,16 +476,11 @@ class Tools implements AdminTabInterface
                     "manage_bulk_ranges",
                 ),
             ),
-            "export"        => array(
-                'title'     => __("Export settings", 'advanced-dynamic-pricing-for-woocommerce'),
+
+            "backup"        => array(
+                'title'     => __("Backup", 'advanced-dynamic-pricing-for-woocommerce'),
                 'templates' => array(
-                    "export",
-                ),
-            ),
-            "import"        => array(
-                'title'     => __("Import settings", 'advanced-dynamic-pricing-for-woocommerce'),
-                'templates' => array(
-                    "import",
+                    "backup",
                 ),
             ),
             "migration_rules"        => array(

@@ -5,7 +5,7 @@ Tags: woocommerce, discounts, deals, dynamic pricing, pricing deals, bulk discou
 Requires PHP: 7.0
 Requires at least: 4.8
 Tested up to: 6.3
-Stable tag: 4.4.3
+Stable tag: 4.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,21 @@ You should be PHP programmer to do it. [Please, review sample addon and adapt it
 
 == Changelog ==
 
+= 4.5.0 - 2023-08-29 =
+We are happy to announce the restyled version of our plugin! Advanced Dynamic Pricing is more user-friendly with this update
+
+* Updated "Rules" tab (rules color, cache control buttons moved, "Add rule" button moved)
+* Show discount type selection each time a rule is created
+* The field "Max Amount" renamed to "Limit discount to amount" to avoid confusion
+* Show an icon for each section of the rules
+* Show the most used cart conditions in the Cart Conditions section
+* Added search on the "Settings" tab
+* Align sections vertically in the Settings and Tools tabs.
+* The "Amount Saved" option has been moved from the Customizer to the cart/order settings
+* Added 'Read-only quantity' option to free products settings
+* Merged import/export settings into one "Backup" section inside the "Tools" tab
+* Restyled sections in the "Help" tab
+
 = 4.4.3 - 2023-07-31 =
 * Bug fixed - multiple attributes worked incorrectly inside product filter
 * Bug fixed - WooCommerce coupons caused "500 error" during checkout
@@ -117,7 +132,7 @@ You should be PHP programmer to do it. [Please, review sample addon and adapt it
 * Bug fixed - single quote soubled in discount name , section "Cart Adjustment"
 * Bug fixed - missed order stats if applied coupons were merged
 * Added compatibility with "Points and Rewards for WooCommerce", by WP Swings
- 
+
 = 4.4.2 - 2023-06-21 =
 * Bug fixed - free shipping ignored if it was added by WooCommerce сoupon
 * Bug fixed - import CSV failed if field "To range" was empty for bulk rule

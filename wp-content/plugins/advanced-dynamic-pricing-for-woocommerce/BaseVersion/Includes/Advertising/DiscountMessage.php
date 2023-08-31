@@ -121,17 +121,17 @@ class DiscountMessage
         foreach ($contexts as $context => $callback) {
 
             if ( $context === self::CONTEXT_CART ) {
-                $enable = $themeOptions->cart->isEnableAmountSaved;
+                $enable = $this->context->getOption('is_enable_cart_amount_saved');
                 $position = $themeOptions->cart->positionAmountSavedAction;
             } elseif ( $context === self::CONTEXT_MINI_CART ) {
-                $enable = $themeOptions->miniCart->isEnableAmountSaved;
+                $enable = $this->context->getOption('is_enable_minicart_amount_saved');
                 $position = $themeOptions->miniCart->positionAmountSavedAction;
             } elseif ( $context === self::CONTEXT_CHECKOUT ) {
-                $enable = $themeOptions->checkout->isEnableAmountSaved;
+                $enable = $this->context->getOption('is_enable_checkout_amount_saved');
                 $position = $themeOptions->checkout->positionAmountSavedAction;
             } elseif ( $context === self::CONTEXT_EDIT_ORDER ) {
-                $enable = $themeOptions->editOrder->isEnableAmountSaved;
-                $position = $themeOptions->editOrder->positionAmountSavedAction;
+                $enable = $this->context->getOption('is_enable_backend_order_amount_saved');
+                $position = "woocommerce_admin_order_totals_after_tax";
             } else {
                 continue;
             }

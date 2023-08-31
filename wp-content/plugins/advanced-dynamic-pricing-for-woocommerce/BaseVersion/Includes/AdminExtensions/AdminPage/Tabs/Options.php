@@ -146,13 +146,14 @@ class Options implements AdminTabInterface
 				'title'     => __("Rules", 'advanced-dynamic-pricing-for-woocommerce'),
                 'doc_link'  => 'https://docs.algolplus.com/algol_pricing/rules-settings-free/',
 				'templates' => array(
-					"rules_per_page",
+					100 => "rules_per_page",
 					"rule_max_exec_time",
 					"limit_results_in_autocomplete",
 					"allow_to_exclude_products",
                     "support_persistence_rules",
 					"support_shortcode_products_on_sale",
 					"support_shortcode_products_bogo",
+					300 => "create_blank_rule"
 				),
 			),
 			"category_page"   => array(
@@ -164,8 +165,8 @@ class Options implements AdminTabInterface
 				'title'     => __("Product page", 'advanced-dynamic-pricing-for-woocommerce'),
                 'doc_link'  => 'https://docs.algolplus.com/algol_pricing/product-page-settings-pro/',
 				'templates' => array(
-					"do_not_modify_price_at_product_page",
-					"use_first_range_as_min_qty",
+					1 => "do_not_modify_price_at_product_page",
+					3 => "use_first_range_as_min_qty",
 				),
 			),
 			"price_templates" => array(
@@ -173,8 +174,8 @@ class Options implements AdminTabInterface
                 'doc_link'  => 'https://docs.algolplus.com/algol_pricing/product-price-pro/',
 				'templates' => array(
 					1  => "show_onsale_badge",
-                    5 => "process_product_strategy",
-                    6 => "process_product_strategy_after_use_price",
+                    6 => "process_product_strategy",
+                    7 => "process_product_strategy_after_use_price",
 					25 => "show_unmodified_price_if_discounts_with_coupon",
                     30 => "replace_price_with_min_bulk_price",
                     40 => "product_price_html",
@@ -194,16 +195,16 @@ class Options implements AdminTabInterface
 				'title'     => __("Cart", 'advanced-dynamic-pricing-for-woocommerce'),
                 'doc_link'  => 'https://docs.algolplus.com/algol_pricing/cart-pro/',
 				'templates' => array(
+					0 => "amount_saved_url_to_customizer",
 					5  => "show_striked_prices",
 					10 => "show_cross_out_subtotal_in_cart_totals",
-					15 => "amount_saved_url_to_customizer",
 				),
 			),
 			"free_products"   => array(
 				'title'     => __("Free products", 'advanced-dynamic-pricing-for-woocommerce'),
                 'doc_link'  => 'https://docs.algolplus.com/algol_pricing/free-products-pro/',
 				'templates' => array(
-					"message_after_add_free_product",
+					10 => "message_after_add_free_product",
 				),
 			),
 			"coupons"         => array(
@@ -219,14 +220,14 @@ class Options implements AdminTabInterface
                 'doc_link'  => 'https://docs.algolplus.com/algol_pricing/calculation-free/',
 				'templates' => array(
                     1 => "apply_discount_for_onsale_products",
-                    2 => "combine_discounts",
-                    3 => "default_discount_name",
-                    4 => "combine_fees",
-                    5 => "default_fee_name",
-                    6 => "default_fee_tax_class",
-                    7 => "override_cents",
-                    8 => "is_calculate_based_on_wc_precision",
-                    9 => "disable_shipping_calc_during_process",
+					2 => "disable_shipping_calc_during_process",
+                    3 => "combine_discounts",
+                    4 => "default_discount_name",
+                    5 => "combine_fees",
+                    6 => "default_fee_name",
+                    7 => "default_fee_tax_class",
+					8 => "is_calculate_based_on_wc_precision",
+                    9 => "override_cents",
                     13 => "initial_price_context",
 				),
 			),

@@ -3,10 +3,6 @@
 
 namespace WebpConverter\Settings\Page;
 
-use WebpConverter\PluginData;
-use WebpConverter\PluginInfo;
-use WebpConverter\Repository\TokenRepository;
-use WebpConverter\Service\CloudflareConfigurator;
 use WebpConverter\Settings\Option\OptionAbstract;
 use WebpConverter\Settings\PluginOptions;
 

@@ -4,6 +4,7 @@ namespace ADP\BaseVersion\Includes\WC;
 
 use ADP\BaseVersion\Includes\Compatibility\TmExtraOptionsCmp;
 use ADP\BaseVersion\Includes\Compatibility\WcSubscriptionsCmp;
+use ADP\BaseVersion\Includes\Compatibility\BeRocketMinMaxQuantitiesCmp;
 use ADP\BaseVersion\Includes\Context;
 use Exception;
 use ReflectionClass;
@@ -113,6 +114,11 @@ class WcNoFilterWorker
         $tmExtraOptCmp = new TmExtraOptionsCmp();
         if ($tmExtraOptCmp->isActive()) {
             $filters[] = 'woocommerce_add_cart_item_data';
+        }
+
+        $minMaxQuantitiesCmp = new BeRocketMinMaxQuantitiesCmp();
+        if ($minMaxQuantitiesCmp->isActive()) {
+            $filters[] = 'woocommerce_after_cart_item_quantity_update';
         }
 
         foreach ($filters as $filter) {
