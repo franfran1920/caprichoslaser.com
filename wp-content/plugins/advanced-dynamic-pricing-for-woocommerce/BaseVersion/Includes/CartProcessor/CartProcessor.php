@@ -177,6 +177,16 @@ class CartProcessor
     protected $yithBundlesCmp;
 
     /**
+     * @var YithGiftCardsCmp
+     */
+    protected $yithGiftCardsCmp;
+
+    /**
+     * @var ShoptimizerCmp
+     */
+    protected $shoptimizerCmp;
+
+    /**
      * CartProcessor constructor.
      *
      * @param Context|WC_Cart $contextOrWcCart

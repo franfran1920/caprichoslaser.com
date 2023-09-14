@@ -66,6 +66,11 @@ class ProcessedProductSimple
     protected $originalPriceToDisplay;
 
     /**
+     * @var array|mixed
+     */
+    protected $listOfFreeCartItemChoices;
+
+    /**
      * @param Context|WC_Product $contextOrProduct
      * @param WC_Product|array<int, CartItem> $productOrCartItems
      * @param array<int, CartItem>|null $deprecated

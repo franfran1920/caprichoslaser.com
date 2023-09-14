@@ -8,6 +8,13 @@ class Factory
     const BASE_VERSION_NAMESPACE = self::PROJECT_NAMESPACE . "\\BaseVersion";
     const PRO_VERSION_NAMESPACE = self::PROJECT_NAMESPACE . "\\ProVersion";
 
+    private static $forceBaseVersion = false;
+
+    public static function forceBaseVersion(bool $value)
+    {
+        self::$forceBaseVersion = $value;
+    }
+
     protected static function convertAlias($name)
     {
         return "Includes\\" . str_replace("_", "\\", $name);
@@ -23,7 +30,7 @@ class Factory
         $className    = self::BASE_VERSION_NAMESPACE . "\\" . self::convertAlias($name);
         $proClassName = self::PRO_VERSION_NAMESPACE . "\\" . self::convertAlias($name);
 
-        if (class_exists($proClassName)) {
+        if ( ! self::$forceBaseVersion && class_exists($proClassName)) {
             $className = $proClassName;
         }
 
@@ -83,14 +90,19 @@ class Factory
 
     public static function getClassNames($name)
     {
-        $result = [];
         $baseClassNames = self::getClassNamesInNameSpace(
             self::BASE_VERSION_NAMESPACE . "\\" . self::convertAlias($name)
         );
+
+        if (self::$forceBaseVersion) {
+            return $baseClassNames;
+        }
+
         $proClassNames = self::getClassNamesInNameSpace(
             self::PRO_VERSION_NAMESPACE . "\\" . self::convertAlias($name)
         );
 
+        $result = [];
         foreach ($baseClassNames as $className) {
             if (!in_array(
                 str_replace(self::BASE_VERSION_NAMESPACE, self::PRO_VERSION_NAMESPACE, $className),

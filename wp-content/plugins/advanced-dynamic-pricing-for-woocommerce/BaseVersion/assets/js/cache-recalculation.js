@@ -10,6 +10,11 @@ jQuery(document).ready(function ($) {
     $("#rules-action-controls button").removeAttr("disabled");
   }
 
+  $('.wdp-rules-recalculate-cache-action select').select2({
+    minimumResultsForSearch: -1,
+	dropdownCssClass: 'wdp-rules-recalculate-select'
+  });
+
   $('.wdp-rules-recalculate-cache-action select').on('change', function () {
 
       if (!$('select[name=recalculace_selector]').val()) {

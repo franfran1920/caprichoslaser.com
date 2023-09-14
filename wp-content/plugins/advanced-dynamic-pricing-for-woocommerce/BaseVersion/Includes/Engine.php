@@ -7,6 +7,7 @@ use ADP\BaseVersion\Includes\CartProcessor\FreeAutoAddItemsController;
 use ADP\BaseVersion\Includes\Compatibility\CTXFeedCmp;
 use ADP\BaseVersion\Includes\Compatibility\SmartCouponsCmp;
 use ADP\BaseVersion\Includes\Compatibility\WcSubscriptionsCmp;
+use ADP\BaseVersion\Includes\Compatibility\WcQuoteCmp;
 use ADP\BaseVersion\Includes\Database\Repository\PersistentRuleRepository;
 use ADP\BaseVersion\Includes\Debug\CalculationProfiler;
 use ADP\BaseVersion\Includes\PriceDisplay\PriceDisplay;
@@ -93,6 +94,11 @@ class Engine
         $ctxFeedCmp = new CTXFeedCmp();
         if ($ctxFeedCmp->isActive()) {
             $ctxFeedCmp->prepareHooks();
+        }
+
+        $wcQuoteCmp = new WcQuoteCmp();
+        if ($wcQuoteCmp->isActive()) {
+            $wcQuoteCmp->prepareHooks();
         }
     }
 

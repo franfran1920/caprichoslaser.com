@@ -239,7 +239,9 @@ class Options implements AdminTabInterface
             "order"           => array(
                 'title'     => __("Order", 'advanced-dynamic-pricing-for-woocommerce'),
                 'doc_link'  => 'https://docs.algolplus.com/algol_pricing/order/',
-                'templates' => array(),
+                'templates' => array(
+                    20 => "order_amount_saved_url_to_customizer"
+                ),
             ),
 			"system"          => array(
 				'title'     => __("System", 'advanced-dynamic-pricing-for-woocommerce'),

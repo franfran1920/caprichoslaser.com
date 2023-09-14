@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Dynamic Pricing for WooCommerce (Pro)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-28 10:09+0000\n"
+"POT-Creation-Date: 2023-09-11 06:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -325,6 +325,7 @@ msgid "Amount Saved"
 msgstr ""
 
 #: BaseVersion/views/admin_page/tabs/options/amount_saved_url_to_customizer.php:10
+#: BaseVersion/views/admin_page/tabs/options/order_amount_saved_url_to_customizer.php:10
 msgid "Amount saved"
 msgstr ""
 
@@ -355,9 +356,9 @@ msgstr ""
 msgid "Applied to visible products"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:338
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:364
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:423
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:360
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:386
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:445
 #: BaseVersion/views/admin_page/tabs/rules.php:81
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:19
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:38
@@ -368,7 +369,7 @@ msgstr ""
 msgid "Apply at first to:"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:397
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:419
 msgid "Apply pricing rules to backend orders"
 msgstr ""
 
@@ -389,11 +390,11 @@ msgstr ""
 msgid "Apply to category/tag pages"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:339
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:361
 msgid "Apply to unmodified cart"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:365
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:387
 msgid "Apply to unmodified cart items only"
 msgstr ""
 
@@ -482,7 +483,7 @@ msgstr ""
 msgid "Below product summary"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:343
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:365
 msgid "Best between coupon and rule"
 msgstr ""
 
@@ -855,7 +856,7 @@ msgstr ""
 msgid "deactivate"
 msgstr ""
 
-#: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Options.php:256
+#: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Options.php:258
 msgid "Debug"
 msgstr ""
 
@@ -908,23 +909,23 @@ msgstr ""
 msgid "Didn’t find a necessary condition?"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:351
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:373
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:426
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:395
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:448
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:27
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:46
 msgid "Disable all if any of cart items updated"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:347
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:369
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:424
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:391
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:446
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:23
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:42
 msgid "Disable all if any rule applied"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:384
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:406
 msgid "Disable external coupons"
 msgstr ""
 
@@ -934,7 +935,7 @@ msgstr ""
 msgid "Disable rule if it runs longer than X seconds"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:412
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:434
 #: BaseVersion/views/admin_page/tabs/options/disable_shipping_calc_during_process.php:7
 #: BaseVersion/views/admin_page/tabs/options/disable_shipping_calc_during_process.php:12
 msgid "Disable shipping calculation"
@@ -1013,7 +1014,7 @@ msgstr ""
 msgid "Don't apply discount if product is already on sale"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:386
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:408
 msgid "Don't disable"
 msgstr ""
 
@@ -1109,16 +1110,16 @@ msgstr ""
 msgid "Export settings"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:421
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:443
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:9
 msgid "External coupons"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:336
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:358
 msgid "External coupons|Cart coupons"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:362
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:384
 msgid "External coupons|Product coupons"
 msgstr ""
 
@@ -1245,7 +1246,7 @@ msgid "from"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:212
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:406
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:428
 msgid "From {{price}} {{price_suffix}}"
 msgstr ""
 
@@ -1340,11 +1341,11 @@ msgstr ""
 msgid "https://algolplus.com/"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:389
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:411
 msgid "If any of cart items updated"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:387
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:409
 msgid "If any rule applied"
 msgstr ""
 
@@ -1419,6 +1420,10 @@ msgstr ""
 
 #: BaseVersion/views/admin_page/tabs/options/amount_saved_url_to_customizer.php:20
 msgid "In the mini-cart"
+msgstr ""
+
+#: BaseVersion/views/admin_page/tabs/options/order_amount_saved_url_to_customizer.php:15
+msgid "In the order backend"
 msgstr ""
 
 #: BaseVersion/views/admin_page/tabs/rules.php:40
@@ -2075,7 +2080,7 @@ msgstr ""
 msgid "Read short guide"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:434
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:456
 msgid "Read-only quantity for free products"
 msgstr ""
 
@@ -2097,7 +2102,7 @@ msgstr ""
 msgid "Remove rule?"
 msgstr ""
 
-#: BaseVersion/Includes/CartProcessor/CartProcessor.php:879
+#: BaseVersion/Includes/CartProcessor/CartProcessor.php:889
 msgid "Removed {{qty}} free {{product_name}}"
 msgstr ""
 
@@ -2111,12 +2116,12 @@ msgid "Replace price with lowest bulk price"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:208
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:402
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:424
 msgid "Replace price with lowest bulk price|Enable"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:213
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:407
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:429
 msgid "Replace price with lowest bulk price|Output template"
 msgstr ""
 
@@ -2311,13 +2316,11 @@ msgid ""
 msgstr ""
 
 #: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Rules.php:384
-#, php-format
 msgctxt "select2 msg when input is too long"
 msgid "Please delete %d character"
 msgstr ""
 
 #: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Rules.php:382
-#, php-format
 msgctxt "select2 msg when input is too short"
 msgid "Please enter %d or more characters"
 msgstr ""
@@ -2333,7 +2336,6 @@ msgid "Loading more results…"
 msgstr ""
 
 #: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Rules.php:390
-#, php-format
 msgctxt "select2 msg when max items selected"
 msgid "You can only select %d item"
 msgstr ""
@@ -2381,6 +2383,22 @@ msgstr ""
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:639
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:581
 msgid "Shipping Country"
+msgstr ""
+
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:352
+msgid "Show Amount saved in in the order backend"
+msgstr ""
+
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:336
+msgid "Show Amount saved in the cart"
+msgstr ""
+
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:341
+msgid "Show Amount saved in the mini cart"
+msgstr ""
+
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:346
+msgid "Show Amount saved on the checkout page"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:76
@@ -2572,7 +2590,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:417
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:439
 #: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:7
 #: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:17
 msgid "Support Product only rules"
@@ -2596,7 +2614,7 @@ msgstr ""
 msgid "Suppress other pricing plugins in frontend"
 msgstr ""
 
-#: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Options.php:245
+#: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Options.php:247
 msgid "System"
 msgstr ""
 
@@ -2823,13 +2841,11 @@ msgstr ""
 
 #: BaseVersion/templates/removed-auto-added-mini-cart-item-stub.php:18
 #: BaseVersion/templates/removed-auto-added-cart-item-stub.php:18
-#, php-format
 msgid "You have deleted %d auto added products from the cart."
 msgstr ""
 
 #: BaseVersion/templates/removed-free-mini-cart-item-stub.php:18
 #: BaseVersion/templates/removed-free-cart-item-stub.php:18
-#, php-format
 msgid "You have deleted %d free products from the cart."
 msgstr ""
 

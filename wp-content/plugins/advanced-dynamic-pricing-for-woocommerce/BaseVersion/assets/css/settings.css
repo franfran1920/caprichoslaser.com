@@ -618,6 +618,17 @@ button.wdp-btn-rule-action-controls {
     align-items: center;
 }
 
+#poststuff .wdp-ruleitem-row h2 {
+	flex: 1;
+    padding-left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.wdp-ruleitem-row > div {
+	white-space: nowrap;
+}
+
 .wdp-ruleitem-row .rule-date-from-to {
 	margin-left: auto !important;
 }
@@ -1013,7 +1024,7 @@ div.wdp-row.wdp-options select {
 
 .wdp-rules-add-rule-action .wdp-addlist-item {
     min-width: 100px;
-    width: 111px;
+    width: auto;
     min-height: 0;
     margin: 0;
 }
@@ -1023,6 +1034,7 @@ div.wdp-row.wdp-options select {
     margin-right: 10px;
 }
 
+.wdp-rules-recalculate-cache-action .select2-container--default .select2-selection--single .select2-selection__rendered,
 .wdp-rules-recalculate-cache-action select,
 .wdp-rules-recalculate-cache-action select:hover,
 .wdp-rules-recalculate-cache-action select:focus,
@@ -1040,12 +1052,12 @@ div.wdp-row.wdp-options select {
 .wdp-rules-recalculate-cache-action select option {
     color: white;
 }
-
+.wdp-rules-recalculate-cache-action .select2-container--default .select2-selection--single .select2-selection__arrow b:before, 
 .wdp-rules-recalculate-cache-action .wdp-column-select .wdp-select-icon:before {
     content: "\f347";
     position: absolute;
     font-family: 'dashicons';
-    top: 7px;
+    top: 6px;
     color: white;
     z-index: 1;
     right: 5px;
@@ -1054,6 +1066,33 @@ div.wdp-row.wdp-options select {
     width: 16px;
     height: 16px;
 }
+.wdp-rules-recalculate-cache-action .select2-container--default .select2-selection--single .select2-selection__arrow b {
+	border-color: transparent;
+	position: initial;
+	font-weight: 400;
+}
+.wdp-rules-recalculate-cache-action .select2-container--default .select2-selection--single .select2-selection__arrow {
+	top: 0;
+}
+
+.wdp-rules-recalculate-cache-action select {
+	width: 230px;
+}
+
+.wdp-rules-recalculate-select li {
+	margin: 0;
+	background-color: #2271b1 !important;
+	color: white !important;
+	padding: 5px;
+}
+.wdp-rules-recalculate-select li.select2-results__option--highlighted {
+	background-color: #50575e !important;
+}
+
+.wdp-rules-recalculate-select li:first-child {
+	display: none;
+}
+
 
 .wdp-rules-recalculate-cache-action .wdp-column-select {
     position: relative;

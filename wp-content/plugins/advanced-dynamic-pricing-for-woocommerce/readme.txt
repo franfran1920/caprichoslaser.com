@@ -5,7 +5,7 @@ Tags: woocommerce, discounts, deals, dynamic pricing, pricing deals, bulk discou
 Requires PHP: 7.0
 Requires at least: 4.8
 Tested up to: 6.3
-Stable tag: 4.5.0
+Stable tag: 4.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,14 +98,20 @@ You should be PHP programmer to do it. [Please, review sample addon and adapt it
 
 == Screenshots ==
 1. List of pricing rules
-2. Simple rule -  discount for category
-3. More complex rule
-4. Complex rule was applied to the cart
-5. The applied discounts can be viewed  inside the order
-6. Settings page
+2. Rule type selector
+3. Discount 5%, up to 10 euro
+4. The rule was applied to the cart
+5. Settings page
 
 
 == Changelog ==
+
+= 4.5.1 - 2023-09-11 =
+* Critical bug fixed - it was impossible to save settings in section >Settings>Cart
+* Bug fixed - incorrect display of the long names of the rules
+* Bug fixed - incorrect display of "Add rule" button 
+* Bug fixed - PHP8 deprecation warnings
+* Added compatibility with "Quote for WooCommerce", by WPExperts.io
 
 = 4.5.0 - 2023-08-29 =
 We are happy to announce the restyled version of our plugin! Advanced Dynamic Pricing is more user-friendly with this update

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Jetpack &#8211; WP Security, Backup, Speed, &amp; Growth - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-08-23 17:53:16+0000\n"
+"PO-Revision-Date: 2023-09-10 11:38:16+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,9 +11,1192 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: Plugins - Jetpack &#8211; WP Security, Backup, Speed, &amp; Growth - Stable (latest release)\n"
 
+#: _inc/blocks/wordads/block.json
+msgctxt "block keyword"
+msgid "advertisement"
+msgstr "publicidad"
+
+#: _inc/blocks/wordads/block.json
+msgctxt "block keyword"
+msgid "WordAds"
+msgstr "WordAds"
+
+#: _inc/blocks/wordads/block.json
+msgctxt "block keyword"
+msgid "ads"
+msgstr "anuncios"
+
+#: _inc/blocks/wordads/block.json
+msgctxt "block description"
+msgid "Earn income by adding high quality ads to your post."
+msgstr "Obtén ingresos añadiendo anuncios de alta calidad a tu entrada."
+
+#: _inc/blocks/wordads/block.json
+msgctxt "block title"
+msgid "Ad"
+msgstr "Anuncio"
+
+#: _inc/blocks/tock/block.json
+msgctxt "block description"
+msgid "Allow visitors to reserve a table at your restaurant with Tock."
+msgstr "Permite que los visitantes reserven una mesa en tu restaurante con Tock."
+
+#: _inc/blocks/tock/block.json
+msgctxt "block title"
+msgid "Tock"
+msgstr "Tock"
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block style label"
+msgid "Tiled columns"
+msgstr "Columnas en mosaico"
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block style label"
+msgid "Square tiles"
+msgstr "Mosaicos cuadrados"
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block style label"
+msgid "Circles"
+msgstr "Círculos"
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block style label"
+msgid "Tiled mosaic"
+msgstr "Mosaico"
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block keyword"
+msgid "mosaic"
+msgstr "mosaico"
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block keyword"
+msgid "circle"
+msgstr "círculo"
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block keyword"
+msgid "columns"
+msgstr "columnas"
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block description"
+msgid "Display multiple images in an elegantly organized tiled layout."
+msgstr "Muestra varias imágenes en una estructura de cuadrícula elegantemente organizada."
+
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block title"
+msgid "Tiled Gallery"
+msgstr "Galería en mosaico"
+
+#: _inc/blocks/subscriptions/block.json
+msgctxt "block style label"
+msgid "Split"
+msgstr "Dividido"
+
+#: _inc/blocks/subscriptions/block.json
+msgctxt "block style label"
+msgid "Compact"
+msgstr "Compacto"
+
+#: _inc/blocks/subscriptions/block.json
+msgctxt "block description"
+msgid "Let readers subscribe to this blog's posts as a newsletter."
+msgstr "Permite que los lectores se suscriban a las entradas de este blog como un boletín."
+
+#: _inc/blocks/subscriptions/block.json
+msgctxt "block title"
+msgid "Subscribe"
+msgstr "Suscripción"
+
+#: _inc/blocks/story/block.json
+msgctxt "block description"
+msgid "Add an interactive story."
+msgstr "Añade una historia interactiva."
+
+#: _inc/blocks/story/block.json
+msgctxt "block title"
+msgid "Story"
+msgstr "Story"
+
+#: _inc/blocks/slideshow/block.json _inc/blocks/story/block.json
+msgctxt "block keyword"
+msgid "gallery"
+msgstr "galería"
+
+#: _inc/blocks/slideshow/block.json _inc/blocks/story/block.json
+msgctxt "block keyword"
+msgid "video"
+msgstr "video"
+
+#: _inc/blocks/slideshow/block.json _inc/blocks/story/block.json
+msgctxt "block keyword"
+msgid "story"
+msgstr "story"
+
+#: _inc/blocks/slideshow/block.json
+msgctxt "block description"
+msgid "Display multiple images in sequential order."
+msgstr "Muestra varias imágenes en orden secuencial."
+
+#: _inc/blocks/slideshow/block.json
+msgctxt "block title"
+msgid "Slideshow"
+msgstr "Carrusel"
+
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block description"
+msgid "Lets you add credit and debit card payment buttons with minimal setup. Good for collecting donations or payments for products and services."
+msgstr "Te permite añadir botones de pago con tarjeta de crédito y débito con una configuración mínima. Bueno para recaudar donativos o pagos por productos y servicios."
+
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block title"
+msgid "Pay with PayPal"
+msgstr "Pagar con PayPal"
+
+#: _inc/blocks/send-a-message/block.json
+msgctxt "block keyword"
+msgid "contact"
+msgstr "contacto"
+
+#: _inc/blocks/send-a-message/block.json
+msgctxt "block keyword"
+msgid "messenger"
+msgstr "messenger"
+
+#: _inc/blocks/send-a-message/block.json
+msgctxt "block keyword"
+msgid "whatsapp"
+msgstr "whatsapp"
+
+#: _inc/blocks/send-a-message/block.json
+msgctxt "block description"
+msgid "Let your visitors send you a message on WhatsApp with the tap of a button."
+msgstr "Permite a tus visitantes enviarte un mensaje de WhatsApp con el toque de un botón."
+
+#: _inc/blocks/send-a-message/block.json
+msgctxt "block title"
+msgid "WhatsApp Button"
+msgstr "Botón de WhatsApp"
+
+#: _inc/blocks/repeat-visitor/block.json
+msgctxt "block keyword"
+msgid "visibility"
+msgstr "visibilidad"
+
+#: _inc/blocks/repeat-visitor/block.json
+msgctxt "block keyword"
+msgid "visitors"
+msgstr "visitantes"
+
+#: _inc/blocks/repeat-visitor/block.json
+msgctxt "block keyword"
+msgid "return"
+msgstr "volver"
+
+#: _inc/blocks/repeat-visitor/block.json
+msgctxt "block description"
+msgid "Control block visibility based on how often a visitor has viewed the page."
+msgstr "Controla la visibilidad del bloque en función de la frecuencia con la que un usuario ha visitado la página."
+
+#: _inc/blocks/repeat-visitor/block.json
+msgctxt "block title"
+msgid "Repeat Visitor"
+msgstr "Visitante recurrente"
+
+#: _inc/blocks/related-posts/block.json
+msgctxt "block keyword"
+msgid "connected"
+msgstr "conectado"
+
+#: _inc/blocks/related-posts/block.json
+msgctxt "block keyword"
+msgid "linked"
+msgstr "enlazado"
+
+#: _inc/blocks/related-posts/block.json
+msgctxt "block keyword"
+msgid "similar content"
+msgstr "contenido similar"
+
+#: _inc/blocks/related-posts/block.json
+msgctxt "block description"
+msgid "Display a list of related posts."
+msgstr "Muestra una lista de entradas relacionadas."
+
+#: _inc/blocks/related-posts/block.json
+msgctxt "block title"
+msgid "Related Posts"
+msgstr "Entradas relacionadas"
+
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block description"
+msgid "Button allowing you to sell products and subscriptions."
+msgstr "Botón que te permite vender productos y suscripciones."
+
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block title"
+msgid "Payment Button"
+msgstr "Botón de pago"
+
+#: _inc/blocks/recipe/block.json
+msgctxt "block description"
+msgid "Add images, ingredients and cooking steps to display an easy to read recipe."
+msgstr "Añade imágenes, ingredientes y pasos de cocción para mostrar una receta fácil de leer."
+
+#: _inc/blocks/recipe/block.json
+msgctxt "block title"
+msgid "Recipe (Beta)"
+msgstr "Receta (beta)"
+
+#: _inc/blocks/rating-star/block.json
+msgctxt "block style label"
+msgid "Outlined"
+msgstr "Contorno"
+
+#: _inc/blocks/rating-star/block.json
+msgctxt "block style label"
+msgid "Filled"
+msgstr "Relleno"
+
+#: _inc/blocks/rating-star/block.json
+msgctxt "block keyword"
+msgid "review"
+msgstr "reseña"
+
+#: _inc/blocks/rating-star/block.json
+msgctxt "block keyword"
+msgid "rating"
+msgstr "valoración"
+
+#: _inc/blocks/rating-star/block.json
+msgctxt "block keyword"
+msgid "star"
+msgstr "estrella"
+
+#: _inc/blocks/rating-star/block.json
+msgctxt "block description"
+msgid "Rate movies, books, songs, recipes — anything you can put a number on."
+msgstr "Puntúa películas, libros, canciones, recetas; cualquier cosa a la que puedas poner un número."
+
+#: _inc/blocks/rating-star/block.json
+msgctxt "block title"
+msgid "Star Rating"
+msgstr "Valoración de estrellas"
+
+#: _inc/blocks/premium-content/block.json
+msgctxt "block keyword"
+msgid "substack"
+msgstr "substack"
+
+#: _inc/blocks/premium-content/block.json _inc/blocks/send-a-message/block.json
+msgctxt "block keyword"
+msgid "support"
+msgstr "soporte"
+
+#: _inc/blocks/premium-content/block.json
+msgctxt "block keyword"
+msgid "repeat"
+msgstr "repetir"
+
+#: _inc/blocks/premium-content/block.json
+msgctxt "block keyword"
+msgid "premium content"
+msgstr "contenido premium"
+
+#: _inc/blocks/premium-content/block.json
+msgctxt "block keyword"
+msgid "paywall"
+msgstr "muro de pago"
+
+#: _inc/blocks/premium-content/block.json
+msgctxt "block keyword"
+msgid "exclusive"
+msgstr "exclusivo"
+
+#: _inc/blocks/premium-content/block.json
+msgctxt "block description"
+msgid "Restrict access to your content for paying subscribers."
+msgstr "Restringe el acceso a tu contenido para que solo puedan verlo los suscriptores de pago."
+
+#: _inc/blocks/premium-content/block.json
+msgctxt "block title"
+msgid "Paid Content"
+msgstr "Contenido de pago"
+
+#: _inc/blocks/podcast-player/block.json
+msgctxt "block keyword"
+msgid "embed"
+msgstr "incrustado"
+
+#: _inc/blocks/podcast-player/block.json
+msgctxt "block keyword"
+msgid "audio"
+msgstr "audio"
+
+#: _inc/blocks/podcast-player/block.json
+msgctxt "block description"
+msgid "Select and play episodes from a single podcast."
+msgstr "Selecciona y reproduce episodios de un podcast."
+
+#: _inc/blocks/podcast-player/block.json
+msgctxt "block title"
+msgid "Podcast Player"
+msgstr "Reproductor de podcast"
+
+#: _inc/blocks/pinterest/block.json
+msgctxt "block keyword"
+msgid "pins"
+msgstr "pines"
+
+#: _inc/blocks/pinterest/block.json
+msgctxt "block keyword"
+msgid "pinboard"
+msgstr "tablero de pines"
+
+#: _inc/blocks/pinterest/block.json
+msgctxt "block keyword"
+msgid "social"
+msgstr "social"
+
+#: _inc/blocks/pinterest/block.json
+msgctxt "block description"
+msgid "Embed a Pinterest pin, board, or user."
+msgstr "Incrusta un pin, tablero o usuario de Pinterest."
+
+#: _inc/blocks/pinterest/block.json
+msgctxt "block title"
+msgid "Pinterest"
+msgstr "Pinterest"
+
+#: _inc/blocks/paywall/block.json _inc/blocks/premium-content/block.json
+msgctxt "block keyword"
+msgid "signin"
+msgstr "inicio de sesión"
+
+#: _inc/blocks/paywall/block.json _inc/blocks/premium-content/block.json
+msgctxt "block keyword"
+msgid "gated"
+msgstr "bloqueado"
+
+#: _inc/blocks/paywall/block.json _inc/blocks/subscriptions/block.json
+msgctxt "block keyword"
+msgid "follow"
+msgstr "seguir"
+
+#: _inc/blocks/paywall/block.json
+msgctxt "block keyword"
+msgid "more"
+msgstr "más"
+
+#: _inc/blocks/paywall/block.json
+msgctxt "block description"
+msgid "Content before this block will be shown in the excerpt on your archives page."
+msgstr "El contenido anterior a este bloque se mostrará en el extracto de tu página de archivo."
+
+#: _inc/blocks/paywall/block.json
+msgctxt "block title"
+msgid "Paywall (Beta)"
+msgstr "Muro de pago (beta)"
+
+#: _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "toast"
+msgstr "tostada"
+
+#: _inc/blocks/payment-buttons/block.json _inc/blocks/paywall/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "subscriptions"
+msgstr "suscripciones"
+
+#: _inc/blocks/payment-buttons/block.json _inc/blocks/paywall/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "subscribe"
+msgstr "suscríbete"
+
+#: _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "shop"
+msgstr "tienda"
+
+#: _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "sell"
+msgstr "vender"
+
+#: _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "purchase"
+msgstr "compra"
+
+#: _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "products"
+msgstr "productos"
+
+#: _inc/blocks/payment-buttons/block.json _inc/blocks/paywall/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "memberships"
+msgstr "membresías"
+
+#: _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "Donations"
+msgstr "Donaciones"
+
+#: _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "commerce"
+msgstr "comercio"
+
+#: _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "buy"
+msgstr "comprar"
+
+#: _inc/blocks/payment-buttons/block.json
+msgctxt "block description"
+msgid "Prompt visitors to purchase your products and subscriptions with a group of buttons."
+msgstr "Anima a los visitantes a comprar tus productos y suscripciones con un grupo de botones."
+
+#: _inc/blocks/payment-buttons/block.json
+msgctxt "block title"
+msgid "Payment Buttons"
+msgstr "Botones de pago"
+
+#: _inc/blocks/opentable/block.json _inc/blocks/tock/block.json
+msgctxt "block keyword"
+msgid "restaurant"
+msgstr "restaurante"
+
+#: _inc/blocks/opentable/block.json _inc/blocks/tock/block.json
+msgctxt "block keyword"
+msgid "reservation"
+msgstr "reserva"
+
+#: _inc/blocks/opentable/block.json _inc/blocks/tock/block.json
+msgctxt "block keyword"
+msgid "booking"
+msgstr "reserva"
+
+#: _inc/blocks/opentable/block.json
+msgctxt "block description"
+msgid "Allow visitors to book a reservation with OpenTable"
+msgstr "Permite que los visitantes hagan una reserva con OpenTable"
+
+#: _inc/blocks/opentable/block.json
+msgctxt "block title"
+msgid "OpenTable"
+msgstr "OpenTable"
+
+#: _inc/blocks/markdown/block.json
+msgctxt "block keyword"
+msgid "markup"
+msgstr "marcado"
+
+#: _inc/blocks/markdown/block.json
+msgctxt "block keyword"
+msgid "syntax"
+msgstr "sintaxis"
+
+#: _inc/blocks/markdown/block.json
+msgctxt "block keyword"
+msgid "formatting"
+msgstr "formato"
+
+#: _inc/blocks/markdown/block.json
+msgctxt "block description"
+msgid "Use regular characters and punctuation to style text, links, and lists."
+msgstr "Utiliza caracteres y puntuación normales para dar estilo a textos, enlaces y listas."
+
+#: _inc/blocks/markdown/block.json
+msgctxt "block title"
+msgid "Markdown"
+msgstr "Markdown"
+
+#: _inc/blocks/map/block.json
+msgctxt "block keyword"
+msgid "navigation"
+msgstr "navegación"
+
+#: _inc/blocks/map/block.json
+msgctxt "block keyword"
+msgid "location"
+msgstr "ubicación"
+
+#: _inc/blocks/map/block.json
+msgctxt "block keyword"
+msgid "maps"
+msgstr "mapas"
+
+#: _inc/blocks/map/block.json
+msgctxt "block description"
+msgid "Add an interactive map showing one or more locations."
+msgstr "Añade un mapa interactivo que muestre una o más ubicaciones."
+
+#: _inc/blocks/map/block.json
+msgctxt "block title"
+msgid "Map"
+msgstr "Mapa"
+
+#: _inc/blocks/mailchimp/block.json _inc/blocks/paywall/block.json
+#: _inc/blocks/premium-content/block.json _inc/blocks/subscriptions/block.json
+msgctxt "block keyword"
+msgid "newsletter"
+msgstr "newsletter"
+
+#: _inc/blocks/mailchimp/block.json _inc/blocks/paywall/block.json
+msgctxt "block keyword"
+msgid "subscription"
+msgstr "suscripción"
+
+#: _inc/blocks/mailchimp/block.json
+msgctxt "block description"
+msgid "A form enabling readers to join a Mailchimp audience."
+msgstr "Un formulario que permite a los lectores unirse a una audiencia de Mailchimp."
+
+#: _inc/blocks/mailchimp/block.json
+msgctxt "block title"
+msgid "Mailchimp"
+msgstr "MailChimp"
+
+#: _inc/blocks/instagram-gallery/block.json
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block keyword"
+msgid "images"
+msgstr "imágenes"
+
+#: _inc/blocks/instagram-gallery/block.json
+msgctxt "block description"
+msgid "Display an automatically updating list of the latest posts from your Instagram feed."
+msgstr "Muestra una lista que se actualiza automáticamente de las últimas entradas de tu feed de Instagram."
+
+#: _inc/blocks/instagram-gallery/block.json
+msgctxt "block title"
+msgid "Latest Instagram Posts"
+msgstr "Últimas publicaciones de Instagram"
+
+#: _inc/blocks/image-compare/block.json
+msgctxt "block keyword"
+msgid "slider"
+msgstr "carrusel"
+
+#: _inc/blocks/image-compare/block.json
+msgctxt "block keyword"
+msgid "side by side"
+msgstr "una junto a otra"
+
+#: _inc/blocks/image-compare/block.json
+#: _inc/blocks/instagram-gallery/block.json
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block keyword"
+msgid "pictures"
+msgstr "fotos"
+
+#: _inc/blocks/image-compare/block.json
+#: _inc/blocks/instagram-gallery/block.json
+#: _inc/blocks/tiled-gallery/block.json
+msgctxt "block keyword"
+msgid "photos"
+msgstr "fotos"
+
+#: _inc/blocks/image-compare/block.json
+msgctxt "block keyword"
+msgid "juxtapose"
+msgstr "yuxtaponer"
+
+#: _inc/blocks/image-compare/block.json
+msgctxt "block description"
+msgid "Compare two images with a slider. Works best with images of the same size."
+msgstr "Compara dos imágenes con un carrusel. Funciona mejor con imágenes del mismo tamaño."
+
+#: _inc/blocks/image-compare/block.json
+msgctxt "block title"
+msgid "Image Compare"
+msgstr "Comparar las imágenes"
+
+#: _inc/blocks/google-docs-embed/block.json
+msgctxt "block keyword"
+msgid "doc"
+msgstr "documento"
+
+#: _inc/blocks/google-docs-embed/block.json
+msgctxt "block keyword"
+msgid "gsuite"
+msgstr "gsuite"
+
+#: _inc/blocks/google-docs-embed/block.json
+msgctxt "block keyword"
+msgid "document"
+msgstr "documento"
+
+#: _inc/blocks/google-docs-embed/block.json
+msgctxt "block description"
+msgid "Embed a Google Document."
+msgstr "Insertar un documento de Documentos de Google."
+
+#: _inc/blocks/google-docs-embed/block.json
+msgctxt "block title"
+msgid "Google Docs (Beta)"
+msgstr "Google Docs (beta)"
+
+#: _inc/blocks/google-calendar/block.json
+msgctxt "block description"
+msgid "Embed a Google Calendar"
+msgstr "Incrustar un Google Calendar"
+
+#: _inc/blocks/google-calendar/block.json
+msgctxt "block title"
+msgid "Google Calendar"
+msgstr "Google Calendar"
+
+#: _inc/blocks/gif/block.json _inc/blocks/slideshow/block.json
+#: _inc/blocks/story/block.json
+msgctxt "block keyword"
+msgid "image"
+msgstr "imagen"
+
+#: _inc/blocks/gif/block.json
+msgctxt "block keyword"
+msgid "giphy"
+msgstr "giphy"
+
+#: _inc/blocks/gif/block.json
+msgctxt "block keyword"
+msgid "animated"
+msgstr "animado"
+
+#: _inc/blocks/gif/block.json
+msgctxt "block description"
+msgid "Search for and insert an animated image."
+msgstr "Busca e inserta una imagen animada."
+
+#: _inc/blocks/gif/block.json
+msgctxt "block title"
+msgid "GIF"
+msgstr "GIF"
+
+#: _inc/blocks/eventbrite/block.json
+msgctxt "block keyword"
+msgid "tickets"
+msgstr "entradas"
+
+#: _inc/blocks/eventbrite/block.json
+msgctxt "block description"
+msgid "Embed Eventbrite event details and ticket checkout."
+msgstr "Inserta detalles del evento de Eventbrite y el pago de entradas."
+
+#: _inc/blocks/eventbrite/block.json
+msgctxt "block title"
+msgid "Eventbrite Checkout"
+msgstr "Pago de Eventbrite"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "venmo"
+msgstr "venmo"
+
+#: _inc/blocks/donations/block.json
+msgctxt "block keyword"
+msgid "tipping"
+msgstr "propinas"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json _inc/blocks/tiled-gallery/block.json
+msgctxt "block keyword"
+msgid "square"
+msgstr "square"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "sponsor"
+msgstr "patrocinador"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "stripe"
+msgstr "stripe"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "recurring"
+msgstr "periódico"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "payments"
+msgstr "pagos"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "pay"
+msgstr "pagar"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "patreon"
+msgstr "patreon"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "paid"
+msgstr "de pago"
+
+#: _inc/blocks/donations/block.json
+msgctxt "block keyword"
+msgid "non-profit"
+msgstr "sin ánimo de lucro"
+
+#: _inc/blocks/donations/block.json
+msgctxt "block keyword"
+msgid "nonprofit"
+msgstr "sin ánimo de lucro"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "money"
+msgstr "dinero"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "gofundme"
+msgstr "gofundme"
+
+#: _inc/blocks/donations/block.json
+msgctxt "block keyword"
+msgid "fundraiser"
+msgstr "recaudador de fondos"
+
+#: _inc/blocks/donations/block.json
+msgctxt "block keyword"
+msgid "fundraising"
+msgstr "recaudación de fondos"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "ecommerce"
+msgstr "comercio electrónico"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "earn"
+msgstr "gana"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "donate"
+msgstr "donar"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "debit card"
+msgstr "tarjeta de débito"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/premium-content/block.json
+#: _inc/blocks/recurring-payments/block.json
+#: _inc/blocks/simple-payments/block.json
+msgctxt "block keyword"
+msgid "credit card"
+msgstr "tarjeta de crédito"
+
+#: _inc/blocks/donations/block.json _inc/blocks/payment-buttons/block.json
+#: _inc/blocks/recurring-payments/block.json
+msgctxt "block keyword"
+msgid "contribution"
+msgstr "contribución"
+
+#: _inc/blocks/donations/block.json
+msgctxt "block keyword"
+msgid "charity"
+msgstr "caridad"
+
+#: _inc/blocks/donations/block.json
+msgctxt "block description"
+msgid "Collect one-time, monthly, or annually recurring donations."
+msgstr "Recolecta donaciones únicas, mensuales o anuales recurrentes."
+
+#: _inc/blocks/donations/block.json
+msgctxt "block title"
+msgid "Donations Form"
+msgstr "Formulario de donaciones"
+
+#: _inc/blocks/cookie-consent/block.json
+msgctxt "block keyword"
+msgid "EU"
+msgstr "UE"
+
+#: _inc/blocks/cookie-consent/block.json
+msgctxt "block keyword"
+msgid "GDPR"
+msgstr "RGPD"
+
+#: _inc/blocks/cookie-consent/block.json
+msgctxt "block keyword"
+msgid "privacy"
+msgstr "privacidad"
+
+#: _inc/blocks/cookie-consent/block.json
+msgctxt "block keyword"
+msgid "consent"
+msgstr "consentimiento"
+
+#: _inc/blocks/cookie-consent/block.json
+msgctxt "block keyword"
+msgid "cookie"
+msgstr "cookie"
+
+#: _inc/blocks/cookie-consent/block.json
+msgctxt "block description"
+msgid "Displays a customizable cookie consent banner. To display this block on all pages of your site, please add it inside a Template Part that is present on all your templates, like a Header or a Footer."
+msgstr "Muestra un banner de consentimiento de cookies personalizable. Para mostrar este bloque en todas las páginas de tu sitio web, añádelo dentro de una parte de plantilla que esté presente en todas tus plantillas, como un encabezado o un pie de página."
+
+#: _inc/blocks/cookie-consent/block.json
+msgctxt "block title"
+msgid "Cookie Consent"
+msgstr "Consentimiento de cookies"
+
+#: _inc/blocks/contact-info/block.json
+msgctxt "block keyword"
+msgid "address"
+msgstr "dirección"
+
+#: _inc/blocks/contact-info/block.json
+msgctxt "block keyword"
+msgid "phone"
+msgstr "teléfono"
+
+#: _inc/blocks/contact-info/block.json
+msgctxt "block description"
+msgid "Lets you add an email address, phone number, and physical address with improved markup for better SEO results."
+msgstr "Te permite añadir una dirección de correo electrónico, un número de teléfono y una dirección física con marcado mejorado para unos mejores resultados SEO."
+
+#: _inc/blocks/contact-info/block.json
+msgctxt "block title"
+msgid "Contact Info"
+msgstr "Información de contacto"
+
+#: _inc/blocks/calendly/block.json _inc/blocks/google-calendar/block.json
+msgctxt "block keyword"
+msgid "dates"
+msgstr "fechas"
+
+#: _inc/blocks/calendly/block.json _inc/blocks/eventbrite/block.json
+#: _inc/blocks/google-calendar/block.json
+msgctxt "block keyword"
+msgid "events"
+msgstr "eventos"
+
+#: _inc/blocks/calendly/block.json _inc/blocks/google-calendar/block.json
+msgctxt "block keyword"
+msgid "appointments"
+msgstr "citas"
+
+#: _inc/blocks/calendly/block.json
+msgctxt "block keyword"
+msgid "calendar"
+msgstr "calendario"
+
+#: _inc/blocks/calendly/block.json
+msgctxt "block description"
+msgid "Embed a calendar for customers to schedule appointments"
+msgstr "Inserta un calendario para que los clientes programen citas"
+
+#: _inc/blocks/calendly/block.json
+msgctxt "block title"
+msgid "Calendly"
+msgstr "Calendly"
+
+#: _inc/blocks/business-hours/block.json
+msgctxt "block keyword"
+msgid "working day"
+msgstr "día laboral"
+
+#: _inc/blocks/business-hours/block.json _inc/blocks/calendly/block.json
+#: _inc/blocks/google-calendar/block.json
+msgctxt "block keyword"
+msgid "schedule"
+msgstr "programa"
+
+#: _inc/blocks/business-hours/block.json
+msgctxt "block keyword"
+msgid "closing time"
+msgstr "hora de cierre"
+
+#: _inc/blocks/business-hours/block.json
+msgctxt "block keyword"
+msgid "opening hours"
+msgstr "horas de apertura"
+
+#: _inc/blocks/business-hours/block.json
+msgctxt "block description"
+msgid "Display opening hours for your business."
+msgstr "Muestra las horas de apertura de tu negocio."
+
+#: _inc/blocks/business-hours/block.json
+msgctxt "block title"
+msgid "Business Hours"
+msgstr "Horas de apertura"
+
+#: _inc/blocks/blogging-prompt/block.json
+msgctxt "block keyword"
+msgid "blogging"
+msgstr "blogueo"
+
+#: _inc/blocks/blogging-prompt/block.json
+msgctxt "block keyword"
+msgid "writing"
+msgstr "escritura"
+
+#: _inc/blocks/blogging-prompt/block.json
+msgctxt "block description"
+msgid "Answer a new and inspiring writing prompt each day."
+msgstr "Todos los días puedes solicitar una sugerencia de escritura que sea nueva e inspiradora."
+
+#: _inc/blocks/blogging-prompt/block.json
+msgctxt "block title"
+msgid "Writing Prompt"
+msgstr "Sugerencia de escritura"
+
+#: _inc/blocks/author-recommendation/block.json
+msgctxt "block description"
+msgid "Select the sites you follow and share them with your users."
+msgstr "Elige los sitios que sigues y compártelos con tus usuarios."
+
+#: _inc/blocks/author-recommendation/block.json
+msgctxt "block title"
+msgid "Author Recommendation (Beta)"
+msgstr "Recomendación del autor (Beta)"
+
+#: _inc/blocks/amazon/block.json
+msgctxt "block keyword"
+msgid "affiliate"
+msgstr "afiliado"
+
+#: _inc/blocks/amazon/block.json
+msgctxt "block keyword"
+msgid "amazon"
+msgstr "amazon"
+
+#: _inc/blocks/amazon/block.json
+msgctxt "block description"
+msgid "Promote Amazon products and earn a commission from sales."
+msgstr "Promociona productos de Amazon y gana comisiones de las ventas."
+
+#: _inc/blocks/amazon/block.json
+msgctxt "block title"
+msgid "Amazon (Beta)"
+msgstr "Amazon (beta)"
+
+#: _inc/blocks/ai-paragraph/block.json
+msgctxt "block description"
+msgid "Automatically generate new paragraphs using your existing content, powered by AI magic. We are experimenting with this feature and can tweak or remove it at any point."
+msgstr "Genera párrafos nuevos automáticamente con el contenido existente, con la magia tecnológica de la inteligencia artificial. Estamos experimentando con esta función y la podemos modificar o retirar en cualquier momento."
+
+#: _inc/blocks/ai-paragraph/block.json
+msgctxt "block title"
+msgid "AI Paragraph (Experimental)"
+msgstr "Párrafo de inteligencia artificial (experimental)"
+
+#: _inc/blocks/ai-image/block.json
+msgctxt "block keyword"
+msgid "Diffusion"
+msgstr "Difusión"
+
+#: _inc/blocks/ai-image/block.json
+msgctxt "block keyword"
+msgid "DALLe"
+msgstr "DALLe"
+
+#: _inc/blocks/ai-image/block.json
+msgctxt "block description"
+msgid "Automatically generate an illustration for your post, powered by AI magic. We are experimenting with this feature and can tweak or remove it at any point."
+msgstr "Genera una ilustración para tu entrada automáticamente, con la magia tecnológica de la inteligencia artificial. Estamos experimentando con esta función y la podemos modificar o retirar en cualquier momento."
+
+#: _inc/blocks/ai-image/block.json
+msgctxt "block title"
+msgid "AI Image (Experimental)"
+msgstr "Imagen de inteligencia artificial (experimental)"
+
+#: _inc/blocks/ai-chat/block.json
+msgctxt "block keyword"
+msgid "Search"
+msgstr "Buscar"
+
+#: _inc/blocks/ai-chat/block.json
+msgctxt "block keyword"
+msgid "Chat"
+msgstr "Chat"
+
+#: _inc/blocks/ai-chat/block.json
+msgctxt "block description"
+msgid "Provides summarized chat across a site’s content, powered by AI magic."
+msgstr "Proporciona un chat resumido en el contenido de un sitio, con la tecnología de la IA."
+
+#: _inc/blocks/ai-chat/block.json
+msgctxt "block title"
+msgid "AI Chat (Beta)"
+msgstr "Chat de IA (beta)"
+
+#: _inc/blocks/ai-assistant/block.json
+msgctxt "block keyword"
+msgid "assistant"
+msgstr "ayudante"
+
+#: _inc/blocks/ai-assistant/block.json
+msgctxt "block keyword"
+msgid "help"
+msgstr "ayuda"
+
+#: _inc/blocks/ai-assistant/block.json _inc/blocks/ai-image/block.json
+#: _inc/blocks/ai-paragraph/block.json
+msgctxt "block keyword"
+msgid "Magic"
+msgstr "Magia"
+
+#: _inc/blocks/ai-assistant/block.json _inc/blocks/ai-image/block.json
+#: _inc/blocks/ai-paragraph/block.json
+msgctxt "block keyword"
+msgid "AL"
+msgstr "AL"
+
+#: _inc/blocks/ai-assistant/block.json _inc/blocks/ai-chat/block.json
+#: _inc/blocks/ai-paragraph/block.json
+msgctxt "block keyword"
+msgid "GPT"
+msgstr "GPT"
+
+#: _inc/blocks/ai-assistant/block.json _inc/blocks/ai-chat/block.json
+#: _inc/blocks/ai-image/block.json _inc/blocks/ai-paragraph/block.json
+msgctxt "block keyword"
+msgid "AI"
+msgstr "IA"
+
+#: _inc/blocks/ai-assistant/block.json
+msgctxt "block description"
+msgid "Automatically generate and modify content, powered by AI magic. The AI Assistant can be imprecise with information about people, places, or facts. We are experimenting with this feature and can tweak or remove it at any point."
+msgstr "Genera y modifica contenidos automáticamente, gracias a la magia de la IA. El AI Assistant puede ser impreciso con la información sobre personas, lugares o hechos. Estamos experimentando con esta función y la podemos modificar o retirar en cualquier momento."
+
+#: _inc/blocks/ai-assistant/block.json
+msgctxt "block title"
+msgid "AI Assistant (Experimental)"
+msgstr "AI Assistant (experimental)"
+
+#: jetpack_vendor/automattic/jetpack-forms/dist/blocks/block.json
+#: jetpack_vendor/automattic/jetpack-forms/src/blocks/contact-form/block.json
+msgctxt "block keyword"
+msgid "contact form"
+msgstr "formulario de contacto"
+
+#: jetpack_vendor/automattic/jetpack-forms/dist/blocks/block.json
+#: jetpack_vendor/automattic/jetpack-forms/src/blocks/contact-form/block.json
+msgctxt "block keyword"
+msgid "feedback"
+msgstr "comentarios"
+
+#: jetpack_vendor/automattic/jetpack-forms/dist/blocks/block.json
+#: jetpack_vendor/automattic/jetpack-forms/src/blocks/contact-form/block.json
+#: _inc/blocks/contact-info/block.json _inc/blocks/mailchimp/block.json
+#: _inc/blocks/paywall/block.json _inc/blocks/subscriptions/block.json
+msgctxt "block keyword"
+msgid "email"
+msgstr "correo electrónico"
+
+#: jetpack_vendor/automattic/jetpack-forms/dist/blocks/block.json
+#: jetpack_vendor/automattic/jetpack-forms/src/blocks/contact-form/block.json
+msgctxt "block description"
+msgid "Create forms to collect data from site visitors and manage their responses."
+msgstr "Crea formularios para recopilar datos de los visitantes del sitio y gestionar sus respuestas."
+
+#: jetpack_vendor/automattic/jetpack-forms/dist/blocks/block.json
+#: jetpack_vendor/automattic/jetpack-forms/src/blocks/contact-form/block.json
+msgctxt "block title"
+msgid "Form"
+msgstr "Formulario"
+
+#: _inc/lib/core-api/wpcom-endpoints/memberships.php:382
+#: _inc/lib/core-api/wpcom-endpoints/memberships.php:433
+msgid "Product not found."
+msgstr "No se ha encontrado el producto."
+
+#: modules/masterbar/admin-menu/class-admin-menu.php:414
+msgid "Podcasting"
+msgstr "Publicación de podcast"
+
 #: jetpack_vendor/automattic/jetpack-publicize/src/class-rest-controller.php:174
 msgid "Time when the notice should reappear"
 msgstr "Hora a la que debería volver a aparecer el aviso"
+
+#: jetpack_vendor/automattic/jetpack-publicize/src/auto-conversion-settings/class-rest-settings-controller.php:134
+msgid "Whether or not auto-conversion is enabled."
+msgstr "Si está activada o no la autoconversión."
+
+#: jetpack_vendor/automattic/jetpack-publicize/src/auto-conversion-settings/class-rest-settings-controller.php:129
+msgid "Whether or not auto-conversion for videos is enabled."
+msgstr "Si está activada o no la autoconversión de vídeos."
+
+#: jetpack_vendor/automattic/jetpack-publicize/src/auto-conversion-settings/class-rest-settings-controller.php:124
+msgid "Whether or not auto-conversion for images is enabled."
+msgstr "Si está activada o no la autoconversión de imágenes."
 
 #: jetpack_vendor/automattic/jetpack-my-jetpack/src/products/class-jetpack-ai.php:105
 msgid "Get feedback about your post"
@@ -34,6 +1217,18 @@ msgstr "No tienes el permiso de usuario adecuado para desarrollar esta acción."
 #: jetpack_vendor/automattic/jetpack-identity-crisis/src/class-rest-endpoints.php:208
 msgid "URL secret does not exist."
 msgstr "El secreto de URL no existe."
+
+#: jetpack_vendor/automattic/jetpack-forms/src/contact-form/class-util.php:63
+msgid "Lead Capture Form"
+msgstr "Formulario de captación de clientes potenciales"
+
+#: extensions/blocks/subscriptions/subscriptions.php:862
+msgid "Upgrade subscription"
+msgstr "Actualizar suscripción"
+
+#: extensions/blocks/subscriptions/subscriptions.php:860
+msgid "You're currently a free subscriber. Upgrade your subscription to get access to the rest of this post and other paid-subscriber only content."
+msgstr "Actualmente eres un suscriptor gratuito. Actualiza tu suscripción para obtener acceso al contenido íntegro de esta entrada y demás contenido exclusivo para suscriptores de pago."
 
 #. translators: %s is the name of the site.
 #: extensions/blocks/subscriptions/subscriptions.php:830

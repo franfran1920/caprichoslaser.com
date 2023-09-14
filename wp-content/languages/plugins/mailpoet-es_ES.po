@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-08-28 14:21:31+0000\n"
+"PO-Revision-Date: 2023-09-11 16:46:10+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -9,8 +9,18 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: MailPoet - MailPoet\n"
 
-#: views/subscribers/subscribers.html:45
-msgid "Engagement over the last 12 months"
+#: lib/API/JSON/v1/SubscriberStats.php:74
+msgid "Lifetime"
+msgstr "De por vida"
+
+#. translators: table header meaning 12 months
+#: lib/API/JSON/v1/SubscriberStats.php:73
+msgid "12(m)"
+msgstr ""
+
+#. translators: table header meaning 30 days
+#: lib/API/JSON/v1/SubscriberStats.php:71
+msgid "30(d)"
 msgstr ""
 
 #: views/segments/translations.html:232
@@ -79,7 +89,7 @@ msgstr ""
 
 #: views/segments/translations.html:152
 msgid "over all time"
-msgstr ""
+msgstr "en todo momento"
 
 #: views/segments/translations.html:140
 msgid "Last sending date"
@@ -117,7 +127,7 @@ msgstr "en o después"
 msgid "on or before"
 msgstr "en o antes"
 
-#: lib/Config/Menu.php:394
+#: lib/Config/Menu.php:397
 msgctxt "lists per page (screen options)"
 msgid "Number of lists per page"
 msgstr "Número de listas por página"
@@ -126,19 +136,19 @@ msgstr "Número de listas por página"
 msgid "This tag does not exist."
 msgstr "Esta etiqueta no existe."
 
-#: views/subscribers/subscribers.html:163
+#: views/subscribers/subscribers.html:162
 msgid "Remove tag..."
 msgstr "Quitar etiqueta..."
 
-#: views/subscribers/subscribers.html:162
+#: views/subscribers/subscribers.html:161
 msgid "Add tag..."
 msgstr "Añadir etiqueta..."
 
-#: views/subscribers/subscribers.html:161
+#: views/subscribers/subscribers.html:160
 msgid "Tag <strong>%1$s</strong> was removed from %2$d subscribers."
 msgstr "Se ha eliminado la etiqueta <strong>%1$s</strong> de los suscriptores de %2$d."
 
-#: views/subscribers/subscribers.html:160
+#: views/subscribers/subscribers.html:159
 msgid "Tag <strong>%1$s</strong> was added to %2$d subscribers."
 msgstr "Se ha añadido la etiqueta <strong>%1$s</strong> a los suscriptores de %2$d."
 
@@ -226,7 +236,7 @@ msgstr "número de aperturas de máquinas"
 msgid "number of opens"
 msgstr "número de aperturas"
 
-#: lib/Config/Menu.php:534 lib/Config/Menu.php:535
+#: lib/Config/Menu.php:537 lib/Config/Menu.php:538
 msgid "Automation Analytics"
 msgstr "Analítica de la automatización"
 
@@ -848,7 +858,7 @@ msgstr "minuto(s)"
 msgid "This subscriber is already unsubscribed."
 msgstr "Este suscriptor ya se ha dado de baja."
 
-#: views/subscribers/subscribers.html:79
+#: views/subscribers/subscribers.html:78
 msgid "Unsubscribed at %1$d, via the MP API."
 msgstr "Darse de baja en %1$d, a través de la API de MP."
 
@@ -1464,7 +1474,7 @@ msgstr "Conecta tu sitio con MailPoet y empieza a enviar gratis. Llega a las ban
 msgid "Get ready to send your first campaign."
 msgstr "Prepárate para enviar tu primera campaña."
 
-#: lib/Config/Menu.php:219 lib/Config/Menu.php:220
+#: lib/Config/Menu.php:222 lib/Config/Menu.php:223
 msgid "Home"
 msgstr "Inicio"
 
@@ -1695,15 +1705,15 @@ msgstr "Automatización no encontrada."
 msgid "Don't forget to include:<br /><br />[activation_link]Confirm your subscription.[/activation_link]<br /><br />Optional:<br /><br /> [lists_to_confirm] - comma separated subscriber's list names<br /><br />[subscriber:firstname | default: there] - Subscriber's first name, defaults to 'there' if not available<br /><br />[subscriber:lastname | default: there] - Subscriber's last name, defaults to 'there' if not available<br /><br />[subscriber:email] - Subscriber's email address<br /><br />[subscriber:count] - Total number of subscribers<br /><br />[site:title] - Your WordPress site title (currently '[current_site_title]')<br /><br />[site:homepage_link] - Link to your site's homepage."
 msgstr "No olvides incluir:<br /><br />[activation_link]Confirma tu suscripción.[/activation_link]<br /><br />Opcional:<br /><br /> [lists_to_confirm] - nombres de listas de suscriptores separados por comas<br /><br />[subscriber:firstname | default: suscriptor] - Nombre del suscriptor, por defecto «suscriptor» si no está disponible<br /><br />[subscriber:lastname | default: susciptor] - Apellido del suscriptor, por defecto «suscriptor» si no está disponible<br /><br />[subscriber:email] - Dirección de correo electrónico del suscriptor<br /><br />[subscriber:count] - Número total de suscriptores<br /><br />[site:title] - El título de tu sitio WordPress (actualmente '[current_site_title]')<br /><br />[site:homepage_link] - Enlace a la página principal de tu sitio."
 
-#: lib/Config/Menu.php:545 lib/Config/Menu.php:546
+#: lib/Config/Menu.php:548 lib/Config/Menu.php:549
 msgid "Automation Templates"
 msgstr "Plantillas de automatización"
 
-#: lib/Config/Menu.php:524 lib/Config/Menu.php:525
+#: lib/Config/Menu.php:527 lib/Config/Menu.php:528
 msgid "Automation Editor"
 msgstr "Editor de automatización"
 
-#: lib/Config/Menu.php:486
+#: lib/Config/Menu.php:489
 msgid "Experimental Features"
 msgstr "Características experimentales"
 
@@ -1794,7 +1804,7 @@ msgctxt "block title"
 msgid "MailPoet Marketing Opt-in"
 msgstr "Opt-in de Marketing de MailPoet"
 
-#: views/segments/translations.html:195 lib/Config/Menu.php:513
+#: views/segments/translations.html:195 lib/Config/Menu.php:516
 msgid "Automations"
 msgstr "Automatizaciones"
 
@@ -2130,11 +2140,11 @@ msgid "tag"
 msgstr "etiqueta"
 
 #: views/subscribers/importExport/import.html:139
-#: views/subscribers/subscribers.html:159
+#: views/subscribers/subscribers.html:158
 msgid "Add new tag"
 msgstr "Añadir nueva etiqueta"
 
-#: views/subscribers/subscribers.html:158
+#: views/subscribers/subscribers.html:157
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:210
 #: lib/Automation/Integrations/WooCommerce/Fields/OrderFieldsFactory.php:242
 msgid "Tags"
@@ -2477,15 +2487,15 @@ msgstr "Mostrar el formulario cada"
 msgid "You have sent more emails this month than your MailPoet plan includes, and sending has been temporarily paused. To continue sending with MailPoet Sending Service please [link]upgrade your plan[/link], or wait until sending is automatically resumed on %1$s."
 msgstr "Has enviado más correos electrónicos de los incluye que tu plan de MailPoet y los envíos han sido pausados temporalmente. Para continuar enviando con el servicio de envio de MailPoet, por favor, [link]mejora tu plan[/link], o espera a que el envío se reanude el %1$s."
 
-#: views/segments/translations.html:260 views/subscribers/subscribers.html:133
+#: views/segments/translations.html:260 views/subscribers/subscribers.html:132
 msgid "Upgrade"
 msgstr "Actualizar"
 
-#: views/segments/translations.html:265 views/subscribers/subscribers.html:139
+#: views/segments/translations.html:265 views/subscribers/subscribers.html:138
 msgid "Upgrade your plan"
 msgstr "Mejora tu plan"
 
-#: views/segments/translations.html:261 views/subscribers/subscribers.html:135
+#: views/segments/translations.html:261 views/subscribers/subscribers.html:134
 #: lib/Util/Notices/PremiumFeaturesAvailableNotice.php:54
 msgid "Your current MailPoet plan includes advanced features, but they require the MailPoet Premium plugin to be installed and activated."
 msgstr "Tu plan actual de MailPoet incluye características avanzadas, pero necesitan que tengas instalado y activo el plugin de MailPoet Premium."
@@ -2764,7 +2774,7 @@ msgstr "Apreciamos tu continuo interés en nuestras actualizaciones. ¡Espera vo
 msgid "Thank you for letting us know!"
 msgstr "¡Gracias por informarnos!"
 
-#: lib/Newsletter/NewsletterValidator.php:75
+#: lib/Newsletter/NewsletterValidator.php:88
 msgid "Re-engagement emails are disabled because open and click tracking is disabled in MailPoet → Settings → Advanced."
 msgstr "Los correos electrónicos de reenganche están desactivados porque el seguimiento de aperturas y clics está desactivado en MailPoet → Ajustes → Avanzado."
 
@@ -2773,7 +2783,7 @@ msgctxt "CTA button label"
 msgid "How can I clean my list?"
 msgstr "¿Cómo puedo limpiar mi lista?"
 
-#: views/segments/translations.html:263 views/subscribers/subscribers.html:137
+#: views/segments/translations.html:263 views/subscribers/subscribers.html:136
 #: lib/Util/Notices/PremiumFeaturesAvailableNotice.php:62
 msgid "Activate MailPoet Premium plugin"
 msgstr "Activar el plugin MailPoet Premium"
@@ -2802,7 +2812,7 @@ msgstr "El CAPTCHA incorporado protege tus formularios de suscripción contra lo
 msgid "Addresses in names are not permitted, please add your name instead."
 msgstr "No están permitidas las direcciones en los nombres. Por favor, añade tu nombre en su lugar."
 
-#: views/subscribers/subscribers.html:46
+#: views/subscribers/subscribers.html:45
 msgctxt "when was the last time the subscriber engaged with the website?"
 msgid "never"
 msgstr "nunca"
@@ -2812,7 +2822,7 @@ msgctxt "Dynamic segment creation: list of all subscribers that opened the newsl
 msgid "machine-opened"
 msgstr "abierto-por-máquina"
 
-#: views/subscribers/subscribers.html:113
+#: views/subscribers/subscribers.html:112
 msgctxt "Percentage of newsletters that were opened by a machine"
 msgid "Machine-opened"
 msgstr "Abierto por máquina"
@@ -2880,27 +2890,27 @@ msgctxt "Text in unsubscribe link"
 msgid "Yes, unsubscribe me"
 msgstr "Sí, dame de baja"
 
-#: views/subscribers/subscribers.html:142
+#: views/subscribers/subscribers.html:141
 msgctxt "Table column label for count of subscriber actions"
 msgid "Count"
 msgstr "Cantidad"
 
-#: views/subscribers/subscribers.html:141
+#: views/subscribers/subscribers.html:140
 msgctxt "Table column label for date when subscriber action happened"
 msgid "Action on"
 msgstr "Acción el"
 
-#: views/subscribers/subscribers.html:140
+#: views/subscribers/subscribers.html:139
 msgctxt "Table column label for subscriber actions e.g. email open, link clicked"
 msgid "Action"
 msgstr "Acción"
 
-#: views/subscribers/subscribers.html:110
+#: views/subscribers/subscribers.html:109
 msgctxt "This is a heading for the subscribers statistics page example: \"Stats: mailpoet@example.com\""
 msgid "Stats: %s"
 msgstr "Estadísticas: %s"
 
-#: views/subscribers/subscribers.html:101
+#: views/subscribers/subscribers.html:100
 msgctxt "This is an action on the subscribers page"
 msgid "Unsubscribe"
 msgstr "Darse de Baja"
@@ -3135,12 +3145,12 @@ msgctxt "number of subscribers in the plugin"
 msgid "%s MailPoet subscribers"
 msgstr "%s suscriptores de MailPoet"
 
-#: views/segments/translations.html:66 views/subscribers/subscribers.html:58
+#: views/segments/translations.html:66 views/subscribers/subscribers.html:57
 msgctxt "number of subscribers in a sending plan"
 msgid "%s subscribers in your plan"
 msgstr "%ssuscriptores en tu plan"
 
-#: views/segments/translations.html:65 views/subscribers/subscribers.html:57
+#: views/segments/translations.html:65 views/subscribers/subscribers.html:56
 msgctxt "count / total subscribers"
 msgid "%1$d / %2$d"
 msgstr "%1$d / %2$d"
@@ -4504,32 +4514,32 @@ msgctxt "title of an automatic email containing statistics (newsletter open rate
 msgid "Stats for email %s"
 msgstr "Estadísticas del correo electrónico %s"
 
-#: lib/Config/Populator.php:301
+#: lib/Config/Populator.php:302
 msgctxt "default email opt-in message displayed on checkout page for ecommerce websites"
 msgid "I would like to receive exclusive emails with discounts and product information"
 msgstr "Me gustaría recibir correos electrónicos exclusivos con descuentos e información de productos"
 
-#: lib/Config/Populator.php:300
+#: lib/Config/Populator.php:301
 msgctxt "default email opt-in message displayed on checkout page for ecommerce websites"
 msgid "Yes, I would like to be added to your mailing list"
 msgstr "Sí, me gustaría que me añadieras a tu lista de correo"
 
-#: lib/Config/Menu.php:419
+#: lib/Config/Menu.php:422
 msgctxt "segments per page (screen options)"
 msgid "Number of segments per page"
 msgstr "Número de segmentos por página"
 
-#: lib/Config/Menu.php:343
+#: lib/Config/Menu.php:346
 msgctxt "subscribers per page (screen options)"
 msgid "Number of subscribers per page"
 msgstr "Número de abonados por página"
 
-#: lib/Config/Menu.php:285
+#: lib/Config/Menu.php:288
 msgctxt "forms per page (screen options)"
 msgid "Number of forms per page"
 msgstr "Número de formularios por página"
 
-#: lib/Config/Menu.php:245
+#: lib/Config/Menu.php:248
 msgctxt "newsletters per page (screen options)"
 msgid "Number of newsletters per page"
 msgstr "Número de boletines por página"
@@ -4587,163 +4597,163 @@ msgstr "Dirección de correo electrónico"
 msgid "Simply click on this link to stop receiving emails from us."
 msgstr "Simplemente haz clic en este enlace para dejar de recibir nuestros correos electrónicos."
 
-#: views/subscribers/subscribers.html:154
+#: views/subscribers/subscribers.html:153
 msgid "Read 20% or fewer of sent emails"
 msgstr "20% o menos de  los correos enviados han sido leídos"
 
-#: views/subscribers/subscribers.html:151
+#: views/subscribers/subscribers.html:150
 msgid "Read between 20 and 50% of sent emails"
 msgstr "Entre el 20 y el 50% de  los correos enviados han sido leídos"
 
-#: views/subscribers/subscribers.html:148
+#: views/subscribers/subscribers.html:147
 msgid "Read 50% or more of sent emails"
 msgstr "50% o más de los correos enviados han sido leídos"
 
-#: views/subscribers/subscribers.html:130
+#: views/subscribers/subscribers.html:129
 msgid "Learn more about how each of your subscribers is engaging with your emails. See which emails they’ve opened, the links they clicked. If you’re a WooCommerce store owner, you’ll also see any purchases made as a result of your emails. [link]Learn more[/link]."
 msgstr "Obtén más información sobre cómo tus suscriptores interactúan con tus correos electrónicos. Puedes ver qué correos electrónicos han abierto, los enlaces en los que hicieron clic. Si eres propietario de una tienda WooCommerce, también verás las compras realizadas como resultado de tus correos electrónicos. [enlace]Más información[/link]."
 
-#: views/subscribers/subscribers.html:123
+#: views/subscribers/subscribers.html:122
 msgid "Add New"
 msgstr "Añadir nuevo"
 
-#: views/subscribers/subscribers.html:119
+#: views/subscribers/subscribers.html:118
 msgid "Need to add new fields, like a telephone number or street address? You can add custom fields by editing the subscription form on the Forms page."
 msgstr "¿Necesitas añadir nuevos campos, como un número de teléfono o la dirección postal? Se pueden añadir campos personalizados mediante la edición del formulario de suscripción en la página de formularios."
 
-#: views/subscribers/subscribers.html:117
+#: views/subscribers/subscribers.html:116
 msgid "Opened emails"
 msgstr "Correos electrónicos abiertos"
 
-#: views/subscribers/subscribers.html:116
+#: views/subscribers/subscribers.html:115
 msgid "Not opened"
 msgstr "No abierto"
 
-#: views/subscribers/subscribers.html:115
+#: views/subscribers/subscribers.html:114
 msgid "Clicked"
 msgstr "Hecho clic"
 
-#: views/subscribers/subscribers.html:111
+#: views/subscribers/subscribers.html:110
 msgid "Sent email"
 msgstr "Correo electrónico enviado"
 
-#: views/subscribers/subscribers.html:108
+#: views/subscribers/subscribers.html:107
 msgid "This subscriber is a registered WordPress user. [link]Edit their profile[/link] to change their email."
 msgstr "Este suscriptor es un usuario registrado de WordPress. [link]Edita su perfil[/link] para cambiar su correo electrónico."
 
-#: views/subscribers/subscribers.html:106
+#: views/subscribers/subscribers.html:105
 msgid "Lists to which the subscriber was subscribed."
 msgstr "Listas a las que el suscritor se ha suscrito."
 
-#: views/subscribers/subscribers.html:105
+#: views/subscribers/subscribers.html:104
 msgid "1 confirmation email has been sent."
 msgstr "Se han enviado 1 correo electrónico de confirmación."
 
-#: views/subscribers/subscribers.html:104
+#: views/subscribers/subscribers.html:103
 msgid "Resend confirmation email"
 msgstr "Reenviar email de confirmación"
 
-#: views/subscribers/subscribers.html:103
+#: views/subscribers/subscribers.html:102
 msgid "%1$d subscribers were removed from all lists."
 msgstr "Se han eliminado %1$d suscriptores de todas las listas."
 
-#: views/subscribers/subscribers.html:102
+#: views/subscribers/subscribers.html:101
 msgid "This action will unsubscribe %s subscribers from all lists. This action cannot be undone. Are you sure, you want to continue?"
 msgstr "Esta acción dará de baja a %s suscriptores de todas las listas. Esta acción no se puede deshacer. ¿Seguro que quieres continuar?"
 
-#: views/subscribers/subscribers.html:100
+#: views/subscribers/subscribers.html:99
 msgid "Remove from all lists"
 msgstr "Eliminar de todas las listas"
 
-#: views/subscribers/subscribers.html:99
+#: views/subscribers/subscribers.html:98
 msgid "%1$d subscribers were removed from list <strong>%2$s</strong>"
 msgstr "Se han eliminado %1$d suscriptores de la lista <strong>%2$s</strong>"
 
-#: views/subscribers/subscribers.html:98
+#: views/subscribers/subscribers.html:97
 msgid "Remove from list..."
 msgstr "Quitar de la lista…"
 
-#: views/subscribers/subscribers.html:97
+#: views/subscribers/subscribers.html:96
 msgid "%1$d subscribers were added to list <strong>%2$s</strong>."
 msgstr "Se han añadido %1$d suscriptores a la lista <strong>%2$s</strong>."
 
-#: views/subscribers/subscribers.html:96
+#: views/subscribers/subscribers.html:95
 msgid "Add to list..."
 msgstr "Añadir a la lista…"
 
-#: views/subscribers/subscribers.html:95
+#: views/subscribers/subscribers.html:94
 msgid "%1$d subscribers were moved to list <strong>%2$s</strong>"
 msgstr "Se han enviado %1$d suscriptores a la lista <strong>%2$s</strong>"
 
-#: views/subscribers/subscribers.html:94
+#: views/subscribers/subscribers.html:93
 msgid "Move to list..."
 msgstr "Mover a la lista."
 
-#: views/subscribers/subscribers.html:93
+#: views/subscribers/subscribers.html:92
 msgid "%1$d subscribers have been restored from the trash."
 msgstr "Se han restaurado %1$d suscriptores de la papelera."
 
-#: views/subscribers/subscribers.html:92
+#: views/subscribers/subscribers.html:91
 msgid "1 subscriber has been restored from the trash."
 msgstr "Se ha restaurado 1 suscriptor de la papelera."
 
-#: views/subscribers/subscribers.html:91
+#: views/subscribers/subscribers.html:90
 msgid "%1$d subscribers were permanently deleted."
 msgstr "Se han eliminado permanentemente %1$d suscriptores."
 
-#: views/subscribers/subscribers.html:90
+#: views/subscribers/subscribers.html:89
 msgid "1 subscriber was permanently deleted."
 msgstr "Se eliminó 1 suscriptor de manera permanente."
 
-#: views/subscribers/subscribers.html:89
+#: views/subscribers/subscribers.html:88
 msgid "%1$d subscribers were moved to the trash."
 msgstr "Se han enviado %1$d suscriptores a la basura."
 
-#: views/subscribers/subscribers.html:88
+#: views/subscribers/subscribers.html:87
 msgid "1 subscriber was moved to the trash."
 msgstr "Se ha enviado 1 suscriptor a la papelera."
 
-#: views/subscribers/subscribers.html:86
+#: views/subscribers/subscribers.html:85
 msgid "Subscribed on"
 msgstr "Suscrito el"
 
-#: views/subscribers/subscribers.html:85
+#: views/subscribers/subscribers.html:84
 msgid "Score"
 msgstr "Puntuación"
 
-#: views/subscribers/subscribers.html:80
+#: views/subscribers/subscribers.html:79
 msgid "Unsubscribed at %1$d, for an unknown reason."
 msgstr "Se ha dado de baja en %1$d, por una razón desconocida."
 
-#: views/subscribers/subscribers.html:78
+#: views/subscribers/subscribers.html:77
 msgid "Unsubscribed at %1$d, by admin \"%2$d\"."
 msgstr "Dado de baja de %1$d, por el administrador «%2$d»."
 
-#: views/subscribers/subscribers.html:77
+#: views/subscribers/subscribers.html:76
 msgid "Unsubscribed at %1$d, using the “Manage my Subscription” page."
 msgstr "Dado de baja de %1$d, utilizando la página «Gestionar mi suscripción»."
 
-#: views/subscribers/subscribers.html:76
+#: views/subscribers/subscribers.html:75
 msgid "Unsubscribed at %1$d, from newsletter [link]."
 msgstr "Dado de baja de %1$d, del boletín de noticias [link]."
 
-#: views/subscribers/subscribers.html:74
+#: views/subscribers/subscribers.html:73
 msgid "This subscriber will receive Welcome Emails if any are active for your lists."
 msgstr "Este suscriptor recibirá los correos electrónicos de bienvenida si está activado para tus listas."
 
-#: views/subscribers/subscribers.html:73
+#: views/subscribers/subscribers.html:72
 msgid "Subscriber was added successfully!"
 msgstr "¡Suscriptor se añadió correctamente!"
 
-#: views/subscribers/subscribers.html:72
+#: views/subscribers/subscribers.html:71
 msgid "Subscriber was updated successfully!"
 msgstr "¡Suscriptor actualizado correctamente!"
 
-#: views/subscribers/subscribers.html:71
+#: views/subscribers/subscribers.html:70
 msgid "Unsubscribed on %1$s"
 msgstr "Dado de baja de la lista %1$s"
 
-#: views/subscribers/subscribers.html:61
+#: views/subscribers/subscribers.html:60
 msgid "E-mail"
 msgstr "Correo electrónico"
 
@@ -5330,7 +5340,7 @@ msgstr "Listas a las que también suscribir a los clientes:"
 msgid "Customers can subscribe to the \"WooCommerce Customers\" list and optionally other lists via a checkbox on the checkout page."
 msgstr "Los clientes pueden suscribirse a la lista \"Clientes de WooCommerce\" y, opcionalmente, otras listas a través de una casilla de verificación en la página de pagos."
 
-#: views/segments/translations.html:262 views/subscribers/subscribers.html:136
+#: views/segments/translations.html:262 views/subscribers/subscribers.html:135
 #: lib/Util/Notices/PremiumFeaturesAvailableNotice.php:58
 msgid "Download MailPoet Premium plugin"
 msgstr "Descargar el plugin MailPoet Premium"
@@ -5706,7 +5716,7 @@ msgid "Add a condition"
 msgstr "Añadir una condición"
 
 #: views/homepage.html:87 views/segments/translations.html:254
-#: views/subscribers/subscribers.html:155
+#: views/subscribers/subscribers.html:154
 msgid "Average percent of emails subscribers read in the last year"
 msgstr "Media porcentual de los correos leídos por los suscriptores el año pasado"
 
@@ -5715,7 +5725,7 @@ msgid "20% or fewer"
 msgstr "20% o menos"
 
 #: views/homepage.html:84 views/segments/translations.html:251
-#: views/subscribers/subscribers.html:152
+#: views/subscribers/subscribers.html:151
 msgid "Low"
 msgstr "Bajo"
 
@@ -5728,12 +5738,12 @@ msgid "50% or more"
 msgstr "50% o más"
 
 #: views/homepage.html:77 views/segments/translations.html:244
-#: views/subscribers/subscribers.html:145
+#: views/subscribers/subscribers.html:144
 msgid "Fewer than 3 emails sent"
 msgstr "Menos de 3 correos electrónicos enviados"
 
 #: views/homepage.html:76 views/segments/translations.html:243
-#: views/subscribers/subscribers.html:144
+#: views/subscribers/subscribers.html:143
 msgid "Not enough data."
 msgstr "No hay datos suficientes."
 
@@ -5894,7 +5904,7 @@ msgstr "Segmento"
 
 #: views/segments/translations.html:73
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:233
-#: lib/Config/Menu.php:406 lib/Config/Menu.php:407
+#: lib/Config/Menu.php:409 lib/Config/Menu.php:410
 msgid "Segments"
 msgstr "Segmentos"
 
@@ -5906,7 +5916,7 @@ msgstr "Este es el total de suscriptores, excluyendo los usuarios de WordPress."
 msgid "This is the total of all subscribers including %1$d WordPress users. To exclude WordPress users, please purchase one of our premium plans."
 msgstr "Este es el total de todos los suscriptores, incluyendo %1$d usuarios de WordPress. Para excluir a los usuarios de WordPress, contrata uno de nuestros planes premium."
 
-#: views/segments/translations.html:67 views/subscribers/subscribers.html:59
+#: views/segments/translations.html:67 views/subscribers/subscribers.html:58
 msgid "This is the total of subscribed, unconfirmed and inactive subscribers we count when you are sending with MailPoet Sending Service. The count excludes unsubscribed and bounced (invalid) email addresses."
 msgstr "Este es el recuento total de suscriptores suscritos, sin corfirmar e inactivos que hacemos cuando envías con el servicio de envíos de MailPoet. El recuento excluye los no suscritos y los correos electrónicos rebotados (no válidos)."
 
@@ -6021,7 +6031,7 @@ msgstr "¡Buenas noticias! MailPoet ya puede enviar, también, los correos elect
 msgid "immediately"
 msgstr "inmediatamente"
 
-#: views/segments/translations.html:264 views/subscribers/subscribers.html:132
+#: views/segments/translations.html:264 views/subscribers/subscribers.html:131
 msgid "Congratulations, you now have [subscribersCount] subscribers! Your plan is limited to [subscribersLimit] subscribers. You need to upgrade now to be able to continue using MailPoet."
 msgstr "¡Felicidades, ahora tienes [subscribersCount] suscriptores! Tu plan está limitado a [subscribersLimit] suscriptores. Necesitas mejorar tu plan para poder seguir usando MailPoet."
 
@@ -6034,12 +6044,12 @@ msgid "Good stuff."
 msgstr "Buen material."
 
 #: views/homepage.html:81 views/segments/translations.html:248
-#: views/subscribers/subscribers.html:149 lib/Twig/Functions.php:305
+#: views/subscribers/subscribers.html:148 lib/Twig/Functions.php:305
 msgid "Good"
 msgstr "Bien"
 
 #: views/homepage.html:78 views/segments/translations.html:245
-#: views/subscribers/subscribers.html:146 lib/Twig/Functions.php:303
+#: views/subscribers/subscribers.html:145 lib/Twig/Functions.php:303
 msgid "Excellent"
 msgstr "Excelente"
 
@@ -7040,7 +7050,7 @@ msgstr "Creado el"
 msgid "Message"
 msgstr "Mensaje"
 
-#: views/logs.html:21 lib/Config/Menu.php:496
+#: views/logs.html:21 lib/Config/Menu.php:499
 msgid "Logs"
 msgstr "Registros"
 
@@ -7146,7 +7156,7 @@ msgstr "Ahora no"
 msgid "[username], did you know that hundreds of WordPress users read the reviews on the plugin repository? They’re also a source of inspiration for our team."
 msgstr "[username], ¿sabías que cientos de usuarios de WordPress leen las valoraciones del repositorio de plugins? También son una fuente de inspiración para nuestro equipo."
 
-#: views/layout.html:140 views/subscribers/subscribers.html:134
+#: views/layout.html:140 views/subscribers/subscribers.html:133
 msgid "Upgrade Now"
 msgstr "Mejorar ahora"
 
@@ -7365,12 +7375,12 @@ msgid "Name"
 msgstr "Nombre"
 
 #: views/forms.html:71 views/segments/translations.html:57
-#: views/segments/translations.html:89 views/subscribers/subscribers.html:55
+#: views/segments/translations.html:89 views/subscribers/subscribers.html:54
 msgid "%1$d items"
 msgstr "%1$d elementos"
 
 #: views/forms.html:70 views/segments/translations.html:56
-#: views/segments/translations.html:88 views/subscribers/subscribers.html:54
+#: views/segments/translations.html:88 views/subscribers/subscribers.html:53
 msgid "1 item"
 msgstr "1 elemento"
 
@@ -7378,27 +7388,27 @@ msgstr "1 elemento"
 msgid "of"
 msgstr "de"
 
-#: views/forms.html:68 views/subscribers/subscribers.html:52
+#: views/forms.html:68 views/subscribers/subscribers.html:51
 msgid "Current Page"
 msgstr "Página actual"
 
 #: views/forms.html:67 views/segments/translations.html:53
-#: views/segments/translations.html:93 views/subscribers/subscribers.html:51
+#: views/segments/translations.html:93 views/subscribers/subscribers.html:50
 msgid "Last page"
 msgstr "Última página"
 
 #: views/forms.html:66 views/segments/translations.html:52
-#: views/segments/translations.html:92 views/subscribers/subscribers.html:50
+#: views/segments/translations.html:92 views/subscribers/subscribers.html:49
 msgid "Next page"
 msgstr "Siguiente página"
 
 #: views/forms.html:65 views/segments/translations.html:51
-#: views/segments/translations.html:91 views/subscribers/subscribers.html:49
+#: views/segments/translations.html:91 views/subscribers/subscribers.html:48
 msgid "First page"
 msgstr "Primera página"
 
 #: views/forms.html:64 views/segments/translations.html:50
-#: views/segments/translations.html:90 views/subscribers/subscribers.html:48
+#: views/segments/translations.html:90 views/subscribers/subscribers.html:47
 msgid "Previous page"
 msgstr "Página anterior"
 
@@ -7873,7 +7883,7 @@ msgid "Form"
 msgstr "Formulario"
 
 #: views/form/editor.html:52 views/segments/translations.html:60
-#: views/subscribers/subscribers.html:127
+#: views/subscribers/subscribers.html:126
 msgid "Back"
 msgstr "Atrás"
 
@@ -7951,7 +7961,7 @@ msgid "MailPoet is now sending your emails"
 msgstr "MailPoet ya está enviando tus correos electrónicos"
 
 #: views/emails/congratulatoryMssEmail.html:50 views/homepage.html:79
-#: views/segments/translations.html:246 views/subscribers/subscribers.html:147
+#: views/segments/translations.html:246 views/subscribers/subscribers.html:146
 msgid "Congrats!"
 msgstr "¡Felicidades!"
 
@@ -8121,7 +8131,7 @@ msgstr "¿Necesitas cambiar tu dirección de correo electrónico? Date de baja a
 #: views/newsletter/templates/components/save.hbs:22
 #: views/newsletter/templates/components/save.hbs:27
 #: views/newsletter/templates/components/save.hbs:48
-#: views/segments/translations.html:45 views/subscribers/subscribers.html:126
+#: views/segments/translations.html:45 views/subscribers/subscribers.html:125
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:81
 msgid "Save"
 msgstr "Guardar"
@@ -8185,7 +8195,7 @@ msgstr "Tienes que esperar esperar %s antes de suscribirte de nuevo."
 msgid "Please leave the first field empty."
 msgstr "Por favor, deja el primer campo vacío."
 
-#: views/segments/translations.html:19 views/subscribers/subscribers.html:69
+#: views/segments/translations.html:19 views/subscribers/subscribers.html:68
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:128
 #: lib/Subscribers/SubscriberListingRepository.php:253
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:196
@@ -8194,7 +8204,7 @@ msgstr "Rebotados"
 
 #: views/segments/translations.html:18
 #: views/subscribers/importExport/import.html:130
-#: views/subscribers/subscribers.html:68
+#: views/subscribers/subscribers.html:67
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:124
 #: lib/Subscribers/SubscriberListingRepository.php:248
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:208
@@ -8203,14 +8213,14 @@ msgstr "Inactivo"
 
 #: views/segments/translations.html:17
 #: views/subscribers/importExport/import.html:129
-#: views/subscribers/subscribers.html:67
+#: views/subscribers/subscribers.html:66
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:120
 #: lib/Subscribers/SubscriberListingRepository.php:243
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:188
 msgid "Unsubscribed"
 msgstr "Dados de baja"
 
-#: views/segments/translations.html:16 views/subscribers/subscribers.html:65
+#: views/segments/translations.html:16 views/subscribers/subscribers.html:64
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:116
 #: lib/Subscribers/SubscriberListingRepository.php:238
 msgid "Unconfirmed"
@@ -8218,7 +8228,7 @@ msgstr "No confirmados"
 
 #: views/segments/translations.html:15
 #: views/subscribers/importExport/import.html:128
-#: views/subscribers/subscribers.html:66
+#: views/subscribers/subscribers.html:65
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:112
 #: lib/Subscribers/SubscriberListingRepository.php:233
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:180
@@ -8231,7 +8241,7 @@ msgid "New subscriber to %s"
 msgstr "Nuevo suscriptor a %s"
 
 #: views/homepage.html:75 views/segments/translations.html:242
-#: views/subscribers/subscribers.html:143
+#: views/subscribers/subscribers.html:142
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:152
 #: lib/Subscribers/ImportExport/PersonalDataExporters/NewsletterClicksExporter.php:28
 #: lib/Subscribers/ImportExport/PersonalDataExporters/NewsletterOpensExporter.php:24
@@ -8275,8 +8285,8 @@ msgstr "IP confirmada"
 msgid "Subscribed IP"
 msgstr "IP suscrita"
 
-#: views/forms.html:59 views/help.html:54 views/subscribers/subscribers.html:64
-#: views/subscribers/subscribers.html:83
+#: views/forms.html:59 views/help.html:54 views/subscribers/subscribers.html:63
+#: views/subscribers/subscribers.html:82
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:104
 #: lib/Automation/Integrations/WooCommerce/Fields/OrderFieldsFactory.php:185
 #: lib/Subscribers/ImportExport/PersonalDataExporters/SubscriberExporter.php:75
@@ -8340,7 +8350,7 @@ msgstr "No"
 msgid "Opened at"
 msgstr "Abierto a las"
 
-#: views/subscribers/subscribers.html:112
+#: views/subscribers/subscribers.html:111
 #: lib/Subscribers/ImportExport/PersonalDataExporters/NewslettersExporter.php:82
 #: lib/Subscribers/ImportExport/PersonalDataExporters/NewslettersExporter.php:91
 msgid "Opened"
@@ -8576,7 +8586,7 @@ msgstr "Apellidos"
 msgid "First Name"
 msgstr "Nombre"
 
-#: views/segments/translations.html:80 views/subscribers/subscribers.html:82
+#: views/segments/translations.html:80 views/subscribers/subscribers.html:81
 #: lib/Newsletter/Shortcodes/ShortcodesHelper.php:20
 #: lib/Newsletter/Shortcodes/ShortcodesHelper.php:135
 msgid "Subscriber"
@@ -8639,20 +8649,20 @@ msgstr "¡El renderizado del cuerpo del boletín de correo no es válido!"
 msgid "Subscribers without a list"
 msgstr "Suscriptores sin lista"
 
-#: lib/Models/Segment.php:113 lib/Segments/SegmentsRepository.php:90
+#: lib/Models/Segment.php:113 lib/Segments/SegmentsRepository.php:97
 msgid "This list contains all of your WooCommerce customers."
 msgstr "Esta lista contiene todos tus clientes de WooCommerce."
 
-#: lib/Models/Segment.php:111 lib/Segments/SegmentsRepository.php:88
+#: lib/Models/Segment.php:111 lib/Segments/SegmentsRepository.php:95
 msgid "WooCommerce Customers"
 msgstr "Clientes de WooCommerce"
 
-#: lib/Models/Segment.php:95 lib/Segments/SegmentsRepository.php:73
+#: lib/Models/Segment.php:95 lib/Segments/SegmentsRepository.php:80
 msgid "This list contains all of your WordPress users."
 msgstr "Esta lista contiene todos los usuarios de WordPress."
 
-#: views/subscribers/subscribers.html:107 lib/Models/Segment.php:93
-#: lib/Segments/SegmentsRepository.php:71
+#: views/subscribers/subscribers.html:106 lib/Models/Segment.php:93
+#: lib/Segments/SegmentsRepository.php:78
 msgid "WordPress Users"
 msgstr "Usuarios de WordPress"
 
@@ -8902,7 +8912,7 @@ msgstr "Año, mes, día"
 
 #: views/form/editor.html:148
 #: views/form/templatesLegacy/blocks/date_years.hbs:5
-#: views/subscribers/subscribers.html:120 lib/Form/Block/Date.php:89
+#: views/subscribers/subscribers.html:119 lib/Form/Block/Date.php:89
 #: lib/Form/Block/Date.php:105 lib/Form/Block/Date.php:182
 #: lib/Newsletter/Shortcodes/ShortcodesHelper.php:84
 msgid "Year"
@@ -8914,7 +8924,7 @@ msgstr "Por favor, selecciona un año"
 
 #: views/form/editor.html:147
 #: views/form/templatesLegacy/blocks/date_months.hbs:3
-#: views/subscribers/subscribers.html:121 lib/Form/Block/Date.php:80
+#: views/subscribers/subscribers.html:120 lib/Form/Block/Date.php:80
 #: lib/Form/Block/Date.php:147
 msgid "Month"
 msgstr "Mes"
@@ -8924,7 +8934,7 @@ msgid "Please select a month"
 msgstr "Por favor, selecciona un mes"
 
 #: views/form/editor.html:146 views/form/templatesLegacy/blocks/date_days.hbs:3
-#: views/subscribers/subscribers.html:122 lib/Form/Block/Date.php:71
+#: views/subscribers/subscribers.html:121 lib/Form/Block/Date.php:71
 #: lib/Form/Block/Date.php:213
 msgid "Day"
 msgstr "Diario"
@@ -9019,11 +9029,11 @@ msgstr "Enlace para darse de baja"
 msgid "Your monthly stats are in!"
 msgstr "¡Ya están tus estadísticas mensuales!"
 
-#: lib/Cron/Workers/SendingQueue/Tasks/Newsletter.php:285
+#: lib/Cron/Workers/SendingQueue/Tasks/Newsletter.php:299
 msgid "There was an error processing your newsletter during sending. If possible, please contact us and report this issue."
 msgstr "Hubo un error al procesar la lista de correo durante el envío. Si es posible, ponte en contacto con nosotros y repórtanos este problema."
 
-#: lib/Cron/Workers/SendingQueue/Tasks/Newsletter.php:205
+#: lib/Cron/Workers/SendingQueue/Tasks/Newsletter.php:219
 msgid "No subject"
 msgstr "Sin asunto"
 
@@ -10353,11 +10363,11 @@ msgstr "Darse de Baja"
 msgid "App Welcome"
 msgstr "Apps bienvenidas"
 
-#: lib/Config/Populator.php:370
+#: lib/Config/Populator.php:371
 msgid "This list is automatically created when you install MailPoet."
 msgstr "Esta lista se crea automáticamente al instalar MailPoet."
 
-#: lib/Config/Populator.php:368
+#: lib/Config/Populator.php:369
 msgid "Newsletter mailing list"
 msgstr "Lista de correos del boletín"
 
@@ -10386,15 +10396,15 @@ msgstr "Listas de MailPoet"
 msgid "MailPoet Subscribers"
 msgstr "Suscriptores de MailPoet"
 
-#: lib/Config/Menu.php:473 lib/Config/Menu.php:474
+#: lib/Config/Menu.php:476 lib/Config/Menu.php:477
 msgid "WooCommerce Setup"
 msgstr "Configuración de WooCommerce"
 
-#: lib/Config/Menu.php:189 lib/Config/Menu.php:190
+#: lib/Config/Menu.php:192 lib/Config/Menu.php:193
 msgid "Welcome Wizard"
 msgstr "Asistente de bienvenida"
 
-#: lib/Config/Menu.php:444 lib/Config/Menu.php:445
+#: lib/Config/Menu.php:447 lib/Config/Menu.php:448
 msgid "Help"
 msgstr "Ayuda"
 
@@ -10403,54 +10413,55 @@ msgid "Settings"
 msgstr "Ajustes"
 
 #: views/forms.html:75 views/segments/translations.html:2
-#: views/subscribers/subscribers.html:84 lib/Config/Menu.php:381
+#: views/subscribers/subscribers.html:83 lib/Config/Menu.php:384
 msgid "Lists"
 msgstr "Listas"
 
 #: views/subscribers/importExport/export.html:6
 #: views/subscribers/importExport/export.html:79
-#: views/subscribers/subscribers.html:125 lib/Config/Menu.php:368
-#: lib/Config/Menu.php:369
+#: views/subscribers/subscribers.html:124 lib/Config/Menu.php:371
+#: lib/Config/Menu.php:372
 msgid "Export"
 msgstr "Exportar"
 
 #: views/subscribers/importExport/import.html:6
 #: views/subscribers/importExport/import.html:99
-#: views/subscribers/subscribers.html:124 lib/Config/Menu.php:355
-#: lib/Config/Menu.php:356
+#: views/subscribers/subscribers.html:123 lib/Config/Menu.php:358
+#: lib/Config/Menu.php:359
 msgid "Import"
 msgstr "Importar"
 
 #: views/homepage.html:68 views/subscribers/subscribers.html:25
-#: lib/Config/Menu.php:330 lib/Config/Menu.php:331
+#: lib/Config/Menu.php:333 lib/Config/Menu.php:334
 msgid "Subscribers"
 msgstr "Suscriptores"
 
-#: lib/Config/Menu.php:317 lib/Config/Menu.php:318
+#: lib/Config/Menu.php:320 lib/Config/Menu.php:321
 msgid "Select Form Template"
 msgstr "Elige plantilla de formulario"
 
-#: lib/Config/Menu.php:297 lib/Config/Menu.php:298
+#: lib/Config/Menu.php:300 lib/Config/Menu.php:301
 msgid "Form Editor"
 msgstr "Editor de formulario"
 
-#: views/forms.html:45 lib/Config/Menu.php:272 lib/Config/Menu.php:273
+#: views/forms.html:45 lib/Config/Menu.php:275 lib/Config/Menu.php:276
 msgid "Forms"
 msgstr "Formularios"
 
-#: views/newsletter/editor.html:340 lib/Config/Menu.php:258
+#: views/newsletter/editor.html:340 lib/Config/Menu.php:261
 msgid "Newsletter Editor"
 msgstr "Editor de boletín"
 
-#: lib/Config/Menu.php:257 lib/Newsletter/Shortcodes/ShortcodesHelper.php:42
+#: lib/Config/Menu.php:260 lib/Newsletter/Shortcodes/ShortcodesHelper.php:42
 msgid "Newsletter"
 msgstr "Boletín"
 
-#: lib/Config/Menu.php:232 lib/Config/Menu.php:233
+#: lib/Config/Menu.php:235 lib/Config/Menu.php:236
+#: lib/EmailEditor/Integrations/MailPoet/EmailEditor.php:61
 msgid "Emails"
 msgstr "Correos electrónicos"
 
-#: lib/Config/Initializer.php:203
+#: lib/Config/Initializer.php:209
 msgid "Unable to connect to the database (the database is unable to open a file or folder), the connection is likely not configured correctly. Please read our [link] Knowledge Base article [/link] for steps how to resolve it."
 msgstr "No fue posible conectar con la base de datos (la base de datos no ha podido abrir el archivo o la carpeta), la conexión probablemente no está configurada correctamente. Por favor, lee nuestro [link] artículo en la base de conocimiento [/link]  para conocer lo pasos sobre cómo resolverlo."
 
@@ -10461,7 +10472,7 @@ msgstr "Boletín de MailPoet"
 #. Plugin Name of the plugin
 #. Author of the plugin
 #: views/woo_system_info.html:5 lib/Config/Capabilities.php:80
-#: lib/Config/Menu.php:202 lib/Config/Menu.php:203 lib/Config/Menu.php:665
+#: lib/Config/Menu.php:205 lib/Config/Menu.php:206 lib/Config/Menu.php:668
 #: lib/Config/PrivacyPolicy.php:12
 #: lib/WooCommerce/WooSystemInfoController.php:41
 msgid "MailPoet"
@@ -10623,7 +10634,7 @@ msgid "At least one segment ID is required."
 msgstr "Se necesita, al menos, un ID de segmento."
 
 #: views/form/editor.html:163 views/segments/translations.html:132
-#: views/subscribers/subscribers.html:63 lib/API/MP/v1/CustomFields.php:43
+#: views/subscribers/subscribers.html:62 lib/API/MP/v1/CustomFields.php:43
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:80
 #: lib/Subscribers/ImportExport/ImportExportFactory.php:62
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:166
@@ -10631,7 +10642,7 @@ msgid "Last name"
 msgstr "Apellido"
 
 #: views/form/editor.html:161 views/segments/translations.html:131
-#: views/subscribers/subscribers.html:62 lib/API/MP/v1/CustomFields.php:35
+#: views/subscribers/subscribers.html:61 lib/API/MP/v1/CustomFields.php:35
 #: lib/Automation/Integrations/MailPoet/Fields/SubscriberFieldsFactory.php:72
 #: lib/Subscribers/ImportExport/ImportExportFactory.php:61
 #: lib/Subscription/ManageSubscriptionFormRenderer.php:157
@@ -10644,6 +10655,7 @@ msgstr "Nombre"
 #: views/subscription/manage_subscription.html:9
 #: lib/API/MP/v1/CustomFields.php:27
 #: lib/Automation/Integrations/WordPress/Subjects/UserSubject.php:62
+#: lib/EmailEditor/Integrations/MailPoet/EmailEditor.php:62
 #: lib/Form/Templates/Templates/InitialForm.php:22
 #: lib/Subscribers/ImportExport/ImportExportFactory.php:60
 #: lib/Subscribers/ImportExport/PersonalDataExporters/SubscriberExporter.php:71
@@ -10668,7 +10680,7 @@ msgstr "Por favor, escribe tu dirección de correo electrónico"
 
 #: lib/API/JSON/v1/Subscribers.php:96 lib/API/JSON/v1/Subscribers.php:190
 #: lib/API/JSON/v1/Subscribers.php:206 lib/API/JSON/v1/Subscribers.php:218
-#: lib/API/JSON/v1/Subscribers.php:248 lib/API/JSON/v1/SubscriberStats.php:38
+#: lib/API/JSON/v1/Subscribers.php:248 lib/API/JSON/v1/SubscriberStats.php:45
 #: lib/API/MP/v1/Subscribers.php:378
 msgid "This subscriber does not exist."
 msgstr "Este suscriptor no existe."
@@ -10837,8 +10849,8 @@ msgstr "Se ha alcanzado el límite de suscriptores."
 msgid "This email does not exist."
 msgstr "Este correo no existe."
 
-#: lib/API/JSON/v1/NewsletterTemplates.php:60
-#: lib/API/JSON/v1/NewsletterTemplates.php:101
+#: lib/API/JSON/v1/NewsletterTemplates.php:65
+#: lib/API/JSON/v1/NewsletterTemplates.php:114
 msgid "This template does not exist."
 msgstr "Esta plantilla no existe."
 

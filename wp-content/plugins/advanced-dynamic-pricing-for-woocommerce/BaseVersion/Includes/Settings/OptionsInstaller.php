@@ -330,6 +330,28 @@ class OptionsInstaller
                 "first"
             ),
 
+            $builder::boolean(
+                'is_enable_cart_amount_saved',
+                false,
+                __('Show Amount saved in the cart', 'advanced-dynamic-pricing-for-woocommerce')
+            ),
+            $builder::boolean(
+                'is_enable_minicart_amount_saved',
+                false,
+                __('Show Amount saved in the mini cart', 'advanced-dynamic-pricing-for-woocommerce')
+            ),
+            $builder::boolean(
+                'is_enable_checkout_amount_saved',
+                false,
+                __('Show Amount saved on the checkout page', 'advanced-dynamic-pricing-for-woocommerce')
+            ),
+
+            $builder::boolean(
+                'is_enable_backend_order_amount_saved',
+                false,
+                __('Show Amount saved in in the order backend', 'advanced-dynamic-pricing-for-woocommerce')
+            ),
+
             // rewrite 'external_coupons_behavior' option
             $builder::selective(
                 "external_cart_coupons_behavior",
@@ -429,7 +451,7 @@ class OptionsInstaller
                 "apply"
             ),
             $builder::boolean(
-                'readonly_price_for_free_products', 
+                'readonly_price_for_free_products',
                 true,
                 __('Read-only quantity for free products', 'advanced-dynamic-pricing-for-woocommerce')
             )

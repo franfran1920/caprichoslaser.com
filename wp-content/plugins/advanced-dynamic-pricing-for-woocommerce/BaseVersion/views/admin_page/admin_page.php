@@ -44,7 +44,7 @@ defined('ABSPATH') or exit;
             <?php if($options->getOption('support_shortcode_products_on_sale') || $options->getOption('support_shortcode_products_bogo') || $options->getOption('support_persistence_rules')): ?>
             <div class="wdp-row">
                 <div class="wdp-column wdp-column-select">
-                    <span class="wdp-select-icon"></span>
+                    <!-- <span class="wdp-select-icon"></span> -->
                     <select name="recalculace_selector">
                         <option value=""><?php _e('Cache recalculation', 'advanced-dynamic-pricing-for-woocommerce') ?></option>
                         <?php if($options->getOption('support_persistence_rules')): ?>
