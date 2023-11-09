@@ -50,7 +50,7 @@ function dgwt_wcas_ekommart_mobile_search() {
 					var $siteSearch = $(this).next();
 					var $form = $siteSearch.find('.js-dgwt-wcas-enable-mobile-form');
 					if ($form.eq(0)) {
-						$form.click();
+						$form.trigger('click');
 					}
 					e.preventDefault();
 				});

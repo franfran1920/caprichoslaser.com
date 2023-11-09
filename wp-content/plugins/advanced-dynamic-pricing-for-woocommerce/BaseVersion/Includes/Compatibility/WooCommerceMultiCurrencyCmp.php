@@ -10,9 +10,12 @@ use ADP\HighLander\HighLanderShortcuts;
 defined('ABSPATH') or exit;
 
 /**
- * Plugin Name: WooCommerce Payments: Currencies
- * Author: WooCommerce
+ * Plugin Name: WooCommerce Payments
+ * Author: Automattic
  *
+ * Compatibility ONLY for multi currency module
+ *
+ * @see https://woocommerce.com/payments/
  * @see https://woocommerce.com/document/woocommerce-payments/currencies/
  */
 class WooCommerceMultiCurrencyCmp
@@ -42,8 +45,10 @@ class WooCommerceMultiCurrencyCmp
                 'advanced-dynamic-pricing-for-woocommerce'), 'load_requirements', 'plugins_loaded'), WC_ADP_VERSION);
         }
 
-        if (function_exists('WC_Payments_Multi_Currency')) {
-            $this->multi_currency = WC_Payments_Multi_Currency();
+        if (function_exists('WC_Payments_Features') && function_exists('WC_Payments_Multi_Currency')) {
+            if ( \WC_Payments_Features::is_customer_multi_currency_enabled() ) {
+                $this->multi_currency = WC_Payments_Multi_Currency();
+            }
         }
     }
 

@@ -10,13 +10,13 @@ if ( ! defined( 'DGWT_WCAS_FILE' ) ) {
 
 $layout = Helpers::getLayoutSettings();
 
-$hasSubmit  = isset( $args['submit_btn'] ) ? $args['submit_btn'] : DGWT_WCAS()->settings->getOption( 'show_submit_button' );
-$submitText = isset( $args['submit_text'] ) ? $args['submit_text'] : Helpers::getLabel( 'submit' );
-$uniqueID   = ++ DGWT_WCAS()->searchInstances;
-$layoutType = ! empty( $args['layout'] ) ? $args['layout'] : $layout->layout;
-$iconType = ! empty( $args['icon'] ) ? $args['icon'] : $layout->icon;
-$isAMP      = Helpers::isAMPEndpoint();
-$iconColor  = ! empty( $args['icon_color'] ) ? $args['icon_color'] : '';
+$hasSubmit    = isset( $args['submit_btn'] ) ? $args['submit_btn'] : DGWT_WCAS()->settings->getOption( 'show_submit_button' );
+$submitText   = isset( $args['submit_text'] ) ? $args['submit_text'] : Helpers::getLabel( 'submit' );
+$uniqueID     = ++ DGWT_WCAS()->searchInstances;
+$layoutType   = ! empty( $args['layout'] ) ? $args['layout'] : $layout->layout;
+$iconType     = ! empty( $args['icon'] ) ? $args['icon'] : $layout->icon;
+$isAMP        = Helpers::isAMPEndpoint();
+$iconColor    = ! empty( $args['icon_color'] ) ? $args['icon_color'] : '';
 $customParams = apply_filters( 'dgwt/wcas/search_bar/custom_params', array(), DGWT_WCAS()->searchInstances );
 
 if ( ! empty( $args['mobile_overlay'] ) && ! empty( $args['mobile_overlay_breakpoint'] ) ) {
@@ -35,19 +35,19 @@ if ( ! empty( $args['layout_breakpoint'] ) && ! empty( $args['layout_breakpoint'
 	<?php endif; ?>
 	<form class="dgwt-wcas-search-form" role="search" action="<?php echo Helpers::searchFormAction(); ?>" method="get">
 		<div class="dgwt-wcas-sf-wrapp">
-			<?php echo $hasSubmit !== 'on' ? Helpers::getMagnifierIco('dgwt-wcas-ico-magnifier', $iconType) : ''; ?>
+			<?php echo $hasSubmit !== 'on' ? Helpers::getMagnifierIco( 'dgwt-wcas-ico-magnifier', $iconType ) : ''; ?>
 			<label class="screen-reader-text"
-			       for="dgwt-wcas-search-input-<?php echo $uniqueID; ?>"><?php _e( 'Products search',
+				   for="dgwt-wcas-search-input-<?php echo $uniqueID; ?>"><?php _e( 'Products search',
 					'ajax-search-for-woocommerce' ); ?></label>
 
 			<input id="dgwt-wcas-search-input-<?php echo $uniqueID; ?>"
-			       type="search"
-			       class="dgwt-wcas-search-input"
-			       name="<?php echo Helpers::getSearchInputName(); ?>"
-			       value="<?php echo apply_filters( 'dgwt/wcas/search_bar/value', get_search_query(), DGWT_WCAS()->searchInstances); ?>"
+				   type="search"
+				   class="dgwt-wcas-search-input"
+				   name="<?php echo Helpers::getSearchInputName(); ?>"
+				   value="<?php echo apply_filters( 'dgwt/wcas/search_bar/value', get_search_query(), DGWT_WCAS()->searchInstances ); ?>"
 				   placeholder="<?php echo esc_attr( Helpers::getLabel( 'search_placeholder' ) ); ?>"
-			       autocomplete="off"
-				   <?php echo ! empty( $customParams ) ? ' data-custom-params="' . htmlspecialchars(json_encode( (object) $customParams)) . '"' : ''; ?>
+				   autocomplete="off"
+				<?php echo ! empty( $customParams ) ? ' data-custom-params="' . htmlspecialchars( json_encode( (object) $customParams ) ) . '"' : ''; ?>
 			/>
 			<div class="dgwt-wcas-preloader"></div>
 
@@ -55,15 +55,15 @@ if ( ! empty( $args['layout_breakpoint'] ) && ! empty( $args['layout_breakpoint'
 
 			<?php if ( $hasSubmit === 'on' ): ?>
 				<button type="submit"
-				        aria-label="<?php echo empty( $submitText ) ? __( 'Search','ajax-search-for-woocommerce' ) :  esc_attr($submitText); ?>"
-				        class="dgwt-wcas-search-submit"><?php echo empty( $submitText ) ? Helpers::getMagnifierIco('dgwt-wcas-ico-magnifier', $iconType) : esc_html( $submitText ); ?></button>
+						aria-label="<?php echo empty( $submitText ) ? __( 'Search', 'ajax-search-for-woocommerce' ) : esc_attr( $submitText ); ?>"
+						class="dgwt-wcas-search-submit"><?php echo empty( $submitText ) ? Helpers::getMagnifierIco( 'dgwt-wcas-ico-magnifier', $iconType ) : esc_html( $submitText ); ?></button>
 			<?php endif; ?>
 
 			<input type="hidden" name="post_type" value="product"/>
 			<input type="hidden" name="dgwt_wcas" value="1"/>
 
 			<?php if ( Multilingual::isWPML() ): ?>
-				<input type="hidden" name="lang" value="<?php echo Multilingual::getCurrentLanguage(); ?>"/>
+				<input type="hidden" name="lang" value="<?php echo esc_attr( Multilingual::getCurrentLanguage() ); ?>"/>
 			<?php endif ?>
 
 			<?php do_action( 'dgwt/wcas/form' ); ?>

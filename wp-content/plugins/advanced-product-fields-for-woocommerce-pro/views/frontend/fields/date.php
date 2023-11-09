@@ -17,7 +17,7 @@ if($model['is_edit']) {
     $default_date_string = $model['default'][0];
 } else if(!empty($model['field']->options['default'])) {
 
-    $default_date = Helper::string_to_date( $model['field']->options['default'] );
+$default_date = Helper::string_to_date( $model['field']->options['default'] );
 
     $default_date_string = $default_date->format(Helper::date_format_to_php_format( $date_format ));
 }
@@ -29,12 +29,7 @@ if($model['is_edit']) {
         if(!window.initWapfDate['<?php echo $field_id; ?>']) {
             window.initWapfDate['<?php echo $field_id; ?>'] = function (field) {
                 var offset = <?php echo $offset;?>;
-                var today = new Date(<?php echo $today_server->format('Y') . ', ' . ( intval($today_server->format('n')) - 1 ) . ', ' . $today_server->format('j') ?>);
-                today.setHours(0,0,0,0);
-
-                wapf_config.today = today;
-                wapf_config.date_format = '<?php echo $date_format;?>';
-
+                var today = new Date(wapf_config.today);
                 var $this = typeof field  === 'string' ? $('.input-' + field ) : field;
 
                 $this.dp({

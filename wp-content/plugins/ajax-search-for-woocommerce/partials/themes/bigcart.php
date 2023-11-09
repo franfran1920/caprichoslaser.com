@@ -24,7 +24,7 @@ add_action( 'wp_footer', function () {
 					setTimeout(function () {
 						var $input = $('#bigcart-search-box .dgwt-wcas-search-input');
 						if ($input.length > 0) {
-							$input.focus();
+							$input.trigger('focus');
 						}
 					}, 500);
 

@@ -15,6 +15,10 @@ add_action( 'wp_loaded', function () {
 	add_shortcode( 'search', array( 'DgoraWcas\\Shortcode', 'addBody' ) );
 } );
 
+global $dgwt_wcas_flatsome_search_counter;
+
+$dgwt_wcas_flatsome_search_counter = 0;
+
 add_action( 'wp_head', function () { ?>
 	<style>
 		.dgwt-wcas-flatsome-up {
@@ -69,10 +73,23 @@ add_action( 'wp_head', function () { ?>
 	<?php
 } );
 
+// Count search items in headers.
+add_action( 'flatsome_header_elements', function ( $value ) {
+	global $dgwt_wcas_flatsome_search_counter;
+
+	if ( $value === 'search' ) {
+		$dgwt_wcas_flatsome_search_counter ++;
+	}
+} );
+
 add_action( 'wp_footer', function () {
+	global $dgwt_wcas_flatsome_search_counter;
+
 	// Overwriting search icon.
-	if ( get_theme_mod( 'header_search_style', 'dropdown' ) === 'dropdown' ) {
-		echo '<div id="wcas-theme-search" style="display: block;"><li>' . do_shortcode( '[fibosearch layout="icon"]' ) . '</li></div>';
+	if ( get_theme_mod( 'header_search_style', 'dropdown' ) === 'dropdown' && $dgwt_wcas_flatsome_search_counter > 0 ) {
+		for ( $i = 0; $i < $dgwt_wcas_flatsome_search_counter; $i ++ ) {
+			echo '<div id="wcas-theme-search-' . $i . '" style="display: block;" class="wcas-theme-search"><li>' . do_shortcode( '[fibosearch layout="icon"]' ) . '</li></div>';
+		}
 		?>
 		<style>
 			.header-main .dgwt-wcas-search-wrapp.dgwt-wcas-layout-icon .dgwt-wcas-search-icon {
@@ -97,11 +114,17 @@ add_action( 'wp_footer', function () {
 			}
 		</style>
 		<script>
-			wcasThemeSearch = document.querySelector('.header-search');
-			if (wcasThemeSearch !== null) {
-				wcasThemeSearch.replaceWith(document.querySelector('#wcas-theme-search > li'));
+			wcasThemeSearch = document.querySelectorAll('.header-search');
+			if (wcasThemeSearch.length > 0) {
+				wcasThemeSearch.forEach((wcasThemeSearchItem, index) => {
+					if (document.querySelector('#wcas-theme-search-' + index + ' > li') !== null) {
+						wcasThemeSearchItem.replaceWith(document.querySelector('#wcas-theme-search-' + index + ' > li'));
+					}
+				});
 			}
-			document.querySelector('#wcas-theme-search').remove();
+			document.querySelectorAll('.wcas-theme-search').forEach(function (elem) {
+				elem.remove();
+			});
 		</script>
 		<?php
 	}
@@ -166,7 +189,7 @@ add_action( 'wp_footer', function () {
 						}
 
 						formWrapper.removeClass('dgwt-wcas-flatsome-up');
-						formWrapper.find('.dgwt-wcas-search-input').focus();
+						formWrapper.find('.dgwt-wcas-search-input').trigger('focus');
 					}, 300);
 				});
 

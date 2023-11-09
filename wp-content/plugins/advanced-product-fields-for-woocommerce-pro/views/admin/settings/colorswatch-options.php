@@ -33,7 +33,7 @@
                     <select class="wapf-pricing-list" rv-on-change="onChange" rv-value="choice.pricing_type">
                         <option value="none"><?php _e('No price change','sw-wapf'); ?></option>
                         <?php
-                        foreach(\SW_WAPF_PRO\Includes\Classes\Fields::get_pricing_options() as $k => $v) {
+                        foreach(\SW_WAPF_PRO\Includes\Classes\Config::get_pricing_options() as $k => $v) {
                             echo '<option value="'.$k.'">'.$v.'</option>';
                         }
                         ?>
@@ -52,7 +52,7 @@
                     <?php echo \SW_WAPF_PRO\Includes\Classes\Html::admin_choice_option_extra_input($input); ?>
                 </div>
             <?php } } ?>
-            <div class="wapf-option__selected"><input data-multi-option="<?php echo isset($model['multi_option']) ? $model['multi_option'] : '0' ;?>" rv-on-change="field.checkSelected" rv-checked="choice.selected" type="checkbox" /></div>
+            <div class="wapf-option__selected"><input rv-on-change="field.checkSelected" rv-checked="choice.selected" type="checkbox" /></div>
             <div class="wapf-option__delete"><a href="#" rv-on-click="field.deleteChoice" class="button wapf-button--tiny-rounded">&times;</a></div>
         </div>
     </div>

@@ -33,6 +33,22 @@
                 escapeRegExChars: function (value) {
                     return value.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
                 },
+                formatHtml: function (string) {
+                    return string.replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&apos;')
+                        .replace(/&lt;sup/g, '<sup')
+                        .replace(/&lt;\/sup/g, '</sup')
+                        .replace(/sup&gt;/g, 'sup>')
+                        .replace(/&lt;sub/g, '<sub')
+                        .replace(/&lt;\/sub/g, '</sub')
+                        .replace(/sub&gt;/g, 'sub>')
+                        .replace(/&lt;br\s?\/?&gt;/g, '<br/>')
+                        .replace(/&lt;(\/?(strong|b|br|span))&gt;/g, '<$1>')
+                        .replace(/&lt;(strong|span)\s+class\s*=\s*&quot;([^&]+)&quot;&gt;/g, '<$1 class="$2">');
+                },
                 createNode: function (containerClass) {
                     var div = document.createElement('div');
                     div.className = containerClass;
@@ -42,49 +58,41 @@
                     return div;
                 },
                 highlight: function (suggestionValue, phrase) {
+                    var i,
+                        tokens = phrase.split(/ /),
+                        highlighted = false,
+                        last = '';
 
-                    if (dgwt_wcas.is_premium) {
-                        var i,
-                            tokens = phrase.split(/ /),
-                            highlighted = false,
-                            last = '';
+                    if (tokens) {
+                        last = tokens[tokens.length - 1];
+                        tokens = tokens.sort(function (a, b) {
+                            return b.length - a.length;
+                        });
 
-                        if (tokens) {
-                            last = tokens[tokens.length - 1];
-                            tokens = tokens.sort(function (a, b) {
-                                return b.length - a.length;
-                            });
+                        for (i = 0; i < tokens.length; i++) {
+                            if (tokens[i] && tokens[i].length >= 1) {
 
-                            for (i = 0; i < tokens.length; i++) {
-                                if (tokens[i] && tokens[i].length >= 1) {
+                                var token = tokens[i].replace(/[\^\@]/g, '');
 
-                                    var token = tokens[i].replace(/[\^\@]/g, '');
-
-                                    if (token.length > 0) {
-                                        if (token.trim().length === 1 && tokens[i] !== last) {
-                                            var pattern = '((\\s|^)' + utils.escapeRegExChars(token.trim()) + '\\s)';
-                                        } else if (token.trim().length === 1 && tokens[i] === last) {
-                                            var pattern = '((\\s|^)' + utils.escapeRegExChars(token.trim()) + ')';
-                                        } else {
-                                            var pattern = '(' + utils.escapeRegExChars(token.trim()) + ')';
-                                        }
-
-                                        suggestionValue = suggestionValue.replace(new RegExp(pattern, 'gi'), '\^\^$1\@\@');
-                                        highlighted = true;
+                                if (token.length > 0) {
+                                    if (token.trim().length === 1 && tokens[i] !== last) {
+                                        var pattern = '((\\s|^)' + utils.escapeRegExChars(token.trim()) + '\\s)';
+                                    } else if (token.trim().length === 1 && tokens[i] === last) {
+                                        var pattern = '((\\s|^)' + utils.escapeRegExChars(token.trim()) + ')';
+                                    } else {
+                                        var pattern = '(' + utils.escapeRegExChars(token.trim()) + ')';
                                     }
+
+                                    suggestionValue = suggestionValue.replace(new RegExp(pattern, 'gi'), '\^\^$1\@\@');
+                                    highlighted = true;
                                 }
                             }
                         }
+                    }
 
-                        if (highlighted) {
-                            suggestionValue = suggestionValue.replace(/\^\^/g, '<strong>');
-                            suggestionValue = suggestionValue.replace(/@@/g, '<\/strong>');
-                        }
-
-
-                    } else {
-                        var pattern = '(' + utils.escapeRegExChars(phrase) + ')';
-                        suggestionValue = suggestionValue.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>');
+                    if (highlighted) {
+                        suggestionValue = suggestionValue.replace(/\^\^/g, '<strong>');
+                        suggestionValue = suggestionValue.replace(/@@/g, '<\/strong>');
                     }
 
                     return suggestionValue;
@@ -167,7 +175,7 @@
                     return navigator.userAgent.indexOf(browser) !== -1;
                 },
                 isSafari: function () {
-                    return this.isBrowser('Safari') && ! this.isBrowser('Chrome');
+                    return this.isBrowser('Safari') && !this.isBrowser('Chrome');
                 },
                 isIOS: function () {
                     return [
@@ -365,34 +373,12 @@
         return typeof response === 'string' ? JSON.parse(response) : response;
     }
 
-    function _formatResult(suggestionValue, currentValue, highlight, options) {
-        // Do not replace anything if there current value is empty
-        if (!currentValue) {
-            return suggestionValue;
-        }
-
-        if (highlight) {
+    function _formatResult(suggestionValue, currentValue, highlight) {
+        if (currentValue.length > 0 && highlight) {
             suggestionValue = utils.highlight(suggestionValue, currentValue);
         }
 
-        if (!options.convertHtml) {
-            return suggestionValue;
-        }
-
-        return suggestionValue.replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&apos;')
-            .replace(/&lt;sup/g, '<sup')
-            .replace(/&lt;\/sup/g, '</sup')
-            .replace(/sup&gt;/g, 'sup>')
-            .replace(/&lt;sub/g, '<sub')
-            .replace(/&lt;\/sub/g, '</sub')
-            .replace(/sub&gt;/g, 'sub>')
-            .replace(/&lt;br\s?\/?&gt;/g, '<br/>')
-            .replace(/&lt;(\/?(strong|b|br|span))&gt;/g, '<$1>')
-            .replace(/&lt;(strong|span)\s+class\s*=\s*&quot;([^&]+)&quot;&gt;/g, '<$1 class="$2">');
+        return utils.formatHtml(suggestionValue);
     }
 
     DgwtWcasAutocompleteSearch.prototype = {
@@ -744,7 +730,7 @@
                             $input[0].setSelectionRange(textEnd, textEnd);
                         }
 
-                        $input.focus();
+                        $input.trigger('focus');
                     });
 
                     setTimeout(function () {
@@ -926,7 +912,7 @@
                 $wrapper.removeClass('dgwt-wcas-has-submit');
             }
 
-            $wrapper.find('.' + that.options.searchInputClass).focus();
+            $wrapper.find('.' + that.options.searchInputClass).trigger('focus');
 
             $(document).on('click.autocomplete', '.js-dgwt-wcas-om-return', function (e) {
                 that.closeOverlayMobile($overlayWrap);
@@ -1135,7 +1121,7 @@
             $wrapp.removeClass(that.classes.inputFilled);
 
             if (focus) {
-                $el.focus();
+                $el.trigger('focus');
             }
         },
         fixPositionSuggestions: function () {
@@ -1617,7 +1603,7 @@
 
             params = options.ignoreParams ? null : options.params;
 
-            if ($.isFunction(options.lookup)) {
+            if (typeof options.lookup === 'function') {
                 options.lookup(q, function (data) {
                     that.suggestions = data.suggestions;
                     that.suggest();
@@ -1636,7 +1622,7 @@
             if (that.isLocal) {
                 response = that.getSuggestionsLocal(q);
             } else {
-                if ($.isFunction(serviceUrl)) {
+                if (typeof serviceUrl === 'function') {
                     serviceUrl = serviceUrl.call(that.element, q);
                 }
                 cacheKey = serviceUrl + '?' + $.param(params || {});
@@ -2109,7 +2095,7 @@
                 $suggestions = that.getSuggestionsContainer(),
                 $detailsPanel = that.getDetailsContainer();
 
-            if ($.isFunction(that.options.onHide) && that.visible) {
+            if (typeof that.options.onHide === 'function' && that.visible) {
                 that.options.onHide.call(that.element, container);
             }
 
@@ -2193,7 +2179,7 @@
             var that = this;
             if (!('ontouchend' in document)) {
 
-                $(document).mouseup(function (e) {
+                $(document).on('mouseup', function (e) {
                     if (!that.visible) {
                         return;
                     }
@@ -2399,7 +2385,7 @@
             noSuggestionsContainer.detach();
             container.html(html);
 
-            if ($.isFunction(beforeRender)) {
+            if (typeof beforeRender === 'function') {
                 beforeRender.call(that.element, container, that.suggestions);
             }
 
@@ -2916,7 +2902,7 @@
                 that.selection = suggestion;
             }
 
-            if ($.isFunction(onSelectCallback)) {
+            if (typeof onSelectCallback === 'function') {
                 onSelectCallback.call(that.element, suggestion);
             }
         },
@@ -2924,7 +2910,7 @@
             var that = this,
                 suggestion = that.suggestions[index];
             if (suggestion.url.length > 0) {
-                window.open(suggestion.url, '_blank').focus();
+                window.open(suggestion.url, '_blank').trigger('focus');
             }
         },
         getValue: function (value) {
@@ -3244,7 +3230,7 @@
                     html += '<a href="' + suggestion.url + '" class="' + that.classes.suggestion + ' dgwt-wcas-suggestion-history-search" data-index="' + suggestionsIndex + '">';
                     html += '<span class="dgwt-wcas-si">' + suggestion.thumb_html + '</span>';
                     html += '<div class="dgwt-wcas-content-wrapp">';
-                    html += '<div class="dgwt-wcas-st"><span class="dgwt-wcas-st-title">' + suggestion.value + '</span></div>'
+                    html += '<div class="dgwt-wcas-st"><span class="dgwt-wcas-st-title">' + utils.formatHtml(suggestion.value) + '</span></div>'
                     html += '</div>';
                     html += '</a>';
 
@@ -3289,7 +3275,7 @@
             $suggestionsWrapp.html('');
             $('body').removeClass('dgwt-wcas-open-pre-suggestions');
 
-            activeInstance.el.focus();
+            activeInstance.el.trigger('focus');
         },
         hidePreSuggestions: function () {
             var that = this;
@@ -3438,8 +3424,8 @@
                     $formWrapper.hasClass('dgwt-wcas-mobile-overlay-trigger-active') &&
                     !$('html').hasClass('dgwt-wcas-overlay-mobile-on')
                 ) {
-                    $formWrapper.find('.js-dgwt-wcas-enable-mobile-form').click();
-                    $formWrapper.find('.' + that.options.searchInputClass).blur();
+                    $formWrapper.find('.js-dgwt-wcas-enable-mobile-form').trigger('click');
+                    $formWrapper.find('.' + that.options.searchInputClass).trigger('blur');
                 }
                 if (that.voiceSearchStarted) {
                     that.voiceSearchAbort();
@@ -3462,7 +3448,7 @@
                 if (result.isFinal) {
                     $input.trigger('change');
                     if (!('ontouchend' in document)) {
-                        $input.focus();
+                        $input.trigger('focus');
                     }
                     that.voiceSearchSetState('inactive', $voiceSearch);
                 }
@@ -3776,7 +3762,6 @@
                 mobileOverlayDelay: dgwt_wcas.mobile_overlay_delay,
                 debounceWaitMs: dgwt_wcas.debounce_wait_ms,
                 sendGAEvents: dgwt_wcas.send_ga_events,
-                convertHtml: dgwt_wcas.convert_html,
                 enableGASiteSearchModule: dgwt_wcas.enable_ga_site_search_module,
                 appendTo: typeof dgwt_wcas.suggestions_wrapper != 'undefined' ? dgwt_wcas.suggestions_wrapper : 'body',
                 showProductVendor: typeof dgwt_wcas.show_product_vendor != 'undefined' && dgwt_wcas.show_product_vendor ? true : false,

@@ -4,6 +4,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 
 	use SW_WAPF_PRO\Includes\Classes\Cache;
     use SW_WAPF_PRO\Includes\Classes\Conditions;
+    use SW_WAPF_PRO\Includes\Classes\Config;
     use SW_WAPF_PRO\Includes\Classes\Enumerable;
     use SW_WAPF_PRO\Includes\Classes\Field_Groups;
     use SW_WAPF_PRO\Includes\Classes\Fields;
@@ -1031,7 +1032,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
         private function create_conditions_model($for_product_admin = false) {
 
             $model = [
-                'condition_options' => Conditions::get_fieldgroup_visibility_conditions(),
+                'condition_options' => Config::get_fieldgroup_visibility_conditions(),
                 'conditions'        => [],
                 'post_type'         => isset($_GET['post_type']) ? $_GET['post_type'] : 'wapf_product'
             ];
@@ -1065,7 +1066,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 
             $model = [
                 'fields'            => [],
-                'condition_options' => Conditions::get_field_visibility_conditions(),
+                'condition_options' => Config::get_field_visibility_conditions(),
                 'type'              => 'wapf_product'
             ];
 

@@ -280,6 +280,7 @@ class Exporter
             if ($adj_handler = $ruleObject->getProductRangeAdjustmentHandler()) {
                 $product_adj['type']          = $adj_handler->getType();
                 $product_adj['qty_based']     = $adj_handler->getGroupBy();
+                $product_adj['measurement']   = $adj_handler->getMeasurement()->getValue();
                 $ranges                       = $adj_handler->getRanges();
                 $product_adj['discount_type'] = $this->getDiscountType($ranges[0]->getData());
                 foreach ($ranges as $range) {

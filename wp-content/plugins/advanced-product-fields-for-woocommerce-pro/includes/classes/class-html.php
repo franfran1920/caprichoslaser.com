@@ -325,15 +325,22 @@ namespace SW_WAPF_PRO\Includes\Classes
 
         	$is_edit = !empty($cart_item_field);
 
-            $model = apply_filters('wapf/field_template_model',[
-            	'product'               => $product,
+            $model = [
+                'product'               => $product,
                 'field'                 => $field,
                 'default'               => $defaults,
-	            'is_edit'               => $is_edit,
+                'is_edit'               => $is_edit,
                 'field_attributes'      => $field_attributes_html,
-	            'raw_field_attributes'  => $field_attributes,
-	            'data'                  => $data
-            ], $field, $fieldgroup_id, $product);
+                'raw_field_attributes'  => $field_attributes,
+                'data'                  => $data
+            ];
+
+
+            if( $field->has_products() ) {
+                $model['product_choices'] = Woocommerce_Service::get_product_choices( $field->products );
+            }
+
+            $model =  apply_filters('wapf/field_template_model', $model, $field, $fieldgroup_id, $product );
 
             $file_name = $field->type === 'p' ? 'content' : $field->type;
             $view = apply_filters(
@@ -429,7 +436,7 @@ namespace SW_WAPF_PRO\Includes\Classes
                 Cache::set( 'pricing_' . $product->get_id(), true );
             }
 
-	        if( isset( $field->options['max_choices'] ) || isset( $field->options['max_choices'] ) )
+	        if( isset( $field->options['min_choices'] ) || isset( $field->options['max_choices'] ) )
 	            $classes[] = 'has-minmax';
 
 	        if( ! empty($field->conditionals ) ) {
@@ -588,7 +595,7 @@ namespace SW_WAPF_PRO\Includes\Classes
 	        if($field->required)
 		        $attributes['required'] = '';
 
-	        if(isset($option['pricing_type']) && $option['pricing_type'] !== 'none') {
+	        if( isset( $option['pricing_type'] ) && $option['pricing_type'] !== 'none' ) {
 		        $attributes['data-wapf-pricetype'] = $option['pricing_type'];
 		        $attributes['data-wapf-price'] = $option['pricing_type'] === 'fx' ? $option['pricing_amount'] : Helper::adjust_addon_price($product,$option['pricing_amount'],$option['pricing_type'],'shop');
 		        if($option['pricing_type'] === 'fx')
@@ -635,10 +642,11 @@ namespace SW_WAPF_PRO\Includes\Classes
 
 		        $attributes['data-wapf-pricetype'] = $option['pricing_type'];
 		        $attributes['data-wapf-price'] = $option['pricing_type'] === 'fx' ? $option['pricing_amount'] : Helper::adjust_addon_price( $product, $option['pricing_amount'], $option['pricing_type'], 'shop' );
-		        if($option['pricing_type'] === 'fx' && Util::show_pricing_hints() ) {
-			        $attributes['data-fx-hint'] = esc_html(Helper::format_pricing_hint( 'fx', '', $product, 'shop', $field, $option ) );
+		        if( $option['pricing_type'] === 'fx' ) {
+                    if( Util::show_pricing_hints() )
+			            $attributes['data-fx-hint'] = esc_html(Helper::format_pricing_hint( 'fx', '', $product, 'shop', $field, $option ) );
+                    $attributes['data-wapf-tax'] = wc_get_price_to_display( $product, [ 'qty' => 1, 'price' => 1 ] );
 		        }
-		        $attributes['data-wapf-tax'] = wc_get_price_to_display( $product, [ 'qty' => 1, 'price' => 1 ] );
 
 	        }
 
@@ -674,7 +682,7 @@ namespace SW_WAPF_PRO\Includes\Classes
 			        }
 		        }
 
-		        switch( $field->type) {
+		        switch( $field->type ) {
 			        case 'date':
 				        $field_attributes['data-df'] = get_option('wapf_date_format','mm-dd-yyyy');
 						break;
@@ -683,7 +691,7 @@ namespace SW_WAPF_PRO\Includes\Classes
 				        $field_attributes['data-true-label'] = isset($field->options['label_true']) ? $field->options['label_true'] : 'true';
 				        break;
 			        case 'file':
-			        	if( !File_Upload::is_ajax_upload()) {
+			        	if( ! File_Upload::is_ajax_upload() ) {
 
 					        $field_attributes['name'] = $field_attributes['name'] . '[]';
 
@@ -698,7 +706,7 @@ namespace SW_WAPF_PRO\Includes\Classes
 			        	break;
 		        }
 
-		        $field_attributes['class'] = implode(' ',array_merge(array_map('sanitize_html_class',$extra_classes,$classes)));
+		        $field_attributes['class'] = implode(' ', array_merge( array_map( 'sanitize_html_class', $extra_classes ), $classes ) );
 
 		        if ( isset( $field->options['placeholder'] ) ) {
 			        $field_attributes['placeholder'] = $field->options['placeholder'];
@@ -727,7 +735,7 @@ namespace SW_WAPF_PRO\Includes\Classes
 
 	        }
 
-	        $field_attributes = apply_filters('wapf/html/field_attributes',$field_attributes, $field, $product, $field_group_id);
+	        $field_attributes = apply_filters( 'wapf/html/field_attributes', $field_attributes, $field, $product, $field_group_id );
 
 	        return $field_attributes;
 
@@ -759,9 +767,15 @@ namespace SW_WAPF_PRO\Includes\Classes
 
 	    }
 
+        public static function product_pricing_hint( $product ) {
+            $format = Util::pricing_hint_format();
+            $price_html = str_replace( '{x}', $product->get_price_html(), $format);
+            return '<span class="wapf-pricing-hint">' . $price_html . '</span>';
+        }
+
 	    public static function frontend_option_pricing_hint($option, $field, $product) {
 
-		    if(!Util::show_pricing_hints() || empty($option['pricing_type']) || $option['pricing_type'] === 'none')
+		    if( ! Util::show_pricing_hints() || empty($option['pricing_type']) || $option['pricing_type'] === 'none')
 		    	return '';
 
 		    return '<span class="wapf-pricing-hint">' . Helper::format_pricing_hint($option['pricing_type'], $option['pricing_type'] === 'fx' ? '' : $option['pricing_amount'], $product, 'shop', $field, $option) . '</span>';
@@ -770,7 +784,7 @@ namespace SW_WAPF_PRO\Includes\Classes
 
 	    public static function frontend_field_pricing_hint( Field $field, $product ) {
 
-		    if(!$field->pricing_enabled() || !Util::show_pricing_hints())
+		    if( ! $field->pricing_enabled() || !Util::show_pricing_hints() )
 		    	return '';
 
 		    return '<span class="wapf-pricing-hint">'. Helper::format_pricing_hint($field->pricing->type, $field->pricing->type === 'fx' ? '' : $field->pricing->amount, $product,'shop', $field) .'</span>';

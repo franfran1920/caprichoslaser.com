@@ -31,13 +31,13 @@ add_action( 'wp_footer', function () {
 						setTimeout(function () {
 							var $input = $('.search-header-contents .dgwt-wcas-search-input');
 							if ($input.length > 0) {
-								$input.focus();
+								$input.trigger('focus');
 							}
 						}, 500);
 					} else {
 						var $mobile = $('.search-header-contents .js-dgwt-wcas-enable-mobile-form');
 						if ($mobile.length > 0) {
-							$mobile.click();
+							$mobile.trigger('click');
 
 							// Support for new version of search popup (version >= v16.2)
 							if (document.querySelector('#rhSplashSearch') !== null) {

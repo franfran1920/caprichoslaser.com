@@ -1,7 +1,0 @@
-2023-09-12T17:45:10+00:00 INFO Queuing 6.7.1 - WCCS_Updates::clear_pricing_caches
-2023-09-12T17:45:10+00:00 INFO Queuing 7.0.0 - WCCS_Updates::clear_pricing_caches
-2023-09-12T17:45:11+00:00 INFO Running WCCS_Updates::clear_pricing_caches callback
-2023-09-12T17:45:11+00:00 INFO Finished WCCS_Updates::clear_pricing_caches callback
-2023-09-12T17:45:11+00:00 INFO Running WCCS_Updates::clear_pricing_caches callback
-2023-09-12T17:45:11+00:00 INFO Finished WCCS_Updates::clear_pricing_caches callback
-2023-09-12T17:45:11+00:00 INFO Data update complete

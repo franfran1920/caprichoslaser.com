@@ -2,7 +2,7 @@
  /** @var $model [] */
 
 use SW_WAPF_PRO\Includes\Classes\Enumerable;
-use SW_WAPF_PRO\Includes\Classes\Fields;
+use SW_WAPF_PRO\Includes\Classes\Config;
 
 $import_class = 'wapf-' . uniqid();
  $export_class = 'wapf-' . uniqid();
@@ -127,7 +127,7 @@ $import_class = 'wapf-' . uniqid();
             </p>
             <select id="wapf-select-function">
                 <?php
-                $definitions = Fields::get_function_definitions();
+                $definitions = Config::get_function_definitions();
                 $groups = Enumerable::from( $definitions )->groupBy( function($x) {
                     return isset($x['category']) ? $x['category'] : '';
                 } )->toArray();

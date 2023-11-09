@@ -16,7 +16,7 @@ class Personalization {
 			add_action( 'admin_enqueue_scripts', function () {
 				// Register personalization styles used in block editor.
 				wp_register_style( 'dgwt-wcas-style-personalization', false, array(), true, true );
-				wp_add_inline_style( 'dgwt-wcas-style-personalization', $this->getStyle() );
+				wp_add_inline_style( 'dgwt-wcas-style-personalization', $this->getStyles() );
 			} );
 		}
 	}
@@ -28,7 +28,7 @@ class Personalization {
 	 */
 	public function printStyle() { ?>
 		<style>
-			<?php echo Helpers::minifyCSS( $this->getStyle() ); ?>
+			<?php echo $this->getStyles(); ?>
 		</style>
 		<?php
 	}
@@ -36,9 +36,11 @@ class Personalization {
 	/**
 	 * Get personalized CSS (without <style></style>)
 	 *
+	 * @param bool $minified Whether styles should be minified.
+	 *
 	 * @return string
 	 */
-	public function getStyle() {
+	public function getStyles( $minified = true ) {
 		// Search form
 		$show_submit             = DGWT_WCAS()->settings->getOption( 'show_submit_button' );
 		$bg_input_underlay_color = DGWT_WCAS()->settings->getOption( 'bg_input_underlay_color' ); // Pirx
@@ -211,6 +213,10 @@ class Personalization {
 			echo '.dgwt-wcas-search-icon path { fill: ' . sanitize_text_field( $search_icon_color ) . ';}';
 		}
 
-		return ob_get_clean();
+		if ( $minified ) {
+			return Helpers::minifyCSS( ob_get_clean() );
+		} else {
+			return ob_get_clean();
+		}
 	}
 }

@@ -3,7 +3,7 @@
 <select rv-default="field.<?php echo $model['id']; ?>" rv-on-change="onChangeType" rv-value="field.<?php echo $model['id']; ?>">
     <?php
     $groups = \SW_WAPF_PRO\Includes\Classes\Enumerable::from($model['options'])->groupBy(function($x){
-        return isset($x['subtype']) ? $x['subtype'] : '';
+        return isset($x['group_label']) ? $x['group_label'] : '';
     })->toArray();
 
     foreach($groups as $optgroup => $types) {

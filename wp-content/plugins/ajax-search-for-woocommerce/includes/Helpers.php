@@ -143,7 +143,7 @@ class Helpers
 		             <path <?php 
                 echo  $style ;
                 ?>
-						   d="M51.539,49.356L37.247,35.065c3.273-3.74,5.272-8.623,5.272-13.983c0-11.742-9.518-21.26-21.26-21.26 S0,9.339,0,21.082s9.518,21.26,21.26,21.26c5.361,0,10.244-1.999,13.983-5.272l14.292,14.292L51.539,49.356z M2.835,21.082 c0-10.176,8.249-18.425,18.425-18.425s18.425,8.249,18.425,18.425S31.436,39.507,21.26,39.507S2.835,31.258,2.835,21.082z"/>
+						 d="M51.539,49.356L37.247,35.065c3.273-3.74,5.272-8.623,5.272-13.983c0-11.742-9.518-21.26-21.26-21.26 S0,9.339,0,21.082s9.518,21.26,21.26,21.26c5.361,0,10.244-1.999,13.983-5.272l14.292,14.292L51.539,49.356z M2.835,21.082 c0-10.176,8.249-18.425,18.425-18.425s18.425,8.249,18.425,18.425S31.436,39.507,21.26,39.507S2.835,31.258,2.835,21.082z"/>
 				</svg>
 				<?php 
                 break;
@@ -157,7 +157,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+						d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
 				</svg>
 				<?php 
                 break;
@@ -188,7 +188,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M14 6.125H3.351l4.891-4.891L7 0 0 7l7 7 1.234-1.234L3.35 7.875H14z" fill-rule="evenodd"/>
+						d="M14 6.125H3.351l4.891-4.891L7 0 0 7l7 7 1.234-1.234L3.35 7.875H14z" fill-rule="evenodd"/>
 				</svg>
 				<?php 
                 break;
@@ -202,7 +202,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
+						d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
 				</svg>
 				<?php 
                 break;
@@ -213,7 +213,7 @@ class Helpers
                 echo  $class ;
                 ?>" viewBox="25 25 50 50">
 					<circle class="dgwt-wcas-loader-circular-path" cx="50" cy="50" r="20" fill="none"
-							<?php 
+						<?php 
                 echo  $style ;
                 ?> stroke-miterlimit="10"/>
 				</svg>
@@ -232,8 +232,8 @@ class Helpers
 						<path <?php 
                 echo  $style2 ;
                 ?>
-							  d="m 60.814237,116.23604 c -9.048223,-1.66914 -16.519379,-6.20497 -21.793789,-13.23128 -1.60071,-2.1324 -4.314629,-7.202619 -4.669151,-8.723059 -0.160775,-0.68952 -0.10638,-0.72795 1.948599,-1.37712 2.642805,-0.83486 2.824539,-0.83179 3.160818,0.0535 2.303833,6.06532 7.117271,11.515849 13.090786,14.823419 3.461115,1.91644 6.665367,2.90424 10.975589,3.38351 8.531032,0.94862 17.134659,-2.15367 23.386899,-8.4328 3.02499,-3.037969 4.6729,-5.555849 6.38356,-9.753479 l 0.39246,-0.963 2.31721,0.75094 c 2.22899,0.72234 2.31594,0.77987 2.28317,1.51079 -0.042,0.93936 -2.04226,5.11147 -3.54876,7.402399 -1.51073,2.29734 -5.78521,6.66064 -8.29613,8.46852 -4.24115,3.05365 -9.37348,5.21483 -14.417657,6.07116 -2.90299,0.49283 -8.586032,0.50118 -11.213604,0.0164 z M 47.412846,73.573941 c -0.309888,-0.59465 -0.464319,-1.51592 -0.477161,-2.84652 -0.02483,-2.57365 0.873951,-4.54095 2.753263,-6.02646 1.633788,-1.29143 2.83173,-1.69831 4.961024,-1.685 2.909938,0.0182 5.40834,1.54992 6.76366,4.14667 0.581876,1.11485 0.698121,1.68141 0.704505,3.43363 0.0045,1.23792 -0.144736,2.45984 -0.363942,2.97966 -0.361143,0.85641 -0.401692,0.87525 -1.4427,0.67016 -1.441299,-0.28395 -9.681541,-0.29597 -11.215046,-0.0164 -1.208977,0.22044 -1.231574,0.21163 -1.683603,-0.65577 z m 23.590775,-0.1224 c -0.24773,-0.57773 -0.44716,-1.76886 -0.46047,-2.75021 -0.0439,-3.23955 2.24441,-6.50245 5.168157,-7.3692 3.62299,-1.07405 7.38202,0.40563 9.28658,3.6555 0.92458,1.57769 1.14637,4.5061 0.47452,6.26533 l -0.46168,1.20889 -1.21243,-0.22321 c -1.58287,-0.29141 -9.51286,-0.28827 -11.113147,0.004 l -1.24453,0.22755 z"
-							  id="path21"/>
+							d="m 60.814237,116.23604 c -9.048223,-1.66914 -16.519379,-6.20497 -21.793789,-13.23128 -1.60071,-2.1324 -4.314629,-7.202619 -4.669151,-8.723059 -0.160775,-0.68952 -0.10638,-0.72795 1.948599,-1.37712 2.642805,-0.83486 2.824539,-0.83179 3.160818,0.0535 2.303833,6.06532 7.117271,11.515849 13.090786,14.823419 3.461115,1.91644 6.665367,2.90424 10.975589,3.38351 8.531032,0.94862 17.134659,-2.15367 23.386899,-8.4328 3.02499,-3.037969 4.6729,-5.555849 6.38356,-9.753479 l 0.39246,-0.963 2.31721,0.75094 c 2.22899,0.72234 2.31594,0.77987 2.28317,1.51079 -0.042,0.93936 -2.04226,5.11147 -3.54876,7.402399 -1.51073,2.29734 -5.78521,6.66064 -8.29613,8.46852 -4.24115,3.05365 -9.37348,5.21483 -14.417657,6.07116 -2.90299,0.49283 -8.586032,0.50118 -11.213604,0.0164 z M 47.412846,73.573941 c -0.309888,-0.59465 -0.464319,-1.51592 -0.477161,-2.84652 -0.02483,-2.57365 0.873951,-4.54095 2.753263,-6.02646 1.633788,-1.29143 2.83173,-1.69831 4.961024,-1.685 2.909938,0.0182 5.40834,1.54992 6.76366,4.14667 0.581876,1.11485 0.698121,1.68141 0.704505,3.43363 0.0045,1.23792 -0.144736,2.45984 -0.363942,2.97966 -0.361143,0.85641 -0.401692,0.87525 -1.4427,0.67016 -1.441299,-0.28395 -9.681541,-0.29597 -11.215046,-0.0164 -1.208977,0.22044 -1.231574,0.21163 -1.683603,-0.65577 z m 23.590775,-0.1224 c -0.24773,-0.57773 -0.44716,-1.76886 -0.46047,-2.75021 -0.0439,-3.23955 2.24441,-6.50245 5.168157,-7.3692 3.62299,-1.07405 7.38202,0.40563 9.28658,3.6555 0.92458,1.57769 1.14637,4.5061 0.47452,6.26533 l -0.46168,1.20889 -1.21243,-0.22321 c -1.58287,-0.29141 -9.51286,-0.28827 -11.113147,0.004 l -1.24453,0.22755 z"
+							id="path21"/>
 					</g>
 				</svg>
 				<?php 
@@ -273,7 +273,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M12 13Q11.15 13 10.575 12.425Q10 11.85 10 11V5Q10 4.15 10.575 3.575Q11.15 3 12 3Q12.85 3 13.425 3.575Q14 4.15 14 5V11Q14 11.85 13.425 12.425Q12.85 13 12 13ZM12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8ZM11.5 20.5V16.975Q9.15 16.775 7.575 15.062Q6 13.35 6 11H7Q7 13.075 8.463 14.537Q9.925 16 12 16Q14.075 16 15.538 14.537Q17 13.075 17 11H18Q18 13.35 16.425 15.062Q14.85 16.775 12.5 16.975V20.5ZM12 12Q12.425 12 12.713 11.712Q13 11.425 13 11V5Q13 4.575 12.713 4.287Q12.425 4 12 4Q11.575 4 11.288 4.287Q11 4.575 11 5V11Q11 11.425 11.288 11.712Q11.575 12 12 12Z"/>
+						d="M12 13Q11.15 13 10.575 12.425Q10 11.85 10 11V5Q10 4.15 10.575 3.575Q11.15 3 12 3Q12.85 3 13.425 3.575Q14 4.15 14 5V11Q14 11.85 13.425 12.425Q12.85 13 12 13ZM12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8Q12 8 12 8ZM11.5 20.5V16.975Q9.15 16.775 7.575 15.062Q6 13.35 6 11H7Q7 13.075 8.463 14.537Q9.925 16 12 16Q14.075 16 15.538 14.537Q17 13.075 17 11H18Q18 13.35 16.425 15.062Q14.85 16.775 12.5 16.975V20.5ZM12 12Q12.425 12 12.713 11.712Q13 11.425 13 11V5Q13 4.575 12.713 4.287Q12.425 4 12 4Q11.575 4 11.288 4.287Q11 4.575 11 5V11Q11 11.425 11.288 11.712Q11.575 12 12 12Z"/>
 				</svg>
 				<?php 
                 break;
@@ -287,7 +287,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M12 14q-1.25 0-2.125-.875T9 11V5q0-1.25.875-2.125T12 2q1.25 0 2.125.875T15 5v6q0 1.25-.875 2.125T12 14Zm0-6Zm-1 13v-3.075q-2.6-.35-4.3-2.325Q5 13.625 5 11h2q0 2.075 1.463 3.537Q9.925 16 12 16t3.538-1.463Q17 13.075 17 11h2q0 2.625-1.7 4.6-1.7 1.975-4.3 2.325V21Zm1-9q.425 0 .713-.288Q13 11.425 13 11V5q0-.425-.287-.713Q12.425 4 12 4t-.712.287Q11 4.575 11 5v6q0 .425.288.712.287.288.712.288Z"/>
+						d="M12 14q-1.25 0-2.125-.875T9 11V5q0-1.25.875-2.125T12 2q1.25 0 2.125.875T15 5v6q0 1.25-.875 2.125T12 14Zm0-6Zm-1 13v-3.075q-2.6-.35-4.3-2.325Q5 13.625 5 11h2q0 2.075 1.463 3.537Q9.925 16 12 16t3.538-1.463Q17 13.075 17 11h2q0 2.625-1.7 4.6-1.7 1.975-4.3 2.325V21Zm1-9q.425 0 .713-.288Q13 11.425 13 11V5q0-.425-.287-.713Q12.425 4 12 4t-.712.287Q11 4.575 11 5v6q0 .425.288.712.287.288.712.288Z"/>
 				</svg>
 				<?php 
                 break;
@@ -301,7 +301,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M12 13Q11.15 13 10.575 12.425Q10 11.85 10 11V5Q10 4.15 10.575 3.575Q11.15 3 12 3Q12.85 3 13.425 3.575Q14 4.15 14 5V11Q14 11.85 13.425 12.425Q12.85 13 12 13ZM11.5 20.5V16.975Q9.15 16.775 7.575 15.062Q6 13.35 6 11H7Q7 13.075 8.463 14.537Q9.925 16 12 16Q14.075 16 15.538 14.537Q17 13.075 17 11H18Q18 13.35 16.425 15.062Q14.85 16.775 12.5 16.975V20.5Z"/>
+						d="M12 13Q11.15 13 10.575 12.425Q10 11.85 10 11V5Q10 4.15 10.575 3.575Q11.15 3 12 3Q12.85 3 13.425 3.575Q14 4.15 14 5V11Q14 11.85 13.425 12.425Q12.85 13 12 13ZM11.5 20.5V16.975Q9.15 16.775 7.575 15.062Q6 13.35 6 11H7Q7 13.075 8.463 14.537Q9.925 16 12 16Q14.075 16 15.538 14.537Q17 13.075 17 11H18Q18 13.35 16.425 15.062Q14.85 16.775 12.5 16.975V20.5Z"/>
 				</svg>
 				<?php 
                 break;
@@ -316,7 +316,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M12 14q-1.25 0-2.125-.875T9 11V5q0-1.25.875-2.125T12 2q1.25 0 2.125.875T15 5v6q0 1.25-.875 2.125T12 14Zm-1 7v-3.075q-2.6-.35-4.3-2.325Q5 13.625 5 11h2q0 2.075 1.463 3.537Q9.925 16 12 16t3.538-1.463Q17 13.075 17 11h2q0 2.625-1.7 4.6-1.7 1.975-4.3 2.325V21Z"/>
+						d="M12 14q-1.25 0-2.125-.875T9 11V5q0-1.25.875-2.125T12 2q1.25 0 2.125.875T15 5v6q0 1.25-.875 2.125T12 14Zm-1 7v-3.075q-2.6-.35-4.3-2.325Q5 13.625 5 11h2q0 2.075 1.463 3.537Q9.925 16 12 16t3.538-1.463Q17 13.075 17 11h2q0 2.625-1.7 4.6-1.7 1.975-4.3 2.325V21Z"/>
 				</svg>
 				<?php 
                 break;
@@ -329,7 +329,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M16.725 13.4 15.975 12.625Q16.1 12.325 16.2 11.9Q16.3 11.475 16.3 11H17.3Q17.3 11.75 17.138 12.337Q16.975 12.925 16.725 13.4ZM13.25 9.9 9.3 5.925V5Q9.3 4.15 9.875 3.575Q10.45 3 11.3 3Q12.125 3 12.713 3.575Q13.3 4.15 13.3 5V9.7Q13.3 9.75 13.275 9.8Q13.25 9.85 13.25 9.9ZM10.8 20.5V17.025Q8.45 16.775 6.875 15.062Q5.3 13.35 5.3 11H6.3Q6.3 13.075 7.763 14.537Q9.225 16 11.3 16Q12.375 16 13.312 15.575Q14.25 15.15 14.925 14.4L15.625 15.125Q14.9 15.9 13.913 16.4Q12.925 16.9 11.8 17.025V20.5ZM19.925 20.825 1.95 2.85 2.675 2.15 20.65 20.125Z"/>
+						d="M16.725 13.4 15.975 12.625Q16.1 12.325 16.2 11.9Q16.3 11.475 16.3 11H17.3Q17.3 11.75 17.138 12.337Q16.975 12.925 16.725 13.4ZM13.25 9.9 9.3 5.925V5Q9.3 4.15 9.875 3.575Q10.45 3 11.3 3Q12.125 3 12.713 3.575Q13.3 4.15 13.3 5V9.7Q13.3 9.75 13.275 9.8Q13.25 9.85 13.25 9.9ZM10.8 20.5V17.025Q8.45 16.775 6.875 15.062Q5.3 13.35 5.3 11H6.3Q6.3 13.075 7.763 14.537Q9.225 16 11.3 16Q12.375 16 13.312 15.575Q14.25 15.15 14.925 14.4L15.625 15.125Q14.9 15.9 13.913 16.4Q12.925 16.9 11.8 17.025V20.5ZM19.925 20.825 1.95 2.85 2.675 2.15 20.65 20.125Z"/>
 				</svg>
 				<?php 
                 break;
@@ -343,7 +343,7 @@ class Helpers
 					<path <?php 
                 echo  $style ;
                 ?>
-						  d="M17.75 14.95 16.3 13.5q.35-.575.525-1.2Q17 11.675 17 11h2q0 1.1-.325 2.087-.325.988-.925 1.863Zm-2.95-3L9 6.15V5q0-1.25.875-2.125T12 2q1.25 0 2.125.875T15 5v6q0 .275-.062.5-.063.225-.138.45ZM11 21v-3.1q-2.6-.35-4.3-2.312Q5 13.625 5 11h2q0 2.075 1.463 3.537Q9.925 16 12 16q.85 0 1.613-.262.762-.263 1.387-.738l1.425 1.425q-.725.575-1.587.962-.863.388-1.838.513V21Zm8.8 1.6L1.4 4.2l1.4-1.4 18.4 18.4Z"/>
+						d="M17.75 14.95 16.3 13.5q.35-.575.525-1.2Q17 11.675 17 11h2q0 1.1-.325 2.087-.325.988-.925 1.863Zm-2.95-3L9 6.15V5q0-1.25.875-2.125T12 2q1.25 0 2.125.875T15 5v6q0 .275-.062.5-.063.225-.138.45ZM11 21v-3.1q-2.6-.35-4.3-2.312Q5 13.625 5 11h2q0 2.075 1.463 3.537Q9.925 16 12 16q.85 0 1.613-.262.762-.263 1.387-.738l1.425 1.425q-.725.575-1.587.962-.863.388-1.838.513V21Zm8.8 1.6L1.4 4.2l1.4-1.4 18.4 18.4Z"/>
 				</svg>
 				<?php 
                 break;
@@ -670,18 +670,18 @@ class Helpers
     }
     
     /**
-     * Calc score for searched
+     * Calc score for searched.
      *
-     * @param string $phrase Search phrase (user input)
-     * @param string $string eg. product title, SKU, attribute name etc.
-     * @param array $args
+     * @param string $phrase Search phrase (user input).
+     * @param string $haystack eg. product title, SKU, attribute name etc.
+     * @param array $args Args that can wide or narrow comparison scope or change the score weight.
      *
-     * @return int
+     * @return float
      */
-    public static function calcScore( $phrase, $string, $args = array() )
+    public static function calcScore( string $phrase, string $haystack, array $args = array() ) : float
     {
         $score = 0;
-        if ( empty($phrase) || empty($string) ) {
+        if ( empty($phrase) || empty($haystack) ) {
             return $score;
         }
         // Don't apply score for a search phrase with a single character
@@ -694,50 +694,151 @@ class Helpers
             'score_containing' => 50,
         );
         $args = array_merge( $default, $args );
-        $phrase = mb_strtolower( $phrase );
-        $string = mb_strtolower( $string );
+        $phrase = self::normalizePhrase( $phrase );
+        $haystack = self::normalizePhrase( $haystack );
+        /* -------------------------------------- *
+         * Bonus for comparing the entire phrase  *
+         * -------------------------------------- */
+        $score += self::allocateScore( self::stringComparisonResult( $phrase, $haystack, $args ) );
+        /* ------------------------------------ *
+         * Bonus for comparing individual words *
+         * ------------------------------------ */
+        $words = explode( ' ', $phrase );
         
-        if ( $args['check_similarity'] ) {
-            $m = similar_text( $phrase, $string, $percent );
-            $score = ($score + $percent) / 3;
-        }
-        
-        $pos = strpos( $string, $phrase );
-        // Add score based on substring position
-        
-        if ( $pos !== false ) {
-            $score += $args['score_containing'];
-            // Bonus for contained substring
-            $allocated = false;
-            // Bonus for exact match for whole phrase
-            
-            if ( $string === $phrase ) {
-                $score += $args['score_containing'] * 5;
-                $allocated = true;
-            }
-            
-            
-            if ( !$allocated && strpos( $string, ' ' ) !== false ) {
-                $phrase = Helpers::escPhraseForRegex( $phrase );
-                // Bonus for exact match for part phrase
-                
-                if ( preg_match( '/\\b' . $phrase . '\\b/i', $string ) ) {
-                    $score += $args['score_containing'] * 2;
-                    $allocated = true;
+        if ( count( $words ) > 1 ) {
+            $args['check_similarity'] = false;
+            foreach ( $words as $word ) {
+                if ( strlen( $word ) < 2 ) {
+                    continue;
                 }
-            
+                $score += self::allocateScore( self::stringComparisonResult( $word, $haystack, $args ) ) / 3;
             }
-            
-            // Bonus for substring position
-            
-            if ( !$allocated && $args['check_position'] ) {
-                $posBonus = (100 - $pos * 100 / strlen( $string )) / 2;
-                $score += $posBonus;
-            }
-        
         }
         
         return $score;
+    }
+    
+    /**
+     * Removes multiple whitespaces,
+     * strips whitespace (or other characters) from the beginning and end of a string
+     * and makes a string lowercase.
+     *
+     * @param string $phrase The phrase to normalize.
+     *
+     * @return string
+     */
+    public static function normalizePhrase( string $phrase ) : string
+    {
+        return mb_strtolower( trim( preg_replace( array( '/\\s{2,}/', '/[\\t\\n]/' ), ' ', $phrase ) ) );
+    }
+    
+    /**
+     * Compare two strings and set data necessary to calculate score.
+     *
+     * @param string $haystack The string to search in.
+     * @param string $needle The string need to be found.
+     * @param array $args Args that can wide or narrow comparison scope or change the score weight.
+     *
+     * @return array
+     */
+    public static function stringComparisonResult( string $needle = '', string $haystack = '', array $args = array() ) : array
+    {
+        $results = array(
+            'exact_match'         => false,
+            'partial_exact_match' => false,
+            'containing'          => false,
+            'containing_pos'      => 0,
+            'text_similarity'     => 0,
+        );
+        $default = array(
+            'check_similarity' => true,
+            'check_position'   => true,
+            'score_containing' => 50,
+        );
+        $args = array_merge( $default, $args );
+        $pos = strpos( $haystack, $needle );
+        
+        if ( $pos !== false ) {
+            $results['containing'] = true;
+            
+            if ( $haystack === $needle ) {
+                $results['exact_match'] = true;
+            } elseif ( strpos( $haystack, ' ' ) !== false ) {
+                $needleRegex = self::escPhraseForRegex( $needle );
+                if ( preg_match( '/\\b' . $needleRegex . '\\b/i', $haystack ) ) {
+                    $results['partial_exact_match'] = true;
+                }
+                if ( $args['check_position'] ) {
+                    $results['containing_pos'] = self::stringPosition( $pos, $haystack );
+                }
+            }
+        
+        }
+        
+        
+        if ( $args['check_similarity'] ) {
+            $m = similar_text( $needle, $haystack, $percent );
+            $results['text_similarity'] = $percent;
+        }
+        
+        return $results;
+    }
+    
+    /**
+     * Allocate score. Take resutls of the comarison and calculate the final score.
+     *
+     * @param array $comparison Data after comparing two string.
+     * @param array $args Values and weights that are required to calculate score.
+     *
+     * @return float
+     */
+    public static function allocateScore( array $comparison, array $args = array() ) : float
+    {
+        $score = 0;
+        $default = [
+            'containing_score'               => 50,
+            'exact_match_multiplier'         => 5,
+            'partial_exact_match_multiplier' => 2,
+            'text_similarity_divisor'        => 3,
+            'containing_position_divisor'    => 2,
+        ];
+        $args = apply_filters( 'dgwt/wcas/score_weights', array_merge( $default, $args ) );
+        if ( $comparison['text_similarity'] > 0 ) {
+            $score = $comparison['text_similarity'] / $args['text_similarity_divisor'];
+        }
+        // Add score based on substring position.
+        
+        if ( $comparison['containing'] ) {
+            $score += $args['containing_score'];
+            // Bonus for contained substring.
+            // Bonus for exact match of the phrase to the text.
+            if ( $comparison['exact_match'] ) {
+                $score += $args['containing_score'] * $args['exact_match_multiplier'];
+            }
+            // Bonus for exact match of the phrase to the part of text.
+            if ( $comparison['partial_exact_match'] ) {
+                $score += $args['containing_score'] * $args['partial_exact_match_multiplier'];
+            }
+            // Bonus for substring position.
+            if ( $comparison['containing_pos'] > 0 ) {
+                $score += $comparison['containing_pos'] / $args['containing_position_divisor'];
+            }
+        }
+        
+        return $score;
+    }
+    
+    /**
+     * Check position of the substring relative to the whole string.
+     *
+     * @param int $position The result of the substr function.
+     * @param string $haystack The string to search in.
+     *
+     * @return float
+     */
+    public static function stringPosition( int $position, string $haystack ) : float
+    {
+        return 100 - $position * 100 / strlen( $haystack );
     }
     
     /**
@@ -1941,13 +2042,16 @@ class Helpers
                 }
             }
         }
+        if ( apply_filters( 'dgwt/wcas/blacklisted_terms/check_js', true ) && self::containsJsScript( $phrase ) ) {
+            return true;
+        }
         return false;
     }
     
     /**
      * Get specific label of the post type
      *
-     * @param string|WP_Post_Type $postType
+     * @param string|\WP_Post_Type $postType
      * @param string $label
      *
      * @return string
@@ -1967,6 +2071,53 @@ class Helpers
             $text = $obj->labels->{$label};
         }
         return $text;
+    }
+    
+    /**
+     * Check if the string contains JS script
+     *
+     * @param string $text
+     *
+     * @return bool
+     */
+    public static function containsJsScript( $text )
+    {
+        return !empty($text) && preg_match( '/<script[^>]*?>/', $text );
+    }
+    
+    /**
+     * Remove content of <script> and <style> tag.
+     * Based on {@see wp_strip_all_tags()}.
+     *
+     * @param string $text
+     *
+     * @return bool
+     */
+    public static function stripScripts( $text )
+    {
+        if ( empty($text) ) {
+            return '';
+        }
+        return preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text );
+    }
+    
+    /**
+     * Format HTML output
+     *
+     * @param string $html
+     * @param string $context Available contexts: name, sku, rating, price, description, stock_status, read_more, attribute_label, attribute_value
+     *
+     * @return string
+     */
+    public static function secureHtmlOutput( $html, $context = '' )
+    {
+        $output = wp_kses_post( $html );
+        return apply_filters(
+            'dgwt/wcas/secure_html_output',
+            $output,
+            $context,
+            $html
+        );
     }
 
 }

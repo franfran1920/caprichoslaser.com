@@ -15,7 +15,7 @@
     <div>
         <select class="wapf-pricing-list" rv-on-change="onChange" rv-value="<?php echo $model['is_field_setting'] ? 'field' : 'settings'; ?>.pricing.type">
             <?php
-            foreach(\SW_WAPF_PRO\Includes\Classes\Fields::get_pricing_options($model['field_type']) as $k => $v) {
+            foreach(\SW_WAPF_PRO\Includes\Classes\Config::get_pricing_options($model['field_type']) as $k => $v) {
                 echo '<option value="'.$k.'">'.$v.'</option>';
             }
             ?>

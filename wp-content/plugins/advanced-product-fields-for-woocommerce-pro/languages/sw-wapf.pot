@@ -67,6 +67,15 @@ msgstr ""
 msgid "Is the calculation being shown for informational purpose only, or should it also adjust the product price?"
 msgstr ""
 
+msgid "Result format"
+msgstr ""
+
+msgid "Don't apply formatting"
+msgstr ""
+
+msgid "Format as number"
+msgstr ""
+
 msgid "Formula"
 msgstr ""
 
@@ -472,199 +481,31 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-msgid "Text"
+msgid "Flat fee"
 msgstr ""
 
-msgid "A single-line input field."
+msgid "Quantity based flat fee"
 msgstr ""
 
-msgid "Basic"
+msgid "Percentage based fee"
 msgstr ""
 
-msgid "Text Area"
+msgid "Quantity based percentage fee"
 msgstr ""
 
-msgid "A multi-line text field."
+msgid "Formula based pricing"
 msgstr ""
 
-msgid "Number"
+msgid "Amount &times; character count"
 msgstr ""
 
-msgid "A number input field"
+msgid "Amount &times; character count &times; qty"
 msgstr ""
 
-msgid "E-mail"
+msgid "Amount &times; field value"
 msgstr ""
 
-msgid "An email input field."
-msgstr ""
-
-msgid "URL"
-msgstr ""
-
-msgid "An input field only accepting URLs."
-msgstr ""
-
-msgid "Select list"
-msgstr ""
-
-msgid "A dropdown list where the user selects one option."
-msgstr ""
-
-msgid "Choice"
-msgstr ""
-
-msgid "Checkboxes"
-msgstr ""
-
-msgid "A series of checkboxes. The user can select multiple."
-msgstr ""
-
-msgid "Radio buttons"
-msgstr ""
-
-msgid "A series of radio buttons. The user can select one."
-msgstr ""
-
-msgid "True/False"
-msgstr ""
-
-msgid "One checkbox indicating true (\"yes\") or false (\"no\")."
-msgstr ""
-
-msgid "Image swatches"
-msgstr ""
-
-msgid "A series of image options. The user can select only one."
-msgstr ""
-
-msgid "Swatch"
-msgstr ""
-
-msgid "Multi-select image swatches"
-msgstr ""
-
-msgid "A series of image options. The user can select multiple."
-msgstr ""
-
-msgid "Images + quantities"
-msgstr ""
-
-msgid "A series of images with a quantity input box."
-msgstr ""
-
-msgid "Color swatches"
-msgstr ""
-
-msgid "A series of color options. The user can select only one."
-msgstr ""
-
-msgid "Multi-select color swatches"
-msgstr ""
-
-msgid "A series of color options. The user can select multiple."
-msgstr ""
-
-msgid "Text swatches"
-msgstr ""
-
-msgid "A series of text badges. The user can select only one."
-msgstr ""
-
-msgid "Multi-select text swatches"
-msgstr ""
-
-msgid "A series of text badges. The user can select multiple."
-msgstr ""
-
-msgid "File upload"
-msgstr ""
-
-msgid "Allows users to upload one or more files."
-msgstr ""
-
-msgid "Text & HTML"
-msgstr ""
-
-msgid "A text paragraph. Some HTML and shortcodes are allowed."
-msgstr ""
-
-msgid "Content"
-msgstr ""
-
-msgid "Image"
-msgstr ""
-
-msgid "An image."
-msgstr ""
-
-msgid "Section"
-msgstr ""
-
-msgid "A wrapper for fields, handy for styling or to enable a repeater for multiple fields."
-msgstr ""
-
-msgid "Layout"
-msgstr ""
-
-msgid "Section end"
-msgstr ""
-
-msgid "Ends a previously started section."
-msgstr ""
-
-msgid "Date"
-msgstr ""
-
-msgid "Allows users to select a date from a calendar."
-msgstr ""
-
-msgid "Find the lowest value among the provided numbers."
-msgstr ""
-
-msgid "The first number to compare."
-msgstr ""
-
-msgid "The 2nd number to compare."
-msgstr ""
-
-msgid "More numbers to compare."
-msgstr ""
-
-msgid "Find the highest value among the provided numbers."
-msgstr ""
-
-msgid "Text operations"
-msgstr ""
-
-msgid "Returns the number of characters in a text."
-msgstr ""
-
-msgid "spaces count as a character."
-msgstr ""
-
-msgid " spaces do not count as a character."
-msgstr ""
-
-msgid "The text for which to find the length. By default, spaces count as characters."
-msgstr ""
-
-msgid "True or false. When set to true, spaces won't count as characters."
-msgstr ""
-
-msgid "Returns a price from a price matrix (lookup table). <a href=\"https://www.studiowombat.com/knowledge-base/what-is-lookup-table-pricing-and-how-does-it-work/\" target=\"_blank\">Read detailed steps</a> on how to use this."
-msgstr ""
-
-msgid "it was defined in a matrix table."
-msgstr ""
-
-msgid "The name of your lookup table."
-msgstr ""
-
-msgid "The ID of the input field holding the 1st number for the number pair to look up."
-msgstr ""
-
-msgid "The ID of the input field holding the 2nd number for the number pair to look up."
+msgid "Amount &times; field value &times; qty"
 msgstr ""
 
 msgid "Message"
@@ -901,6 +742,15 @@ msgstr ""
 msgid "Size of the color swatch."
 msgstr ""
 
+msgid "Selection limits"
+msgstr ""
+
+msgid "The min and max choices required."
+msgstr ""
+
+msgid "Set both to '1' if you only allow a single choice. Leave blank if you don't require a min or max"
+msgstr ""
+
 msgid "Define your swatches here."
 msgstr ""
 
@@ -925,34 +775,202 @@ msgstr ""
 msgid "MB"
 msgstr ""
 
+msgid "Content"
+msgstr ""
+
 msgid "Can contain some basic HTML."
 msgstr ""
 
-msgid "Flat fee"
+msgid "Image"
 msgstr ""
 
-msgid "Quantity based flat fee"
+msgid "Find the lowest value among the provided numbers."
 msgstr ""
 
-msgid "Percentage based fee"
+msgid "The first number to compare."
 msgstr ""
 
-msgid "Quantity based percentage fee"
+msgid "The 2nd number to compare."
 msgstr ""
 
-msgid "Formula based pricing"
+msgid "More numbers to compare."
 msgstr ""
 
-msgid "Amount &times; character count"
+msgid "Find the highest value among the provided numbers."
 msgstr ""
 
-msgid "Amount &times; character count &times; qty"
+msgid "Text operations"
 msgstr ""
 
-msgid "Amount &times; field value"
+msgid "Returns the number of characters in a text."
 msgstr ""
 
-msgid "Amount &times; field value &times; qty"
+msgid "spaces count as a character."
+msgstr ""
+
+msgid " spaces do not count as a character."
+msgstr ""
+
+msgid "The text for which to find the length. By default, spaces count as characters."
+msgstr ""
+
+msgid "True or false. When set to true, spaces won't count as characters."
+msgstr ""
+
+msgid "Returns a price from a price matrix (lookup table). <a href=\"https://www.studiowombat.com/knowledge-base/what-is-lookup-table-pricing-and-how-does-it-work/\" target=\"_blank\">Read detailed steps</a> on how to use this."
+msgstr ""
+
+msgid "it was defined in a matrix table."
+msgstr ""
+
+msgid "The name of your lookup table."
+msgstr ""
+
+msgid "The ID of the input field holding the 1st number for the number pair to look up."
+msgstr ""
+
+msgid "The ID of the input field holding the 2nd number for the number pair to look up."
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "A single-line input field."
+msgstr ""
+
+msgid "Basic"
+msgstr ""
+
+msgid "Text Area"
+msgstr ""
+
+msgid "A multi-line text field."
+msgstr ""
+
+msgid "Number"
+msgstr ""
+
+msgid "A number input field"
+msgstr ""
+
+msgid "E-mail"
+msgstr ""
+
+msgid "An email input field."
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "An input field only accepting URLs."
+msgstr ""
+
+msgid "Select list"
+msgstr ""
+
+msgid "A dropdown list where the user selects one option."
+msgstr ""
+
+msgid "Choice"
+msgstr ""
+
+msgid "Checkboxes"
+msgstr ""
+
+msgid "A series of checkboxes. The user can select multiple."
+msgstr ""
+
+msgid "Radio buttons"
+msgstr ""
+
+msgid "A series of radio buttons. The user can select one."
+msgstr ""
+
+msgid "True/False"
+msgstr ""
+
+msgid "One checkbox indicating true (\"yes\") or false (\"no\")."
+msgstr ""
+
+msgid "Image swatches"
+msgstr ""
+
+msgid "A series of image options. The user can select only one."
+msgstr ""
+
+msgid "Swatch"
+msgstr ""
+
+msgid "Multi-select image swatches"
+msgstr ""
+
+msgid "A series of image options. The user can select multiple."
+msgstr ""
+
+msgid "Images + quantities"
+msgstr ""
+
+msgid "A series of images with a quantity input box."
+msgstr ""
+
+msgid "Color swatches"
+msgstr ""
+
+msgid "A series of color options. The user can select only one."
+msgstr ""
+
+msgid "Multi-select color swatches"
+msgstr ""
+
+msgid "A series of color options. The user can select multiple."
+msgstr ""
+
+msgid "Text swatches"
+msgstr ""
+
+msgid "A series of text badges. The user can select only one."
+msgstr ""
+
+msgid "Multi-select text swatches"
+msgstr ""
+
+msgid "A series of text badges. The user can select multiple."
+msgstr ""
+
+msgid "File upload"
+msgstr ""
+
+msgid "Allows users to upload one or more files."
+msgstr ""
+
+msgid "Text & HTML"
+msgstr ""
+
+msgid "A text paragraph. Some HTML and shortcodes are allowed."
+msgstr ""
+
+msgid "An image."
+msgstr ""
+
+msgid "Section"
+msgstr ""
+
+msgid "A wrapper for fields, handy for styling or to enable a repeater for multiple fields."
+msgstr ""
+
+msgid "Layout"
+msgstr ""
+
+msgid "Section end"
+msgstr ""
+
+msgid "Ends a previously started section."
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Allows users to select a date from a calendar."
 msgstr ""
 
 msgid "Error uploading file \"%s\". %s"
@@ -1309,7 +1327,7 @@ msgstr ""
 msgid "View all fields"
 msgstr ""
 
-msgid "To ensure optimal page load performance, the field list is not displayed yet. If you want to edit or add fields, click the button above to view the list. Rendering may take a moment to complete."
+msgid "To ensure optimal page load performance, the field list is not displayed yet.<br/>If you want to edit or add fields, click the button above to view the list. Rendering may take a moment to complete."
 msgstr ""
 
 msgid "Add your first field"
@@ -1685,6 +1703,9 @@ msgid "Select"
 msgstr ""
 
 msgid "Help with pricing"
+msgstr ""
+
+msgid "Add product"
 msgstr ""
 
 msgid "Repeater type"

@@ -4,6 +4,7 @@ namespace ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
 
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\RangeDiscount;
+use ADP\BaseVersion\Includes\Core\RuleProcessor\BulkDiscount\BulkMeasurementEnum;
 use Exception;
 
 defined('ABSPATH') or exit;
@@ -22,6 +23,11 @@ class ProductsRangeAdjustments
      * @var string
      */
     protected $type;
+
+    /**
+     * @var BulkMeasurementEnum
+     */
+    protected $measurement;
 
     const GROUP_BY_DEFAULT = 'not';
     const GROUP_BY_PRODUCT = 'product';
@@ -83,8 +89,9 @@ class ProductsRangeAdjustments
      * @param Context $context
      * @param string $type
      * @param string $groupBy
+     * @param BulkMeasurementEnum $measurement
      */
-    public function __construct($context, $type, $groupBy)
+    public function __construct($context, $type, $groupBy, $measurement)
     {
         if ( ! in_array($type, self::AVAILABLE_TYPES)) {
             $context->handleError(
@@ -109,6 +116,7 @@ class ProductsRangeAdjustments
         }
 
         $this->type                      = $type;
+        $this->measurement               = $measurement;
         $this->groupBy                   = $groupBy;
         $this->replaceAsCartAdjustment   = false;
         $this->replaceCartAdjustmentCode = null;
@@ -152,6 +160,14 @@ class ProductsRangeAdjustments
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return BulkMeasurementEnum
+     */
+    public function getMeasurement()
+    {
+        return $this->measurement;
     }
 
     /**

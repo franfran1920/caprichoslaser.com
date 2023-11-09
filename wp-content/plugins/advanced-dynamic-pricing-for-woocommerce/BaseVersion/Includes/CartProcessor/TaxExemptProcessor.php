@@ -29,12 +29,20 @@ class TaxExemptProcessor
         $this->context = $context;
     }
 
+    public function isActive() {
+        return $this->context->isTaxExemptProcessorActive();
+    }
+
     /**
      * @param WC_Customer|null $wcCustomer
      * @param WC_Session|null $wcSession
      */
     public function maybeRevertTaxExempt($wcCustomer, $wcSession)
     {
+        if ( ! $this->isActive() ) {
+            return;
+        }
+
         if ( ! isset($wcCustomer, $wcSession)) {
             return;
         }
@@ -59,6 +67,10 @@ class TaxExemptProcessor
      */
     public function installTaxExemptFromNewCart($cart, $wcCustomer, $wcSession)
     {
+        if ( ! $this->isActive() ) {
+            return;
+        }
+
         if ( ! isset($wcCustomer, $wcSession)) {
             return;
         }
@@ -76,6 +88,10 @@ class TaxExemptProcessor
      */
     public function updateTotals($cart)
     {
+        if ( ! $this->isActive() ) {
+            return;
+        }
+
         $cart->getContext()->getSession()->insertCustomerTaxAdj($cart->getContext()->getCustomer()->getCustomerTaxAdj());
     }
 }

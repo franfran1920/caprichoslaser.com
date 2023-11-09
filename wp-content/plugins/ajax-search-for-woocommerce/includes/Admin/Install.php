@@ -4,7 +4,6 @@ namespace DgoraWcas\Admin;
 
 use  DgoraWcas\Engines\TNTSearchMySQL\Config ;
 use  DgoraWcas\Engines\TNTSearchMySQL\Indexer\Builder ;
-use  DgoraWcas\Engines\TNTSearchMySQL\Indexer\Updater ;
 use  DgoraWcas\Helpers ;
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) {
@@ -220,6 +219,24 @@ class Install
         $result = $wpdb->get_var( "SELECT JSON_CONTAINS('[1,2,3]', '2')" );
         $wpdb->suppress_errors( $suppress_errors );
         update_option( 'dgwt_wcas_db_json_support', ( $result === '1' && empty($wpdb->last_error) ? 'yes' : 'no' ) );
+    }
+    
+    /**
+     * Check if SQL server support locking mechanism
+     */
+    private static function checkIfDbSupportLocks()
+    {
+        global  $wpdb ;
+        $lockName = 'fibosearch_lock_test';
+        $row = $wpdb->get_row( $wpdb->prepare( 'SELECT GET_LOCK(%s,%d) as set_lock', $lockName, 5 ) );
+        
+        if ( intval( $row->set_lock ) === 1 ) {
+            $wpdb->get_row( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s) as lock_released', $lockName ) );
+            update_option( 'dgwt_wcas_db_locking_support', 'yes' );
+        } else {
+            update_option( 'dgwt_wcas_db_locking_support', 'no' );
+        }
+    
     }
     
     /**

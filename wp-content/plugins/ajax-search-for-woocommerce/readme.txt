@@ -2,9 +2,9 @@
 Contributors: damian-gora, matczar
 Tags: woocommerce search, ajax search, search by sku, product search, woocommerce
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.25.0
+Stable tag: 1.26.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,27 @@ You can read more and compare Pro and Free features here: [Full comparison - Pro
 5. Settings page
 
 == Changelog ==
+
+= 1.26.1, October 19, 2023 =
+* FIXED: Details panel - wrong HTML format of stock status element 
+
+= 1.26.0, October 17, 2023 =
+* ADDED: Integration with “Bricks builder”
+* ADDED: Integration with “Brizy builder”
+
+* FIXED: Calc score by comparing every word of the search phrase instead of all search phrase
+* FIXED: WooCommerce Wholesale Prices plugin - invalid search results e.g. not hidden products and categories in the search results
+* FIXED: Flatsome - when there are more search icons, only one is replaced
+* FIXED: WPRocket - in some cases search fields/icons are not replaced immediately after the page load
+* FIXED: Highlight matched words instead of the whole search phrase
+
+* TWEAK: Allowing access to the `Personalization` class via `DGWT_WCAS()` function
+* TWEAK: HUSKY - Products Filter Professional for WooCommerce plugin - disable the test in the Troubleshooting module for newer versions of this plugin
+
+* REFACTOR: Replace `.click()` with `trigger('click')`, `.focus()` with `trigger('focus')`, `.blur()` with `trigger('blur')`
+* REFACTOR: Replace `jQuery.fn.mouseup()` with `$(document).on('mouseup')`
+* REFACTOR: Replace `jQuery.isFunction()` with `typeof fn === 'function'`
+* UPDATED: Freemius SDK v2.5.12
 
 = 1.25.0, July 06, 2023 =
 * ADDED: Possibility to search for taxonomy terms regardless of accents in a phrase or term name

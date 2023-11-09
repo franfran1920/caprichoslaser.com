@@ -95,7 +95,7 @@ add_action( 'wp_footer', function () {
 
 					if ($input.length) {
 						setTimeout(function () {
-							$input.focus();
+							$input.trigger('focus');
 						}, 500);
 					}
 				});
@@ -108,7 +108,7 @@ add_action( 'wp_footer', function () {
 
 						setTimeout(function () {
 							if ($('.site-search-close button').length) {
-								$('.site-search-close button').click();
+								$('.site-search-close button').trigger('click');
 							}
 						}, 500);
 					}

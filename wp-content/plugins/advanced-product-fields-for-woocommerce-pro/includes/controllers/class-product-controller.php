@@ -172,7 +172,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 
                 $cart_text = apply_filters('wapf/cart_edit_text', '(' . __('edit','sw-wapf') . ')', $cart_item );
 
-                echo '&nbsp;<a href="'.esc_html($permalink).'">' . $cart_text . '</a>';
+                echo '&nbsp;<a class="wapf-edit-cartitem" href="'.esc_html($permalink).'">' . $cart_text . '</a>';
 
 	        }
         }
@@ -380,9 +380,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 	            }
             }
 
-	        $sorted = $wapf_data;
-	        $sorted = Enumerable::from($sorted)->orderBy( function($x) { return $x['id']; } )->toArray();
-	        $wapf_unique_key = $this->generate_cart_item_id( $product_id, $variation_id, array_values($sorted) );
+	        $wapf_unique_key = $this->generate_cart_item_id( $product_id, $variation_id, $wapf_data );
 
 	        if( ! empty( $clones ) )
 		        Cache::add_clone( $wapf_unique_key, $clones );
@@ -440,11 +438,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 
 			    }
 
-			    $ordered = array_values( Enumerable::from( $complete_clone )->orderBy( function ( $x ) {
-				    return $x['id'];
-			    } )->toArray() );
-
-			    $clone_fingerprint = $this->generate_cart_item_id( $product_id, $variation_id, $ordered );
+			    $clone_fingerprint = $this->generate_cart_item_id( $product_id, $variation_id, $complete_clone );
 
 			    if ( $clone_fingerprint !== $fingerprint ) {
 
@@ -579,6 +573,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 	    public function display_field_groups() {
 
 		    global $product;
+
 		    if( !$product )
 			    return;
 
@@ -792,7 +787,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 
 			    if( ! empty( $wapf ) ) {
 				    $cart_item_data['wapf'] = $wapf;
-				    $cart_item_data['wapf_key'] = $this->generate_cart_item_id($order_item->get_product_id(),$order_item->get_variation_id(),$wapf);
+				    $cart_item_data['wapf_key'] = $this->generate_cart_item_id($order_item->get_product_id(), $order_item->get_variation_id(), $wapf, false);
 				    $cart_item_data['wapf_field_groups'] = Enumerable::from($groups)->select(function($x){return $x->id;})->toArray();
 			    }
 		    }
@@ -834,7 +829,16 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 
 	    #region Private Helpers
 
-	    private function generate_cart_item_id($product_id, $variation_id, $data) {
+	    private function generate_cart_item_id($product_id, $variation_id, $data, $edit = true) {
+
+            if( $edit ) {
+                $data = array_values(Enumerable::from($data)->orderBy(function ($x) {
+                    return $x['id'];
+                })->toArray());
+                foreach ($data as &$d) {
+                    unset($d['clone_idx']);
+                }
+            }
 
 		    return md5(json_encode( [
 			    (int) $product_id,

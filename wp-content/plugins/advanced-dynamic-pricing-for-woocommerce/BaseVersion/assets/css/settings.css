@@ -612,6 +612,12 @@ button.wdp-btn-rule-action-controls {
 	overflow: hidden;
 }
 
+.wdp-ruleitem.disabled h2{
+    text-decoration: line-through;
+	color: #777;
+    font-weight: normal;
+}
+
 .wdp-ruleitem-row {
 	display: flex;
     height: 56px;
@@ -736,6 +742,11 @@ div.wdp-row.wdp-options select {
 
 .smaller-width {
   width: 10%;
+}
+
+.smaller-width-column {
+  width: 10%;
+  margin-left: 10px;
 }
 
 .wdp-list-container .wdp-adjustment-ranges {
@@ -1052,7 +1063,7 @@ div.wdp-row.wdp-options select {
 .wdp-rules-recalculate-cache-action select option {
     color: white;
 }
-.wdp-rules-recalculate-cache-action .select2-container--default .select2-selection--single .select2-selection__arrow b:before, 
+.wdp-rules-recalculate-cache-action .select2-container--default .select2-selection--single .select2-selection__arrow b:before,
 .wdp-rules-recalculate-cache-action .wdp-column-select .wdp-select-icon:before {
     content: "\f347";
     position: absolute;
@@ -1105,8 +1116,8 @@ div.wdp-row.wdp-options select {
 	column-gap: 40px;
 }
 .wdp-discount-type-item {
-	border: 1px #E0E0E0 solid; 
-	border-radius: 10px; 
+	border: 1px #E0E0E0 solid;
+	border-radius: 10px;
     height: 232px;
     padding: 30px;
     box-sizing: border-box;

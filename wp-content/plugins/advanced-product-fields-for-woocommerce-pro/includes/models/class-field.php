@@ -2,6 +2,7 @@
 
 namespace SW_WAPF_PRO\Includes\Models {
 
+    use SW_WAPF_PRO\Includes\Classes\Config;
     use SW_WAPF_PRO\Includes\Classes\Enumerable;
 
     if (!defined('ABSPATH')) {
@@ -12,8 +13,6 @@ namespace SW_WAPF_PRO\Includes\Models {
     {
 
         public $id;
-
-        public $key;
 
         public $label;
 
@@ -39,11 +38,13 @@ namespace SW_WAPF_PRO\Includes\Models {
 
 	    public $parent_clone;
 
+        public $products;
+
 	    public $clone;
 
-
-
 	    private $choices_have_pricing;
+
+        public $meta = [];
 
         public function __construct()
         {
@@ -52,11 +53,13 @@ namespace SW_WAPF_PRO\Includes\Models {
             $this->options = [];
             $this->conditionals = [];
             $this->parent_clone = [];
+            $this->products = [];
             $this->pricing = new FieldPricing();
             $this->parent_qty_based = false;
             $this->clone = [ 'enabled' => false ];
 
             $this->choices_have_pricing = null;
+
         }
 
         public function from_array($a) {
@@ -78,6 +81,9 @@ namespace SW_WAPF_PRO\Includes\Models {
 	        if( ! empty( $a['parent_clone'] ) )
 		        $this->parent_clone = $a['parent_clone'];
 
+            if( ! empty( $a['products'] ) )
+                $this->products = $a['products'];
+
         	$this->options = $a['options'];
         	$p = new FieldPricing();
         	$p->type = $a['pricing']['type'];
@@ -98,6 +104,8 @@ namespace SW_WAPF_PRO\Includes\Models {
 		        }
         		$this->conditionals[] = $cond;
 	        }
+
+            $this->meta = Config::get_field_definition_for( $this->type );
 
         	return $this;
 
@@ -123,6 +131,9 @@ namespace SW_WAPF_PRO\Includes\Models {
 			        'enabled'       => $this->pricing->enabled
 		        ]
 	        ];
+
+            if( ! empty( $this->products ) )
+                $a['products'] = $this->products;
 
         	foreach ($this->conditionals as $conditional) {
         		$c = ['rules' => [] ];
@@ -157,8 +168,8 @@ namespace SW_WAPF_PRO\Includes\Models {
 
         }
 
-        public function get_option($key,$default = null) {
-        	if(isset($this->options[$key]))
+        public function get_option($key, $default = null) {
+        	if( isset( $this->options[ $key ] ) )
         		return $this->options[$key];
         	return $default;
         }
@@ -168,11 +179,11 @@ namespace SW_WAPF_PRO\Includes\Models {
         }
 
         public function is_choice_field() {
-            return in_array($this->type, ['select','checkboxes','radio','image-swatch','multi-image-swatch','color-swatch','multi-color-swatch','text-swatch','multi-text-swatch']);
+            return ! empty( $this->meta['multi_choice'] );
         }
 
         public function is_multichoice_field() {
-	        return in_array($this->type, [ 'checkboxes','multi-image-swatch','multi-color-swatch','multi-text-swatch' ]);
+            return ! empty( $this->meta['multi_select'] );
         }
 
         public function is_normal_field() {
@@ -181,6 +192,12 @@ namespace SW_WAPF_PRO\Includes\Models {
 
         public function is_content_field() {
         	return in_array($this->type, ['p','img'] );
+        }
+
+        public function has_products() {
+
+            return !empty( $this->meta['has_products'] );
+
         }
 
         public function is_layout_field(){

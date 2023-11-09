@@ -23,7 +23,7 @@ function dgwt_wcas_shopical_mobile_search() {
 					var $overlay = $(this).prev();
 					var $form = $overlay.find('.js-dgwt-wcas-enable-mobile-form');
 					if ($form.eq(0)) {
-						$form.click();
+						$form.trigger('click');
 					}
 					e.preventDefault();
 				});

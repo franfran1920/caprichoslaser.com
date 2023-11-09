@@ -63,6 +63,10 @@ class JetSmartFilters
      * Filter search results if the query was marked in the filter above
      * Widget: Elementor Pro Archive Products (epro-archive-products)
      *
+     * OR
+     *
+     * Filter WP_Query used by plugin to determine counters for filter values.
+     *
      * @param bool $enable
      * @param \WP_Query $query
      *
@@ -71,6 +75,10 @@ class JetSmartFilters
     public function allow_to_process_search_query( $enable, $query )
     {
         if ( is_object( $query ) && is_a( $query, 'WP_Query' ) && isset( $query->query_vars['run_wcas_search'] ) ) {
+            $enable = true;
+        }
+        // @since 1.26.0.
+        if ( is_object( $query ) && is_a( $query, 'WP_Query' ) && $query->get( 'wc_query' ) === 'product_query' && isset( $query->query_vars['s'] ) && Helpers::is_running_inside_class( 'Jet_Smart_Filters_Indexer_Data', 20 ) && Helpers::isRunningInsideFunction( 'get_queried_ids', 20 ) ) {
             $enable = true;
         }
         return $enable;

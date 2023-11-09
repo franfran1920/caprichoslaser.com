@@ -646,22 +646,45 @@ class CartProcessor
                     'incl' === $this->context->getTaxDisplayCartMode()
                 );
 
-                if (isset($initialTotals['discount_total'])
-                    && $this->compareStrategy->floatLess($amountSavedByPricing, $initialTotals['discount_total'])) {
-                    $wcCart->applied_coupons = $initialCoupons;
-                    $this->deleteAllPricingDataFromCart($wcCart);
-                    $cart->getContext()->getSession()->flush()->push();
-                    $wcCart->set_session();
-                } else {
-                    foreach ( $initialCoupons as $initialCoupon ) {
-                        wc_add_notice(
-                            str_replace(
-                                "{{name}}",
-                                $initialCoupon,
-                                "Sorry, the coupon \"{{name}}\" is not valid."
-                            ),
-                            'error'
+                $initialDiscountTotal = $initialTotals['discount_total'] ?? 0.0;
+
+                if ( $this->compareStrategy->floatLess(0.0, $initialDiscountTotal) ) {
+                    if ($this->compareStrategy->floatLess($amountSavedByPricing, $initialDiscountTotal)) {
+                        $wcCart->applied_coupons = $initialCoupons;
+                        $this->deleteAllPricingDataFromCart($wcCart);
+                        $cart->getContext()->getSession()->flush()->push();
+                        $wcCart->set_session();
+                    } else {
+                        $newNotices = [];
+                        $appliedSuccessfullyText = __('Coupon code applied successfully.', 'woocommerce');
+                        foreach (wc_get_notices() as $type => $notices) {
+                            if ($type === "success") {
+                                $notices = array_filter($notices, function ($notice) use ($appliedSuccessfullyText) {
+                                    return !($notice['notice'] && $notice['notice'] === $appliedSuccessfullyText);
+                                });
+                            }
+
+                            $newNotices[$type] = $notices;
+                        }
+                        wc_set_notices($newNotices);
+
+                        $initialCoupons = array_filter(
+                            $initialCoupons,
+                            function ($code) {
+                                return ! $this->isAdpCouponCode($code);
+                            }
                         );
+
+                        foreach ( $initialCoupons as $initialCoupon ) {
+                            wc_add_notice(
+                                str_replace(
+                                    "{{name}}",
+                                    $initialCoupon,
+                                    "Sorry, the coupon \"{{name}}\" is not valid."
+                                ),
+                                'error'
+                            );
+                        }
                     }
                 }
             }
@@ -797,7 +820,9 @@ class CartProcessor
             }
 
             $facade->setOriginalPrice($facade->getProduct()->get_price('edit'));
-            $productPrice = $this->overrideCentsStrategy->maybeOverrideCentsForItem($productPrice, $item);
+            if ( $item->areRuleApplied() ) {
+                $productPrice = $this->overrideCentsStrategy->maybeOverrideCentsForItem($productPrice, $item);
+            }
 
             $facade->setNewPrice($productPrice);
             $facade->setHistory($item->getHistory());
@@ -1337,6 +1362,27 @@ class CartProcessor
         }
 
         return floatval($amountSaved);
+    }
+
+    protected function isAdpCoupon(\WC_Coupon $wcCoupon): bool
+    {
+        if ($this->context->isUseMergedCoupons()) {
+            $mergedCoupon = WcAdpMergedCouponHelper::loadOfCoupon($wcCoupon);
+
+            return $mergedCoupon !== null && $mergedCoupon->hasAdpPart();
+        } else {
+            $adpData = $wcCoupon->get_meta('adp', true, 'edit');
+            $coupon = isset($adpData['parts']) ? reset($adpData['parts']) : null;
+
+            return !!$coupon;
+        }
+    }
+
+    protected function isAdpCouponCode(string $code): bool
+    {
+        $wcCoupon = new \WC_Coupon($code);
+
+        return $this->isAdpCoupon($wcCoupon);
     }
 
     protected function deleteAllPricingDataFromCart(WC_Cart $wcCart) {

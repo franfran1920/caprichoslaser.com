@@ -250,12 +250,32 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                     </div>
                     <div class="wdp-wrapper wdp-column">
                         <div class="wdp-row">
+                            <span class="wdp-product-adjustments-type-value-note">
+                                <?php
+                                    echo sprintf(
+                                        wp_kses(
+                                            '<a href="%s" target="_blank">' .__('Please, read about difference between Tier and Bulk modes', 
+                                                'advanced-dynamic-pricing-for-woocommerce') .'</a>',
+                                            array('a' => array('href' => array(), 'target' => array()), 'br' => array())
+                                        ),
+                                        esc_url('https://docs.algolplus.com/algol_pricing/overview-bulk-mode/#bulk-tier')
+                                    );
+                                ?>
+                            </span>
+                        </div>
+                        <div class="wdp-row">
                             <div class="smaller-width">
                                 <div class="wdp-column">
                                     <select name="rule[bulk_adjustments][type]" class="bulk-adjustment-type">
                                         <option value="bulk"><?php _e('Bulk',
                                                 'advanced-dynamic-pricing-for-woocommerce') ?></option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="smaller-width-column">
+                                <div class="wdp-column">
+                                    <select name="rule[bulk_adjustments][measurement]" class="bulk-measurement-type"></select>
                                 </div>
                             </div>
 
@@ -563,31 +583,31 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                 <div class="wdp-description ">
                     <div class="wdp-description-content">
                         <ul class="wdp-rule-help" style="column-count: 2;">
-                            <?php 
+                            <?php
                             $mostPopularConditions = [
                                 \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\CartSubtotal::class
-                                    => __('Subtotal', 
+                                    => __('Subtotal',
                                             'advanced-dynamic-pricing-for-woocommerce'), //(Cart Condition "Subtotal (excl. VAT)”)
                                 \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\CustomerRole::class
-                                    => __('Role', 
+                                    => __('Role',
                                             'advanced-dynamic-pricing-for-woocommerce'),
                                 \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\Date::class
-                                    => __('Date', 
+                                    => __('Date',
                                             'advanced-dynamic-pricing-for-woocommerce'),
                                 \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\CustomerOrderCount::class
-                                    => __('First Order', 
+                                    => __('First Order',
                                             'advanced-dynamic-pricing-for-woocommerce'),
                                 \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\ShippingCountry::class
-                                    => __('Shipping Country', 
+                                    => __('Shipping Country',
                                             'advanced-dynamic-pricing-for-woocommerce'),
                                 \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\ProductsAll::class
-                                    => __('Product in the Cart', 
+                                    => __('Product in the Cart',
                                             'advanced-dynamic-pricing-for-woocommerce'),
                             ];
 
                             foreach($mostPopularConditions as $impl => $name) {?>
                                 <li>
-                                    <span class="wdp-add-popular-condition wdp-link" 
+                                    <span class="wdp-add-popular-condition wdp-link"
                                         data-condition-type="<?php echo $impl::getType() ?>"
                                         <?php if($impl === \ADP\BaseVersion\Includes\Core\Rule\CartCondition\Impl\CustomerOrderCount::class) {?>
                                             data-condition-value="1"

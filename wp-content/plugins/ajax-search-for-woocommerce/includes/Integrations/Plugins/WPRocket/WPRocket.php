@@ -23,6 +23,7 @@ class WPRocket {
 		}
 
 		add_filter( 'rocket_delay_js_exclusions', array( $this, 'excludedJs' ) );
+		add_filter( 'rocket_rucss_inline_content_exclusions', array( $this, 'addRucssContentExcluded' ) );
 	}
 
 	/**
@@ -36,7 +37,21 @@ class WPRocket {
 		$excluded[] = 'jquery-migrate-js';
 		$excluded[] = 'jquery-core-js';
 		$excluded[] = 'dgwt-wcas';
+		$excluded[] = 'wcasThemeSearch';
 
 		return $excluded;
+	}
+
+	/**
+	 * Adding our inline styles to the list of excluded from remove from content.
+	 *
+	 * @param array $excluded
+	 *
+	 * @return array
+	 */
+	public function addRucssContentExcluded( $inlineExclusions  ) {
+		$inlineExclusions [] = '.dgwt-wcas';
+
+		return $inlineExclusions;
 	}
 }

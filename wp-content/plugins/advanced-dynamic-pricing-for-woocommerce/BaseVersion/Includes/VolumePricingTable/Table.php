@@ -30,6 +30,11 @@ class Table
     protected $rows;
 
     /**
+     * @var array[]
+     */
+    protected $dataRows;
+
+    /**
      * @var string
      */
     protected $tableFooter;
@@ -44,6 +49,7 @@ class Table
         $this->tableHeader = '';
         $this->columns     = array();
         $this->rows        = array();
+        $this->dataRows   = array();
         $this->tableFooter = '';
     }
 
@@ -68,6 +74,7 @@ class Table
             'header_html'  => $this->tableHeader,
             'table_header' => $this->columns,
             'rows'         => $this->rows,
+            'data_rows'    => $this->dataRows,
             'footer_html'  => $this->tableFooter,
         );
 
@@ -99,6 +106,18 @@ class Table
     public function addRow($row)
     {
         $this->rows[] = $row;
+    }
+
+    /**
+     * @param array $data_row
+     */
+    public function addDataRow($data_row, $key=null)
+    {
+        if(is_null($key)) {
+            $this->dataRows[] = $data_row;
+        } else {
+            $this->dataRows[$key] = $data_row;
+        }
     }
 
     /**

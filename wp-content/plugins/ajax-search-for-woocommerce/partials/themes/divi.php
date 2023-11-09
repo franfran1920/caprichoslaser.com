@@ -48,7 +48,7 @@ add_action( 'wp_footer', function () {
 				) {
 					diviSearch.replaceWith(search);
 					$('.et_search_form_container .et_close_search_field').on('click', function () {
-						$('.et_search_form_container .dgwt-wcas-close').click();
+						$('.et_search_form_container .dgwt-wcas-close').trigger('click');
 					});
 					if (!body.hasClass('et_vertical_nav')) {
 						$('#et_top_search').on('click', function () {
@@ -100,11 +100,11 @@ add_action( 'wp_footer', function () {
 						setTimeout(function () {
 							var $closeBtn = $('.et_close_search_field');
 							if ($closeBtn.length) {
-								$closeBtn.click();
+								$closeBtn.trigger('click');
 							}
 							var $closeBtn2 = $('.dm-search-box .close');
 							if ($closeBtn2.length) {
-								$closeBtn2.click();
+								$closeBtn2.trigger('click');
 							}
 						}, 1100)
 					}
@@ -121,14 +121,14 @@ add_action( 'wp_footer', function () {
 						setTimeout(function () {
 							var $closeBtn = $('.et_pb_menu__close-search-button');
 							if ($closeBtn.length) {
-								$closeBtn.click();
+								$closeBtn.trigger('click');
 							}
 						}, 1100)
 					} else {
 						setTimeout(function () {
 							var $input = $('.et_pb_menu__search .dgwt-wcas-search-input');
 							if ($input.length > 0 && $input.val().length === 0) {
-								$input.focus();
+								$input.trigger('focus');
 							}
 						}, 500)
 					}

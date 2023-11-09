@@ -82,7 +82,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 
             foreach($json_array as &$field) {
 
-                if (!empty($field["options"])) {
+                if ( ! empty( $field["options"] ) ) {
                     foreach ($field["options"] as $k => $v) {
                         $field[$k] = $v;
                     }
@@ -235,7 +235,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 	            if(isset($raw_field['hide_order']))
 		            $field->options['hide_order'] = $raw_field['hide_order'] == 'true';
 				if(isset($raw_field['p_content']))
-					$field->options['p_content'] = wp_kses($raw_field['p_content'],Html::$minimal_allowed_html_element);
+					$field->options['p_content'] = wp_kses($raw_field['p_content'],  array_merge( Html::$minimal_allowed_html_element, ['img' => ['src' => [],'target' => [], 'class' => [], 'alt' => [], 'style' => [], 'id' => [] ] ] ) );
 	            if(isset($raw_field['image']))
 		            $field->options['image'] = esc_url_raw($raw_field['image']);
 	            if(isset($raw_field['attachment'])) {
@@ -246,7 +246,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 
                     $key = sanitize_text_field( $k );
 
-                    if( in_array($key, ['id','key','label','description','default','placeholder','choices','conditionals','type','required','options','p_content','image','attachment','class','width','pricing','parent_clone','clone','hide_cart','hide_checkout','hide_order']) )
+                    if( in_array($key, ['id','key','label','description','default','placeholder','choices','products','conditionals','type','required','options','p_content','image','attachment','class','width','pricing','parent_clone','clone','hide_cart','hide_checkout','hide_order']) )
                         continue;
 
                     switch( $key ) {
@@ -611,8 +611,11 @@ namespace SW_WAPF_PRO\Includes\Classes {
 		        $product = wc_get_product($product);
 
 	        $product_id = $product->get_id();
-	        if( $product->get_parent_id() )
-	        	$product_id = $product->get_parent_id();
+
+	        if( $product->get_parent_id() ) {
+                $product = wc_get_product($product->get_parent_id());
+                $product_id = $product->get_parent_id();
+            }
 
 	        $cache_key = self::$field_groups_product_cache_key . $product_id;
 
@@ -679,21 +682,14 @@ namespace SW_WAPF_PRO\Includes\Classes {
             return $id;
         }
 
-        public static function has_pricing_logic($groups) {
-            return Enumerable::from($groups)->any(function($group){
-                return Enumerable::from($group->fields)->any(function($field) {
-                    return $field->pricing_enabled();
-                });
-            });
-        }
-
         public static function process_data($data) {
 
-	        if( is_serialized( $data ) ) {
+            if( is_serialized( $data ) ) {
 
 	        	try {
 
-	        		$unserialized = unserialize( $data );
+
+                    $unserialized = unserialize( $data );
 
 	        							if( is_array( $unserialized ) ) {
 

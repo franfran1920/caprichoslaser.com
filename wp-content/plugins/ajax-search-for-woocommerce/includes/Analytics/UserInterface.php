@@ -191,7 +191,7 @@ class UserInterface
             wp_die( -1, 403 );
         }
         check_ajax_referer( self::LOAD_INTERFACE_NONCE );
-        $lang = ( !empty($_REQUEST['lang']) && Multilingual::isLangCode( $_REQUEST['lang'] ) ? sanitize_key( $_REQUEST['lang'] ) : '' );
+        $lang = ( !empty($_REQUEST['lang']) && Multilingual::isLangCode( sanitize_key( $_REQUEST['lang'] ) ) ? sanitize_key( $_REQUEST['lang'] ) : '' );
         $data = array(
             'html' => '',
         );
@@ -213,7 +213,7 @@ class UserInterface
             wp_die( -1, 403 );
         }
         check_ajax_referer( self::LOAD_MORE_CRITICAL_SEARCHES_NONCE );
-        $lang = ( !empty($_REQUEST['lang']) && Multilingual::isLangCode( $_REQUEST['lang'] ) ? sanitize_key( $_REQUEST['lang'] ) : '' );
+        $lang = ( !empty($_REQUEST['lang']) && Multilingual::isLangCode( sanitize_key( $_REQUEST['lang'] ) ) ? sanitize_key( $_REQUEST['lang'] ) : '' );
         $offset = ( !empty($_REQUEST['loaded']) ? absint( $_REQUEST['loaded'] ) : 0 );
         $html = '';
         $data = new Data();
@@ -262,7 +262,7 @@ class UserInterface
             wp_die( -1, 403 );
         }
         check_ajax_referer( self::LOAD_MORE_AUTOCOMPLETE_NONCE );
-        $lang = ( !empty($_REQUEST['lang']) && Multilingual::isLangCode( $_REQUEST['lang'] ) ? sanitize_key( $_REQUEST['lang'] ) : '' );
+        $lang = ( !empty($_REQUEST['lang']) && Multilingual::isLangCode( sanitize_key( $_REQUEST['lang'] ) ) ? sanitize_key( $_REQUEST['lang'] ) : '' );
         // Autocomplete
         $data = new Data();
         if ( !empty($lang) ) {
@@ -294,7 +294,7 @@ class UserInterface
             wp_die( -1, 403 );
         }
         check_ajax_referer( self::LOAD_MORE_SEARCH_PAGE_NONCE );
-        $lang = ( !empty($_REQUEST['lang']) && Multilingual::isLangCode( $_REQUEST['lang'] ) ? sanitize_key( $_REQUEST['lang'] ) : '' );
+        $lang = ( !empty($_REQUEST['lang']) && Multilingual::isLangCode( sanitize_key( $_REQUEST['lang'] ) ) ? sanitize_key( $_REQUEST['lang'] ) : '' );
         // Search page
         $data = new Data();
         if ( !empty($lang) ) {

@@ -16,6 +16,9 @@ jQuery(document).ready(function ($) {
             $container.find('.bulk-qty_based-type').on('change', function () {
                 update_selectors($container, $rule);
             });
+            $container.find('.bulk-measurement-type').on('change', function () {
+              update_selectors($container, $rule);
+            });
             make_select2_products($container.find('[data-field="autocomplete"]'));
         };
 
@@ -41,6 +44,7 @@ jQuery(document).ready(function ($) {
             var $adj_type = $container.find('.bulk-adjustment-type').val();
             var $qty_based = $container.find('.bulk-qty_based-type').val();
             var $discount_type = $container.find('.bulk-discount-type').val();
+            var $measurement_type = $container.find('.bulk-measurement-type').val();
 
             var $available_qty_based;
             if ( persistence ) {
@@ -60,15 +64,25 @@ jQuery(document).ready(function ($) {
             });
 
             var $available_discount_types
+            var $available_measurement_types
             if ( persistence ) {
-              var $available_discount_types = get_available_discount_persistence_types($adj_type, $qty_based);
+              $available_discount_types = get_available_discount_persistence_types($adj_type, $qty_based);
               if (!check_discount_type_persistence_availability($adj_type, $qty_based, $discount_type)) {
-                $discount_type = Object.keys(get_available_discount_persistence_types($adj_type, $qty_based))[0];
+                $discount_type = Object.keys($available_discount_types)[0];
+              }
+
+              if (!check_measurement_type_persistence_availability($adj_type, $qty_based, $measurement_type)) {
+                $measurement_type = Object.keys(get_available_measurement_persistence_types($adj_type, $qty_based))[0];
               }
             } else {
-              var $available_discount_types = get_available_discount_types($adj_type, $qty_based);
+              $available_discount_types = get_available_discount_types($adj_type, $qty_based);
               if (!check_discount_type_availability($adj_type, $qty_based, $discount_type)) {
-                $discount_type = Object.keys(get_available_discount_types($adj_type, $qty_based))[0];
+                $discount_type = Object.keys($available_discount_types)[0];
+              }
+
+              $available_measurement_types = get_available_measurement_types($adj_type, $qty_based);
+              if (!check_measurement_type_availability($adj_type, $qty_based, $measurement_type)) {
+                $measurement_type = Object.keys($available_measurement_types)[0];
               }
             }
             $container.find('.bulk-discount-type').html("");
@@ -76,8 +90,14 @@ jQuery(document).ready(function ($) {
                 $container.find('.bulk-discount-type').append(make_option($key, $label))
             });
 
+            $container.find('.bulk-measurement-type').html("");
+            $.each($available_measurement_types, function ($key, $label) {
+              $container.find('.bulk-measurement-type').append(make_option($key, $label))
+            });
+
             $container.find('.bulk-qty_based-type').val($qty_based);
             $container.find('.bulk-discount-type').val($discount_type);
+            $container.find('.bulk-measurement-type').val($measurement_type);
 
             if ($qty_based === 'product_selected_categories') {
                 $container.find('.bulk-selected_categories-type').show();
@@ -90,6 +110,10 @@ jQuery(document).ready(function ($) {
             } else {
                 $container.find('.bulk-selected_products-type').hide();
             }
+
+            updateBulkAdjustmentInputPlaceholders($container);
+
+            $container.find('.wdp-product-adjustments-type-value-note').toggle($adj_type === 'tier');
         };
 
         var make_option = function ($value, $label, $classes) {
@@ -120,8 +144,16 @@ jQuery(document).ready(function ($) {
             return $available_types[$adj_type][$qty_based].items;
         };
 
+        var get_available_measurement_types = function ($adj_type, $qty_based) {
+          return $available_types[$adj_type][$qty_based].measurement;
+        };
+
         var check_discount_type_availability = function ($adj_type, $qty_based, $discount_type) {
             return typeof $available_types[$adj_type][$qty_based].items[$discount_type] !== 'undefined';
+        };
+
+        var check_measurement_type_availability = function ($adj_type, $qty_based, $measurement) {
+          return typeof $available_types[$adj_type][$qty_based].measurement[$measurement] !== 'undefined';
         };
 
       var get_available_qty_based_persistence_types = function ($adj_type) {
@@ -136,8 +168,16 @@ jQuery(document).ready(function ($) {
         return $persistence_available_types[$adj_type][$qty_based].items;
       };
 
+      var get_available_measurement_persistence_types = function ($adj_type, $qty_based) {
+        return $persistence_available_types[$adj_type][$qty_based].measurement;
+      };
+
       var check_discount_type_persistence_availability = function ($adj_type, $qty_based, $discount_type) {
         return typeof $persistence_available_types[$adj_type][$qty_based].items[$discount_type] !== 'undefined';
+      };
+
+      var check_measurement_type_persistence_availability = function ($adj_type, $qty_based, $measurement) {
+        return typeof $persistence_available_types[$adj_type][$qty_based].measurement[$measurement] !== 'undefined';
       };
 
         return {
@@ -162,6 +202,7 @@ jQuery(document).ready(function ($) {
                 $rule.find('.bulk-adjustment-type').find('option:first-child').prop("selected", "selected");
                 $rule.find('.bulk-qty_based-type').find('option:first-child').prop("selected", "selected");
                 $rule.find('.bulk-discount-type').find('option:first-child').prop("selected", "selected");
+                $rule.find('.bulk-measurement-type').find('option:first-child').prop("selected", "selected");
 
                 init_events($container, $rule, blocks);
 
@@ -172,6 +213,10 @@ jQuery(document).ready(function ($) {
 
                     if ($data.discount_type) {
                         $container.find('.bulk-discount-type').val($data.discount_type);
+                    }
+
+                    if ($data.measurement) {
+                        $container.find('.bulk-measurement-type').val($data.measurement);
                     }
 
                     if ($data.qty_based) {
@@ -495,7 +540,7 @@ jQuery(document).ready(function ($) {
           }
         });
         for (let i = adjustments.length - 1; i >= 0; i--) {
-          let rowValid = isNaN(adjustments[i].to) ? !isNaN(adjustments[i].from) : adjustments[i].from <= adjustments[i].to;
+          let rowValid = isNaN(adjustments[i].to) ? (!isNaN(adjustments[i].from) && adjustments[i].from > 0)  : (adjustments[i].from <= adjustments[i].to && adjustments[i].from > 0);
           let less = false;
           let include = false;
           if (i - 1 >= 0) {
@@ -599,6 +644,11 @@ jQuery(document).ready(function ($) {
           } else {
             currentRangeError    = "Inputs cannot be empty";
             innerErrorContainerClass  = "products-filter__emptiness-error"
+          }
+
+          if(rangeStartValue < 1) {
+            currentRangeError    = "The quantity must be greater than 0";
+            innerErrorContainerClass  = "products-filter__input-error"
           }
 
           if ( currentRangeError !== "" ) {
@@ -1137,6 +1187,7 @@ jQuery(document).ready(function ($) {
         // Add range (bulk)
         new_rule.find('.add-range').click(function () {
             add_range($(this));
+            updateBulkAdjustmentInputPlaceholders(new_rule);
         });
 
         // Add product filter
@@ -3694,6 +3745,20 @@ jQuery(document).ready(function ($) {
   $(document).on('click', '.wdp-description-cut',function() {
       $(this).closest('.wdp-description').toggleClass('wdp-description_visible');
   });
+
+  function updateBulkAdjustmentInputPlaceholders(rule) {
+    var $measurement_type = rule.find('.bulk-measurement-type').val();
+    if ( $measurement_type === 'qty' ) {
+      rule.find('.adjustment-from').attr('placeholder', 'qty from');
+      rule.find('.adjustment-to').attr('placeholder', 'qty to');
+    } else if ( $measurement_type === 'sum' ) {
+      rule.find('.adjustment-from').attr('placeholder', 'sum from');
+      rule.find('.adjustment-to').attr('placeholder', 'sum to');
+    } else if ( $measurement_type === 'weight' ) {
+      rule.find('.adjustment-from').attr('placeholder', 'weight from');
+      rule.find('.adjustment-to').attr('placeholder', 'weight to');
+    }
+  }
 });
 
 let RuleBlocks = (function () {

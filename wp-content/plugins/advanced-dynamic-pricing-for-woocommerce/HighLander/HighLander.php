@@ -168,6 +168,9 @@ class HighLander
         }
 
         $hookObj->callbacks = $newCallbacks;
+
+        $this->maybeUpdatePriorities($hookObj);
+
         if ($removedCallbacks) {
             if ( ! isset($this->removed[$tag])) {
                 $this->removed[$tag] = array();
@@ -196,11 +199,25 @@ class HighLander
                     $hookObj->callbacks[$prior] = $callback;
                 }
                 ksort($hookObj->callbacks, SORT_NUMERIC);
+
+                $this->maybeUpdatePriorities($hookObj);
             }
         }
         $this->removed = array();
 
         return true;
+    }
+
+    private function maybeUpdatePriorities($hookObj)
+    {
+        try {
+            $reflection = new \ReflectionClass($hookObj);
+            $property = $reflection->getProperty('priorities');
+            $property->setAccessible(true);
+            $property->setValue($hookObj, array_keys($hookObj->callbacks));
+        } catch (\ReflectionException $e) {
+
+        }
     }
 
 }

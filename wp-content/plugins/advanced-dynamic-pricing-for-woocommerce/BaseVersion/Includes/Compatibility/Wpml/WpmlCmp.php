@@ -3,6 +3,8 @@
 namespace ADP\BaseVersion\Includes\Compatibility\Wpml;
 
 use ADP\BaseVersion\Includes\Context;
+use ADP\BaseVersion\Includes\Context\Currency;
+use ADP\BaseVersion\Includes\Context\CurrencyController;
 use ADP\BaseVersion\Includes\Core\Rule\Internationalization\RuleTranslator;
 use ADP\BaseVersion\Includes\Core\Rule\Rule;
 
@@ -47,6 +49,14 @@ class WpmlCmp
         if($this->sitepress) {
             $locale = $this->sitepress->get_locale($this->sitepress->get_this_lang());
             $context->setLanguage(new Context\Language($locale));
+
+            if (isset($this->wcWpml->multi_currency)) {
+                $context->currencyController = new CurrencyController(
+                    $context,
+                    $this->getDefaultCurrency()
+                );
+                $context->currencyController->setCurrentCurrency($this->getCurrentCurrency());
+            }
         }
 
     }
@@ -98,6 +108,8 @@ class WpmlCmp
         } else {
             $this->oi = null;
         }
+
+        add_filter( 'wcml_load_multi_currency_in_ajax', "__return_true");
     }
 
     public function shouldTranslate()
@@ -129,5 +141,41 @@ class WpmlCmp
         }
 
         return $rule;
+    }
+
+    /**
+     * @return Currency|null
+     * @throws \Exception
+     */
+    protected function getDefaultCurrency()
+    {
+        $symbols      = CurrencyController::getDefaultCurrencySymbols();
+
+        return new Currency(
+            $this->wcWpml->multi_currency->get_default_currency(),
+            $symbols[$this->wcWpml->multi_currency->get_default_currency()] ?? '',
+        1.0
+        );
+    }
+
+    /**
+     * @return Currency|null
+     * @throws \Exception
+     */
+    protected function getCurrentCurrency()
+    {
+        $symbols      = CurrencyController::getDefaultCurrencySymbols();
+
+        if ( $this->wcWpml->multi_currency->get_client_currency() === $this->wcWpml->multi_currency->get_default_currency() ) {
+            return $this->getDefaultCurrency();
+        }
+
+        // sometimes the "rate" property of default currency contains non "1" value
+
+        return new Currency(
+            $this->wcWpml->multi_currency->get_client_currency(),
+            $symbols[$this->wcWpml->multi_currency->get_client_currency()] ?? '',
+            1.0
+        );
     }
 }

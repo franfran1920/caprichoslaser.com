@@ -30,7 +30,7 @@ add_action( 'wp_footer', function () {
 					setTimeout(function () {
 						var $input = $('.search-panel .side-panel-content .dgwt-wcas-search-input');
 						if ($input.length > 0 && $input.val().length === 0) {
-							$input.focus();
+							$input.trigger('focus');
 						}
 					}, 500);
 				});

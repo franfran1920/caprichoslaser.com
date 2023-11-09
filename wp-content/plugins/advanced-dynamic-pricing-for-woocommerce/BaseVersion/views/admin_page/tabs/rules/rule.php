@@ -422,6 +422,20 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.",
                     </div>
                     <div class="wdp-wrapper wdp-column">
                         <div class="wdp-row">
+                            <span class="wdp-product-adjustments-type-value-note">
+                                <?php
+                                    echo sprintf(
+                                        wp_kses(
+                                            '<a href="%s" target="_blank">' .__('Please, read about difference between Tier and Bulk modes', 
+                                                'advanced-dynamic-pricing-for-woocommerce') .'</a>',
+                                            array('a' => array('href' => array(), 'target' => array()), 'br' => array())
+                                        ),
+                                        esc_url('https://docs.algolplus.com/algol_pricing/overview-bulk-mode/#bulk-tier')
+                                    );
+                                ?>
+                            </span>
+                        </div>
+                        <div class="wdp-row">
                             <div class="smaller-width">
                                 <div class="wdp-column">
                                     <select name="rule[bulk_adjustments][type]" class="bulk-adjustment-type">
@@ -430,6 +444,12 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.",
                                         <option value="tier"><?php _e('Tier',
                                                 'advanced-dynamic-pricing-for-woocommerce') ?></option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="smaller-width-column">
+                                <div class="wdp-column">
+                                    <select name="rule[bulk_adjustments][measurement]" class="bulk-measurement-type"></select>
                                 </div>
                             </div>
 

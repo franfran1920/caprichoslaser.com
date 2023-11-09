@@ -4,8 +4,8 @@ Donate link: https://paypal.me/ipprokaev/0usd
 Tags: woocommerce, discounts, deals, dynamic pricing, pricing deals, bulk discount, pricing rule
 Requires PHP: 7.0
 Requires at least: 4.8
-Tested up to: 6.3
-Stable tag: 4.5.1
+Tested up to: 6.4
+Stable tag: 4.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,10 +106,26 @@ You should be PHP programmer to do it. [Please, review sample addon and adapt it
 
 == Changelog ==
 
+= 4.5.3 - 2023-10-30 =
+* Bug fixed - can't view order in the backend , if WooCommerce Payments (version 6.6.0) is active
+* Bug fixed - "individual use only" didn't work properly for WC coupons
+* Bug fixed - can't deactivate WooCommerce Subscription plugin
+* Added compatibility with "PPOM for WooCommerce", by Themeisle
+* Updated compatibility with "WPML"
+* Dev - added hook "adp_is_tax_exempt_processor_active", use it only if your custom code manages tax exemption
+
+= 4.5.2 - 2023-10-10 =
+* Minor UI tweaks at tab "Rules"
+* Bug fixed - field "Sale Price" was overwritten when user used >Products>All Products>Export
+* Bug fixed - zero "Amount Saved" at "Thank-you" page
+* Updated compatibility with "WPML"
+* Updated compatibility with "YITH WooCommerce Product Add-Ons"
+* Dev - we pass raw $data_rows to template bulk-table.php (to simplify custom templates)
+
 = 4.5.1 - 2023-09-11 =
 * Critical bug fixed - it was impossible to save settings in section >Settings>Cart
 * Bug fixed - incorrect display of the long names of the rules
-* Bug fixed - incorrect display of "Add rule" button 
+* Bug fixed - incorrect display of "Add rule" button
 * Bug fixed - PHP8 deprecation warnings
 * Added compatibility with "Quote for WooCommerce", by WPExperts.io
 

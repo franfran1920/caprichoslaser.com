@@ -107,7 +107,7 @@ add_action( 'wp_footer', function () { ?>
 
 				if ($input.length) {
 					setTimeout(function () {
-						$input.focus();
+						$input.trigger('focus');
 					}, 300);
 				}
 			});

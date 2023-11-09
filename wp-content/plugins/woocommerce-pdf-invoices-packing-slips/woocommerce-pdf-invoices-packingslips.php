@@ -2,15 +2,15 @@
 /**
  * Plugin Name:          PDF Invoices & Packing Slips for WooCommerce
  * Plugin URI:           https://wpovernight.com/downloads/woocommerce-pdf-invoices-packing-slips-bundle/
- * Description:          Create, print & email PDF invoices & packing slips for WooCommerce orders.
- * Version:              3.6.3
+ * Description:          Create, print & email PDF or UBL Invoices & PDF Packing Slips for WooCommerce orders.
+ * Version:              3.7.2
  * Author:               WP Overnight
  * Author URI:           https://www.wpovernight.com
  * License:              GPLv2 or later
  * License URI:          https://opensource.org/licenses/gpl-license.php
  * Text Domain:          woocommerce-pdf-invoices-packing-slips
  * WC requires at least: 3.0
- * WC tested up to:      8.0
+ * WC tested up to:      8.3
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,8 +21,9 @@ if ( ! class_exists( 'WPO_WCPDF' ) ) :
 
 class WPO_WCPDF {
 
-	public $version = '3.6.3';
+	public $version = '3.7.2';
 	public $plugin_basename;
+	public $legacy_addons;
 	public $third_party_plugins;
 	public $order_util;
 	public $settings;
@@ -55,8 +56,14 @@ class WPO_WCPDF {
 	 */
 	public function __construct() {
 		$this->plugin_basename = plugin_basename(__FILE__);
+		$this->legacy_addons   = apply_filters( 'wpo_wcpdf_legacy_addons', array(
+			'ubl-woocommerce-pdf-invoices.php'     => 'UBL Invoices for WooCommerce',
+			'woocommerce-pdf-ips-number-tools.php' => 'PDF Invoices & Packing Slips for WooCommerce - Number Tools',
+		) );
 
 		$this->define( 'WPO_WCPDF_VERSION', $this->version );
+		
+		require $this->plugin_path() . '/vendor/autoload.php';
 
 		// load the localisation & classes
 		add_action( 'plugins_loaded', array( $this, 'translations' ) );
@@ -66,6 +73,10 @@ class WPO_WCPDF {
 		add_action( 'admin_notices', array( $this, 'nginx_detected' ) );
 		add_action( 'admin_notices', array( $this, 'mailpoet_mta_detected' ) );
 		add_action( 'admin_notices', array( $this, 'rtl_detected' ) );
+		add_action( 'admin_notices', array( $this, 'legacy_addon_notices' ) );
+		
+		// deactivate legacy extensions if activated
+		register_activation_hook( __FILE__, array( $this, 'deactivate_legacy_addons' ) );
 	}
 	
 	private function autoloaders() {
@@ -154,14 +165,16 @@ class WPO_WCPDF {
 			return;
 		}
 		
-		if ( version_compare( PHP_VERSION, '7.2', '<' ) ) {
-			add_action( 'admin_notices', array ( $this, 'next_php_version_bump' ) );
-		}
+		// if ( version_compare( PHP_VERSION, '7.2', '<' ) ) {
+		// 	add_action( 'admin_notices', array ( $this, 'next_php_version_bump' ) );
+		// }
 
-		if ( has_filter( 'wpo_wcpdf_pdf_maker' ) === false && version_compare( PHP_VERSION, '7.1', '<' ) ) {
+		if ( has_filter( 'wpo_wcpdf_pdf_maker' ) === false && version_compare( PHP_VERSION, '7.2', '<' ) ) {
 			add_filter( 'wpo_wcpdf_document_is_allowed', '__return_false', 99999 );
 			add_action( 'admin_notices', array ( $this, 'required_php_version' ) );
 		}
+		
+		add_action( 'admin_init', array( $this, 'deactivate_legacy_addons') );
 
 		// all systems ready - GO!
 		$this->includes();
@@ -234,7 +247,7 @@ class WPO_WCPDF {
 	 * PHP version requirement notice
 	 */
 	public function required_php_version() {
-		$error_message	= __( 'PDF Invoices & Packing Slips for WooCommerce requires PHP 7.1 (7.4 or higher recommended).', 'woocommerce-pdf-invoices-packing-slips' );
+		$error_message	= __( 'PDF Invoices & Packing Slips for WooCommerce requires PHP 7.2 (7.4 or higher recommended).', 'woocommerce-pdf-invoices-packing-slips' );
 		/* translators: <a> tags */
 		$php_message	= __( 'We strongly recommend to %1$supdate your PHP version%2$s.', 'woocommerce-pdf-invoices-packing-slips' );
 		/* translators: <a> tags */
@@ -256,6 +269,7 @@ class WPO_WCPDF {
 	 */
 	public function next_php_version_bump() {
 		$error_message	= sprintf(
+			/* translators: <a> tags */
 			__( 'PDF Invoices & Packing Slips for WooCommerce will require PHP 7.2 soon for future releases. Please %1$supdate your PHP version%2$s so that you will be able to use our plugin in the future.', 'woocommerce-pdf-invoices-packing-slips' ),
 			'<a href="https://docs.wpovernight.com/general/how-to-update-your-php-version/" target="_blank">',
 			'</a>'
@@ -320,6 +334,9 @@ class WPO_WCPDF {
 				$upgrade_notice .= '</p><p class="wpo_wcpdf_upgrade_notice">';
 
 				foreach ( $notices as $index => $line ) {
+					if ( empty( $line ) ) {
+						continue;
+					}
 					$upgrade_notice .= preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
 				}
 			}
@@ -459,6 +476,95 @@ class WPO_WCPDF {
 				exit;
 			} else {
 				update_option( 'wpo_wcpdf_hide_rtl_notice', true );
+				wp_redirect( 'admin.php?page=wpo_wcpdf_options_page' );
+				exit;
+			}
+		}
+	}
+	
+	/**
+	 * Get an array of all active plugins, including multisite
+	 * @return array active plugin paths
+	 */
+	public function get_active_plugins() {
+		$active_plugins = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
+		if ( is_multisite() ) {
+			// get_site_option( 'active_sitewide_plugins', array() ) returns a 'reversed list'
+			// like [hello-dolly/hello.php] => 1369572703 so we do array_keys to make the array
+			// compatible with $active_plugins
+			$active_sitewide_plugins = (array) array_keys( get_site_option( 'active_sitewide_plugins', array() ) );
+			// merge arrays and remove doubles
+			$active_plugins = (array) array_unique( array_merge( $active_plugins, $active_sitewide_plugins ) );
+		}
+
+		return $active_plugins;
+	}
+	
+	public function deactivate_legacy_addons() {
+		foreach ( $this->legacy_addons as $filename => $name ) {
+			$legacy_addon = $this->legacy_addon_detected( $filename );
+		
+			if ( ! empty( $legacy_addon ) ) {
+				deactivate_plugins( $legacy_addon );
+				$transient_name = $this->get_legacy_addon_transient_name( $filename );
+				set_transient( $transient_name, 'yes', DAY_IN_SECONDS );
+			}
+		}
+	}
+	
+	public function legacy_addon_detected( $filename ) {
+		$active_plugins = $this->get_active_plugins();
+		$legacy_addon   = '';
+		
+		foreach ( $active_plugins as $plugin ) {
+			if ( false !== strpos( $plugin, $filename ) ) {
+				$legacy_addon = $plugin;
+				break;
+			}
+		}			
+		
+		return $legacy_addon;
+	}
+	
+	public function get_legacy_addon_transient_name( $filename ) {
+		$filename_without_ext = basename( $filename, '.php' );
+		$legacy_addon_name    = str_replace( '-', '_', $filename_without_ext );
+		
+		return "wpo_wcpdf_legacy_addon_{$legacy_addon_name}";
+	}
+	
+	public function legacy_addon_notices() {
+		foreach ( $this->legacy_addons as $filename => $name ) {
+			$transient_name = $this->get_legacy_addon_transient_name( $filename );
+			$query_arg      = "{$transient_name}_notice";
+			
+			if ( get_transient( $transient_name ) ) {
+				ob_start();
+				?>
+				<div class="notice notice-warning">
+					<p>
+						<?php 
+							printf(
+								/* translators: legacy addon name */
+								__( 'While updating the PDF Invoices & Packing Slips for WooCommerce plugin we\'ve noticed our legacy %s add-on was active on your site. This functionality is now incorporated into the core plugin. We\'ve deactivated the add-on for you, and you are free to uninstall it.', 'woocommerce-pdf-invoices-packing-slips' ),
+								'<strong>' . esc_attr( $name ) . '</strong>'
+							);
+						?>
+					</p>
+					<p><a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( $query_arg => true ) ), 'wcpdf_legacy_addon_notice' ) ); ?>"><?php _e( 'Hide this message', 'woocommerce-pdf-invoices-packing-slips' ); ?></a></p>
+				</div>
+				<?php
+				echo wp_kses_post( ob_get_clean() );
+			}
+			
+			// save option to hide legacy addon notice
+			if ( isset( $_REQUEST[ $query_arg ] ) && isset( $_REQUEST['_wpnonce'] ) ) {
+				if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'wcpdf_legacy_addon_notice' ) ) {
+					wcpdf_log_error( 'You do not have sufficient permissions to perform this action: ' . $query_arg );
+				} else {
+					delete_transient( $transient_name );
+				}
+				
 				wp_redirect( 'admin.php?page=wpo_wcpdf_options_page' );
 				exit;
 			}

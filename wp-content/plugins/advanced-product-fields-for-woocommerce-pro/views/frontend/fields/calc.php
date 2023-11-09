@@ -6,6 +6,7 @@ use SW_WAPF_PRO\Includes\Classes\Enumerable;
 $formula = empty( $model['field']->options['formula'] ) ? 0 : esc_attr( $model['field']->options['formula'] );
 $result_text = empty( $model['field']->options['result_text'] ) ? '{result}' : esc_attr( $model['field']->options['result_text'] );
 $type = isset( $model['field']->options['calc_type'] ) && $model['field']->options['calc_type'] === 'cost' ? 'cost' : 'default';
+$result_format = $type === 'default' ? ( empty( $model['field']->options['result_format'] ) ? 'number' : 'none' ) : '';
 
 $attributes = [
     'class'             => 'wapf-input input-' . $model['field']->id,
@@ -25,6 +26,6 @@ $attributes = Enumerable::from($attributes)->join(function($value,$key) {
 ?>
 
 <div class="wapf-calc-wrapper">
-    <span class="wapf-calc-text" data-type="<?php echo $type ?>" data-txt="<?php echo $result_text ?>" data-formula="<?php echo $formula ?>"></span>
+    <span class="wapf-calc-text" data-type="<?php echo $type ?>" data-format="<?php echo $result_format ?>" data-txt="<?php echo $result_text ?>" data-formula="<?php echo $formula ?>"></span>
     <input type="hidden" <?php echo $attributes ?> data-fid="<?php echo $model['field']->id;?>" value="idle" name="wapf[field_<?php echo $model['field']->id;?>]" />
 </div>

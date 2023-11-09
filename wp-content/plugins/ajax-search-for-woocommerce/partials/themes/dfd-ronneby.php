@@ -26,7 +26,7 @@ add_action( 'wp_footer', function () {
 						setTimeout(function () {
 							var $input = $('.form-search-section .dgwt-wcas-search-input');
 							if ($input.length > 0) {
-								$input.focus();
+								$input.trigger('focus');
 							}
 						}, 800)
 					});

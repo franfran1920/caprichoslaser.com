@@ -213,7 +213,7 @@ class WC_Payments_Utils {
 
 	/**
 	 * List of countries enabled for Stripe platform account. See also this URL:
-	 * https://woocommerce.com/document/woocommerce-payments/compatibility/countries/#supported-countries
+	 * https://woocommerce.com/document/woopayments/compatibility/countries/#supported-countries
 	 *
 	 * @return string[]
 	 */
@@ -391,6 +391,27 @@ class WC_Payments_Utils {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Apply a callback on every value in an array, regardless of the number of array dimensions.
+	 *
+	 * @param array    $array The array to map.
+	 * @param callable $callback The callback to apply.
+	 * @return array The mapped array.
+	 */
+	public static function array_map_recursive( array $array, callable $callback ): array {
+		foreach ( $array as $key => $value ) {
+			if ( \is_array( $value ) ) {
+				$value = self::array_map_recursive( $value, $callback );
+			} else {
+				$value = $callback( $value, $key, $array );
+			}
+
+			$array[ $key ] = $value;
+		}
+
+		return $array;
 	}
 
 	/**
@@ -660,6 +681,10 @@ class WC_Payments_Utils {
 			return '';
 		}
 
+		if ( strpos( $primary_id, 'seti_' ) !== false ) {
+			return '';
+		}
+
 		return add_query_arg( // nosemgrep: audit.php.wp.security.xss.query-arg -- server generated url is passed in.
 			array_merge(
 				[
@@ -727,8 +752,7 @@ class WC_Payments_Utils {
 			'yes' === get_option( 'woocommerce_allow_tracking' )
 		);
 
-		return 'treatment' === $abtest->get_variation( 'woocommerce_payments_onboarding_progressive_express_2023_v1' )
-			|| 'treatment' === $abtest->get_variation( 'woocommerce_payments_onboarding_progressive_express_2023_v2' );
+		return 'treatment' === $abtest->get_variation( 'woocommerce_payments_onboarding_progressive_express_2023_v3' );
 	}
 
 	/**

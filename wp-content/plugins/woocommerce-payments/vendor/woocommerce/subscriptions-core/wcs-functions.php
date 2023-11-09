@@ -174,7 +174,7 @@ function wcs_create_subscription( $args = array() ) {
 
 	$subscription->set_customer_note( $args['customer_note'] ?? '' );
 	$subscription->set_customer_id( $args['customer_id'] );
-	$subscription->set_date_created( $args['date_created'] );
+	$subscription->set_date_created( wcs_date_to_time( $args['date_created'] ) );
 	$subscription->set_created_via( $args['created_via'] );
 	$subscription->set_currency( $args['currency'] );
 	$subscription->set_prices_include_tax( 'no' !== $args['prices_include_tax'] );
@@ -501,7 +501,13 @@ function wcs_get_subscriptions( $args ) {
 
 	// Maybe filter to a specific customer.
 	if ( 0 !== $args['customer_id'] && is_numeric( $args['customer_id'] ) ) {
-		$query_args['customer_id'] = $args['customer_id'];
+		// When HPOS is disabled, fetch subscriptions by customer_id using the user's subscription cache and query by post__in for improved performance.
+		if ( ! wcs_is_custom_order_tables_usage_enabled() ) {
+			$users_subscription_ids = WCS_Customer_Store::instance()->get_users_subscription_ids( $args['customer_id'] );
+			$query_args             = WCS_Admin_Post_Types::set_post__in_query_var( $query_args, $users_subscription_ids );
+		} else {
+			$query_args['customer_id'] = $args['customer_id'];
+		}
 	}
 
 	// We need to restrict subscriptions to those which contain a certain product/variation

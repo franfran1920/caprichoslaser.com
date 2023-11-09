@@ -240,6 +240,7 @@ class Search
             
             $args = apply_filters( 'dgwt/wcas/search_query/args', $args );
             $products = get_posts( $args );
+            $products = apply_filters( 'dgwt/wcas/search_results/products_raw', $products );
             $totalProducts = count( $products );
             $hits += $totalProducts;
             do_action(
@@ -754,7 +755,14 @@ class Search
         if ( $this->hooked ) {
             return;
         }
-        $this->hooked = true;
+        /**
+         * Allowing hook WP_Query more then once
+         *
+         * @since 1.26.0
+         */
+        if ( apply_filters( 'dgwt/wcas/native/hook_query_once', true ) ) {
+            $this->hooked = true;
+        }
         /**
          * Disable cache: `cache_results` defaults to false but can be enabled
          */

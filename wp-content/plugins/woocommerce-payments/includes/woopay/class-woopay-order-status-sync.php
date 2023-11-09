@@ -100,7 +100,7 @@ class WooPay_Order_Status_Sync {
 	 */
 	private function register_webhook() {
 		$webhook = new \WC_Webhook();
-		$webhook->set_name( $this->get_webhook_name() );
+		$webhook->set_name( self::get_webhook_name() );
 		$webhook->set_user_id( get_current_user_id() );
 		$webhook->set_topic( 'order.status_changed' );
 		$webhook->set_secret( wp_generate_password( 50, false ) );
@@ -135,6 +135,12 @@ class WooPay_Order_Status_Sync {
 	 * @param integer $id          ID of the webhook.
 	 */
 	public static function create_payload( $payload, $resource, $resource_id, $id ) {
+		$webhook = wc_get_webhook( $id );
+		if ( 0 !== strpos( $webhook->get_delivery_url(), WooPay_Utilities::get_woopay_rest_url( 'merchant-notification' ) ) ) {
+			// This is not a WooPay webhook, so we don't need to modify the payload.
+			return $payload;
+		}
+
 		return [
 			'blog_id'      => \Jetpack_Options::get_option( 'id' ),
 			'order_id'     => $resource_id,

@@ -166,14 +166,14 @@ add_action( 'wp_footer', function () {
 					$('.fusion-header-v6 .fusion-icon-search').on('click', function () {
 						var $input = $('.fusion-flyout-search .dgwt-wcas-search-input');
 						if ($input.length > 0) {
-							$input.focus();
+							$input.trigger('focus');
 						}
 					});
 
 					$('.fusion-header-v6 .fusion-icon-search').on('click', function () {
 						var $input = $('.fusion-flyout-search .dgwt-wcas-search-input');
 						if ($input.length > 0) {
-							$input.focus();
+							$input.trigger('focus');
 						}
 					});
 

@@ -5,7 +5,7 @@ namespace SW_WAPF_PRO\Includes\Classes\Integrations {
 	{
 		public function __construct() {
 			add_action('wp_footer', [$this, 'add_javascript'] );
-            add_filter('wapf/add_to_cart_redirect_when_editing', '__return false');
+            add_filter('wapf/add_to_cart_redirect_when_editing', function( $x ) { return false; }, 10, 1);
 		}
 
 		public function add_javascript() {

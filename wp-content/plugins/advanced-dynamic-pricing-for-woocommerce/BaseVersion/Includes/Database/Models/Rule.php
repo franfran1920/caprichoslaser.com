@@ -214,17 +214,9 @@ class Rule
         );
         $rule = array_merge($rule, $data);
 
-        $rule['advertising'] ? array_walk($rule['advertising'], function (&$value) {
-            $value = stripslashes($value);
-        }) : null;
-
-        $rule['cart_adjustments'] ? array_walk($rule['cart_adjustments'], function (&$value) {
-            $value = stripslashes_deep($value);
-        }) : null;
-
-        $rule['condition_message'] ? array_walk($rule['condition_message'], function (&$value) {
-            $value = stripslashes_deep($value);
-        }) : null;
+        $rule['advertising']       = stripslashes_deep($rule['advertising']);
+        $rule['cart_adjustments']  = stripslashes_deep($rule['cart_adjustments']);
+        $rule['condition_message'] = stripslashes_deep($rule['condition_message']);
 
         return new self(
             $rule['id'],

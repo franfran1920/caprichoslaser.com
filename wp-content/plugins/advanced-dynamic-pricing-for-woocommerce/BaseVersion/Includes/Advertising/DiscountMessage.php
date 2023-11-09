@@ -201,7 +201,7 @@ class DiscountMessage
      *
      * @return float
      */
-    protected function getAmountSavedOrder($orderId)
+    public function getAmountSavedOrder($orderId)
     {
         $rules = $this->orderRepository->getAppliedRulesForOrder($orderId);
 

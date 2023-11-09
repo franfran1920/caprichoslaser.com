@@ -407,8 +407,8 @@ class Rules implements AdminTabInterface
             'product'            => isset($_GET['product']) ? (int)$_GET['product'] : -1,
             'product_title'      => isset ($_GET['product']) ? CacheHelper::getWcProduct($_GET['product'])->get_title() : -1,
             'action_rules'       => isset($_GET['action_rules']) ? $_GET['action_rules'] : -1,
-            'bulk_rule'          => self::getAllAvailableTypes(),
-            'persistence_bulk_rule' => self::getAllAvailablePersistenceTypes(),
+            'bulk_rule'          => static::getAllAvailableTypes(),
+            'persistence_bulk_rule' => static::getAllAvailablePersistenceTypes(),
             'options'            => array(
                 'close_on_select'        => defined("WC_ADP_PRO_VERSION_URL") ? false : true,
                 'enable_product_exclude' => $context->getOption('allow_to_exclude_products'),
@@ -431,6 +431,11 @@ class Rules implements AdminTabInterface
         return array(
             'bulk' => array(
                 'all'                         => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::setDiscountAmount(),
@@ -438,9 +443,14 @@ class Rules implements AdminTabInterface
                         self::priceFixed(),
                         self::setPriceFixed(),
                     )),
-                    'label' => __('Qty based on all matched products', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on all matched products', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'total_qty_in_cart'           => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::setDiscountAmount(),
@@ -448,9 +458,14 @@ class Rules implements AdminTabInterface
                         self::priceFixed(),
                         self::setPriceFixed(),
                     )),
-                    'label' => __('Qty based on all items in the cart', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on all items in the cart', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'product_categories'          => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::setDiscountAmount(),
@@ -458,10 +473,15 @@ class Rules implements AdminTabInterface
                         self::priceFixed(),
                         self::setPriceFixed(),
                     )),
-                    'label' => __('Qty based on product categories in all cart',
+                    'label' => __('Based on product categories in all cart',
                         'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'product_selected_categories' => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::setDiscountAmount(),
@@ -469,10 +489,15 @@ class Rules implements AdminTabInterface
                         self::priceFixed(),
                         self::setPriceFixed(),
                     )),
-                    'label' => __('Qty based on selected categories in all cart',
+                    'label' => __('Based on selected categories in all cart',
                         'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'selected_products'           => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::setDiscountAmount(),
@@ -480,10 +505,15 @@ class Rules implements AdminTabInterface
                         self::priceFixed(),
                         self::setPriceFixed(),
                     )),
-                    'label' => __('Qty based on selected products in all cart',
+                    'label' => __('Based on selected products in all cart',
                         'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'sets'                        => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::setDiscountAmount(),
@@ -491,99 +521,154 @@ class Rules implements AdminTabInterface
                         self::priceFixed(),
                         self::setPriceFixed(),
                     )),
-                    'label' => __('Qty based on sets', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on sets', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'product'                     => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on product', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on product', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'variation'                   => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on variation', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on variation', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'cart_position'               => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on cart position', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on cart position', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'meta_data'                   => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on product meta data', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on product meta data', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
             ),
             'tier' => array(
                 'all'                         => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on all matched products', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on all matched products', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'product_selected_categories' => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on selected categories in all cart',
+                    'label' => __('Based on selected categories in all cart',
                         'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'selected_products'           => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on selected products in all cart',
+                    'label' => __('Based on selected products in all cart',
                         'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'sets'                        => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::setDiscountAmount(),
                         self::discountPercentage(),
                         self::setPriceFixed(),
                     )),
-                    'label' => __('Qty based on sets', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on sets', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'product'                     => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on product', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on product', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'variation'                   => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on variation', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on variation', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
                 'cart_position'               => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on cart position', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on cart position', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
             ),
         );
@@ -594,20 +679,24 @@ class Rules implements AdminTabInterface
         return array(
             'bulk' => array(
                 'all'                         => array(
+                    'measurement' => self::formatOutput(
+                        [
+                            self::measurementQty(),
+                        ]
+                    ),
                     'items' => self::formatOutput(array(
                         self::discountAmount(),
                         self::discountPercentage(),
                         self::priceFixed(),
                     )),
-                    'label' => __('Qty based on all matched products', 'advanced-dynamic-pricing-for-woocommerce'),
+                    'label' => __('Based on all matched products', 'advanced-dynamic-pricing-for-woocommerce'),
                 ),
 
             ),
         );
     }
 
-
-    private static function discountAmount()
+    protected static function discountAmount()
     {
         return array(
             'key'   => 'discount__amount',
@@ -615,7 +704,7 @@ class Rules implements AdminTabInterface
         );
     }
 
-    private static function setDiscountAmount()
+    protected static function setDiscountAmount()
     {
         return array(
             'key'   => 'set_discount__amount',
@@ -623,7 +712,7 @@ class Rules implements AdminTabInterface
         );
     }
 
-    private static function discountPercentage()
+    protected static function discountPercentage()
     {
         return array(
             'key'   => 'discount__percentage',
@@ -631,7 +720,7 @@ class Rules implements AdminTabInterface
         );
     }
 
-    private static function priceFixed()
+    protected static function priceFixed()
     {
         return array(
             'key'   => 'price__fixed',
@@ -639,7 +728,7 @@ class Rules implements AdminTabInterface
         );
     }
 
-    private static function setPriceFixed()
+    protected static function setPriceFixed()
     {
         return array(
             'key'   => 'set_price__fixed',
@@ -647,7 +736,31 @@ class Rules implements AdminTabInterface
         );
     }
 
-    private static function formatOutput($types)
+    protected static function measurementQty()
+    {
+        return array(
+            'key' => 'qty',
+            'label' => __('Qty', 'advanced-dynamic-pricing-for-woocommerce'),
+        );
+    }
+
+    protected static function measurementSum()
+    {
+        return array(
+            'key' => 'sum',
+            'label' => __('Sum', 'advanced-dynamic-pricing-for-woocommerce'),
+        );
+    }
+
+    protected static function measurementWeight()
+    {
+        return array(
+            'key' => 'weight',
+            'label' => __('Weight', 'advanced-dynamic-pricing-for-woocommerce'),
+        );
+    }
+
+    protected static function formatOutput($types)
     {
         return array_combine(array_column($types, 'key'), array_column($types, 'label'));
     }

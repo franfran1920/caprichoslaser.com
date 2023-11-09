@@ -60,7 +60,9 @@ class YithAddonsCmp
         foreach ($addonsData as $index => $addonData) {
             foreach ($addonData as $key => $value) {
                 if ($key && '' !== $value) {
-                    $value = stripslashes($value);
+                    if (is_string($value)) {
+                        $value = stripslashes($value);
+                    }
                     $explode = explode('-', $key);
                     if (isset($explode[1])) {
                         $addon_id = $explode[0];

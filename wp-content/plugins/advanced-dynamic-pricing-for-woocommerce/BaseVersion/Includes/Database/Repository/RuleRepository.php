@@ -587,7 +587,7 @@ class RuleRepository implements RuleRepositoryInterface {
         /**
          * @var Rule $rule
          */
-        foreach ($rules as $rule) {
+        foreach ($rules as $rule) {            
             if (isset($rule->conditions) && !empty($rule->conditions)) {
                 $conditions = $rule->conditions;
             } else {
@@ -600,7 +600,7 @@ class RuleRepository implements RuleRepositoryInterface {
             }
             $conditions = array_values($conditions);
 
-            $data = array_merge($rule->getDataForDB(), array('id' => $rule->id, 'conditions' => serialize($conditions)));
+            $data = array_merge($rule->getData(), array('id' => $rule->id, 'conditions' => $conditions));
             $ruleObj = Rule::fromArray($data);
             $this->storeRule($ruleObj);
         }

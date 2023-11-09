@@ -5,6 +5,7 @@ defined('ABSPATH') or exit;
  * @var string $header_html
  * @var array $table_header
  * @var array $rows
+ * @var array $data_rows
  * @var string $footer_html
  */
 

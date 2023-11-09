@@ -3,6 +3,7 @@
 namespace ADP\BaseVersion\Includes\WC;
 
 use ADP\BaseVersion\Includes\CartProcessor\OriginalPriceCalculation;
+use ADP\BaseVersion\Includes\Compatibility\PPOMCmp;
 use ADP\BaseVersion\Includes\Compatibility\ThemehighExtraOptionsProCmp;
 use ADP\BaseVersion\Includes\Compatibility\TmExtraOptionsCmp;
 use ADP\BaseVersion\Includes\Compatibility\WcCustomProductAddonsCmp;
@@ -377,8 +378,12 @@ class WcCartItemFacade
         $wcCustomProductAddonsCmp = new WcCustomProductAddonsCmp();
         $yithAddonsCmp = new YithAddonsCmp();
         $flexibleProductFieldsCmp = new FlexibleProductFieldsCmp();
+        $ppomCmp = new PPOMCmp();
+
         if ($tmCmp->isActive()) {
-            $initialCost = $origPriceCalc->basePrice;
+            if ( $origPriceCalc->basePrice !== "" ) {
+                $initialCost = floatval($origPriceCalc->basePrice);
+            }
 
             $addons = $tmCmp->getAddonsFromCartItem($this);
 
@@ -493,6 +498,28 @@ class WcCartItemFacade
             $addons = $flexibleProductFieldsCmp->getAddonsFromCartItem($this);
 
             $initialCost += array_sum(array_column($addons, 'price'));
+
+            if ($this->isImmutable() && $this->getHistory()) {
+                foreach ($this->getHistory() as $amounts) {
+                    $initialCost += array_sum($amounts);
+                }
+            }
+
+            $item = new CartItem($this, $initialCost, $qty);
+
+            if (count($addons) > 0) {
+                $item->setAddons($addons);
+            } else {
+                $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
+            }
+        }
+
+        if ($ppomCmp->isActive()) {
+            $initialCost = $origPriceCalc->basePrice;
+
+            $addons = $ppomCmp->getAddonsFromCartItem($this);
+
+            $initialCost = $wcCustomProductAddonsCmp->calculateCost($initialCost, $addons, $this->getThirdPartyData());
 
             if ($this->isImmutable() && $this->getHistory()) {
                 foreach ($this->getHistory() as $amounts) {

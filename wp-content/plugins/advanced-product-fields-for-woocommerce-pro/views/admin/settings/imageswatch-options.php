@@ -36,7 +36,7 @@
                     <select class="wapf-pricing-list" rv-on-change="onChange" rv-value="choice.pricing_type">
                         <option value="none"><?php _e('No price change','sw-wapf'); ?></option>
                         <?php
-                        foreach(\SW_WAPF_PRO\Includes\Classes\Fields::get_pricing_options( $model['field_type'] ) as $k => $v) {
+                        foreach(\SW_WAPF_PRO\Includes\Classes\Config::get_pricing_options( $model['field_type'] ) as $k => $v) {
                             echo '<option value="'.$k.'">'.$v.'</option>';
                         }
                         ?>

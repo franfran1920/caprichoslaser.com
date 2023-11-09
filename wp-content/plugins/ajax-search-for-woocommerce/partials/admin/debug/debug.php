@@ -135,7 +135,7 @@ echo  $prefix ;
 echo  $prefix ;
 ?>nav-tab-wrapper a').removeClass('nav-tab-active');
 
-			$(this).addClass('nav-tab-active').blur();
+			$(this).addClass('nav-tab-active').trigger('blur');
 			var clicked_group = $(this).attr('href');
 
 			$('.<?php 

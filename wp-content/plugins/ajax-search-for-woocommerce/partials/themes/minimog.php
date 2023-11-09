@@ -40,15 +40,15 @@ add_action( 'wp_footer', function () {
 				$input = $('#popup-search .dgwt-wcas-search-input');
 				if ($inputMobile.length > 0) {
 					setTimeout(function () {
-						$inputMobile.click();
+						$inputMobile.trigger('click');
 					}, 50);
 					// Close the theme search window.
 					setTimeout(function () {
-						$('#popup-search #search-popup-close').click();
+						$('#popup-search #search-popup-close').trigger('click');
 					}, 200)
 				} else if ($input.length > 0) {
 					setTimeout(function () {
-						$input.focus();
+						$input.trigger('focus');
 					}, 350);
 				}
 			});

@@ -246,7 +246,7 @@ class Context
         }
 
         $wcMultiCurrencyCmp = new WooCommerceMultiCurrencyCmp($this);
-                
+
         $priceBasedOnCountryCmp = new PriceBasedOnCountryCmp();
         if ($priceBasedOnCountryCmp->isActive()) {
             $priceBasedOnCountryCmp->modifyContext($this);
@@ -616,9 +616,13 @@ class Context
     {
         return apply_filters('adp_show_price_range_in_bulk_table_for_variable_products', false);
     }
-    
+
     public function isGenerateSqlPerRule() {
         return apply_filters('adp_generate_sql_per_rule', false);
+    }
+
+    public function isTaxExemptProcessorActive() {
+        return apply_filters('adp_is_tax_exempt_processor_active', true);
     }
 
     protected function setUpPricesSettings()

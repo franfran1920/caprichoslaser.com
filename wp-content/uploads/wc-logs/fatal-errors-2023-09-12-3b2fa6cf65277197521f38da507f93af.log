@@ -1,6 +1,0 @@
-2023-09-12T17:37:57+00:00 CRITICAL Cannot redeclare activate_wc_conditions() (previously declared in /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts/easy-woocommerce-discounts.php:34) en /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/easy-woocommerce-discounts.php en la línea 34
-
-2023-09-12T17:38:02+00:00 CRITICAL Cannot redeclare activate_wc_conditions() (previously declared in /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts/easy-woocommerce-discounts.php:34) en /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/easy-woocommerce-discounts.php en la línea 34
-
-2023-09-12T17:38:02+00:00 CRITICAL Cannot redeclare activate_wc_conditions() (previously declared in /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts/easy-woocommerce-discounts.php:34) en /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/easy-woocommerce-discounts.php en la línea 34
-

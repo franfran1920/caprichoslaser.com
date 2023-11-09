@@ -550,12 +550,12 @@ defined('ABSPATH') or exit;
 
             <div class="wdp-column">
                 <input name="rule[bulk_adjustments][ranges][{b}][from]"
-                       class="adjustment-from" type="number" placeholder="qty from" min="0" step="any">
+                       class="adjustment-from" type="number" placeholder="qty from" min="1" step="any">
             </div>
 
             <div class="wdp-column">
                 <input name="rule[bulk_adjustments][ranges][{b}][to]"
-                       class="adjustment-to" type="number" placeholder="qty to" min="0" step="any">
+                       class="adjustment-to" type="number" placeholder="qty to" min="1" step="any">
             </div>
 
             <div class="wdp-column">

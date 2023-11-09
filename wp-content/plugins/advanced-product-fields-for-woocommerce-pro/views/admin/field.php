@@ -1,7 +1,8 @@
 <?php
 /* @var $field [] */
 /* @var $type string */
-$types = \SW_WAPF_PRO\Includes\Classes\Fields::get_field_definitions();
+use \SW_WAPF_PRO\Includes\Classes\Config;
+$types = Config::get_field_definitions( 'admin' );
 ?>
 
 <div rv-each-field="renderedFields" rv-cloak class="wapf-field" rv-data-type="field.type"
@@ -12,7 +13,7 @@ $types = \SW_WAPF_PRO\Includes\Classes\Fields::get_field_definitions();
         <div class="wapf-field-sort sort--left" title="<?php _e('Drag & drop','sw-wapf');?>">☰</div>
         <div class="wapf-field-icon">
             <?php
-                foreach ($types as $type) {
+                foreach ( $types as $type ) {
                     ?>
                     <div rv-if="field.type | eq '<?php echo $type['id']; ?>'">
                         <?php if(isset($type['icon'])) echo $type['icon']; ?>
@@ -31,11 +32,11 @@ $types = \SW_WAPF_PRO\Includes\Classes\Fields::get_field_definitions();
             </span>
         </div>
         <div rv-if="field.group|eq 'layout'" class="wapf-field-label" rv-on-click="setActiveField">
-            <span style="font-weight: bold" rv-text="fieldDefinitions | query 'first' 'id' '==' field.type 'get' 'title'"></span>
+            <span style="font-weight: bold" rv-text="fieldDefinitions | getFieldDefTitle field.type"></span>
         </div>
 
         <div class="wapf-field-type">
-            <span rv-text="fieldDefinitions | query 'first' 'id' '==' field.type 'get' 'title'"></span>
+            <span rv-text="fieldDefinitions | getFieldDefTitle field.type"></span>
         </div>
         <div class="wapf-field-actions">
             <a href="#" title="<?php _e('Duplicate field','sw-wapf');?>" rv-on-click="duplicateField">Duplicate</a>
@@ -90,7 +91,7 @@ $types = \SW_WAPF_PRO\Includes\Classes\Fields::get_field_definitions();
 
         do_action('wapf/admin/before_additional_field_settings');
 
-        foreach(\SW_WAPF_PRO\Includes\Classes\Fields::get_field_options() as $field_type => $options) { ?>
+        foreach( Config::get_field_options() as $field_type => $options) { ?>
             <div rv-if="field.type | eq '<?php echo $field_type; ?>'" class="wapf_field__options">
                 <?php
                     foreach($options as $option) {

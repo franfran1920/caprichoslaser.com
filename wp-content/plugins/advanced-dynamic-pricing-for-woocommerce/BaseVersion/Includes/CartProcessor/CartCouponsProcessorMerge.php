@@ -328,7 +328,7 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
             $mergedCoupons[$couponCode] = $newCoupons;
         }
 
-        $this->mergedCoupons = $mergedCoupons;
+        $this->mergedCoupons = array_filter($mergedCoupons);
     }
 
     protected function addExternalWcCouponWithSameCodeIfPossible(Cart $cart, WC_Cart $wcCart, string $couponCode)

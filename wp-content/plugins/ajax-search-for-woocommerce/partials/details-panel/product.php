@@ -5,6 +5,8 @@
  * This template can be overridden by copying it to yourtheme/fibosearch/details-panel/product.php.
  */
 
+use DgoraWcas\Helpers;
+
 // Exit if accessed directly
 if ( ! defined( 'DGWT_WCAS_FILE' ) ) {
 	exit;
@@ -18,51 +20,51 @@ if ( ! defined( 'DGWT_WCAS_FILE' ) ) {
 	<div class="dgwt-wcas-product-details">
 
 		<?php do_action( 'dgwt/wcas/details_panel/product/image_before', $vars ); ?>
-		<a href="<?php echo esc_url( $vars->link ); ?>" title="<?php echo wp_strip_all_tags($vars->name); ?>">
+		<a href="<?php echo esc_url( $vars->link ); ?>" title="<?php echo esc_attr( wp_strip_all_tags( $vars->name ) ); ?>">
 			<div class="dgwt-wcas-details-main-image">
 				<img
 					src="<?php echo esc_url( $vars->imageSrc ); ?>"
 					<?php echo ( ! empty( $vars->imageSrcset ) && ! empty( $vars->imageSizes ) ) ? 'srcset="' . esc_attr( $vars->imageSrcset ) . '"' : '' ?>
 					<?php echo ( ! empty( $vars->imageSrcset ) && ! empty( $vars->imageSizes ) ) ? 'sizes="' . esc_attr( $vars->imageSizes ) . '"' : '' ?>
-					alt="<?php echo wp_strip_all_tags( $vars->name ); ?>"
+					alt="<?php echo esc_attr( wp_strip_all_tags( $vars->name ) ); ?>"
 				>
 			</div>
 		</a>
 		<?php do_action( 'dgwt/wcas/details_panel/product/image_after', $vars ); ?>
 
 		<div class="dgwt-wcas-details-space">
-			<a class="dgwt-wcas-details-product-title" href="<?php echo esc_url( $vars->link ); ?>" title="<?php echo wp_strip_all_tags($vars->name); ?>">
-				<?php echo $vars->name; ?>
+			<a class="dgwt-wcas-details-product-title" href="<?php echo esc_url( $vars->link ); ?>" title="<?php echo esc_attr( wp_strip_all_tags( $vars->name ) ); ?>">
+				<?php echo Helpers::secureHtmlOutput( $vars->name, 'name' ); ?>
 			</a>
 			<?php if ( ! empty( $vars->sku ) ): ?>
-				<span class="dgwt-wcas-details-product-sku"><?php echo $vars->sku; ?></span>
+				<span class="dgwt-wcas-details-product-sku"><?php echo Helpers::secureHtmlOutput( $vars->sku, 'sku' ); ?></span>
 			<?php endif; ?>
 
 			<?php if ( $vars->reviewCount > 0 ): ?>
 
 				<div class="dgwt-wcas-pd-rating">
-					<?php echo $vars->ratingHtml . ' <span class="dgwt-wcas-pd-review">(' . $vars->reviewCount . ')</span>'; ?>
+					<?php echo Helpers::secureHtmlOutput( $vars->ratingHtml . ' <span class="dgwt-wcas-pd-review">(' . $vars->reviewCount . ')</span>', 'rating' ); ?>
 				</div>
 
 			<?php endif; ?>
 
 			<?php do_action( 'dgwt/wcas/details_panel/product/price_before', $vars ); ?>
 			<div class="dgwt-wcas-pd-price">
-				<?php echo $vars->priceHtml; ?>
+				<?php echo Helpers::secureHtmlOutput( $vars->priceHtml, 'price' ); ?>
 			</div>
 			<?php do_action( 'dgwt/wcas/details_panel/product/price_after', $vars ); ?>
 
 			<?php if ( ! empty( $vars->desc ) ): ?>
 				<div class="dgwt-wcas-details-hr"></div>
 				<div class="dgwt-wcas-details-desc">
-					<?php echo wp_kses_post( $vars->desc ); ?>
+					<?php echo Helpers::secureHtmlOutput( $vars->desc, 'description' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<div class="dgwt-wcas-details-hr"></div>
 
 			<?php if ( ! empty( $vars->stockAvailability ) ) {
-				echo $vars->stockAvailability;
+				echo Helpers::secureHtmlOutput( $vars->stockAvailability, 'stock_status' );
 			}; ?>
 
 			<?php do_action( 'dgwt/wcas/details_panel/product/add_to_cart_before', $vars ); ?>

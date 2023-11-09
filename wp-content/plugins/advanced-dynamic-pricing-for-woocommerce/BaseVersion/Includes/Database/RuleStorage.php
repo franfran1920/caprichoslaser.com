@@ -27,6 +27,7 @@ use ADP\BaseVersion\Includes\Core\Rule\Structures\PackageItemFilter;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\RangeDiscount;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\RoleDiscount;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\SetDiscount;
+use ADP\BaseVersion\Includes\Core\RuleProcessor\BulkDiscount\BulkMeasurementEnum;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\OptionsConverter;
 use ADP\BaseVersion\Includes\Enums\AutoAddChoiceTypeEnum;
 use ADP\BaseVersion\Includes\Enums\AutoAddModeEnum;
@@ -651,6 +652,7 @@ class RuleStorage
             $bulkData = $ruleData->bulkAdjustments;
 
             $qty_based = $bulkData['qty_based'];
+            $measurement = $bulkData['measurement'] ?? null;
 
             if ($rule instanceof SingleItemRule) {
                 if ($qty_based === 'all') {
@@ -675,8 +677,12 @@ class RuleStorage
                     $qty_based = SingleItemRule\ProductsRangeAdjustments::GROUP_BY_META_DATA;
                 }
 
-                $productAdjustment = new SingleItemRule\ProductsRangeAdjustments($this->context, $bulkData['type'],
-                    $qty_based);
+                $productAdjustment = new SingleItemRule\ProductsRangeAdjustments(
+                    $this->context,
+                    $bulkData['type'],
+                    $qty_based,
+                    new BulkMeasurementEnum($measurement)
+                );
             } elseif ($rule instanceof PackageRule) {
                 if ($qty_based === 'all') {
                     $qty_based = PackageRule\PackageRangeAdjustments::GROUP_BY_DEFAULT;
@@ -700,8 +706,12 @@ class RuleStorage
                     $qty_based = PackageRule\PackageRangeAdjustments::GROUP_BY_META_DATA;
                 }
 
-                $productAdjustment = new PackageRule\PackageRangeAdjustments($this->context, $bulkData['type'],
-                    $qty_based);
+                $productAdjustment = new PackageRule\PackageRangeAdjustments(
+                    $this->context,
+                    $bulkData['type'],
+                    $qty_based,
+                    new BulkMeasurementEnum($measurement)
+                );
             } else {
                 return;
             }

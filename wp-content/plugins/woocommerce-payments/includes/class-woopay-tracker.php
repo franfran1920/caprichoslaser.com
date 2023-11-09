@@ -63,10 +63,14 @@ class WooPay_Tracker extends Jetpack_Tracks_Client {
 
 		// Actions that should result in recorded Tracks events.
 		add_action( 'woocommerce_after_checkout_form', [ $this, 'classic_checkout_start' ] );
+		add_action( 'woocommerce_after_cart', [ $this, 'classic_cart_page_view' ] );
+		add_action( 'woocommerce_after_single_product', [ $this, 'classic_product_page_view' ] );
 		add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_after', [ $this, 'blocks_checkout_start' ] );
+		add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', [ $this, 'blocks_cart_page_view' ] );
 		add_action( 'woocommerce_checkout_order_processed', [ $this, 'checkout_order_processed' ] );
 		add_action( 'woocommerce_blocks_checkout_order_processed', [ $this, 'checkout_order_processed' ] );
 		add_action( 'woocommerce_payments_save_user_in_woopay', [ $this, 'must_save_payment_method_to_platform' ] );
+		add_action( 'before_woocommerce_pay_form', [ $this, 'pay_for_order_page_view' ] );
 	}
 
 	/**
@@ -161,7 +165,7 @@ class WooPay_Tracker extends Jetpack_Tracks_Client {
 	}
 
 	/**
-	 * Override parent method to omit the jetpack TOS check.
+	 * Override parent method to omit the jetpack TOS check and include custom tracking conditions.
 	 *
 	 * @param bool $is_admin_event Indicate whether the event is emitted from admin area.
 	 * @param bool $track_on_all_stores Indicate whether the event is tracked on all WCPay stores.
@@ -169,6 +173,19 @@ class WooPay_Tracker extends Jetpack_Tracks_Client {
 	 * @return bool
 	 */
 	public function should_enable_tracking( $is_admin_event = false, $track_on_all_stores = false ) {
+
+		// Don't track if the gateway is not enabled.
+		$gateway = \WC_Payments::get_gateway();
+		if ( ! $gateway->is_enabled() ) {
+			return false;
+		}
+
+		// Don't track if the account is not connected.
+		$account = WC_Payments::get_account_service();
+		if ( is_null( $account ) || ! $account->is_stripe_connected() ) {
+			return false;
+		}
+
 		// Always respect the user specific opt-out cookie.
 		if ( ! empty( $_COOKIE['tk_opt-out'] ) ) {
 			return false;
@@ -201,7 +218,6 @@ class WooPay_Tracker extends Jetpack_Tracks_Client {
 		}
 
 		// For the remaining events, don't track when woopay is disabled.
-		$gateway            = \WC_Payments::get_gateway();
 		$is_woopay_eligible = WC_Payments_Features::is_woopay_eligible(); // Feature flag.
 		$is_woopay_enabled  = 'yes' === $gateway->get_option( 'platform_checkout', 'no' );
 		if ( ! ( $is_woopay_eligible && $is_woopay_enabled ) ) {
@@ -369,6 +385,51 @@ class WooPay_Tracker extends Jetpack_Tracks_Client {
 				'theme_type'     => 'blocks',
 				'woopay_enabled' => $is_woopay_enabled,
 			]
+		);
+	}
+
+	/**
+	 * Record a Tracks event that the classic cart page has loaded.
+	 */
+	public function classic_cart_page_view() {
+		$this->maybe_record_wcpay_shopper_event(
+			'cart_page_view',
+			[
+				'theme_type' => 'short_code',
+			]
+		);
+	}
+
+	/**
+	 * Record a Tracks event that the blocks cart page has loaded.
+	 */
+	public function blocks_cart_page_view() {
+		$this->maybe_record_wcpay_shopper_event(
+			'cart_page_view',
+			[
+				'theme_type' => 'blocks',
+			]
+		);
+	}
+
+	/**
+	 * Record a Tracks event that the classic cart product has loaded.
+	 */
+	public function classic_product_page_view() {
+		$this->maybe_record_wcpay_shopper_event(
+			'product_page_view',
+			[
+				'theme_type' => 'short_code',
+			]
+		);
+	}
+
+	/**
+	 * Record a Tracks event that the pay-for-order page has loaded.
+	 */
+	public function pay_for_order_page_view() {
+		$this->maybe_record_wcpay_shopper_event(
+			'pay_for_order_page_view'
 		);
 	}
 

@@ -510,6 +510,9 @@ class Troubleshooting
         if ( !defined( 'WOOF_VERSION' ) || !isset( $GLOBALS['WOOF'] ) ) {
             return $result;
         }
+        if ( strpos( WOOF_VERSION, '1' ) === 0 && version_compare( WOOF_VERSION, '1.3.2' ) >= 0 || strpos( WOOF_VERSION, '3' ) === 0 && version_compare( WOOF_VERSION, '3.3.2' ) >= 0 ) {
+            return $result;
+        }
         if ( !method_exists( 'WOOF_EXT', 'is_ext_activated' ) ) {
             return $result;
         }

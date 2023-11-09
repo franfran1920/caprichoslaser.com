@@ -46,19 +46,27 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 			        $prev         = $table;
 
 			        for ( $k = 1; $k < sizeof( $args ); $k ++ ) {
-				        global $solution;
-				        $field = Enumerable::from( $data['fields'] )->firstOrDefault( function ( $x ) use ( $args, $k ) {
-					        return $x['id'] === $args[ $k ];
-				        } );
-				        if ( ! $field ) {
-					        $solution = 0;
-					        break;
-				        }
-				        $value = $field['values'][0]['label'];
-				        if ( $value === '' ) {
-					        $solution = 0;
-					        break;
-				        }
+
+                        global $solution;
+                        $value = '';
+
+                        if( strlen( $args[ $k ] ) < 8 ) {
+                            $value = $args[ $k ];
+                        }
+                        else {
+                            $field = Enumerable::from($data['fields'])->firstOrDefault(function ($x) use ($args, $k) {
+                                return $x['id'] === $args[$k];
+                            });
+                            if ( ! $field ) {
+                                $solution = 0;
+                                break;
+                            }
+                            $value = $field['values'][0]['label'];
+                            if ($value === '') {
+                                $solution = 0;
+                                break;
+                            }
+                        }
 				        $n              = Helper::find_nearest( $value, $prev );
 				        $table_values[] = $n;
 				        $prev           = $prev[ $n ];

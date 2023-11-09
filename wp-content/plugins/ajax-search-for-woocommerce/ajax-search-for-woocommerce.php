@@ -4,13 +4,13 @@
  * Plugin Name: FiboSearch - AJAX Search for WooCommerce
  * Plugin URI: https://fibosearch.com?utm_source=wp-admin&utm_medium=referral&utm_campaign=author_uri&utm_gen=utmdc
  * Description: The most popular WooCommerce product search. Gives your users a well-designed advanced AJAX search bar with live search suggestions.
- * Version: 1.25.0
+ * Version: 1.26.1
  * Author: FiboSearch Team
  * Author URI: https://fibosearch.com?utm_source=wp-admin&utm_medium=referral&utm_campaign=author_uri&utm_gen=utmdc
  * Text Domain: ajax-search-for-woocommerce
  * Domain Path: /languages
  * WC requires at least: 5.5
- * WC tested up to: 7.9
+ * WC tested up to: 8.2
  *
  */
 // Exit if accessed directly
@@ -54,6 +54,10 @@ if ( !class_exists( 'DGWT_WC_Ajax_Search' ) && !function_exists( 'dgoraAsfwFs' )
          */
         public  $nativeSearch ;
         /**
+         * @var \DgoraWcas\Personalization
+         */
+        public  $personalization ;
+        /**
          * @var \DgoraWcas\Engines\TNTSearchMySQL\TNTSearch
          */
         public  $tntsearchMySql ;
@@ -85,7 +89,7 @@ if ( !class_exists( 'DGWT_WC_Ajax_Search' ) && !function_exists( 'dgoraAsfwFs' )
                 // @TODO Temporary always use native WordPress DetailsBox engine.
                 // Replace with details.php and shortinit in future releases
                 new \DgoraWcas\Engines\WordPressNative\DetailsBox();
-                new \DgoraWcas\Personalization();
+                self::$instance->personalization = new \DgoraWcas\Personalization();
                 new \DgoraWcas\Scripts();
                 $embeddingViaMenu = new \DgoraWcas\EmbeddingViaMenu();
                 $embeddingViaMenu->init();

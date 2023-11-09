@@ -208,7 +208,6 @@ namespace SW_WAPF_PRO\Includes\Classes {
             return 'other';
         }
 
-
         public static function get_price_display_options( $for_frontend = false ) {
 
             static $display_options = null;
@@ -286,6 +285,35 @@ namespace SW_WAPF_PRO\Includes\Classes {
 		    return $attributes;
 	    }
 
+        public static function get_product_choices( $product_meta_data = [] ) {
+
+            if( empty( $product_meta_data ) ) return [];
+
+            $ids = [];
+            $result = [];
+            foreach ( $product_meta_data as $data ) {
+                $ids[] = $data['product_id'];
+                $result[ $data['product_id'] ] = $data;
+            }
+
+            $args = [
+                'include'   => $ids,
+                'orderby'   => 'include'
+            ];
+
+            if( get_option( 'woocommerce_hide_out_of_stock_items' ) ) {
+                $args['stock_status'] = 'instock';
+            }
+
+            $products = wc_get_products( $args );
+
+            foreach ( $products as $product ) {
+                $result[ $product->get_id() ][ 'product' ] = $product;
+            }
+
+            return $result;
+
+        }
 
     }
 }

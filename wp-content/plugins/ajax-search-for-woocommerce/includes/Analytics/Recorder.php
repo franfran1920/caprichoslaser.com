@@ -66,7 +66,7 @@ class Recorder
             $autocomplete = false;
         }
         $phrase = strtolower( substr( $phrase, 0, 255 ) );
-        $lang = ( !empty($lang) && Multilingual::isLangCode( strtolower( $lang ) ) ? strtolower( $lang ) : '' );
+        $lang = ( !empty($lang) && Multilingual::isLangCode( $lang ) ? $lang : '' );
         $this->push(
             $phrase,
             $hits,

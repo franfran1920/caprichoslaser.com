@@ -80,7 +80,7 @@ class Multilingual {
 	 * @return bool
 	 */
 	public static function isLangCode( $lang ) {
-		return ! empty( $lang ) && is_string( $lang ) && (bool) preg_match( '/^([a-z]{2,10})$|^([a-z]{2}\-[a-z]{2,4})$/', $lang );
+		return ! empty( $lang ) && is_string( $lang ) && (bool) preg_match( '/^([a-zA-Z]{2,10})$|^([a-zA-Z]{2}[-_][a-zA-Z]{2,4})$/', $lang );
 	}
 
 	/**
@@ -104,9 +104,7 @@ class Multilingual {
 			$defaultLang = substr( $locale, 0, 2 );
 		}
 
-		$defaultLang = apply_filters( 'dgwt/wcas/multilingual/default-language', $defaultLang );
-
-		return $defaultLang;
+		return apply_filters( 'dgwt/wcas/multilingual/default-language', $defaultLang );
 	}
 
 	/**
@@ -132,12 +130,10 @@ class Multilingual {
 		}
 
 		if ( empty( $currentLang ) && ! empty( $_GET['lang'] ) && self::isLangCode( $_GET['lang'] ) ) {
-			$currentLang = strtolower( $_GET['lang'] );
+			$currentLang = $_GET['lang'];
 		}
 
-		$currentLang = apply_filters( 'dgwt/wcas/multilingual/current-language', $currentLang );
-
-		return $currentLang;
+		return apply_filters( 'dgwt/wcas/multilingual/current-language', $currentLang );
 	}
 
 	/**
@@ -148,7 +144,6 @@ class Multilingual {
 	 * @return string
 	 */
 	public static function getPostLang( $postID, $postType = 'product' ) {
-
 		$lang = self::getDefaultLanguage();
 
 		if ( self::isWPML() ) {
@@ -161,10 +156,10 @@ class Multilingual {
                                           FROM $tranlationsTable
                                           WHERE element_type=%s
                                           AND element_id=%d", sanitize_key( $postType ), $postID );
-			$query            = $wpdb->get_var( $sql );
+			$result           = $wpdb->get_var( $sql );
 
-			if ( self::isLangCode( $query ) ) {
-				$lang = $query;
+			if ( self::isLangCode( $result ) ) {
+				$lang = $result;
 			}
 		}
 
@@ -200,10 +195,10 @@ class Multilingual {
                                           AND element_id=%d",
 				$elementType, $termID );
 
-			$query = $wpdb->get_var( $sql );
+			$result = $wpdb->get_var( $sql );
 
-			if ( self::isLangCode( $query ) ) {
-				$lang = $query;
+			if ( self::isLangCode( $result ) ) {
+				$lang = $result;
 			}
 		}
 
@@ -270,7 +265,7 @@ class Multilingual {
 			if ( is_array( $wpmlLangs ) ) {
 				foreach ( $wpmlLangs as $langCode => $details ) {
 					if ( self::isLangCode( $langCode ) || $includeInvalid ) {
-						$langs[] = strtolower( $langCode );
+						$langs[] = $langCode;
 					}
 				}
 			}
@@ -299,7 +294,6 @@ class Multilingual {
 
 			$langs = wp_list_pluck( $langs, 'slug' );
 		}
-
 
 		if ( empty( $langs ) ) {
 			$langs[] = self::getDefaultLanguage();
@@ -513,7 +507,6 @@ class Multilingual {
 			if ( $termID ) {
 				$term = get_term( $termID, $taxonomy );
 			}
-
 		}
 
 		$term = apply_filters( 'dgwt/wcas/multilingual/term', $term, $termID, $taxonomy, $lang );

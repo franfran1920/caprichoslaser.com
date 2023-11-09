@@ -353,6 +353,13 @@ class ThemesCompatibility {
 					'forceMobileOverlayBreakpoint' => 959,
 				),
 			),
+			'bricks'          => array(
+				'slug' => 'bricks',
+				'name' => 'Bricks',
+				'args' => array(
+					'alwaysEnabled' => true,
+				),
+			),
 		);
 	}
 

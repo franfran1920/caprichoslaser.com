@@ -38,6 +38,8 @@
 	width: 2rem;
 	background-size: contain;
 	background-repeat: no-repeat;
+	border-radius: 2px;
+	outline: 1px solid rgba( 0, 0, 0, 0.25 );
 }
 
 .payment-method__brand--amex {
@@ -126,6 +128,10 @@
 
 .payment-method__brand--affirm {
 	background-image: url( '../images/payment-methods/affirm-icon.svg' );
+}
+
+.payment-method__brand--klarna {
+	background-image: url( '../images/payment-methods/klarna.svg' );
 }
 
 .wc_gateways tr[data-gateway_id='woocommerce_payments'] .payment-method__icon {

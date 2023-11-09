@@ -202,31 +202,32 @@ namespace SW_WAPF_PRO\Includes\Classes {
 
 		public static function maybe_add_tax($product, $price, $for_page = 'shop'){
 
-                static $tax_enabled = null;
+            static $tax_enabled = null;
 
-                if( $tax_enabled === null ) {
-                    $tax_enabled = wc_tax_enabled();
-                }
+            if( $tax_enabled === null ) {
+                $tax_enabled = wc_tax_enabled();
+            }
 
-				if( empty( $price ) || $price < 0 || ! $tax_enabled ) {
-                    return apply_filters( 'wapf/pricing/price_with_tax', $price, $price, $product, $for_page );
-                }
+            if( empty( $price ) || $price < 0 || ! $tax_enabled ) {
+                return apply_filters( 'wapf/pricing/price_with_tax', $price, $price, $product, $for_page );
+            }
 
-				if( is_int( $product ) )
-					$product = wc_get_product( $product );
+            if( is_int( $product ) ) {
+                $product = wc_get_product($product);
+            }
 
-				$args = [ 'qty' => 1, 'price' => $price ];
+            $args = [ 'qty' => 1, 'price' => $price ];
 
-				if($for_page === 'cart') {
-					if( get_option('woocommerce_tax_display_cart') === 'incl' )
-                        $price_with_tax = wc_get_price_including_tax($product, $args);
-					else
-                        $price_with_tax = wc_get_price_excluding_tax($product, $args);
-				}
-				else
-                    $price_with_tax = wc_get_price_to_display($product, $args);
+            if($for_page === 'cart') {
+                if( get_option('woocommerce_tax_display_cart') === 'incl' )
+                    $price_with_tax = wc_get_price_including_tax($product, $args);
+                else
+                    $price_with_tax = wc_get_price_excluding_tax($product, $args);
+            }
+            else
+                $price_with_tax = wc_get_price_to_display($product, $args);
 
-                return apply_filters( 'wapf/pricing/price_with_tax', $price_with_tax, $price, $product, $for_page );
+            return apply_filters( 'wapf/pricing/price_with_tax', $price_with_tax, $price, $product, $for_page );
 
 		}
 
@@ -595,7 +596,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 						Helper::replace_in_formula(
 							Helper::evaluate_variables($valu,$fields,$variables,$product_id,$clone_idx,$base_price,$val,$qty,$options_total,$cart_item_fields)
 							,$qty,$base_price,$val,$options_total,$cart_item_fields,$product_id, $clone_idx)
-						,$cart_item_fields, true, ['product_id' => $product_id]);
+						,$cart_item_fields, true, ['product_id' => $product_id ]);
 				}
 
 				return '0';

@@ -1,5 +1,5 @@
 <?php
-$defs = \SW_WAPF_PRO\Includes\Classes\Fields::get_function_definitions();
+$defs = \SW_WAPF_PRO\Includes\Classes\Config::get_function_definitions();
 ?>
 
 <div class="wapf-fb-keyboard">

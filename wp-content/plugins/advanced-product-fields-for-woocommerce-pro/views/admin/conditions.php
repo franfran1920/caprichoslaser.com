@@ -63,14 +63,13 @@ use SW_WAPF_PRO\Includes\Classes\Helper;
                                     </div>
                                     <div rv-if="rule.selectedCondition.value.type | eq 'select2'">
                                         <select
-                                            rv-select2options="rule.value"
                                             rv-on-change="onChange"
                                             rv-select2="rule.value"
                                             class="wapf-select2"
                                             multiple="multiple"
                                             rv-data-select2-placeholder="rule.selectedCondition.value.placeholder"
                                             rv-data-select2-action="rule.selectedCondition.value.action"
-                                            rv-data-select2-prefill="rule.selectedCondition.value.data|tostring"
+                                            rv-data-select2-data="rule.selectedCondition.value.data|tostring"
                                             rv-data-select2-single="rule.selectedCondition.value.single"
                                         >
                                         </select>

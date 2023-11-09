@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'woocommerce/pinterest-for-woocommerce',
-        'pretty_version' => 'dev-release/1.3.10',
-        'version' => 'dev-release/1.3.10',
-        'reference' => '8a13a772a1f78ebedaa6c2cbbcbe6bcb8b1aed36',
+        'pretty_version' => 'dev-release/1.3.13',
+        'version' => 'dev-release/1.3.13',
+        'reference' => 'f2b97f3f52f79f6dcf30f51ac95098aaf0891cdf',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'automattic/jetpack-autoloader' => array(
-            'pretty_version' => 'v2.11.22',
-            'version' => '2.11.22.0',
-            'reference' => '32cc6b4a30e5cb5be669b4c8bed7330202e9f0c1',
+            'pretty_version' => 'v2.12.0',
+            'version' => '2.12.0.0',
+            'reference' => '632b69cfc73ed5505f2b03165e7f68d414d0da12',
             'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/../automattic/jetpack-autoloader',
             'aliases' => array(),
@@ -47,9 +47,9 @@
             'dev_requirement' => false,
         ),
         'woocommerce/pinterest-for-woocommerce' => array(
-            'pretty_version' => 'dev-release/1.3.10',
-            'version' => 'dev-release/1.3.10',
-            'reference' => '8a13a772a1f78ebedaa6c2cbbcbe6bcb8b1aed36',
+            'pretty_version' => 'dev-release/1.3.13',
+            'version' => 'dev-release/1.3.13',
+            'reference' => 'f2b97f3f52f79f6dcf30f51ac95098aaf0891cdf',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

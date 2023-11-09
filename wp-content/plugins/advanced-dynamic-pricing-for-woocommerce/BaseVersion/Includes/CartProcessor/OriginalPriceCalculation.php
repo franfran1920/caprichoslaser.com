@@ -36,7 +36,7 @@ class OriginalPriceCalculation
     public $trdPartyAdjustmentsAmount;
 
     /**
-     * @var float
+     * @var float|string
      */
     public $basePrice;
 

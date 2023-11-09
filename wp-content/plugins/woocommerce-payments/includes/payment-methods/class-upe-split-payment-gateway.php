@@ -8,9 +8,13 @@
 namespace WCPay\Payment_Methods;
 
 use Exception;
+use WC_Order;
 use WC_Payments_API_Setup_Intention;
+use WC_Payments_Features;
+use WC_Payments_Fraud_Service;
 use WCPay\Core\Server\Request\Get_Setup_Intention;
 use WCPay\Exceptions\Add_Payment_Method_Exception;
+use WCPay\Exceptions\Invalid_Address_Exception;
 use WCPay\Exceptions\Process_Payment_Exception;
 use WCPay\Logger;
 use WCPay\Session_Rate_Limiter;
@@ -28,7 +32,8 @@ use WCPay\Constants\Payment_Method;
 use WCPay\Duplicate_Payment_Prevention_Service;
 use WP_User;
 use WC_Payments_Localization_Service;
-
+use WCPay\Payment_Information;
+use WCPay\Core\Server\Request\Create_And_Confirm_Intention;
 
 
 /**
@@ -63,6 +68,7 @@ class UPE_Split_Payment_Gateway extends UPE_Payment_Gateway {
 	 * @param WC_Payments_Order_Service            $order_service                        - Order class instance.
 	 * @param Duplicate_Payment_Prevention_Service $duplicate_payment_prevention_service - Service for preventing duplicate payments.
 	 * @param WC_Payments_Localization_Service     $localization_service                 - Localization service instance.
+	 * @param WC_Payments_Fraud_Service            $fraud_service                        - Fraud service instance.
 	 */
 	public function __construct(
 		WC_Payments_API_Client $payments_api_client,
@@ -75,9 +81,10 @@ class UPE_Split_Payment_Gateway extends UPE_Payment_Gateway {
 		Session_Rate_Limiter $failed_transaction_rate_limiter,
 		WC_Payments_Order_Service $order_service,
 		Duplicate_Payment_Prevention_Service $duplicate_payment_prevention_service,
-		WC_Payments_Localization_Service $localization_service
+		WC_Payments_Localization_Service $localization_service,
+		WC_Payments_Fraud_Service $fraud_service
 	) {
-		parent::__construct( $payments_api_client, $account, $customer_service, $token_service, $action_scheduler_service, $payment_methods, $failed_transaction_rate_limiter, $order_service, $duplicate_payment_prevention_service, $localization_service );
+		parent::__construct( $payments_api_client, $account, $customer_service, $token_service, $action_scheduler_service, $payment_methods, $failed_transaction_rate_limiter, $order_service, $duplicate_payment_prevention_service, $localization_service, $fraud_service );
 		$this->method_description = __( 'Payments made simple, with no monthly fees - designed exclusively for WooCommerce stores. Accept credit cards, debit cards, and other popular payment methods.', 'woocommerce-payments' );
 		$this->description        = '';
 		$this->stripe_id          = $payment_method->get_id();
@@ -97,8 +104,10 @@ class UPE_Split_Payment_Gateway extends UPE_Payment_Gateway {
 	 * @return void
 	 */
 	public function init_hooks() {
-		add_action( "wc_ajax_wcpay_create_payment_intent_$this->stripe_id", [ $this, 'create_payment_intent_ajax' ] );
-		add_action( "wc_ajax_wcpay_update_payment_intent_$this->stripe_id", [ $this, 'update_payment_intent_ajax' ] );
+		if ( ! WC_Payments_Features::is_upe_deferred_intent_enabled() ) {
+			add_action( "wc_ajax_wcpay_create_payment_intent_$this->stripe_id", [ $this, 'create_payment_intent_ajax' ] );
+			add_action( "wc_ajax_wcpay_update_payment_intent_$this->stripe_id", [ $this, 'update_payment_intent_ajax' ] );
+		}
 		add_action( "wc_ajax_wcpay_init_setup_intent_$this->stripe_id", [ $this, 'init_setup_intent_ajax' ] );
 
 		parent::init_hooks();
@@ -361,7 +370,7 @@ class UPE_Split_Payment_Gateway extends UPE_Payment_Gateway {
 		try {
 			$setup_intent_request = Get_Setup_Intention::create( $setup_intent_id );
 			/** @var WC_Payments_API_Setup_Intention $setup_intent */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-			$setup_intent = $setup_intent_request->send( 'wcpay_get_setup_intent_request' );
+			$setup_intent = $setup_intent_request->send();
 
 			$payment_method_id = $setup_intent->get_payment_method_id();
 			// TODO: When adding SEPA and Sofort, we will need a new API call to get the payment method and from there get the type.
@@ -374,6 +383,20 @@ class UPE_Split_Payment_Gateway extends UPE_Payment_Gateway {
 			wc_add_notice( WC_Payments_Utils::get_filtered_error_message( $e ), 'error', [ 'icon' => 'error' ] );
 			Logger::log( 'Error when adding payment method: ' . $e->getMessage() );
 		}
+	}
+
+	/**
+	 * Mandate must be shown and acknowledged by customer before deferred intent UPE payment can be processed.
+	 * This applies to SEPA and Link payment methods.
+	 * https://stripe.com/docs/payments/finalize-payments-on-the-server
+	 *
+	 * @return boolean True if mandate must be shown and acknowledged by customer before deferred intent UPE payment can be processed, false otherwise.
+	 */
+	public function is_mandate_data_required() {
+		$is_stripe_link_enabled = Payment_Method::CARD === $this->get_selected_stripe_payment_type_id() && in_array( Payment_Method::LINK, $this->get_upe_enabled_payment_method_ids(), true );
+		$is_sepa_debit_payment  = Payment_Method::SEPA === $this->get_selected_stripe_payment_type_id();
+
+		return $is_stripe_link_enabled || $is_sepa_debit_payment;
 	}
 
 	/**
@@ -528,5 +551,56 @@ class UPE_Split_Payment_Gateway extends UPE_Payment_Gateway {
 	 */
 	public function get_stripe_id() {
 		return $this->stripe_id;
+	}
+
+	/**
+	 * Handles the shipping requirement for Afterpay payments.
+	 *
+	 * This method extracts the shipping and billing data from the order and sets the appropriate
+	 * shipping data for the Afterpay payment request. If neither shipping nor billing data is valid
+	 * for shipping, an exception is thrown.
+	 *
+	 * @param WC_Order                     $order    The order object containing shipping and billing information.
+	 * @param Create_And_Confirm_Intention $request The Afterpay payment request object to set shipping data on.
+	 *
+	 * @throws Invalid_Address_Exception If neither shipping nor billing address is valid for Afterpay payments.
+	 * @return void
+	 */
+	private function handle_afterpay_shipping_requirement( WC_Order $order, Create_And_Confirm_Intention $request ): void {
+		$check_if_usable = function( array $address ): bool {
+			return $address['country'] && $address['state'] && $address['city'] && $address['postal_code'] && $address['line1'];
+		};
+
+		$shipping_data = $this->order_service->get_shipping_data_from_order( $order );
+		if ( $check_if_usable( $shipping_data['address'] ) ) {
+			$request->set_shipping( $shipping_data );
+			return;
+		}
+
+		$billing_data = $this->order_service->get_billing_data_from_order( $order );
+		if ( $check_if_usable( $billing_data['address'] ) ) {
+			$request->set_shipping( $billing_data );
+			return;
+		}
+
+		throw new Invalid_Address_Exception( __( 'A valid shipping address is required for Afterpay payments.', 'woocommerce-payments' ) );
+	}
+
+
+	/**
+	 * Modifies the create intent parameters when processing a payment.
+	 *
+	 * If the selected Stripe payment type is AFTERPAY, it updates the shipping data in the request.
+	 *
+	 * @param Create_And_Confirm_Intention $request               The request object for creating and confirming intention.
+	 * @param Payment_Information          $payment_information   The payment information object.
+	 * @param WC_Order                     $order                 The order object.
+	 *
+	 * @return void
+	 */
+	protected function modify_create_intent_parameters_when_processing_payment( Create_And_Confirm_Intention $request, Payment_Information $payment_information, WC_Order $order ): void {
+		if ( Payment_Method::AFTERPAY === $this->get_selected_stripe_payment_type_id() ) {
+			$this->handle_afterpay_shipping_requirement( $order, $request );
+		}
 	}
 }

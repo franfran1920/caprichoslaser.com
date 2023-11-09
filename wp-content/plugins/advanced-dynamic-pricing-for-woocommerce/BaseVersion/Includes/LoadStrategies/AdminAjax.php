@@ -49,6 +49,17 @@ class AdminAjax implements LoadStrategy
 
     public function start()
     {
+        $action = isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : '';
+
+        if ( $action === 'woocommerce_do_ajax_product_export' ) {
+            return;
+        }
+
+        $this->startPostConditions();
+    }
+
+    public function startPostConditions()
+    {
         /**
          * @var CustomizerExtensions $customizer
          * @var DiscountMessage $discountMessage

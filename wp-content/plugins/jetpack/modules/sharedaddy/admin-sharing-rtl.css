@@ -183,6 +183,10 @@ li.service.share-nextdoor span:before {
   content: "\f10c";
 }
 
+li.service.share-x span:before {
+  content: "\f10e";
+}
+
 /**
  * Preview section
  */
@@ -367,7 +371,7 @@ body.settings_page_sharing .advanced input[type=submit] {
   text-decoration: line-through;
 }
 
-@media (min-resolution: 120dpi) {
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
   .preview-digg .option-smart-on {
     background-image: url(../../modules/sharedaddy/images/smart-digg@2x.png);
   }

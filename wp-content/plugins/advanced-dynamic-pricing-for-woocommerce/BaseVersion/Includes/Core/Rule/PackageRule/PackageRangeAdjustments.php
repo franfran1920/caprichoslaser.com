@@ -4,6 +4,7 @@ namespace ADP\BaseVersion\Includes\Core\Rule\PackageRule;
 
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\RangeDiscount;
+use ADP\BaseVersion\Includes\Core\RuleProcessor\BulkDiscount\BulkMeasurementEnum;
 use Exception;
 
 defined('ABSPATH') or exit;
@@ -53,6 +54,11 @@ class PackageRangeAdjustments
     protected $groupBy;
 
     /**
+     * @var BulkMeasurementEnum
+     */
+    protected $measurement;
+
+    /**
      * Coupon or Fee
      *
      * @var bool
@@ -88,8 +94,9 @@ class PackageRangeAdjustments
      * @param Context $context
      * @param string $type
      * @param string $groupBy
+     * @param BulkMeasurementEnum $measurement
      */
-    public function __construct($context, $type, $groupBy)
+    public function __construct($context, $type, $groupBy, $measurement)
     {
         if ( ! in_array($type, self::AVAILABLE_TYPES)) {
             $context->handleError(new Exception(sprintf("Item range adjustment type '%s' not supported",
@@ -110,6 +117,7 @@ class PackageRangeAdjustments
         }
 
         $this->type                      = $type;
+        $this->measurement               = $measurement;
         $this->groupBy                   = $groupBy;
         $this->replaceAsCartAdjustment   = false;
         $this->replaceCartAdjustmentCode = null;
@@ -153,6 +161,14 @@ class PackageRangeAdjustments
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return BulkMeasurementEnum
+     */
+    public function getMeasurement()
+    {
+        return $this->measurement;
     }
 
     /**
