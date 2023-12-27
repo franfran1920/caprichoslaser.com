@@ -10,8 +10,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 	use DateTime;
 	use DateInterval;
 
-    class Licensing
-    {
+    class Licensing {
         private $api_url     = '';
         private $slug        = '';
         private $version     = '';
@@ -21,12 +20,12 @@ namespace SW_WAPF_PRO\Includes\Classes {
         private $exp         = '';
         private $cached_plugin_update = null;
 
-        public function __construct( $api_url, $plugin_base ) {
+        public function __construct( ) {
 
-            $this->api_url     = trailingslashit( $api_url );
+            $this->api_url     = 'https://api.studiowombat.com/';
             $this->slug        = wapf_get_setting('slug');
             $this->version     = wapf_get_setting('version');
-            $this->name        = $plugin_base;
+            $this->name        = wapf_get_setting('basename');
 
 	        add_filter( 'pre_set_site_transient_update_plugins', [$this, 'check_update'] );
 	        add_filter( 'plugins_api', [$this, 'plugins_api_filter'], 10, 3 );
@@ -52,7 +51,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
         {
             $key = $this->get_key();
             if($key !== false){
-                $this->api_request('license/deactivate/'.$key.'/'.$this->slug);
+                $this->api_request('license/deactivate', [ 'key' => $key ] );
             }
             delete_option('advanced-product-fields-for-woocommerce-pro_license');
 
@@ -63,7 +62,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
         {
             $key = $_POST['wapf_license'];
 
-            $result = $this->api_request('license/activate/'.$key.'/'.$this->slug);
+            $result = $this->api_request('license/activate',[ 'key' => $key ] );
 
             if($result === null)
                 return "Couldn't connect to license server";
@@ -94,7 +93,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
             if ($this->get_key() === false)
                 return $_data;
 
-            $api_response = $this->api_request( 'plugin/info/'.$this->get_key().'/'.$this->slug );
+            $api_response = $this->api_request( 'plugin/info', [ 'key' => $this->get_key() ] );
 
             if ( null !== $api_response ) {
                 $_data = $api_response;
@@ -138,7 +137,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 		        $version_info = $this->wp_override ? null : $this->get_cached_version_info();
 
             if ( null === $version_info) {
-                $version_info = $this->api_request( 'plugin/update/'.$this->version.'/'.$this->get_key() . '/'.$this->slug );
+                $version_info = $this->api_request( 'plugin/update', [ 'version' => $this->version, 'key' => $this->get_key() ] );
                 if(isset($version_info->icons))
                 	$version_info->icons = json_decode(json_encode($version_info->icons),true);
                 $this->set_version_info_cache( $version_info );
@@ -179,32 +178,34 @@ namespace SW_WAPF_PRO\Includes\Classes {
 
         }
 
-        private function api_request( $url ) {
+        private function api_request( $action, $api_data = [] ) {
+
             global $wp_version;
 
             $api_params = [
                 'wp_version'    => $wp_version,
                 'url'           => home_url(),
-                'is_ssl'        => is_ssl()
+                'slug'          => $this->slug,
+                'action'        => $action
             ];
 
 	        $data = [
 		        'timeout' 	=> apply_filters('wapf/licensing/timeout', 5),
-		        'body'		=> $api_params
+		        'body'		=> array_merge($api_params, $api_data )
 	        ];
 
-            $request = wp_remote_post( $this->api_url .$url, $data);
-
-            $return = null;
+            $request = wp_remote_post( $this->api_url, $data);
 
             if ( is_wp_error( $request ) )
-                return $return;
+                return null;
+
+            $return = null;
 
             if ( $request['response']['code'] == 200 )
             {
                 $return = json_decode($request['body']);
 
-                if( strpos($url,'plugin/update') !== false && is_object($return)) {
+                if( $action === 'update' && is_object($return)) {
 		                $return->plugin = $this->name;
 		                $return->id = $this->name;
                 }

@@ -134,7 +134,14 @@ class WpmlCmp
     {
         if (isset($this->wcWpml->multi_currency)) {
             $currency = $this->wcWpml->multi_currency->get_client_currency();
-            $rate     = $this->wcWpml->multi_currency->exchange_rate_services->get_currency_rate($currency);
+//            $rate     = $this->wcWpml->multi_currency->exchange_rate_services->get_currency_rate($currency);
+
+            $rates = $this->wcWpml->multi_currency->get_exchange_rates();
+            if (!isset($rates[$currency])) {
+                return $rule;
+            }
+            $rate = floatval($rates[$currency]);
+
             if ($rate) {
                 $rule = RuleTranslator::setCurrency($rule, $rate);
             }

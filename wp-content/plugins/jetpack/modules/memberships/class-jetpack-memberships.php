@@ -7,7 +7,7 @@
  */
 
 use Automattic\Jetpack\Blocks;
-use Automattic\Jetpack\Extensions\Premium_Content\Subscription_Service\Token_Subscription_Service;
+use Automattic\Jetpack\Extensions\Premium_Content\Subscription_Service\Abstract_Token_Subscription_Service;
 use Automattic\Jetpack\Status\Host;
 use const Automattic\Jetpack\Extensions\Subscriptions\META_NAME_FOR_POST_LEVEL_ACCESS_SETTINGS;
 use const Automattic\Jetpack\Extensions\Subscriptions\META_NAME_FOR_POST_TIER_ID_SETTINGS;
@@ -337,7 +337,7 @@ class Jetpack_Memberships {
 	 * @param string   $content - Recurring Payment block content.
 	 * @param WP_Block $block - Recurring Payment block instance.
 	 *
-	 * @return string|void
+	 * @return string|void - HTML for the button, void removes the button.
 	 */
 	public function render_button( $attributes, $content = null, $block = null ) {
 		Jetpack_Gutenberg::load_assets_as_required( self::$button_block_name, array( 'thickbox', 'wp-polyfill' ) );
@@ -350,14 +350,30 @@ class Jetpack_Memberships {
 			return;
 		}
 
-		$plan_id = (int) $attributes['planId'];
-		$product = get_post( $plan_id );
-		if ( ! $product || is_wp_error( $product ) ) {
+		// This is string of '+` separated plan ids. Loop through them and
+		// filter out the ones that are not valid.
+		$plan_ids    = explode( '+', $attributes['planId'] );
+		$valid_plans = array();
+		foreach ( $plan_ids as $plan_id ) {
+			if ( ! is_numeric( $plan_id ) ) {
+				continue;
+			}
+			$product = get_post( $plan_id );
+			if ( ! $product || is_wp_error( $product ) ) {
+				continue;
+			}
+			if ( $product->post_type !== self::$post_type_plan || 'publish' !== $product->post_status ) {
+				continue;
+			}
+			$valid_plans[] = $plan_id;
+		}
+
+		// If none are valid, return.
+		// (Returning like this makes the button disappear.)
+		if ( empty( $valid_plans ) ) {
 			return;
 		}
-		if ( $product->post_type !== self::$post_type_plan || 'publish' !== $product->post_status ) {
-			return;
-		}
+		$plan_id = implode( '+', $valid_plans );
 
 		add_thickbox();
 
@@ -487,12 +503,12 @@ class Jetpack_Memberships {
 			$post_id = get_the_ID();
 		}
 		if ( ! $post_id ) {
-			return Token_Subscription_Service::POST_ACCESS_LEVEL_EVERYBODY;
+			return Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_EVERYBODY;
 		}
 
 		$post_access_level = get_post_meta( $post_id, self::$post_access_level_meta_name, true );
 		if ( empty( $post_access_level ) ) {
-			$post_access_level = Token_Subscription_Service::POST_ACCESS_LEVEL_EVERYBODY;
+			$post_access_level = Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_EVERYBODY;
 		}
 		return $post_access_level;
 	}
@@ -535,8 +551,7 @@ class Jetpack_Memberships {
 	}
 
 	/**
-	 * Determines whether the current user can view the post based on the newsletter access level
-	 * and caches the result.
+	 * Determines whether the current user is a paid subscriber and caches the result.
 	 *
 	 * @return bool Whether the post can be viewed
 	 */
@@ -545,7 +560,7 @@ class Jetpack_Memberships {
 
 		require_once JETPACK__PLUGIN_DIR . 'extensions/blocks/premium-content/_inc/subscription-service/include.php';
 		$paywall            = \Automattic\Jetpack\Extensions\Premium_Content\subscription_service();
-		$is_paid_subscriber = $paywall->visitor_can_view_content( self::get_all_newsletter_plan_ids(), Token_Subscription_Service::POST_ACCESS_LEVEL_PAID_SUBSCRIBERS_ALL_TIERS );
+		$is_paid_subscriber = $paywall->visitor_can_view_content( self::get_all_newsletter_plan_ids(), Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_PAID_SUBSCRIBERS_ALL_TIERS );
 
 		self::$user_is_paid_subscriber_cache[ $user_id ] = $is_paid_subscriber;
 		return $is_paid_subscriber;
@@ -555,11 +570,15 @@ class Jetpack_Memberships {
 	 * Determines whether the current user can view the post based on the newsletter access level
 	 * and caches the result.
 	 *
+	 * @param int|null $post_id Explicit post id to check against.
+	 *
 	 * @return bool Whether the post can be viewed
 	 */
-	public static function user_can_view_post() {
+	public static function user_can_view_post( $post_id = null ) {
 		$user_id = get_current_user_id();
-		$post_id = get_the_ID();
+		if ( null === $post_id ) {
+			$post_id = get_the_ID();
+		}
 
 		if ( false === $post_id ) {
 			$post_id = 0;
@@ -571,14 +590,14 @@ class Jetpack_Memberships {
 		}
 
 		$post_access_level = self::get_post_access_level();
-		if ( Token_Subscription_Service::POST_ACCESS_LEVEL_EVERYBODY === $post_access_level ) {
+		if ( Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_EVERYBODY === $post_access_level ) {
 			self::$user_can_view_post_cache[ $cache_key ] = true;
 			return true;
 		}
 
 		if ( $user_id === 0 ) {
 			if ( defined( 'WPCOM_SENDING_POST_TO_SUBSCRIBERS' ) && WPCOM_SENDING_POST_TO_SUBSCRIBERS ) {
-				if ( Token_Subscription_Service::POST_ACCESS_LEVEL_SUBSCRIBERS === $post_access_level ) {
+				if ( Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_SUBSCRIBERS === $post_access_level ) {
 					return true;
 				}
 			}
@@ -590,15 +609,22 @@ class Jetpack_Memberships {
 		$all_newsletters_plan_ids = self::get_all_newsletter_plan_ids();
 
 		if ( 0 === count( $all_newsletters_plan_ids ) &&
-			Token_Subscription_Service::POST_ACCESS_LEVEL_PAID_SUBSCRIBERS === $post_access_level ||
-			Token_Subscription_Service::POST_ACCESS_LEVEL_PAID_SUBSCRIBERS_ALL_TIERS === $post_access_level
+			Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_PAID_SUBSCRIBERS === $post_access_level ||
+			Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_PAID_SUBSCRIBERS_ALL_TIERS === $post_access_level
 		) {
 			// The post is paywalled but there is no newsletter plans on the site.
 			// We downgrade the post level to subscribers-only
-			$post_access_level = Token_Subscription_Service::POST_ACCESS_LEVEL_SUBSCRIBERS;
+			$post_access_level = Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_SUBSCRIBERS;
 		}
 
 		$can_view_post = $paywall->visitor_can_view_content( $all_newsletters_plan_ids, $post_access_level );
+
+		if ( $can_view_post && $post_access_level !== Abstract_Token_Subscription_Service::POST_ACCESS_LEVEL_EVERYBODY ) {
+			// Prevent batcache to cache paywalled content
+			if ( function_exists( 'batcache_cancel' ) ) {
+				batcache_cancel();
+			}
+		}
 
 		self::$user_can_view_post_cache[ $cache_key ] = $can_view_post;
 		return $can_view_post;
@@ -684,45 +710,25 @@ class Jetpack_Memberships {
 		// We can retrieve the data directly except on a Jetpack/Atomic cached site or
 		$is_cached_site = ( new Host() )->is_wpcom_simple() && is_jetpack_site();
 		if ( ! $is_cached_site ) {
-			return array_merge(
-				get_posts(
-					array(
-						'posts_per_page' => -1,
-						'fields'         => 'ids',
-						'post_type'      => self::$post_type_plan,
-						'meta_query'     => array(
-							'relation' => 'AND',
-							array(
-								'key'   => 'jetpack_memberships_site_subscriber',
-								'value' => true,
-							),
-							array(
-								'key'     => 'jetpack_memberships_interval',
-								'value'   => 'one-time',
-								'compare' => '!=',
-							),
-						),
-					)
-				),
-				get_posts(
-					array(
-						'posts_per_page' => -1,
-						'fields'         => 'ids',
-						'post_type'      => self::$post_type_plan,
-						'meta_key'       => 'jetpack_memberships_type',
-						'meta_value'     => self::$type_tier,
-					)
+			return get_posts(
+				array(
+					'posts_per_page' => -1,
+					'fields'         => 'ids',
+					'post_type'      => self::$post_type_plan,
+					'meta_key'       => 'jetpack_memberships_type',
+					'meta_value'     => self::$type_tier,
 				)
 			);
 
 		} else {
 			// On cached site on WPCOM
 			require_lib( 'memberships' );
-			$only_tiers    = true;
 			$allow_deleted = true;
-			// In https://github.com/Automattic/gold/issues/190, it needs to be changed to
-			// Memberships_Product::get_product_list( $this->blog_id, Membership_Product::TIER_TYPE)
-			$list = Memberships_Product::get_product_list( get_current_blog_id(), null, null, $only_tiers, $allow_deleted );
+			$list          = Memberships_Product::get_product_list( get_current_blog_id(), self::$type_tier, null, $allow_deleted );
+
+			if ( is_wp_error( $list ) ) {
+				return array();
+			}
 
 			return array_map(
 				function ( $product ) {
@@ -791,14 +797,25 @@ class Jetpack_Memberships {
 	}
 
 	/**
+	 * Returns the email of the current user.
+	 *
+	 * @return string
+	 */
+	public static function get_current_user_email() {
+		require_once JETPACK__PLUGIN_DIR . 'extensions/blocks/premium-content/_inc/subscription-service/include.php';
+		$subscription_service = \Automattic\Jetpack\Extensions\Premium_Content\subscription_service();
+		return $subscription_service->get_subscriber_email();
+	}
+
+	/**
 	 * Returns if the current user is subscribed or not.
 	 *
 	 * @return boolean
 	 */
-	public static function get_current_user_subscriber_email() {
+	public static function is_current_user_subscribed() {
 		require_once JETPACK__PLUGIN_DIR . 'extensions/blocks/premium-content/_inc/subscription-service/include.php';
 		$subscription_service = \Automattic\Jetpack\Extensions\Premium_Content\subscription_service();
-		return $subscription_service->get_subscriber_email();
+		return $subscription_service->is_current_user_subscribed();
 	}
 }
 Jetpack_Memberships::get_instance();

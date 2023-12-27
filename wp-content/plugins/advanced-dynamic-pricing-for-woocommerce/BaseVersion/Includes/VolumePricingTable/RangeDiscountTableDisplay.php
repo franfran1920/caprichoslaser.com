@@ -74,7 +74,29 @@ class RangeDiscountTableDisplay
 
     public function echoProductTableContent()
     {
+        global $product;
+
+        if ($product instanceof \WC_Product_Variable) {
+            $this->echoDefaultVariation($product);
+            return;
+        }
+
         echo $this->rangeDiscountTable->getProductTableContent();
+    }
+
+    /**
+     * @param \WC_Product_Variable $product
+     */
+    protected function echoDefaultVariation($product)
+    {
+        $attributes = [];
+        foreach ($product->get_variation_attributes() as $attrName => $options) {
+            $attributes[wc_variation_attribute_name($attrName)] = $product->get_variation_default_attribute($attrName);
+        }
+
+        $variationId = \WC_Data_Store::load('product')->find_matching_product_variation($product, $attributes);
+
+        echo $this->rangeDiscountTable->getProductTableContent($variationId, $attributes);
     }
 
     public function echoCategoryTableContent()

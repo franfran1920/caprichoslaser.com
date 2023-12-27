@@ -11,7 +11,7 @@ $cols_mobile = isset($model['field']->options['items_per_row_mobile']) ? intval(
 if(!empty($model['field']->options['choices'])) {
 
     $label_pos = isset($model['field']->options['label_pos']) ? $model['field']->options['label_pos'] : 'default';
-    echo '<div class="wapf-image-swatch-wrapper wapf-swatch-wrapper " style="--wapf-cols:'.$cols.';--wapf-cols-t:'.$cols_tablet.';--wapf-cols-m:'.$cols_mobile.'" data-is-required="'. $model['field']->required .'">';
+    echo '<div class="wapf-image-swatch-wrapper wapf-swatch-wrapper " style="--wapf-cols:'.$cols.';--wapf-cols-t:'.$cols_tablet.';--wapf-cols-m:'.$cols_mobile.'">';
     //echo '<input class="wapf-tf-h" name="wapf[field_' . $model['field']->id . ']" value="1" type="hidden" />';
     echo '<input type="hidden" class="wapf-tf-h" data-fid="'.$model['field']->id.'" value="1" name="wapf[field_'.$model['field']->id.']" />';
     for( $i = 0; $i < count( $model['field']->options['choices'] ); $i++ ) {

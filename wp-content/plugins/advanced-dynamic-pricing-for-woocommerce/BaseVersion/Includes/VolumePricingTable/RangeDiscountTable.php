@@ -94,8 +94,8 @@ class RangeDiscountTable
         $this->filtersFormatter         = Factory::get("VolumePricingTable_FiltersFormatter", $this->context);
         $this->priceFunctions           = new PriceFunctions();
 
-        $this->productContextOptions  = new ProductBulkTableThemeProperties();
-        $this->categoryContextOptions = new CategoryVolumePricingTableProperties();
+        $this->productContextOptions  = new ProductVolumePricingTableProperties();
+        $this->categoryContextOptions = new CategoryBulkTableThemeProperties();
     }
 
     public function withContext(Context $context)
@@ -434,11 +434,6 @@ class RangeDiscountTable
     public function getProductTable($product)
     {
         $contextOptions = $this->buildProductContextOptions();
-        foreach (get_object_vars($this->productContextOptions) as $key => $value) {
-            if ($value !== null) {
-                $contextOptions->$key = $value;
-            }
-        }
 
         $context = $this->context;
 
@@ -535,7 +530,10 @@ class RangeDiscountTable
                 $rule->getProductRangeAdjustmentHandler()->getMeasurement()
             );
 
-            $table->addColumn($index, apply_filters('adp_simple_discount_product_table_column', $value, $range));
+            $table->addColumn(
+                $index,
+                apply_filters('adp_simple_discount_product_table_column', $value, $range, $rule)
+            );
             $columns[] = $range;
         }
 
@@ -1030,11 +1028,6 @@ class RangeDiscountTable
         }
 
         $contextOptions = $this->buildCategoryContextOptions();
-        foreach (get_object_vars($this->categoryContextOptions) as $key => $value) {
-            if ($value !== null) {
-                $contextOptions->$key = $value;
-            }
-        }
 
         $context      = $this->context;
 
@@ -1306,16 +1299,40 @@ class RangeDiscountTable
      * @param BulkMeasurementEnum $measurement
      * @return string
      */
-    protected function formatRangeValueDependsOnMeasurement(RangeDiscount $range, BulkMeasurementEnum $measurement)
+    public function formatRangeValueDependsOnMeasurement(RangeDiscount $range, BulkMeasurementEnum $measurement)
     {
+        $formatValueCallback = self::makeFormatValueCallback(
+            $this->priceFunctions,
+            $this->context,
+            $measurement
+        );
+
+        if ($range->getFrom() == $range->getTo()) {
+            $formattedValue = $formatValueCallback($range->getFrom());
+        } else {
+            if (is_infinite($range->getTo())) {
+                $formattedValue = $formatValueCallback($range->getFrom()) . ' +';
+            } else {
+                $formattedValue = $formatValueCallback($range->getFrom()) . ' - ' . $formatValueCallback($range->getTo());
+            }
+        }
+
+        return $formattedValue;
+    }
+
+    public static function makeFormatValueCallback(
+        PriceFunctions $priceFunctions,
+        Context $context,
+        BulkMeasurementEnum $measurement
+    ): \Closure {
         if ($measurement->equals(BulkMeasurementEnum::WEIGHT())) {
             $formatValueCallback = function ($rangeValue) {
                 return wc_format_weight($rangeValue);
             };
         } else {
             if ($measurement->equals(BulkMeasurementEnum::SUM())) {
-                $formatValueCallback = function ($rangeValue) {
-                    return $this->priceFunctions->format($rangeValue * $this->context->currencyController->getRate());
+                $formatValueCallback = function ($rangeValue) use ($priceFunctions, $context) {
+                    return $priceFunctions->format($rangeValue * $context->currencyController->getRate());
                 };
             } else {
                 if ($measurement->equals(BulkMeasurementEnum::QTY())) {
@@ -1330,17 +1347,7 @@ class RangeDiscountTable
             }
         }
 
-        if ($range->getFrom() == $range->getTo()) {
-            $formattedValue = $formatValueCallback($range->getFrom());
-        } else {
-            if (is_infinite($range->getTo())) {
-                $formattedValue = $formatValueCallback($range->getFrom()) . ' +';
-            } else {
-                $formattedValue = $formatValueCallback($range->getFrom()) . ' - ' . $formatValueCallback($range->getTo());
-            }
-        }
-
-        return $formattedValue;
+        return $formatValueCallback;
     }
 
     /**

@@ -99,7 +99,8 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			/**
 			 * Show icon on order list for picked up orders
 			 */
-			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'prepare_picked_up_icon' ) );
+			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'prepare_picked_up_icon' ), 10, 2 );
+			add_action( 'manage_woocommerce_page_wc-orders_custom_column', array( $this, 'prepare_picked_up_icon' ), 10, 2 );
 
 			/**
 			 * Save Order Meta Boxes
@@ -117,6 +118,8 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			add_action( 'woocommerce_my_account_my_orders_actions', array( $this, 'show_picked_up_icon_on_orders' ), 99, 2 );
 
 			add_action( 'woocommerce_admin_field_carriers_list', array( $this, 'show_carriers_settings' ) );
+
+			add_action( 'before_woocommerce_init', array( $this, 'declare_wc_features_support' ) );
 
 		}
 
@@ -248,7 +251,11 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			wp_register_script( 'tooltipster', YITH_YWOT_URL . 'assets/js/tooltipster.bundle.min.js', array( 'jquery' ), '4.2.8', true );
 			wp_register_script( 'ywot_script', YITH_YWOT_URL . 'assets/js/ywot.js', array(), YITH_YWOT_VERSION, true );
 
-			if ( ( is_admin() && ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'yith_woocommerce_order_tracking_panel' === $_GET['page'] ) || ( 'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) || ( 'post.php' === $pagenow && isset( $_GET['post'] ) ) || ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) ) || is_account_page() ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$current_screen_id = function_exists( 'get_current_screen' ) ? get_current_screen()->id : '';
+
+			$if_shop_order = function_exists( 'wc_get_page_screen_id' ) ? wc_get_page_screen_id( 'shop-order' ) === $current_screen_id : 'shop-order' === $current_screen_id;
+
+			if ( ( is_admin() && ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'yith_woocommerce_order_tracking_panel' === $_GET['page'] ) || ( 'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) || ( 'post.php' === $pagenow && isset( $_GET['post'] ) ) || ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) ) || is_account_page() || $if_shop_order ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$can_be_enqueue = true;
 			}
 
@@ -270,7 +277,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 				wp_enqueue_script( 'ywot_script' );
 			}
 
-			if ( function_exists( 'get_current_screen' ) && get_current_screen() && 'shop_order' === get_current_screen()->id && class_exists( 'YIT_Assets' ) ) {
+			if ( $if_shop_order && class_exists( 'YIT_Assets' ) ) {
 				// Make sure pluing-fw scripts and styles are registered.
 				if ( ! wp_script_is( 'yith-plugin-fw-fields', 'registered' ) || ! wp_style_is( 'yith-plugin-fw-fields', 'registered' ) ) {
 					YIT_Assets::instance()->register_styles_and_scripts();
@@ -290,8 +297,16 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @access public
 		 * @return void
 		 */
-		public function add_order_tracking_metabox() {
-			add_meta_box( 'yith-order-tracking-information', __( 'Order tracking', 'yith-woocommerce-order-tracking' ), array( $this, 'show_order_tracking_metabox' ), 'shop_order', 'side', 'high' );
+		public function add_order_tracking_metabox( $post_type ) {
+			if ( in_array( $post_type, array( wc_get_page_screen_id( 'shop-order' ), 'shop_order' ), true ) ) {
+				add_meta_box( 
+					'yith-order-tracking-information', 
+					__( 'Order tracking', 'yith-woocommerce-order-tracking' ), 
+					array( $this, 'show_order_tracking_metabox' ), 
+					$post_type, 
+					'side', 
+					'high' );
+			}
 		}
 
 		/**
@@ -477,15 +492,15 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 * @access public
 		 * @return void
 		 */
-		public function prepare_picked_up_icon( $column ) {
+		public function prepare_picked_up_icon( $column, $post_id ) {
 			// If column is not of type order_status, skip it.
 			if ( 'order_status' !== $column ) {
 				return;
 			}
 
-			global $the_order;
+			$order = $post_id instanceof WC_Order ? $post_id : wc_get_order( $post_id );
 
-			$data = get_post_custom( yit_get_prop( $the_order, 'id' ) );
+			$data = get_post_custom( yit_get_prop( $order, 'id' ) );
 
 			// if current order is not flagged as picked up, skip.
 			if ( ! $this->is_order_picked_up( $data ) ) {
@@ -632,6 +647,15 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		 */
 		public function show_carriers_settings() {
 			yith_ywot_get_view( 'carriers.php' );
+		}
+
+		/** 
+		 *  Declare support for WooCommerce features. 
+		 */ 
+		public function declare_wc_features_support() {
+			if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', YITH_YWOT_FREE_INIT, true);
+			}
 		}
 	}
 }

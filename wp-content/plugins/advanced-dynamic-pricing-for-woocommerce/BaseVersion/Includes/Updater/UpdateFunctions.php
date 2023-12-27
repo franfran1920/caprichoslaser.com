@@ -12,6 +12,8 @@ use ADP\BaseVersion\Includes\Enums\RuleTypeEnum;
 use ADP\Factory;
 use ADP\BaseVersion\Includes\Database\Repository\ThemeModificationsRepository;
 use ADP\BaseVersion\Includes\CustomizerExtensions\AdvertisingThemeProperties;
+use ADP\BaseVersion\Includes\Core\Rule\CartCondition\Interfaces\ValueComparisonCondition;
+use ADP\BaseVersion\Includes\Core\Rule\CartCondition\Interfaces\ListComparisonCondition;
 
 defined('ABSPATH') or exit;
 
@@ -526,6 +528,97 @@ class UpdateFunctions
             $settings->set($newOptionName, $enable);
         }
         $settings->save();
+    }
+
+    public static function migratePostalCodesConditionsTo_4_5_3()
+    {
+        global $wpdb;
+
+        $table = $wpdb->prefix . Rule::TABLE_NAME;
+        $sql   = "SELECT id, conditions FROM $table";
+        $rows  = $wpdb->get_results($sql);
+
+        $rows = array_filter(array_map(function ($item) {
+            $result = array(
+                'id'           => $item->id,
+                'conditions' => unserialize($item->conditions),
+            );
+
+            if (empty($result['conditions'])) {
+                return false;
+            }
+
+            return $result;
+        }, $rows));
+
+
+        foreach ($rows as &$row) {
+            $hasTypeCustomerPostcode = false;
+            foreach ($row['conditions'] as &$data) {
+                if('customer_postcode' !== $data['type']) {
+                    continue;
+                }
+                $hasTypeCustomerPostcode = true;
+                $data['options'][ValueComparisonCondition::COMPARISON_VALUE_METHOD_KEY] = $data['options'][ListComparisonCondition::COMPARISON_LIST_METHOD_KEY];
+                $data['options'][ValueComparisonCondition::COMPARISON_VALUE_KEY]        = $data['options'][ListComparisonCondition::COMPARISON_LIST_KEY];
+                unset($data['options'][ListComparisonCondition::COMPARISON_LIST_METHOD_KEY]);
+                unset($data['options'][ListComparisonCondition::COMPARISON_LIST_KEY]);
+            }
+            if($hasTypeCustomerPostcode) {
+                $row['conditions']       = serialize($row['conditions']);
+
+                $wpdb->update($table, array(
+                    'conditions'       => $row['conditions'],
+                ), array('id' => $row['id']));
+            }
+        }
+    }
+
+    public static function migrateSpentConditionsTo_4_5_3()
+    {
+        global $wpdb;
+
+        $table = $wpdb->prefix . Rule::TABLE_NAME;
+        $sql   = "SELECT id, conditions FROM $table";
+        $rows  = $wpdb->get_results($sql);
+
+        $rows = array_filter(array_map(function ($item) {
+            $result = array(
+                'id'           => $item->id,
+                'conditions' => unserialize($item->conditions),
+            );
+
+            if (empty($result['conditions'])) {
+                return false;
+            }
+
+            $hasSpentConditions = false;
+            foreach($result['conditions'] as $data) {
+                if(in_array($data['type'], ['customer_spent_and_subtotal', 'customer_spent_and_subtotal_inc_vat'])) {
+                    $hasSpentConditions = true;
+                }
+            }
+            if(!$hasSpentConditions) {
+                return false;
+            }
+
+            return $result;
+        }, $rows));
+
+        foreach ($rows as &$row) {
+            foreach ($row['conditions'] as &$data) {
+                if(!in_array($data['type'], ['customer_spent_and_subtotal', 'customer_spent_and_subtotal_inc_vat'])) {
+                    continue;
+                }
+                $data['options']['time_range'] = 'all_time';
+            }
+
+            $row['conditions'] = serialize($row['conditions']);
+
+            $wpdb->update($table, array(
+                'conditions'       => $row['conditions'],
+            ), array('id' => $row['id']));
+        }
     }
 }
 

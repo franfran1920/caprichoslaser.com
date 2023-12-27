@@ -646,44 +646,19 @@ class CartProcessor
                     'incl' === $this->context->getTaxDisplayCartMode()
                 );
 
-                $initialDiscountTotal = $initialTotals['discount_total'] ?? 0.0;
+                if ( $this->cartCouponsProcessor->disableAllWcCoupons() ) {
+                    $this->replaceCouponSuccessNotices($initialCoupons);
+                } else {
+                    $initialDiscountTotal = $initialTotals['discount_total'] ?? 0.0;
 
-                if ( $this->compareStrategy->floatLess(0.0, $initialDiscountTotal) ) {
-                    if ($this->compareStrategy->floatLess($amountSavedByPricing, $initialDiscountTotal)) {
-                        $wcCart->applied_coupons = $initialCoupons;
-                        $this->deleteAllPricingDataFromCart($wcCart);
-                        $cart->getContext()->getSession()->flush()->push();
-                        $wcCart->set_session();
-                    } else {
-                        $newNotices = [];
-                        $appliedSuccessfullyText = __('Coupon code applied successfully.', 'woocommerce');
-                        foreach (wc_get_notices() as $type => $notices) {
-                            if ($type === "success") {
-                                $notices = array_filter($notices, function ($notice) use ($appliedSuccessfullyText) {
-                                    return !($notice['notice'] && $notice['notice'] === $appliedSuccessfullyText);
-                                });
-                            }
-
-                            $newNotices[$type] = $notices;
-                        }
-                        wc_set_notices($newNotices);
-
-                        $initialCoupons = array_filter(
-                            $initialCoupons,
-                            function ($code) {
-                                return ! $this->isAdpCouponCode($code);
-                            }
-                        );
-
-                        foreach ( $initialCoupons as $initialCoupon ) {
-                            wc_add_notice(
-                                str_replace(
-                                    "{{name}}",
-                                    $initialCoupon,
-                                    "Sorry, the coupon \"{{name}}\" is not valid."
-                                ),
-                                'error'
-                            );
+                    if ( $this->compareStrategy->floatLess(0.0, $initialDiscountTotal) ) {
+                        if ($this->compareStrategy->floatLess($amountSavedByPricing, $initialDiscountTotal)) {
+                            $wcCart->applied_coupons = $initialCoupons;
+                            $this->deleteAllPricingDataFromCart($wcCart);
+                            $cart->getContext()->getSession()->flush()->push();
+                            $wcCart->set_session();
+                        } else {
+                            $this->replaceCouponSuccessNotices($initialCoupons);
                         }
                     }
                 }
@@ -697,6 +672,39 @@ class CartProcessor
         do_action('wdp_process_complete', $wcCart, $result, $cart, $this);
 
         return $cart;
+    }
+
+    protected function replaceCouponSuccessNotices($initialCoupons) {
+        $newNotices = [];
+        $appliedSuccessfullyText = __('Coupon code applied successfully.', 'woocommerce');
+        foreach (wc_get_notices() as $type => $notices) {
+            if ($type === "success") {
+                $notices = array_filter($notices, function ($notice) use ($appliedSuccessfullyText) {
+                    return !($notice['notice'] && $notice['notice'] === $appliedSuccessfullyText);
+                });
+            }
+
+            $newNotices[$type] = $notices;
+        }
+        wc_set_notices($newNotices);
+
+        $initialCoupons = array_filter(
+            $initialCoupons,
+            function ($code) {
+                return ! $this->isAdpCouponCode($code);
+            }
+        );
+
+        foreach ( $initialCoupons as $initialCoupon ) {
+            wc_add_notice(
+                str_replace(
+                    "{{name}}",
+                    $initialCoupon,
+                    "Sorry, the coupon \"{{name}}\" is not valid."
+                ),
+                'error'
+            );
+        }
     }
 
     /**
@@ -820,7 +828,7 @@ class CartProcessor
             }
 
             $facade->setOriginalPrice($facade->getProduct()->get_price('edit'));
-            if ( $item->areRuleApplied() ) {
+            if ( $item->isPriceChanged() ) {
                 $productPrice = $this->overrideCentsStrategy->maybeOverrideCentsForItem($productPrice, $item);
             }
 

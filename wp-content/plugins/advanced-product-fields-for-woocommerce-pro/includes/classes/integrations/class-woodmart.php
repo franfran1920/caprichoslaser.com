@@ -11,10 +11,13 @@ namespace SW_WAPF_PRO\Includes\Classes\Integrations {
 		public function add_javascript() {
 			?>
 			<script>
-                jQuery(document).on('woodmart-quick-view-displayed',function(){
-                    new WAPF.Frontend(jQuery('.product-quick-view'));
+                jQuery(document).on('woodmart-quick-view-displayed',function(){ new WAPF.Frontend(jQuery('.product-quick-view')); });
+                document.addEventListener( 'wapf/image_changed', function(e) {
+                    if( ! e.detail || !e.detail.image || ! woodmartThemeModule ) return;
+                    if ( woodmartThemeModule.initZoom ) { var zoomImg = document.querySelector('.zoomImg'); if (zoomImg) { zoomImg.src = e.detail.image.full_src; if (zoomImg.complete) woodmartThemeModule.initZoom(); else zoomImg.addEventListener('load', woodmartThemeModule.initZoom); } }
+                    var thumb = document.querySelector('.product-image-thumbnail img'); if( thumb ) { thumb.src = e.detail.image.full_src; thumb.srcset = ''; }
                 });
-			</script>
+            </script>
 			<?php
 		}
 

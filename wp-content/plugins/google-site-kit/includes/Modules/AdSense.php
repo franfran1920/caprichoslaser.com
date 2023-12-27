@@ -187,9 +187,7 @@ final class AdSense extends Module
 	public function on_deactivation() {
 		$this->get_settings()->delete();
 
-		if ( $this->ad_blocking_recovery_tag->has() ) {
-			$this->ad_blocking_recovery_tag->delete();
-		}
+		$this->ad_blocking_recovery_tag->delete();
 	}
 
 	/**
@@ -289,7 +287,6 @@ final class AdSense extends Module
 			),
 			'GET:sites'                           => array( 'service' => 'adsense' ),
 			'POST:sync-ad-blocking-recovery-tags' => array( 'service' => 'adsense' ),
-			'GET:urlchannels'                     => array( 'service' => 'adsense' ),
 		);
 	}
 
@@ -461,25 +458,6 @@ final class AdSense extends Module
 				}
 				$service = $this->get_service( 'adsense' );
 				return $service->accounts->getAdBlockingRecoveryTag( self::normalize_account_id( $settings['accountID'] ) );
-			case 'GET:urlchannels':
-				if ( ! isset( $data['accountID'] ) ) {
-					return new WP_Error(
-						'missing_required_param',
-						/* translators: %s: Missing parameter name */
-						sprintf( __( 'Request parameter is empty: %s.', 'google-site-kit' ), 'accountID' ),
-						array( 'status' => 400 )
-					);
-				}
-				if ( ! isset( $data['clientID'] ) ) {
-					return new WP_Error(
-						'missing_required_param',
-						/* translators: %s: Missing parameter name */
-						sprintf( __( 'Request parameter is empty: %s.', 'google-site-kit' ), 'clientID' ),
-						array( 'status' => 400 )
-					);
-				}
-				$service = $this->get_service( 'adsense' );
-				return $service->accounts_adclients_urlchannels->listAccountsAdclientsUrlchannels( self::normalize_client_id( $data['accountID'], $data['clientID'] ) );
 		}
 
 		return parent::create_data_request( $data );
@@ -526,8 +504,6 @@ final class AdSense extends Module
 						'success' => true,
 					)
 				);
-			case 'GET:urlchannels':
-				return $response->getUrlChannels();
 		}
 
 		return parent::parse_data_response( $data, $response );

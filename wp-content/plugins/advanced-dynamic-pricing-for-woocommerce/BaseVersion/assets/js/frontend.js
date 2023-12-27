@@ -107,6 +107,8 @@ jQuery( document ).ready( function ( $ ) {
 	}
 
 	setTimeout(function () {
-		init_events();
+      jQuery('.variations_form').on("wc_variation_form", function () {
+          init_events();
+      })
 	}, 0);
 } );

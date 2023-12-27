@@ -2,11 +2,11 @@
 Contributors: studiowombat,maartenbelmans
 Tags: woocommerce, custom fields, product, addon, acf
 Requires at least: 4.7
-Tested up to: 6.3.2
+Tested up to: 6.4.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 2.7.5
+Stable tag: 2.7.7
 Build: 13650
 
 Customize WooCommerce product pages with extra form fields ( = product add-ons). This is the premium version.
@@ -16,6 +16,16 @@ Customize WooCommerce product pages with extra form fields ( = product add-ons).
 The premium version of Advanced Product Fields for WooCommerce.
 
 == Changelog ==
+
+= version 2.7.7 =
+ * Improvement: improved compatibility with the Woodmart theme's custom gallery.
+ * Improvement: improved "order again" functionality.
+ * Fix: resolved licensing issue preventing some users from activating the plugin.
+
+= version 2.7.6 =
+ * Improvement: compatibility with WooCommerce's "single product" block.
+ * Fix: fixed an issue with not validating multi-select swatches on the front-end whose min and max attribute were set.
+ * Fix: fixed an issue with invalid carts when ordering 2 specific variations at the same time.
 
 = version 2.7.5 =
  * Fix: fixed a PHP warning.

@@ -10,6 +10,7 @@ defined( 'ABSPATH' ) || exit;
 use WCPay\Constants\Intent_Status;
 use WCPay\Exceptions\API_Exception;
 use WCPay\Exceptions\Amount_Too_Small_Exception;
+use WCPay\Exceptions\Amount_Too_Large_Exception;
 use WCPay\Exceptions\Connection_Exception;
 use WCPay\Fraud_Prevention\Fraud_Prevention_Service;
 use WCPay\Fraud_Prevention\Buyer_Fingerprinting_Service;
@@ -83,13 +84,20 @@ class WC_Payments_API_Client {
 		'client_secret',
 		'email',
 		'name',
+		'first_name',
+		'last_name',
 		'phone',
+		'company',
+		'address_1',
+		'address_2',
 		'line1',
 		'line2',
 		'postal_code',
+		'postcode',
 		'state',
 		'city',
 		'country',
+		'company',
 		'customer_name',
 		'customer_email',
 	];
@@ -1919,10 +1927,22 @@ class WC_Payments_API_Client {
 					$response_code
 				);
 			} elseif ( isset( $response_body['error'] ) ) {
+				$response_body_error_code = $response_body['error']['code'] ?? null;
+				$payment_intent_status    = $response_body['error']['payment_intent']['status'] ?? null;
+
+				// We redact the API error message to prevent prompting the merchant to contact Stripe support
+				// when attempting to manually capture an amount greater than what's authorized. Contacting support is unnecessary in this scenario.
+				if ( 'amount_too_large' === $response_body_error_code && Intent_Status::REQUIRES_CAPTURE === $payment_intent_status ) {
+					throw new Amount_Too_Large_Exception(
+						// translators: This is an error API response.
+						__( 'Error: The payment could not be captured because the requested capture amount is greater than the amount you can capture for this charge.', 'woocommerce-payments' ),
+						$response_code
+					);
+				}
 				$decline_code = $response_body['error']['decline_code'] ?? '';
 				$this->maybe_act_on_fraud_prevention( $decline_code );
 
-				$error_code    = $response_body['error']['code'] ?? $response_body['error']['type'] ?? null;
+				$error_code    = $response_body_error_code ?? $response_body['error']['type'] ?? null;
 				$error_message = $response_body['error']['message'] ?? null;
 				$error_type    = $response_body['error']['type'] ?? null;
 			} elseif ( isset( $response_body['code'] ) ) {
@@ -2077,6 +2097,8 @@ class WC_Payments_API_Client {
 			'number'              => $order->get_order_number(),
 			'url'                 => $order->get_edit_order_url(),
 			'customer_url'        => $this->get_customer_url( $order ),
+			'customer_name'       => trim( $order->get_formatted_billing_full_name() ),
+			'customer_email'      => $order->get_billing_email(),
 			'fraud_meta_box_type' => $order->get_meta( '_wcpay_fraud_meta_box_type' ),
 		];
 
@@ -2376,13 +2398,15 @@ class WC_Payments_API_Client {
 	/**
 	 * Delete account.
 	 *
+	 * @param bool $test_mode Whether we are in test mode or not.
+	 *
 	 * @return array
 	 * @throws API_Exception
 	 */
-	public function delete_account() {
+	public function delete_account( bool $test_mode = false ) {
 		return $this->request(
 			[
-				'test_mode' => WC_Payments::mode()->is_dev(), // only send a test mode request if in dev mode.
+				'test_mode' => $test_mode,
 			],
 			self::ACCOUNTS_API . '/delete',
 			self::POST,

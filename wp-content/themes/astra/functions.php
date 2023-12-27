@@ -182,3 +182,29 @@ require_once ASTRA_THEME_DIR . 'inc/core/markup/class-astra-markup.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-filters.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-hooks.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-functions.php';
+
+
+/* *****  descripción categorías debajo de productos ****** */
+
+remove_action( 'woocommerce_archive_description','woocommerce_taxonomy_archive_description', 10 );
+
+add_action( 'woocommerce_after_shop_loop', 'woocommerce_taxonomy_archive_description' );
+
+/* ****** descripción categorías debajo de productos ****** */
+
+function ejr_limita_envios ($provincias) {
+
+   unset ($provincias ['ES'] ['TF']);
+
+   unset ($provincias ['ES'] ['GC']);
+
+   unset ($provincias ['ES'] ['CE']);
+
+   unset ($provincias ['ES'] ['ML']);
+
+   return $provincias;
+
+   }
+
+
+add_filter ('woocommerce_states', 'ejr_limita_envios');

@@ -759,40 +759,47 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 
             $cart_item_data['wapf_order_again'] = true;
 
-		    if( is_array( $meta_data ) && isset( $meta_data['fields'] ) ) {
+            if(  is_array( $meta_data ) ) {
 
-			    $wapf = [];
+                $wapf = [];
+                $groups = wapf_get_field_groups_of_product($order_item->get_product_id());
+                $fields = Enumerable::from($groups)->merge(function($x){return $x->fields; })->toArray();
 
-			    $groups = wapf_get_field_groups_of_product($order_item->get_product_id());
-			    $fields = Enumerable::from($groups)->merge(function($x){return $x->fields; })->toArray();
+                if( isset( $meta_data['fields'] ) ) { 
+                    foreach($meta_data['fields'] as $field_meta) {
+                        $field = Enumerable::from($fields)->firstOrDefault(function($x) use($field_meta){ return $x->id === $field_meta['id'];});
+                        if(!$field) continue;
+                        $raw_values = empty($field_meta['values']) ? null : Enumerable::from($field_meta['values'])->select(function($x) {
+                            return isset( $x['slug'] ) && empty( $x['use_label'] )  ? $x['slug'] : $x['label'];
+                        })->toArray();
 
-			    foreach($meta_data['fields'] as $field_meta) {
+                        if( count( $raw_values ) === 1 )
+                            $raw_values = $raw_values[0];
 
-				    $field = Enumerable::from($fields)->firstOrDefault(function($x) use($field_meta){ return $x->id === $field_meta['id'];});
-				    if(!$field) continue;
+                        $clone_idx = isset( $field_meta['clone_idx'] ) ? $field_meta['clone_idx'] : 0;
+                        $cart_field  = Cart::to_cart_item_field( $field, $clone_idx, $raw_values );
+                        $wapf[] = $cart_field;
+                    }
+                }
+                else { 
+                    foreach ( $meta_data as $field_id => $field_meta ) {
+                        $field = Enumerable::from($fields)->firstOrDefault(function($x) use($field_id){ return $x->id === $field_id;});
+                        if( ! $field || empty( $field_meta['raw'] ) ) continue;
+                        $cart_field  = Cart::to_cart_item_field( $field, 0, $field_meta['raw'] );
+                        $wapf[] = $cart_field;
+                    }
+                }
 
-				    $raw_values = empty($field_meta['values']) ? null : Enumerable::from($field_meta['values'])->select(function($x) {
-				    	return isset( $x['slug'] ) && empty( $x['use_label'] )  ? $x['slug'] : $x['label'];
-				    })->toArray();
+                if( ! empty( $wapf ) ) {
+                    $cart_item_data['wapf'] = $wapf;
+                    $cart_item_data['wapf_key'] = $this->generate_cart_item_id($order_item->get_product_id(), $order_item->get_variation_id(), $wapf, false);
+                    $cart_item_data['wapf_field_groups'] = Enumerable::from($groups)->select(function($x){return $x->id;})->toArray();
+                }
 
-				    if( count( $raw_values ) === 1 )
-				    	$raw_values = $raw_values[0];
-
-					$clone_idx = isset( $field_meta['clone_idx'] ) ? $field_meta['clone_idx'] : 0;
-				    $cart_field  = Cart::to_cart_item_field( $field, $clone_idx, $raw_values );
-				    $wapf[] = $cart_field;
-			    }
-
-
-
-			    if( ! empty( $wapf ) ) {
-				    $cart_item_data['wapf'] = $wapf;
-				    $cart_item_data['wapf_key'] = $this->generate_cart_item_id($order_item->get_product_id(), $order_item->get_variation_id(), $wapf, false);
-				    $cart_item_data['wapf_field_groups'] = Enumerable::from($groups)->select(function($x){return $x->id;})->toArray();
-			    }
-		    }
+            }
 
 		    return $cart_item_data;
+
 	    }
 
 	    public function calculate_prices_for_ordered_again_item($cart_item, $cart_id) {

@@ -344,7 +344,7 @@ if ( ! class_exists( 'YITH_Post_Type_Admin' ) ) {
 
 				$this->render_blank_state();
 
-				echo '<style type="text/css">#posts-filter .wp-list-table, #posts-filter .tablenav.top, .tablenav.bottom > *, .wrap .subsubsub  { display: none; } #posts-filter .tablenav.bottom { height: auto; display: block } </style>';
+				echo '<style type="text/css">#posts-filter .wp-list-table, #posts-filter .yith-plugin-ui__wp-list-auto-h-scroll__wrapper, #posts-filter .tablenav.top, .tablenav.bottom > *, .wrap .subsubsub { display: none; } #posts-filter .tablenav.bottom { height: auto; display: block } </style>';
 			}
 		}
 
@@ -378,6 +378,14 @@ if ( ! class_exists( 'YITH_Post_Type_Admin' ) ) {
 
 			if ( is_callable( array( $this, $render_method ) ) ) {
 				$this->{$render_method}();
+			}
+
+			if ( $this->get_primary_column() === $column ) {
+				printf(
+					'<button type="button" class="toggle-row"><span class="screen-reader-text">%s</span></button>',
+					// translators: Hidden accessibility text.
+					esc_html__( 'Show more details', 'yith-plugin-fw' )
+				);
 			}
 		}
 

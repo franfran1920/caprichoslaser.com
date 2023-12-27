@@ -2253,13 +2253,14 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 
 				if ( in_array( $pagenow, array( 'edit.php', 'edit-tags.php' ), true ) ) {
 					$options_to_classes[]   = 'wp-list-style';
+					$options_to_classes[]   = 'wp-list-auto-h-scroll';
 					$page_wrapper_classes[] = 'yith-plugin-ui';
 				}
 
 				foreach ( $options_to_classes as $key ) {
 					if ( isset( $options[ $key ] ) ) {
 						$option                 = $options[ $key ];
-						$page_wrapper_classes[] = "yith-plugin-ui--{$option}-{$key}";
+						$page_wrapper_classes[] = true === $option ? "yith-plugin-ui--{$key}" : "yith-plugin-ui--{$option}-{$key}";
 					}
 				}
 				$page_wrapper_classes = implode( ' ', array_filter( $page_wrapper_classes ) );

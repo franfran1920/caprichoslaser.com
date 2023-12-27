@@ -285,6 +285,7 @@ class Request extends Report {
 				'customEvent:googlesitekit_post_author',
 				'customEvent:googlesitekit_post_categories',
 				'customEvent:googlesitekit_post_date',
+				'customEvent:googlesitekit_post_type',
 			)
 		);
 
@@ -394,6 +395,12 @@ class Request extends Report {
 
 		$filter            = new $filter_class();
 		$filter_expression = $filter->parse_filter_expression( $dimension_name, $dimension_value );
+
+		if ( ! empty( $dimension_value['notExpression'] ) ) {
+			$not_filter_expression = new Google_Service_AnalyticsData_FilterExpression();
+			$not_filter_expression->setNotExpression( $filter_expression );
+			return $not_filter_expression;
+		}
 
 		return $filter_expression;
 	}

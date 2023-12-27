@@ -5,11 +5,11 @@ Tags: woocommerce, discounts, deals, dynamic pricing, pricing deals, bulk discou
 Requires PHP: 7.0
 Requires at least: 4.8
 Tested up to: 6.4
-Stable tag: 4.5.3
+Stable tag: 4.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-All discount types. WordPress Customizer supported.
+All discount types - flexible and feature rich plugin.
 
 == Description ==
 
@@ -105,6 +105,13 @@ You should be PHP programmer to do it. [Please, review sample addon and adapt it
 
 
 == Changelog ==
+
+= 4.5.4 - 2023-12-04 =
+* Speed up generation of bulk table, at product page
+* Bug fixed - wrong coupon amount for mode "Don't modify price/add as coupon"
+* Bug fixed - conflict between option "Override cents" and rule checkbox "Don't modify price/add as coupon"
+* Bug fixed - PHP8.2 deprecation warnings
+* Updated compatibility with "YITH WooCommerce Gift Cards"
 
 = 4.5.3 - 2023-10-30 =
 * Bug fixed - can't view order in the backend , if WooCommerce Payments (version 6.6.0) is active

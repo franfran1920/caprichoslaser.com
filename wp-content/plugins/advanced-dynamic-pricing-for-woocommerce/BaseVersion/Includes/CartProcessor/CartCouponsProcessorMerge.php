@@ -69,6 +69,11 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
         $this->context = $context;
     }
 
+    public function disableAllWcCoupons(): bool
+    {
+        return boolval($this->disableAllInRuleWcCoupons);
+    }
+
     public function installActions()
     {
         $this->setFilterToInstallCouponsData();
@@ -161,7 +166,7 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
                     [
                         new ExternalWcCoupon(
                             new WC_Coupon($couponCode),
-                            $discountsProperty->getValue($wcDiscounts)[$couponCode] ?: []
+                            $discountsProperty->getValue($wcDiscounts)[$couponCode] ?? []
                         )
                     ]
                 );
@@ -177,9 +182,9 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
         $wcCart->applied_coupons = [];
         $this->purge();
 
+        $this->processCouponAdjustments($cart, $wcCart);
         $this->processOriginCoupons($cart, $wcCart);
         $this->processRuleTriggerCoupons($cart, $wcCart);
-        $this->processCouponAdjustments($cart, $wcCart);
         $this->processCartCoupons($cart, $wcCart);
         $this->processIndividualUseCoupons($cart, $wcCart);
 
@@ -191,7 +196,7 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
         foreach ($cart->getOriginCoupons() as $couponCode) {
             $wcCoupon = $this->loadWcCouponByCode($couponCode);
 
-            if ($this->isWcCouponValid($cart, $wcCart, $wcCoupon)) {
+            if ($this->isWcCouponValid($cart, $wcCart, $wcCoupon) && ! $this->disableAllWcCoupons()) {
                 $this->addToMerged($couponCode, new WcCouponExternal($wcCoupon));
             } else {
                 $this->wcCouponExternalExcludeCodes[] = $couponCode;
@@ -352,6 +357,14 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
 
         foreach ($this->mergedCoupons[$code] as $loopCoupon) {
             if ($coupon instanceof WcCouponExternal && $loopCoupon instanceof WcCouponExternal) {
+                return;
+            }
+
+            if ($coupon instanceof CouponCartItem && $loopCoupon instanceof CouponCartItem && $coupon->equals($loopCoupon)) {
+                $loopCoupon->setAffectedCartItemQty(
+                    $loopCoupon->getAffectedCartItemQty() + $coupon->getAffectedCartItemQty()
+                );
+
                 return;
             }
         }
@@ -527,10 +540,16 @@ class CartCouponsProcessorMerge implements ICartCouponsProcessor
     {
         $mergedCoupon = WcAdpMergedCouponHelper::loadOfCoupon($wcCoupon);
 
-        if ($this->disableAllInRuleWcCoupons === true && $mergedCoupon->hasOnlyInternalWcCouponPart()) {
-            throw new \Exception(
-                __('Sorry, this coupon is not applicable to cart.', 'advanced-dynamic-pricing-for-woocommerce')
-            );
+        if ($this->disableAllInRuleWcCoupons === true) {
+            $currentCoupons = $this->mergedCoupons[$wcCoupon->get_code("edit")] ?? [];
+
+            if ($mergedCoupon->hasOnlyInternalWcCouponPart()
+                || count($currentCoupons) === 1 && $currentCoupons[0] instanceof WcCouponExternal
+            ) {
+                throw new \Exception(
+                    __('Sorry, this coupon is not applicable to cart.', 'advanced-dynamic-pricing-for-woocommerce')
+                );
+            }
         }
 
         if (in_array($wcCoupon->get_code(), $this->disabledWcCoupons, true)) {

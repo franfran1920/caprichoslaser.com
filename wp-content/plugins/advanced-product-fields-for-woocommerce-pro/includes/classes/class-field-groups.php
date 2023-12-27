@@ -611,11 +611,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 		        $product = wc_get_product($product);
 
 	        $product_id = $product->get_id();
-
-	        if( $product->get_parent_id() ) {
-                $product = wc_get_product($product->get_parent_id());
-                $product_id = $product->get_parent_id();
-            }
+            $parent_id = $product->get_parent_id();
 
 	        $cache_key = self::$field_groups_product_cache_key . $product_id;
 
@@ -626,7 +622,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 	        }
 
 	        $field_groups_of_product = [];
-	        $field_group_on_product = self::process_data(get_post_meta($product_id,'_wapf_fieldgroup', true));
+	        $field_group_on_product = self::process_data(get_post_meta( empty( $parent_id ) ? $product_id : $parent_id, '_wapf_fieldgroup', true));
 
 	        if( $field_group_on_product && ! empty( $field_group_on_product->fields ) || ! empty( $field_group_on_product->variables ) )
                 array_push($field_groups_of_product, $field_group_on_product);

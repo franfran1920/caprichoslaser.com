@@ -138,6 +138,6 @@ class WcAdpMergedCoupon
             return !($part instanceof RuleTriggerCoupon);
         });
 
-        return count($parts) === 1 && $parts[0] instanceof InternalWcCoupon;
+        return count($parts) === 1 && reset($parts) instanceof InternalWcCoupon;
     }
 }

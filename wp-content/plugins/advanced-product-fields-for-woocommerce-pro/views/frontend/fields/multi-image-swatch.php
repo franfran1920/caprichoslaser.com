@@ -10,7 +10,7 @@ $cols_mobile = isset($model['field']->options['items_per_row_mobile']) ? intval(
 $first = true;
 if(!empty($model['field']->options['choices'])) {
 
-    echo '<div class="wapf-image-swatch-wrapper wapf-swatch-wrapper wapf-col--'.$cols.'" style="--wapf-cols:'.$cols.';--wapf-cols-t:'.$cols_tablet.';--wapf-cols-m:'.$cols_mobile.'" data-is-required="'. $model['field']->required .'">';
+    echo '<div class="wapf-image-swatch-wrapper wapf-swatch-wrapper wapf-col--'.$cols.'" style="--wapf-cols:'.$cols.';--wapf-cols-t:'.$cols_tablet.';--wapf-cols-m:'.$cols_mobile.'">';
 
     foreach ($model['field']->options['choices'] as $option) {
 

@@ -74,6 +74,11 @@ class CartCouponsProcessor implements ICartCouponsProcessor
         $this->context = $context;
     }
 
+    public function disableAllWcCoupons(): bool
+    {
+        return boolval($this->disabledWcCoupons);
+    }
+
     public function init()
     {
         $this->replaceNotices();

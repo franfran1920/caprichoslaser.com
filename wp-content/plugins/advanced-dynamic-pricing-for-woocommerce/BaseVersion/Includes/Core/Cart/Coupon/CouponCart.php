@@ -73,6 +73,18 @@ class CouponCart implements CouponInterface, AdpCouponInterface
         $this->ruleId = $ruleId;
     }
 
+    public function equals(AdpCouponInterface $coupon): bool
+    {
+        if (!$coupon instanceof CouponCart) {
+            return false;
+        }
+
+        return $this->type === $coupon->getType()
+            && $this->code === $coupon->getCode()
+            && $this->value === $coupon->getValue()
+            && $this->ruleId === $coupon->getRuleId();
+    }
+
     /**
      * @return string
      */

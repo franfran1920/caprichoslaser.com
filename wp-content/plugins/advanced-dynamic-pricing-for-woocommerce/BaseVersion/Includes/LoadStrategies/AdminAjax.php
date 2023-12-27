@@ -51,7 +51,9 @@ class AdminAjax implements LoadStrategy
     {
         $action = isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : '';
 
-        if ( $action === 'woocommerce_do_ajax_product_export' ) {
+        if ($action === 'woocommerce_do_ajax_product_export'
+            && ! apply_filters("adp_available_during_wc_product_export", false)
+        ) {
             return;
         }
 

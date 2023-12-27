@@ -6,7 +6,7 @@ use SW_WAPF_PRO\Includes\Classes\Html;
 
 if(!empty($model['field']->options['choices'])) {
 
-    echo '<div class="wapf-swatch-wrapper" data-is-required="'. $model['field']->required .'">';
+    echo '<div class="wapf-swatch-wrapper">';
     echo '<input type="hidden" class="wapf-tf-h" data-fid="'.$model['field']->id.'" value="0" name="wapf[field_'.$model['field']->id.']" />';
 
     foreach ($model['field']->options['choices'] as $option) {

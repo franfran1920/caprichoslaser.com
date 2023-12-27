@@ -19,6 +19,21 @@ defined('ABSPATH') or exit;
 
 class WcQuoteCmp
 {
+    /**
+     * @var Context
+     */
+    protected $context;
+
+    /**
+     * @var Processor
+     */
+    protected $productProcessor;
+
+    /**
+     * @var CartBuilder
+     */
+    protected $cartBuilder;
+
     public function __construct()
     {
         $this->context          = adp_context();
@@ -39,7 +54,7 @@ class WcQuoteCmp
         }
     }
 
-    function add_to_quote($quote_item_key, $product_id, $quantity, $variation_id, $variation, $quote_item_data) 
+    function add_to_quote($quote_item_key, $product_id, $quantity, $variation_id, $variation, $quote_item_data)
     {
         $quote_contents = WC()->session->get( 'wc_quotes' );
         $quote_contents[$quote_item_key]['offered_price'] = $quote_contents[$quote_item_key]['addons_price'];
@@ -49,7 +64,7 @@ class WcQuoteCmp
     function update_session_quote_addon_price()
     {
         $quote_contents = WC()->session->get( 'wc_quotes' );
-        
+
         $productProcessor = $this->productProcessor;
         $cart             = $this->cartBuilder->create(WC()->customer, WC()->session);
         $productProcessor->withCart($cart);

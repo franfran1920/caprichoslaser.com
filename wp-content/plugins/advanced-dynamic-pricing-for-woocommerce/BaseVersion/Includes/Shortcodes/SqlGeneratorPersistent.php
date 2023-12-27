@@ -298,19 +298,37 @@ class SqlGeneratorPersistent
         //TODO check_lookup_table_exists
         $data_store      = wc_get_container()->get( LookupDataStore::class );
         $lookupTable     = $data_store->get_lookup_table_name();
-        $lookupTableName = "lookup_product_attr";
-
-        $where = $this->compareToSql("{$lookupTableName}.term_id", ComparisonMethods::IN_LIST, $termIds);
 
         if(ComparisonMethods::NOT_IN_LIST === $comparisonMethod) {
+            $lookupTableName = "lookup_product_attr";
+
+            $where = $this->compareToSql("{$lookupTableName}.term_id", ComparisonMethods::IN_LIST, $termIds);
             return "post_children.ID NOT IN( 
                 SELECT product_id FROM {$lookupTable} as {$lookupTableName}
+                WHERE {$where} 
+            )
+            AND post.ID NOT IN(
+                SELECT product_or_parent_id FROM {$lookupTable} as {$lookupTableName}
                 WHERE {$where} 
             )";
         }
 
-        $this->addJoin( "LEFT JOIN {$lookupTable} as {$lookupTableName} ON post_children.ID = {$lookupTableName}.product_id" );
-        
+
+        $where = [];
+        foreach($termIds as $id) {
+            $lookupTableName = "lookup_product_attr_{$id}";
+            $this->addJoin( "LEFT JOIN {$lookupTable} as {$lookupTableName} 
+                ON 
+                IF({$lookupTableName}.is_variation_attribute, 
+                    post_children.ID = {$lookupTableName}.product_id, 
+                    post.ID = {$lookupTableName}.product_or_parent_id
+                )" );
+
+            $where[] = "{$lookupTableName}.term_id = {$id}";
+
+        }
+        $where = "( " . implode(' AND ', $where) . " )";
+
         return $where;
     }
 

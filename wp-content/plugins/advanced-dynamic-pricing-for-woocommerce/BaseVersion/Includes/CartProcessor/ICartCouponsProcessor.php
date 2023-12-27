@@ -17,4 +17,6 @@ interface ICartCouponsProcessor
     public function applyCouponsToWcCart(Cart $cart, \WC_Cart $wcCart);
 
     public function updateTotals(\WC_Cart $wcCart);
+
+    public function disableAllWcCoupons(): bool;
 }

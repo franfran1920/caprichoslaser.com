@@ -341,24 +341,31 @@ class Rules implements AdminTabInterface
             'jquery',
             'jquery-ui-sortable',
             'wdp_select2',
+            'wc-clipboard',
+            'jquery-tiptip'
         ), WC_ADP_VERSION);
 
+        wp_localize_script('wdp_settings-scripts', 'wdp_data', $this->getScriptData());
+    }
+
+    protected function getScriptData()
+    {
         $rules = $this->getTabRules();
         $paged = $this->paginator->getPageNum();
 
         $preloaded_lists = array(
-            'currencies'           => Helpers::getCurrencies(),
-            'payment_methods'      => Helpers::getPaymentMethods(),
-            'shipping_methods'     => Helpers::getShippingMethods(),
+            'currencies' => Helpers::getCurrencies(),
+            'payment_methods' => Helpers::getPaymentMethods(),
+            'shipping_methods' => Helpers::getShippingMethods(),
             'all_shipping_methods' => Helpers::getAllShippingMethods(),
-            'shipping_class'       => Helpers::getShippingClasses(),
-            'shipping_zones'       => Helpers::getShippingZones(),
-            'countries'            => Helpers::getCountries(),
-            'states'               => Helpers::getStates(),
-            'user_roles'           => Helpers::getUserRoles(),
-            'languages'            => Helpers::getLanguages(),
-            'user_capabilities'    => Helpers::getUserCapabilities(),
-            'weekdays'             => Helpers::getWeekdays(),
+            'shipping_class' => Helpers::getShippingClasses(),
+            'shipping_zones' => Helpers::getShippingZones(),
+            'countries' => Helpers::getCountries(),
+            'states' => Helpers::getStates(),
+            'user_roles' => Helpers::getUserRoles(),
+            'languages' => Helpers::getLanguages(),
+            'user_capabilities' => Helpers::getUserCapabilities(),
+            'weekdays' => Helpers::getWeekdays(),
         );
 
         foreach ($preloaded_lists as $list_key => &$list) {
@@ -369,56 +376,81 @@ class Rules implements AdminTabInterface
 
         $context = $this->context;
         /** @var AdminPageFilterTitles $adminFilterTitles */
-        $adminFilterTitles = Factory::get("AdminExtensions_AdminPage_AdminPageFilterTitles", $context, new RuleRepository());
+        $adminFilterTitles = Factory::get(
+            "AdminExtensions_AdminPage_AdminPageFilterTitles",
+            $context,
+            new RuleRepository()
+        );
 
-        $wdp_data = array(
-            'page'               => self::getKey(),
-            'rules'              => $rules,
-            'titles'             => $adminFilterTitles->getTitles($rules),
-            'links'              => $adminFilterTitles->getLinks($rules),
-            'labels'             => array(
-                'select2_no_results'       => _x('no results', 'select2 msg when results wasn\'t found',
-                    'advanced-dynamic-pricing-for-woocommerce'),
-                'select2_input_too_short'  => _x('Please enter %d or more characters',
-                    'select2 msg when input is too short', 'advanced-dynamic-pricing-for-woocommerce'),
-                'select2_input_too_long'   => _x('Please delete %d character', 'select2 msg when input is too long',
-                    'advanced-dynamic-pricing-for-woocommerce'),
-                'select2_error_loading'    => _x('The results could not be loaded',
-                    'select2 msg when it get error while loading', 'advanced-dynamic-pricing-for-woocommerce'),
-                'select2_loading_more'     => _x('Loading more results…', 'select2 msg when loading more',
-                    'advanced-dynamic-pricing-for-woocommerce'),
-                'select2_maximum_selected' => _x('You can only select %d item', 'select2 msg when max items selected',
-                    'advanced-dynamic-pricing-for-woocommerce'),
-                'select2_searching'        => _x('Searching…', 'select2 msg when searching',
-                    'advanced-dynamic-pricing-for-woocommerce'),
-                'confirm_remove_rule'      => __('Remove rule?', 'advanced-dynamic-pricing-for-woocommerce'),
-                'currency_symbol'          => get_woocommerce_currency_symbol(),
-                'fixed_discount'           => __('Fixed discount for item', 'advanced-dynamic-pricing-for-woocommerce'),
-                'fixed_price'              => __('Fixed price for item', 'advanced-dynamic-pricing-for-woocommerce'),
-                'fixed_discount_for_set'   => __('Fixed discount for set', 'advanced-dynamic-pricing-for-woocommerce'),
-                'fixed_price_for_set'      => __('Fixed price for set', 'advanced-dynamic-pricing-for-woocommerce'),
+        return array(
+            'page' => self::getKey(),
+            'rules' => $rules,
+            'titles' => $adminFilterTitles->getTitles($rules),
+            'links' => $adminFilterTitles->getLinks($rules),
+            'labels' => array(
+                'select2_no_results' => _x(
+                    'no results',
+                    'select2 msg when results wasn\'t found',
+                    'advanced-dynamic-pricing-for-woocommerce'
+                ),
+                'select2_input_too_short' => _x(
+                    'Please enter %d or more characters',
+                    'select2 msg when input is too short',
+                    'advanced-dynamic-pricing-for-woocommerce'
+                ),
+                'select2_input_too_long' => _x(
+                    'Please delete %d character',
+                    'select2 msg when input is too long',
+                    'advanced-dynamic-pricing-for-woocommerce'
+                ),
+                'select2_error_loading' => _x(
+                    'The results could not be loaded',
+                    'select2 msg when it get error while loading',
+                    'advanced-dynamic-pricing-for-woocommerce'
+                ),
+                'select2_loading_more' => _x(
+                    'Loading more results…',
+                    'select2 msg when loading more',
+                    'advanced-dynamic-pricing-for-woocommerce'
+                ),
+                'select2_maximum_selected' => _x(
+                    'You can only select %d item',
+                    'select2 msg when max items selected',
+                    'advanced-dynamic-pricing-for-woocommerce'
+                ),
+                'select2_searching' => _x(
+                    'Searching…',
+                    'select2 msg when searching',
+                    'advanced-dynamic-pricing-for-woocommerce'
+                ),
+                'confirm_remove_rule' => __('Remove rule?', 'advanced-dynamic-pricing-for-woocommerce'),
+                'currency_symbol' => get_woocommerce_currency_symbol(),
+                'fixed_discount' => __('Fixed discount for item', 'advanced-dynamic-pricing-for-woocommerce'),
+                'fixed_price' => __('Fixed price for item', 'advanced-dynamic-pricing-for-woocommerce'),
+                'fixed_discount_for_set' => __('Fixed discount for set', 'advanced-dynamic-pricing-for-woocommerce'),
+                'fixed_price_for_set' => __('Fixed price for set', 'advanced-dynamic-pricing-for-woocommerce'),
                 'are_you_sure_to_delete_selected_rules' => __(
                     "Are you sure to delete the selected rules?",
                     'advanced-dynamic-pricing-for-woocommerce'
                 ),
             ),
-            'lists'              => $preloaded_lists,
-            'selected_rule'      => isset($_GET['rule_id']) ? (int)$_GET['rule_id'] : -1,
-            'product'            => isset($_GET['product']) ? (int)$_GET['product'] : -1,
-            'product_title'      => isset ($_GET['product']) ? CacheHelper::getWcProduct($_GET['product'])->get_title() : -1,
-            'action_rules'       => isset($_GET['action_rules']) ? $_GET['action_rules'] : -1,
-            'bulk_rule'          => static::getAllAvailableTypes(),
+            'lists' => $preloaded_lists,
+            'selected_rule' => isset($_GET['rule_id']) ? (int)$_GET['rule_id'] : -1,
+            'product' => isset($_GET['product']) ? (int)$_GET['product'] : -1,
+            'product_title' => isset ($_GET['product']) ? CacheHelper::getWcProduct($_GET['product'])->get_title() : -1,
+            'action_rules' => isset($_GET['action_rules']) ? $_GET['action_rules'] : -1,
+            'bulk_rule' => static::getAllAvailableTypes(),
             'persistence_bulk_rule' => static::getAllAvailablePersistenceTypes(),
-            'options'            => array(
-                'close_on_select'        => defined("WC_ADP_PRO_VERSION_URL") ? false : true,
+            'options' => array(
+                'close_on_select' => defined("WC_ADP_PRO_VERSION_URL") ? false : true,
                 'enable_product_exclude' => $context->getOption('allow_to_exclude_products'),
-                'rules_per_page'         => $context->getOption('rules_per_page'),
+                'rules_per_page' => $context->getOption('rules_per_page'),
             ),
-            'paged'              => $paged,
-            'security'           => wp_create_nonce(Ajax::SECURITY_ACTION),
+            'paged' => $paged,
+            'security' => wp_create_nonce(Ajax::SECURITY_ACTION),
             'security_query_arg' => Ajax::SECURITY_QUERY_ARG,
+            'activation_link_pattern' => ""
         );
-        wp_localize_script('wdp_settings-scripts', 'wdp_data', $wdp_data);
     }
 
     public function registerAjax()

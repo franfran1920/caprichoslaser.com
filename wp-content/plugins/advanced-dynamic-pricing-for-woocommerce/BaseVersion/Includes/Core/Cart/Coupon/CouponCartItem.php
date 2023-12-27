@@ -93,6 +93,20 @@ class CouponCartItem implements CouponInterface, AdpCouponInterface
         }
     }
 
+    public function equals(AdpCouponInterface $coupon): bool
+    {
+        if (!$coupon instanceof CouponCartItem) {
+            return false;
+        }
+
+        return $this->type === $coupon->getType()
+            && $this->label === $coupon->getLabel()
+            && $this->code === $coupon->getCode()
+            && $this->value === $coupon->getValue()
+            && $this->ruleId === $coupon->getRuleId()
+            && $this->affectedCartItemKey === $coupon->getAffectedCartItemKey();
+    }
+
     /**
      * @return string
      */

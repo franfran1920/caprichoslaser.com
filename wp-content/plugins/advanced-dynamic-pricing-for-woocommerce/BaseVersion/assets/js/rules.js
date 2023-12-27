@@ -71,6 +71,7 @@ jQuery(document).ready(function ($) {
                 $discount_type = Object.keys($available_discount_types)[0];
               }
 
+              $available_measurement_types = get_available_measurement_persistence_types($adj_type, $qty_based);
               if (!check_measurement_type_persistence_availability($adj_type, $qty_based, $measurement_type)) {
                 $measurement_type = Object.keys(get_available_measurement_persistence_types($adj_type, $qty_based))[0];
               }
@@ -920,8 +921,16 @@ jQuery(document).ready(function ($) {
             } );
         });
 
-		new_rule.find('.rule-trigger-coupon-code input').change(function () {
+		new_rule.find('.rule-trigger-coupon-code input').change(function (evt) {
 			new_rule.addClass('dirty');
+
+            let val = $(evt.target).val();
+
+            if ( val ) {
+                $(evt.target).closest(".rule-trigger-coupon-code").find("button").show();
+            } else {
+                $(evt.target).closest(".rule-trigger-coupon-code").find("button").hide();
+            }
 		});
 
         new_rule.find('.wdp-field-enabled').click(function (event) {
@@ -1332,7 +1341,9 @@ jQuery(document).ready(function ($) {
           }
 			if (data.additional.trigger_coupon_code) {
 				new_rule.find('.rule-trigger-coupon-code input').val(data.additional.trigger_coupon_code);
-			}
+			} else {
+                new_rule.find('.rule-trigger-coupon-code button').hide()
+            }
 
           if (data.additional.date_from) {
             new_rule.find('input[name="rule[additional][date_from]"]').val(data.additional.date_from);
@@ -1369,6 +1380,7 @@ jQuery(document).ready(function ($) {
             //   inactiveRules.text(Number(inactiveRules.text()) + 1);
             // }
         } else {
+            new_rule.find('.rule-trigger-coupon-code button').hide()
             new_rule.find('.wdp-disabled-automatically-prefix').hide();
             new_rule.removeClass('closed');
             new_rule.addClass('dirty');
@@ -3760,6 +3772,38 @@ jQuery(document).ready(function ($) {
     }
   }
 });
+
+jQuery( function ( $ ) {
+    $(document.body)
+        .on('click', '.copy-to-clipboard-button', function (evt) {
+            let code = $(evt.target).closest(".rule-trigger-coupon-code").find("input").val()
+
+            if ( ! code ) {
+                return;
+            }
+
+            if ( ! wdp_data.activation_link_pattern ) {
+                return;
+            }
+
+            wcClearClipboard();
+            wcSetClipboard(wdp_data.activation_link_pattern + "=" + code, $(this));
+            evt.preventDefault();
+        })
+        .on('aftercopy', '.copy-to-clipboard-button', function (evt) {
+            $(evt.target).tipTip({
+                'attribute': 'data-tip',
+                'activation': 'focus',
+                'fadeIn': 50,
+                'fadeOut': 50,
+                'delay': 0,
+            }).trigger('focus')
+        })
+        .on('aftercopyfailure', '.copy-to-clipboard-button', function (evt) {
+            console.error("Copy to clipboard failed")
+            console.log(evt.target)
+        })
+})
 
 let RuleBlocks = (function () {
   function RuleBlocks (element) {

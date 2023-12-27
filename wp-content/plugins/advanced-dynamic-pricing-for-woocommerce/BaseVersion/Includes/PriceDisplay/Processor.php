@@ -235,11 +235,11 @@ class Processor implements IWcProductProcessor
                 $property   = $reflection->getProperty('changes');
                 $property->setAccessible(true);
                 $changes = $product->get_changes();
-                if ( isset($changes['attributes']) ) {
-                    $changes = array('attributes' => $changes['attributes']);
-                } else {
-                    $changes = array();
-                }
+
+                $changes = array_filter([
+                    'attributes'            => $changes['attributes'] ?? null,
+                    'adpCustomInitialPrice' => $changes['adpCustomInitialPrice'] ?? null
+                ]);
 
                 $property->setValue($product, $changes);
             } catch (ReflectionException $exception) {

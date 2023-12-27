@@ -922,16 +922,35 @@
 	 * Action buttons
 	 */
 	var actionButtons = {
-		init           : function () {
+		observable        : {
+			openedMenu: false,
+			button    : false
+		},
+		init              : function () {
 			$( document ).on( 'click', '.yith-plugin-fw__action-button--has-menu', actionButtons.open );
 			$( document ).on( 'click', '.yith-plugin-fw__action-button__menu', actionButtons.stopPropagation );
 			$( document ).on( 'click', actionButtons.closeAll );
+			$( window ).on( 'scroll', actionButtons.handleScroll );
 		},
-		closeAll       : function () {
+		closeAll          : function () {
+			actionButtons.observable.openedMenu = false;
 			$( '.yith-plugin-fw__action-button--opened' ).removeClass( 'yith-plugin-fw__action-button--opened' );
 		},
-		open           : function ( e ) {
+		updateMenuPosition: function () {
+			if ( actionButtons.observable.openedMenu && actionButtons.observable.button ) {
+				var buttonEl   = actionButtons.observable.button.get( 0 ),
+					buttonRect = buttonEl.getBoundingClientRect(),
+					props      = {
+						top : buttonRect.top + buttonRect.height + 8,
+						left: buttonRect.left + buttonRect.width - actionButtons.observable.openedMenu.outerWidth()
+					};
+
+				actionButtons.observable.openedMenu.css( props )
+			}
+		},
+		open              : function ( e ) {
 			var button    = $( this ).closest( '.yith-plugin-fw__action-button' ),
+				menu      = button.find( '.yith-plugin-fw__action-button__menu' ),
 				wasOpened = button.hasClass( 'yith-plugin-fw__action-button--opened' );
 			e.preventDefault();
 			e.stopPropagation();
@@ -940,10 +959,17 @@
 
 			if ( !wasOpened ) {
 				button.addClass( 'yith-plugin-fw__action-button--opened' );
+				actionButtons.observable.openedMenu = menu;
+				actionButtons.observable.button     = button;
+
+				actionButtons.updateMenuPosition();
 			}
 		},
-		stopPropagation: function ( e ) {
+		stopPropagation   : function ( e ) {
 			e.stopPropagation();
+		},
+		handleScroll      : function () {
+			actionButtons.updateMenuPosition();
 		}
 	};
 	actionButtons.init();
@@ -1381,8 +1407,63 @@
 			.on( 'dragover', '.yith-plugin-fw-file', onDragOver )
 			.on( 'dragleave', '.yith-plugin-fw-file', onDragLeave )
 			.on( 'change', '.yith-plugin-fw-file__field', onChange );
+	} )();
 
+	// WP List - Auto Horizontal Scroll
+	( function () {
+		var selectors = [
+			'.yith-plugin-ui--wp-list-auto-h-scroll .wp-list-table:not(.yith-plugin-ui-wp-list-auto-h-scroll--initialized)',
+			'.yith-plugin-ui__wp-list-auto-h-scroll:not(.yith-plugin-ui-wp-list-auto-h-scroll--initialized)'
+		];
+		$( selectors.join( ',' ) ).each(
+			function () {
+				var table = $( this );
+				table.wrap( '<div class="yith-plugin-ui__wp-list-auto-h-scroll__wrapper" />' );
 
+				var wrapper = table.parent( '.yith-plugin-ui__wp-list-auto-h-scroll__wrapper' ),
+					thead   = table.find( 'thead' ).first(),
+					update  = function () {
+						table.addClass( 'yith-plugin-ui__wp-list-auto-h-scroll--initializing' );
+
+						table.css( { position: 'absolute', tableLayout: 'auto', width: 'max-content', minWidth: '' } );
+						var minWidth = table.outerWidth();
+
+						table.css( { position: '', tableLayout: '', width: '', minWidth: minWidth + 'px' } );
+
+						if ( minWidth > wrapper.innerWidth() ) {
+							wrapper.addClass( 'yith-plugin-ui--has-scrolling' )
+						} else {
+							wrapper.removeClass( 'yith-plugin-ui--has-scrolling' )
+						}
+
+						table.removeClass( 'yith-plugin-ui__wp-list-auto-h-scroll--initializing' );
+						table.addClass( 'yith-plugin-ui__wp-list-auto-h-scroll--initialized' );
+					};
+
+				if ( table.is( '.yith-plugin-fw__classic-table' ) ) {
+					wrapper.addClass( 'yith-plugin-ui__wp-list-auto-h-scroll__wrapper--classic' )
+				} else if ( table.is( '.yith-plugin-fw__boxed-table' ) ) {
+					wrapper.addClass( 'yith-plugin-ui__wp-list-auto-h-scroll__wrapper--boxed' )
+				}
+
+				wrapper.on( 'scroll', function () {
+					if ( wrapper.scrollLeft() > 0 ) {
+						wrapper.addClass( 'yith-plugin-ui--is-scrolling' );
+					} else {
+						wrapper.removeClass( 'yith-plugin-ui--is-scrolling' );
+					}
+				} );
+
+				if ( typeof MutationObserver !== 'undefined' ) {
+					var observer = new MutationObserver( update );
+					observer.observe( thead.get( 0 ), { attributes: true, childList: true, subtree: true } );
+				}
+
+				$( window ).on( 'resize', update );
+
+				update();
+			}
+		);
 	} )();
 
 } )( jQuery );

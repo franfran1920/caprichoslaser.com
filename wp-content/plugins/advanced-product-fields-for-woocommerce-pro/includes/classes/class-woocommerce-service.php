@@ -73,33 +73,36 @@ namespace SW_WAPF_PRO\Includes\Classes {
             })->toArray();
         }
 
-        public static function find_products_by_name($term)
-        {
+        public static function find_products_by_name( $term = '', $include_variations = false ) {
 
-            if(empty($term))
-                return [];
+            if( empty( $term ) ) return [];
 
-            $ds = new \WC_Product_Data_Store_CPT();
-            $product_ids = $ds->search_products($term, '', false, true, 10);
+            $limit = absint( apply_filters( 'woocommerce_json_search_limit', 10 ) );
+
+            $data_store = \WC_Data_Store::load( 'product' );
+            $ids        = $data_store->search_products( $term, '', (bool) $include_variations, true, $limit );
 
             $products = [];
 
-            foreach($product_ids as $pid) {
-                if($pid === 0)
-                    continue;
+            foreach ( $ids as $id ) {
 
-                $product = wc_get_product($pid);
-                if(empty($product))
-                    continue;
+                if( empty( $id ) ) continue; 
+
+                $product_object = wc_get_product( $id );
+
+                if ( ! wc_products_array_filter_readable( $product_object ) ) continue;
+
+                $formatted_name = $product_object->get_formatted_name();
 
                 $products[] = [
-                    'name' => $product->get_title(),
-                    'id' => $product->get_id()
+                    'name' => rawurldecode( wp_strip_all_tags( $formatted_name ) ),
+                    'id' => $product_object->get_id()
                 ];
 
             }
 
             return $products;
+
         }
 
         public static function find_attributes_by_name($term) {

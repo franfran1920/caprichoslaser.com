@@ -346,7 +346,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 		        return;
 	        }
 
-	        $this->licensing = new Licensing('https://www.studiowombat.com/wp-json/ssp/v1', wapf_get_setting('basename'));
+	        $this->licensing = new Licensing();
 
         }
 

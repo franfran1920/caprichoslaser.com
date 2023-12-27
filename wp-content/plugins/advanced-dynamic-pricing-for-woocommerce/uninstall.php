@@ -4,6 +4,7 @@ namespace ADP;
 
 use ADP\BaseVersion\Includes\Database\Database;
 use ADP\BaseVersion\Includes\Context;
+use ADP\BaseVersion\Includes\Updater\Updater;
 
 if (defined('WP_UNINSTALL_PLUGIN')) {
     if ( ! class_exists("\ADP\AutoLoader")) {
@@ -21,6 +22,7 @@ if (defined('WP_UNINSTALL_PLUGIN')) {
     $context = new Context();
     // delete tables  only if have value in settings
     if ($context->getOption('uninstall_remove_data')) {
+        Updater::cleanUp();
         Database::deleteDatabase();
     }
 

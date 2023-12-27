@@ -10,6 +10,8 @@ class Updater
 {
     const DB_VERSION_KEY = "wdp_db_version";
 
+    const DB_LEVEL_KEY = "wdp_db_level";
+
     private static $db_updates = array(
         '2.2.3' => array(
             'migrateTo_2_2_3',
@@ -48,10 +50,26 @@ class Updater
         ),
         '4.4.3' => array(
             'migratethemeOptionsTo_4_4_3',
+        ),
+        '4.5.3' => array(
+            'migratePostalCodesConditionsTo_4_5_3',
+            'migrateSpentConditionsTo_4_5_3'
         )
     );
 
     public static function update()
+    {
+        self::updateLevel();
+        self::applyMigrations();
+    }
+
+    public static function cleanUp()
+    {
+        delete_option(self::DB_LEVEL_KEY);
+        delete_option(self::DB_VERSION_KEY);
+    }
+
+    public static function applyMigrations()
     {
         $current_version = get_option(self::DB_VERSION_KEY, "");
 
@@ -67,6 +85,23 @@ class Updater
             }
 
             update_option(self::DB_VERSION_KEY, WC_ADP_VERSION, false);
+        }
+    }
+
+    public static function updateLevel()
+    {
+        $currentDBLevel = get_option(self::DB_LEVEL_KEY, "");
+        $currentLevel = defined("WC_ADP_PRO_VERSION_PATH") ? "pro" : "base";
+
+        if ( $currentDBLevel !== $currentLevel ) {
+            if ($currentLevel === "base" ) {
+                \ADP\BaseVersion\Includes\Database\Database::createDatabase();
+            } else if ( $currentLevel === "pro" ) {
+                \ADP\BaseVersion\Includes\Database\Database::createDatabase();
+                \ADP\ProVersion\Includes\Database\Database::createDatabase();
+            }
+
+            update_option(self::DB_LEVEL_KEY, $currentLevel, false);
         }
     }
 }

@@ -3,9 +3,9 @@ Contributors: mateuszgbiorczyk
 Donate link: https://url.mattplugins.com/converter-readme-donate-link
 Tags: convert webp, webp, optimize images, image optimization, compress images
 Requires at least: 4.9
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 5.11.2
+Stable tag: 5.11.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,89 +86,15 @@ Please remember to include the answers to all questions by adding a thread. It i
 
 = Configuration for Nginx =
 
-For Nginx server that does not support .htaccess rules, additional Nginx server configuration is required for the plugin to function properly.
+If you are using a Nginx server that does not support .htaccess rules, additional Nginx server configuration is required for the plugin to work properly.
 
-Follow the 4 steps below **(please do all of them)**:
-
-**Step 1**
-
-Find the configuration file in one of the paths *(remember to select configuration file used by your vhost)*:
-- `/etc/nginx/sites-available/` or `/etc/nginx/sites-enabled/`
-- `/etc/nginx/conf.d/`
-
-and add this code *(add these lines at the beginning of the `server { ... }` block)* - **remember to add these rules before any other `location {}` rules**:
-
-`# BEGIN Converter for Media`
-`set $ext_avif ".avif";`
-`if ($http_accept !~* "image/avif") {`
-`	set $ext_avif "";`
-`}`
-``
-`set $ext_webp ".webp";`
-`if ($http_accept !~* "image/webp") {`
-`	set $ext_webp "";`
-`}`
-``
-`location ~ /wp-content/(?<path>.+)\.(?<ext>jpe?g|png|gif|webp)$ {`
-`	add_header Vary Accept;`
-`	expires 365d;`
-`	try_files`
-`		/wp-content/uploads-webpc/$path.$ext$ext_avif`
-`		/wp-content/uploads-webpc/$path.$ext$ext_webp`
-`		$uri =404;`
-`}`
-`# END Converter for Media`
-
-[Here](https://url.mattplugins.com/converter-plugin-faq-nginx-configuration-example) is an example of what a properly added Nginx configuration looks like (this is an example Nginx configuration, but in most cases it looks similar). Note where the rules marked with a red frame are placed.
-
-**Step 2**
-
-Then add support for the required MIME types, if they are not supported. Edit the configuration file:
-- `/etc/nginx/mime.types`
-
-and add this code *(add these lines inside the `types { ... }` block)*:
-
-`image/webp webp;`
-`image/avif avif;`
-
-**Step 3**
-
-After making changes, remember to restart the machine:
-
-`systemctl restart nginx`
-
-In case of problems, please contact us in [the support forum](https://url.mattplugins.com/converter-plugin-faq-nginx-configuration-contact). We will try to help.
-
-**Step 4**
-
-Also see question "Configuration for Nginx Proxy" in the FAQ below.
+Please read [this tutorial](https://url.mattplugins.com/converter-plugin-faq-nginx-configuration-instruction) for more information.
 
 = Configuration for Nginx Proxy =
 
-If in the plugin settings page you see the Server configuration error with an error code: **bypassing_apache**, **rewrites_not_executed** or **rewrites_cached**, it means a problem with Nginx Reverse Proxy fof static files or Nginx Caching fof static files.
+If you are using a Nginx server that supports .htaccess rules, but you still have a server configuration error on the plugin settings page, additional Nginx server configuration is required for the plugin to work properly.
 
-To solve this problem, look for rules of this type in one of the main Nginx configuration files for the domain (the list of extensions in the location condition may vary, so look for similarities):
-
-`location ~* ^.+\.(css|js|jpg|jpeg|png|gif|webp|ico|eot|otf|woff|woff2|ttf)$ {`
-`	expires max;`
-`...`
-
-or
-
-`location ~* ^.+\.(css|js|jpe?g|png|gif|webp|ico|eot|otf|woff|woff2|ttf)$ {`
-`	expires 1M;`
-`	try_files $uri @proxy;`
-`...`
-
-If you find such rules, remove the following formats from them:
-- `jpg` and `jpeg` or `jpe?g`
-- `png`
-- `gif`
-- `webp`
-
-After making changes, remember to restart the service:
-
-`systemctl restart nginx`
+Please read [this tutorial](https://url.mattplugins.com/converter-plugin-faq-nginx-proxy-configuration-instruction) for more information.
 
 = Error on plugin settings screen? =
 
@@ -376,6 +302,22 @@ Current list of supported CDN servers:
 5. Ability to manually undo optimization of selected image
 
 == Changelog ==
+
+= 5.11.5 (2023-12-07) =
+* `[Added]` Compatibility with PHP 8.3
+* `[Changed]` Error message for rewrites_not_executed error in server configuration
+* `[Changed]` Error message for bypassing_apache error in server configuration
+
+= 5.11.4 (2023-11-13) =
+* `[Fixed]` Removing WebP files converted for AVIF format from /uploads-webpc directory after uninstalling plugin
+* `[Fixed]` Statistics of conversion progress in WP-CLI
+* `[Changed]` Error message for rewrites_not_executed error in server configuration
+* `[Changed]` Error message for bypassing_apache error in server configuration
+* `[Changed]` Error message for rewrites_cached error in server configuration
+
+= 5.11.3 (2023-11-09) =
+* `[Fixed]` Automatically conversion of images from /uploads directory, but not from Media Library
+* `[Added]` Support for WordPress 6.4
 
 = 5.11.2 (2023-10-16) =
 * `[Added]` Button to expand/collapse list of directories to optimize in Bulk Optimization of Images section

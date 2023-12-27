@@ -25,4 +25,14 @@ class CouponRuleTrigger implements AdpCouponInterface
     {
         return $this->ruleId;
     }
+
+    public function equals(AdpCouponInterface $coupon): bool
+    {
+        if (!$coupon instanceof CouponRuleTrigger) {
+            return false;
+        }
+
+        return $this->code === $coupon->getCode()
+            && $this->ruleId === $coupon->getRuleId();
+    }
 }

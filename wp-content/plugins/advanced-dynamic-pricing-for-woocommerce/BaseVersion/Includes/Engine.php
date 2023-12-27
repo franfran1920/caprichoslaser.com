@@ -213,6 +213,10 @@ class Engine
             return;
         }
 
+        if ( apply_filters("adp_disable_process_after_calculate_totals", false) ) {
+            return;
+        }
+
         $this->process(false);
 //		$this->priceDisplay->restore_hooks();
     }

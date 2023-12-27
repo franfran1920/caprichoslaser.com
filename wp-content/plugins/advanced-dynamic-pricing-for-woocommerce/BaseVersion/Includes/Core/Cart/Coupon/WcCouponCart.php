@@ -36,6 +36,16 @@ class WcCouponCart implements CouponInterface, AdpCouponInterface
         $this->ruleId = $ruleId;
     }
 
+    public function equals(AdpCouponInterface $coupon): bool
+    {
+        if (!$coupon instanceof WcCouponCart) {
+            return false;
+        }
+
+        return $this->code === $coupon->getCode()
+            && $this->ruleId === $coupon->getRuleId();
+    }
+
     /**
      * @param string $code
      */

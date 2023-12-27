@@ -425,6 +425,9 @@ namespace SW_WAPF_PRO\Includes\Classes
             if(!empty($field->class))
                 $classes[] = $field->class;
 
+            if( $field->required )
+                $classes[] = 'wapf-required';
+
             if( $field->has_conditionals() )
                 $classes[] = 'wapf-hide';
 
@@ -505,9 +508,7 @@ namespace SW_WAPF_PRO\Includes\Classes
 
         public static function multi_choice_attributes(Field $field, $product) {
 
-        	$attributes = [
-		        'data-is-required' => $field->required
-	        ];
+        	$attributes = [];
 
 	        $attributes = apply_filters('wapf/html/multi_choice_attributes', $attributes, $field, $product);
 
@@ -590,8 +591,6 @@ namespace SW_WAPF_PRO\Includes\Classes
 
             }
 
-	        $attributes['data-is-required'] = $field->required;
-
 	        if($field->required)
 		        $attributes['required'] = '';
 
@@ -656,7 +655,6 @@ namespace SW_WAPF_PRO\Includes\Classes
         private static function field_attributes($product,Field $field, $field_group_id) {
 
         	$field_attributes = [
-		        'data-is-required'  => $field->required,
 		        'data-field-id'     => $field->id,
 	        ];
 

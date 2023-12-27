@@ -184,7 +184,7 @@ namespace SW_WAPF_PRO\Includes\Classes {
 				if(!isset($all[$type]))
 					continue;
 
-				$type = sanitize_text_field($type);
+				$type = sanitize_text_field( $type );
 				$t[$type] = $all[$type];
 			}
 

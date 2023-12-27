@@ -54,6 +54,9 @@ $default_date = Helper::string_to_date( $model['field']->options['default'] );
 							<?php } ?>
                             return WAPF.Filter.apply('date/selectable', true, { date: date, offset: offset,field:$this, today:today,isToday:isToday } );
                         }
+                    },
+                    pick: function() {
+                        document.dispatchEvent( new CustomEvent('wapf/date_selected', { detail: { date: $this.data('selected'), input: $this[0] } }) );
                     }
                 });
             };

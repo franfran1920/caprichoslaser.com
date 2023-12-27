@@ -229,6 +229,7 @@ class Help {
 			'providers/activecampaign'                => 'activecampaign',
 			'providers/campaign_monitor'              => 'campaign monitor',
 			'providers/constant_contact'              => 'constant contact',
+			'providers/convertkit'                    => 'convertkit',
 			'providers/drip'                          => 'drip',
 			'providers/getresponse'                   => 'getresponse',
 			'providers/getresponse_v3'                => 'getresponse',
@@ -463,6 +464,7 @@ class Help {
 			],
 			'email'                     => [
 				'/docs/setup-form-notification-wpforms/',
+				'/docs/customizing-form-notification-emails/',
 				'/docs/how-to-create-conditional-form-notifications-in-wpforms/',
 				'/docs/troubleshooting-email-notifications/',
 				'/docs/how-to-fix-wordpress-contact-form-not-sending-email-with-smtp/',
@@ -953,24 +955,28 @@ class Help {
 			],
 			'notification'              => [
 				'/docs/setup-form-notification-wpforms/',
+				'/docs/customizing-form-notification-emails/',
 				'/docs/how-to-create-conditional-form-notifications-in-wpforms/',
 				'/docs/troubleshooting-email-notifications/',
 				'/docs/how-to-fix-wordpress-contact-form-not-sending-email-with-smtp/',
 			],
 			'notifications'             => [
 				'/docs/setup-form-notification-wpforms/',
+				'/docs/customizing-form-notification-emails/',
 				'/docs/how-to-create-conditional-form-notifications-in-wpforms/',
 				'/docs/troubleshooting-email-notifications/',
 				'/docs/how-to-fix-wordpress-contact-form-not-sending-email-with-smtp/',
 			],
 			'notification email'        => [
 				'/docs/setup-form-notification-wpforms/',
+				'/docs/customizing-form-notification-emails/',
 				'/docs/how-to-create-conditional-form-notifications-in-wpforms/',
 				'/docs/troubleshooting-email-notifications/',
 				'/docs/how-to-fix-wordpress-contact-form-not-sending-email-with-smtp/',
 			],
 			'notification emails'       => [
 				'/docs/setup-form-notification-wpforms/',
+				'/docs/customizing-form-notification-emails/',
 				'/docs/how-to-create-conditional-form-notifications-in-wpforms/',
 				'/docs/troubleshooting-email-notifications/',
 				'/docs/how-to-fix-wordpress-contact-form-not-sending-email-with-smtp/',
@@ -1145,6 +1151,9 @@ class Help {
 			],
 			'constant contact'          => [
 				'/docs/how-to-connect-constant-contact-with-wpforms/',
+			],
+			'convertkit'                => [
+				'/docs/convertkit-addon/',
 			],
 			'drip'                      => [
 				'/docs/how-to-install-and-use-the-drip-addon-in-wpforms/',

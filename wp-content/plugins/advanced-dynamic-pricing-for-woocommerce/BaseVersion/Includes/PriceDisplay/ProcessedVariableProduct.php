@@ -54,7 +54,7 @@ class ProcessedVariableProduct
     protected $childSummary;
 
     /**
-     * @var array
+     * @var array<int, ProcessedProductSimple>
      */
     protected $children;
 
@@ -409,7 +409,7 @@ class ProcessedVariableProduct
     }
 
     /**
-     * @return array
+     * @return array<int, ProcessedProductSimple>
      */
     public function getChildren()
     {
