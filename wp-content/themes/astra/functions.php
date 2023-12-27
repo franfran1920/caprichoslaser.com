@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define Constants
  */
-define( 'ASTRA_THEME_VERSION', '4.4.0' );
+define( 'ASTRA_THEME_VERSION', '4.5.2' );
 define( 'ASTRA_THEME_SETTINGS', 'astra-settings' );
 define( 'ASTRA_THEME_DIR', trailingslashit( get_template_directory() ) );
 define( 'ASTRA_THEME_URI', trailingslashit( esc_url( get_template_directory_uri() ) ) );
@@ -24,7 +24,7 @@ define( 'ASTRA_THEME_URI', trailingslashit( esc_url( get_template_directory_uri(
  * Minimum Version requirement of the Astra Pro addon.
  * This constant will be used to display the notice asking user to update the Astra addon to the version defined below.
  */
-define( 'ASTRA_EXT_MIN_VER', '4.4.0' );
+define( 'ASTRA_EXT_MIN_VER', '4.5.0' );
 
 /**
  * Setup helper functions of Astra.
@@ -191,6 +191,9 @@ remove_action( 'woocommerce_archive_description','woocommerce_taxonomy_archive_d
 add_action( 'woocommerce_after_shop_loop', 'woocommerce_taxonomy_archive_description' );
 
 /* ****** descripción categorías debajo de productos ****** */
+
+
+//Eliminar envíos a CANARIAS, CEUTA Y MELILLA
 
 function ejr_limita_envios ($provincias) {
 
