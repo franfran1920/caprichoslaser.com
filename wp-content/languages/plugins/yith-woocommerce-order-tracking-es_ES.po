@@ -2,17 +2,22 @@
 # This file is distributed under the same license as the Plugins - YITH WooCommerce Order &amp; Shipment Tracking - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-07-24 11:14:50+0000\n"
+"PO-Revision-Date: 2023-11-22 07:09:43+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.7\n"
+"X-Generator: GlotPress/4.0.0-alpha.11\n"
 "Language: es\n"
 "Project-Id-Version: Plugins - YITH WooCommerce Order &amp; Shipment Tracking - Stable (latest release)\n"
 
-#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:501
-#: plugin-fw/includes/class-yit-plugin-panel.php:1546
+#. translators: Hidden accessibility text.
+#: plugin-fw/includes/class-yith-post-type-admin.php:387
+msgid "Show more details"
+msgstr "Muestra más detalles"
+
+#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:502
+#: plugin-fw/includes/class-yit-plugin-panel.php:1561
 msgid "Options saved!"
 msgstr "¡Opciones guardadas!"
 
@@ -62,7 +67,7 @@ msgctxt "Premium Tab"
 msgid "Upgrade now to get a %s%% off"
 msgstr "Actualiza ahora para obtener un %s%% de descuento"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1290
+#: plugin-fw/includes/class-yit-plugin-panel.php:1305
 msgid ""
 "At first, I was hesitant to buy the premium version so I started with the free option.\n"
 "After a while, seeing the quality of the plugin and the results I was getting, I decided to give it a shot and switch to premium. No regrets!\n"
@@ -99,7 +104,7 @@ msgstr "Vendedor independiente #1 de <mark>plugins para WooCommerce</mark>"
 msgid "Search for an order..."
 msgstr "Buscar un pedido..."
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:977
+#: plugin-fw/includes/class-yit-plugin-panel.php:992
 msgctxt "Panel tab name"
 msgid "Your Store Tools"
 msgstr "Herramientas de tu tienda"
@@ -136,7 +141,7 @@ msgstr "Subir archivo"
 msgid "Drag or upload a file."
 msgstr "Arrastrar o subir un archivo."
 
-#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:555
+#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:556
 msgid "Options reset correctly!"
 msgstr "¡Opciones restablecidas correctamente!"
 
@@ -249,24 +254,24 @@ msgstr "Guardar"
 msgid "It is not possible save the options"
 msgstr "No es posible guardar las opciones"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1170
+#: plugin-fw/includes/class-yit-plugin-panel.php:1185
 msgid "See how it works before you start using it"
 msgstr "Mira cómo funciona antes de comenzar a utilizarlo"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1169
+#: plugin-fw/includes/class-yit-plugin-panel.php:1184
 msgid "Watch our <mark>\"First Steps\" video</mark>"
 msgstr "Mira nuestro <mark>vídeo «Primeros pasos»</mark>"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1159
+#: plugin-fw/includes/class-yit-plugin-panel.php:1174
 msgid "Learn what you can really do with this powerful tool"
 msgstr "Aprende lo que realmente puedes hacer con esta potente herramienta"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1158
+#: plugin-fw/includes/class-yit-plugin-panel.php:1173
 msgid "Read the <mark>plugin documentation</mark>"
 msgstr "Lee la <mark>documentación del plugin</mark>"
 
 #. translators: 1. Plugin name.
-#: plugin-fw/includes/class-yit-plugin-panel.php:905
+#: plugin-fw/includes/class-yit-plugin-panel.php:920
 msgctxt "Help tab default title"
 msgid "Thank you for using %s!"
 msgstr "¡Gracias por usar %s!"
@@ -431,7 +436,7 @@ msgctxt "Premium Tab"
 msgid "...and so much more!"
 msgstr "... ¡y mucho más!"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:962
+#: plugin-fw/includes/class-yit-plugin-panel.php:977
 msgctxt "Premium tab name"
 msgid "Get premium"
 msgstr "Hazte premium"
@@ -551,18 +556,18 @@ msgctxt "Image width field label"
 msgid "Width"
 msgstr "Anchura"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:914
+#: plugin-fw/includes/class-yit-plugin-panel.php:929
 msgctxt "Help tab default description"
 msgid "We want to help you enjoy a wonderful experience with all of our products."
 msgstr "Queremos ayudarte a disfrutar de una experiencia maravillosa con todos nuestros productos."
 
 #. translators: 1. Plugin name.
-#: plugin-fw/includes/class-yit-plugin-panel.php:905
+#: plugin-fw/includes/class-yit-plugin-panel.php:920
 msgctxt "Help tab default title"
 msgid "Thank you for purchasing %s!"
 msgstr "¡Gracias por comprar %s!"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:992
+#: plugin-fw/includes/class-yit-plugin-panel.php:1007
 msgctxt "Help tab name"
 msgid "Help"
 msgstr "Ayuda"
@@ -1033,7 +1038,7 @@ msgstr "Desactivado"
 msgid "Enabled"
 msgstr "Activado"
 
-#: plugin-fw/templates/sysinfo/system-information-panel.php:22
+#: plugin-fw/templates/sysinfo/system-information-panel.php:28
 msgid "YITH System Information"
 msgstr "Información del sistema de YITH"
 
@@ -1152,8 +1157,8 @@ msgctxt "Privacy Policy Guide Title"
 msgid "YITH Plugins"
 msgstr "Plugins de YITH"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:544
-#: plugin-fw/includes/class-yit-plugin-panel.php:547
+#: plugin-fw/includes/class-yit-plugin-panel.php:559
+#: plugin-fw/includes/class-yit-plugin-panel.php:562
 msgid "How to install premium version"
 msgstr "Como instalar la versión premium"
 
@@ -1278,43 +1283,43 @@ msgstr "Plugins mejorados"
 msgid "Plugins Activated"
 msgstr "Plugins activados"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1551
+#: plugin-fw/includes/class-yit-plugin-panel.php:1566
 msgid "Sorting successful."
 msgstr "Clasificación realizada con éxito."
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1550
+#: plugin-fw/includes/class-yit-plugin-panel.php:1565
 msgid "Sorry, import is disabled."
 msgstr "Lo siento, la importación está desactivada."
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1549
+#: plugin-fw/includes/class-yit-plugin-panel.php:1564
 msgid "The added file is not valid."
 msgstr "El archivo añadido es no válido."
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1548
+#: plugin-fw/includes/class-yit-plugin-panel.php:1563
 msgid "An error has occurred during import. Please try again."
 msgstr "Ha ocurrido un error durante la importación. Por favor, inténtalo de nuevo."
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1547
+#: plugin-fw/includes/class-yit-plugin-panel.php:1562
 msgid "Database imported correctly."
 msgstr "Base de datos importada correctamente."
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1545
+#: plugin-fw/includes/class-yit-plugin-panel.php:1560
 msgid "Element updated correctly."
 msgstr "Elemento actualizado correctamente."
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1544
+#: plugin-fw/includes/class-yit-plugin-panel.php:1559
 msgid "Element deleted correctly."
 msgstr "Elemento eliminado correctamente."
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1543
+#: plugin-fw/includes/class-yit-plugin-panel.php:1558
 msgid "Settings reset"
 msgstr "Restablecer ajustes"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1542
+#: plugin-fw/includes/class-yit-plugin-panel.php:1557
 msgid "Settings saved"
 msgstr "Ajustes guardados"
 
-#: plugin-fw/includes/class-yit-plugin-panel.php:1541
+#: plugin-fw/includes/class-yit-plugin-panel.php:1556
 msgid "The element you have entered already exists. Please, enter another name."
 msgstr "El elemento que has introducido ya existe. Por favor, introduce otro nombre."
 
@@ -1348,7 +1353,7 @@ msgstr "Plugins de YITH"
 msgid "Plugin Settings"
 msgstr "Ajustes del plugin"
 
-#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:605
+#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:606
 msgid "The changes you have made will be lost if you leave this page."
 msgstr "Los cambios que has hecho se perderán si abandonas esta página."
 
