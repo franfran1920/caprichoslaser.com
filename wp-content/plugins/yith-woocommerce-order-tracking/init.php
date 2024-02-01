@@ -5,10 +5,10 @@
  * Description: Enter the order shipping and tracking information in your WooCommerce orders. Share the tracking info with your customers and improve your customer experience.
  * Author: YITH
  * Text Domain: yith-woocommerce-order-tracking
- * Version: 2.21.0
+ * Version: 2.22.1
  * Author URI: http://yithemes.com/
- * WC requires at least: 8.2
- * WC tested up to: 8.4
+ * WC requires at least: 8.3
+ * WC tested up to: 8.5
  *
  * @package YITH\OrderTracking
  */
@@ -34,7 +34,7 @@ if ( ! defined( 'YITH_YWOT_SLUG' ) ) {
 }
 
 if ( ! defined( 'YITH_YWOT_VERSION' ) ) {
-	define( 'YITH_YWOT_VERSION', '2.21.0' );
+	define( 'YITH_YWOT_VERSION', '2.22.1' );
 }
 
 if ( ! defined( 'YITH_YWOT_FILE' ) ) {

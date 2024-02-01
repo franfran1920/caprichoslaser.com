@@ -3,7 +3,7 @@
 namespace ADP\BaseVersion\Includes\SpecialStrategies;
 
 use ADP\BaseVersion\Includes\Context;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 
 defined('ABSPATH') or exit;
 
@@ -29,7 +29,7 @@ class OverrideCentsStrategy
 
     /**
      * @param float $price
-     * @param CartItem $item
+     * @param ICartItem $item
      *
      * @return float
      */

@@ -3,8 +3,9 @@
 namespace ADP\BaseVersion\Includes\Core;
 
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Database\RulesCollection;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 
 interface ICartCalculator
 {
@@ -17,7 +18,7 @@ interface ICartCalculator
 
     /**
      * @param Cart $cart
-     * @param CartItem $item
+     * @param ICartItem $item
      *
      * @return bool
      */

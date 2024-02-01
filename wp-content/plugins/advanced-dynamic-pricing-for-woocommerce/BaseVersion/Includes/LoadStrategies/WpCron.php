@@ -27,6 +27,11 @@ class WpCron implements LoadStrategy
 
     public function start()
     {
+        if (!apply_filters("adp_wp_cron_strategy_load", true)) {
+            return false;
+        }
+
+
         /**
          * Do not call @see wc_get_chosen_shipping_method_ids() in CRON.
          *

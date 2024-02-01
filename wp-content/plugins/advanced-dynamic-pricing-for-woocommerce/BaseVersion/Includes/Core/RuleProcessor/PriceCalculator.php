@@ -4,10 +4,13 @@ namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemPriceAdjustment\CartItemPriceAdjustment;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemPriceAdjustment\CartItemPriceUpdateSourceEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemPriceAdjustment\CartItemPriceUpdateTypeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Core\Cart\Coupon\CouponCartItem;
 use ADP\BaseVersion\Includes\Core\Cart\Fee;
-use ADP\BaseVersion\Includes\Core\Cart\ItemDiscount;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule\PackageRangeAdjustments;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule\ProductsAdjustmentSplit;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule\ProductsAdjustmentTotal;
@@ -47,47 +50,13 @@ class PriceCalculator
      */
     public function __construct($rule, $discount, $discountTotalLimit = null)
     {
-        $this->rule               = $rule;
-        $this->discount           = $discount;
+        $this->rule = $rule;
+        $this->discount = $discount;
         $this->discountTotalLimit = $discountTotalLimit;
     }
 
     /**
-     * @param CartItemsCollection $collection
-     * @param Context $globalContext
-     */
-    public function applyToAllItemsInCollection(&$collection, $globalContext)
-    {
-        foreach ($collection->get_items() as &$item) {
-            $this->applyToItem($item, $globalContext);
-        }
-    }
-
-    /**
-     * @param CartItem $item
-     * @param Context $globalContext
-     */
-    public function applyToItem(&$item, $globalContext)
-    {
-        $price = $this->calculateSinglePrice($item->getPrice());
-
-        if ($item->getAddonsAmount() > 0) {
-            if (Discount::TYPE_FIXED_VALUE === $this->discount->getType()) {
-                $price += $item->getAddonsAmount();
-            }
-        } else {
-            if ($globalContext->isToCompensateTrdPartAdjustmentForFixedPrice()) {
-                if (Discount::TYPE_FIXED_VALUE === $this->discount->getType()) {
-                    $price += $item->trdPartyPriceAdj;
-                }
-            }
-        }
-
-        $item->setPrice($this->rule->getId(), $price);
-    }
-
-    /**
-     * @param CartItem $item
+     * @param ICartItem $item
      * @param Cart $cart
      *
      * @return float|null
@@ -116,7 +85,7 @@ class PriceCalculator
         } else {
             if ($globalContext->isToCompensateTrdPartAdjustmentForFixedPrice()) {
                 if ($discount::TYPE_FIXED_VALUE === $discount->getType()) {
-                    $newPrice += $item->trdPartyPriceAdj;
+                    $newPrice += $item->prices()->getTrdPartyAdjustmentsTotal();
                 }
             }
         }
@@ -125,7 +94,7 @@ class PriceCalculator
     }
 
     /**
-     * @param CartItem $item
+     * @param ICartItem $item
      * @param Cart $cart
      * @param ProductsAdjustment|ProductsRangeAdjustments|ProductsAdjustmentTotal|ProductsAdjustmentSplit|PackageRangeAdjustments|RoleDiscount $handler
      */
@@ -133,7 +102,6 @@ class PriceCalculator
     {
         $globalContext = $cart->getContext()->getGlobalContext();
         $discount = $this->discount;
-        $settings = $globalContext->getSettings();
         $compatibilitySettings = $globalContext->getCompatibilitySettings();
 
         if ($discount instanceof SetDiscount) {
@@ -141,12 +109,15 @@ class PriceCalculator
         }
 
         $flags = array();
+        $priceAdjBuilder = CartItemPriceAdjustment::builder();
+        $priceAdjBuilder->type(CartItemPriceUpdateTypeEnum::DEFAULT());
 
         if ($globalContext->getOption('apply_discount_to_original_price') && Discount::TYPE_PERCENTAGE === $discount->getType()) {
-            $price   = $item->getOriginalPrice();
-            $flags[] = CartItem::FLAG_DISCOUNT_ORIGINAL;
+            $price = $item->getOriginalPrice();
+            $priceAdjBuilder->originalPrice($item->getOriginalPrice());
         } else {
             $price = $item->getPrice();
+            $priceAdjBuilder->originalPrice($item->getPrice());
         }
 
         $dontApplyDiscountToAddons = $compatibilitySettings->getOption('dont_apply_discount_to_addons');
@@ -167,15 +138,17 @@ class PriceCalculator
         } else {
             if ($globalContext->isToCompensateTrdPartAdjustmentForFixedPrice()) {
                 if ($discount::TYPE_FIXED_VALUE === $discount->getType()) {
-                    $newPrice += $item->trdPartyPriceAdj;
+                    $newPrice += $item->prices()->getTrdPartyAdjustmentsTotal();
                 }
             }
         }
         $amount = ($price - $newPrice) * $item->getQty();
+        $priceAdjBuilder->newPrice($newPrice);
+        $priceAdjBuilder->amount($price - $newPrice);
 
         if ($handler->isReplaceWithCartAdjustment()) {
-            $flags[]        = CartItem::FLAG_IGNORE;
             $adjustmentCode = $handler->getReplaceCartAdjustmentCode();
+            $priceAdjBuilder->type(CartItemPriceUpdateTypeEnum::REPLACED_BY_CART_ADJUSTMENT());
 
             if ($amount > 0) {
                 $coupon = new CouponCartItem(
@@ -202,10 +175,10 @@ class PriceCalculator
                 );
             }
         } elseif ($globalContext->getOption('item_adjustments_as_coupon', false)
-                  && $globalContext->getOption('item_adjustments_coupon_name', false)
+            && $globalContext->getOption('item_adjustments_coupon_name', false)
         ) {
-            $flags[]        = CartItem::FLAG_IGNORE;
             $adjustmentCode = $globalContext->getOption('item_adjustments_coupon_name');
+            $priceAdjBuilder->type(CartItemPriceUpdateTypeEnum::REPLACED_BY_CART_ADJUSTMENT());
 
             if ($amount > 0) {
                 $coupon = new CouponCartItem(
@@ -233,32 +206,22 @@ class PriceCalculator
             }
         }
 
-        $item->setPrice($this->rule->getId(), $newPrice, $flags);
-
         if ($handler instanceof ProductsAdjustment) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_SINGLE_ITEM_SIMPLE, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_SINGLE_ITEM_SIMPLE());
         } elseif ($handler instanceof ProductsRangeAdjustments) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_SINGLE_ITEM_RANGE, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_SINGLE_ITEM_RANGE());
         } elseif ($handler instanceof ProductsAdjustmentTotal) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_PACKAGE_SIMPLE, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_PACKAGE_SIMPLE());
         } elseif ($handler instanceof ProductsAdjustmentSplit) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_PACKAGE_SPLIT, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_PACKAGE_SPLIT());
         } elseif ($handler instanceof PackageRangeAdjustments) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_PACKAGE_RANGE, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_PACKAGE_RANGE());
         } elseif ($handler instanceof RoleDiscount) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_ROLE, $newPrice);
-        } else {
-            return;
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_ROLE());
         }
 
-        $discount->setRuleId($this->rule->getId());
-        foreach ($flags as $flag) {
-            $discount->addFlag($flag);
-        }
-
-        // todo add range
-
-        $item->setPriceNew($discount);
+        $priceAdjBuilder->ruleId($this->rule->getId());
+        $item->applyPriceAdjustment($priceAdjBuilder->build());
     }
 
     /**
@@ -270,7 +233,7 @@ class PriceCalculator
     {
         $old_price = floatval($price);
 
-        $operationType  = $this->discount->getType();
+        $operationType = $this->discount->getType();
         $operationValue = $this->discount->getValue();
 
         if (Discount::TYPE_FREE === $operationType) {
@@ -293,7 +256,7 @@ class PriceCalculator
     }
 
     /**
-     * @param $listOfItems CartItem[]|CartSet|CartItemsCollection
+     * @param $listOfItems ICartItem[]|CartSet|CartItemsCollection
      * @param $globalContext Context
      *
      * @return float
@@ -305,7 +268,7 @@ class PriceCalculator
         $items = array();
         if (is_array($listOfItems)) {
             foreach ($listOfItems as $item) {
-                if ($item instanceof CartItem) {
+                if ($item instanceof ICartItem) {
                     $items[] = $item;
                 }
             }
@@ -322,8 +285,8 @@ class PriceCalculator
         foreach ($items as $item) {
             if ($item->getAddonsAmount() > 0) {
                 $third_party_adjustments += $item->getAddonsAmount();
-            } elseif ( $globalContext->isToCompensateTrdPartAdjustmentForFixedPrice() ) {
-                $third_party_adjustments += $item->trdPartyPriceAdj;
+            } elseif ($globalContext->isToCompensateTrdPartAdjustmentForFixedPrice()) {
+                $third_party_adjustments += $item->prices()->getMinDiscountRangePrice();
             }
         }
 
@@ -331,16 +294,16 @@ class PriceCalculator
         if (Discount::TYPE_PERCENTAGE === $discountType) {
             foreach ($items as $item) {
                 /**
-                 * @var $item CartItem
+                 * @var $item ICartItem
                  */
-                if ($item->hasAttr($item::ATTR_READONLY_PRICE)) {
+                if ($item->hasAttr(CartItemAttributeEnum::READONLY_PRICE())) {
                     continue;
                 }
-                $new_price        = $this->makeDiscountPercentage($item->getTotalPrice(), $this->discount->getValue());
+                $new_price = $this->makeDiscountPercentage($item->getTotalPrice(), $this->discount->getValue());
                 $adjustments_left += $item->getTotalPrice() - $new_price;
             }
         } elseif (Discount::TYPE_FIXED_VALUE === $discountType || Discount::TYPE_AMOUNT === $discountType) {
-            if ( ! empty($price_total)) {
+            if (!empty($price_total)) {
                 if (Discount::TYPE_FIXED_VALUE === $discountType) {
                     $adjustments_left = $price_total - $this->discount->getValue() - $third_party_adjustments;
                 } else {
@@ -368,8 +331,8 @@ class PriceCalculator
     }
 
     /**
-     * @param CartSet                                                                                                                          $set
-     * @param Cart                                                                                                                             $cart
+     * @param CartSet $set
+     * @param Cart $cart
      * @param ProductsAdjustment|ProductsRangeAdjustments|ProductsAdjustmentTotal|ProductsAdjustmentSplit|PackageRangeAdjustments|RoleDiscount $handler
      *
      * @return CartSet
@@ -380,8 +343,8 @@ class PriceCalculator
     }
 
     /**
-     * @param CartSet                                                                                                                          $set
-     * @param Cart                                                                                                                             $cart
+     * @param CartSet $set
+     * @param Cart $cart
      * @param ProductsAdjustment|ProductsRangeAdjustments|ProductsAdjustmentTotal|ProductsAdjustmentSplit|PackageRangeAdjustments|RoleDiscount $handler
      *
      * @return CartSet
@@ -393,9 +356,9 @@ class PriceCalculator
         $totalPrice = 0;
         foreach ($set->getItems() as $item) {
             /**
-             * @var $item CartItem
+             * @var $item ICartItem
              */
-            if ( ! $item->hasAttr($item::ATTR_READONLY_PRICE)) {
+            if (!$item->hasAttr(CartItemAttributeEnum::READONLY_PRICE())) {
                 $totalPrice += $item->getTotalPrice();
             }
         }
@@ -403,9 +366,9 @@ class PriceCalculator
         $totalQty = 0;
         foreach ($set->getItems() as $item) {
             /**
-             * @var $item CartItem
+             * @var $item ICartItem
              */
-            if ( ! $item->hasAttr($item::ATTR_READONLY_PRICE)) {
+            if (!$item->hasAttr(CartItemAttributeEnum::READONLY_PRICE())) {
                 $totalQty += $item->getQty();
             }
         }
@@ -417,9 +380,9 @@ class PriceCalculator
             )
         );
 
-        $overprice       = $adjustmentsLeft < 0;
+        $overprice = $adjustmentsLeft < 0;
         $adjustmentsLeft = $overprice ? -$adjustmentsLeft : $adjustmentsLeft;
-        $diff            = 0.0;
+        $diff = 0.0;
 
         if ($adjustmentsLeft > 0 && $totalPrice > 0) {
             $diff = $adjustmentsLeft / $totalPrice;
@@ -428,10 +391,10 @@ class PriceCalculator
         foreach ($set->getPositions() as $position) {
             foreach ($set->getItemsByPosition($position) as $item) {
                 /**
-                 * @var $item CartItem
+                 * @var $item ICartItem
                  */
 
-                if ($item->hasAttr($item::ATTR_READONLY_PRICE)) {
+                if ($item->hasAttr(CartItemAttributeEnum::READONLY_PRICE())) {
                     continue;
                 }
 
@@ -449,10 +412,11 @@ class PriceCalculator
                     $newPrice = $this->makeDiscountAmount($price, $adjustmentAmount);
                 }
 
-                $flags  = array();
+                $flags = array();
                 $amount = ($price - $newPrice) * $item->getQty() * $set->getQty();
 
-                if ( ! $this->makeSetItemDiscount($item, $set, $cart, $handler, $amount, $newPrice, $flags)) {
+                if (!$this->makeSetItemDiscount($item, $set, $cart, $handler, $amount, $newPrice, $flags,
+                    $price - $newPrice)) {
                     continue;
                 }
 
@@ -468,22 +432,30 @@ class PriceCalculator
     }
 
     /**
-     * @param CartItem                                                                                                                         $item
+     * @param ICartItem $item
      * @param CartSet                                                                                                                          $set
-     * @param Cart                                                                                                                             $cart
+     * @param Cart $cart
      * @param ProductsAdjustment|ProductsRangeAdjustments|ProductsAdjustmentTotal|ProductsAdjustmentSplit|PackageRangeAdjustments|RoleDiscount $handler
-     * @param float                                                                                                                            $amount
-     * @param float                                                                                                                            $newPrice
-     * @param array                                                                                                                            $flags
+     * @param float $amount
+     * @param float $newPrice
+     * @param array $flags
+     * @param float $amountPerItem
      *
      * @return bool
      */
-    protected function makeSetItemDiscount($item, $set, $cart, $handler, $amount, $newPrice, $flags)
+    protected function makeSetItemDiscount($item, $set, $cart, $handler, $amount, $newPrice, $flags, $amountPerItem)
     {
         $globalContext = $cart->getContext()->getGlobalContext();
 
+        $priceAdjBuilder = CartItemPriceAdjustment::builder();
+        $priceAdjBuilder
+            ->type(CartItemPriceUpdateTypeEnum::DEFAULT())
+            ->originalPrice($newPrice + $amountPerItem)
+            ->amount(floatval($amountPerItem))
+            ->newPrice($newPrice);
+
         if ($handler->isReplaceWithCartAdjustment()) {
-            $flags[]        = CartItem::FLAG_IGNORE;
+            $priceAdjBuilder->type(CartItemPriceUpdateTypeEnum::REPLACED_BY_CART_ADJUSTMENT());
             $adjustmentCode = $handler->getReplaceCartAdjustmentCode();
 
             if ($amount > 0) {
@@ -512,11 +484,10 @@ class PriceCalculator
                     )
                 );
             }
-        } elseif ($globalContext->getOption(
-                'item_adjustments_as_coupon',
-                false
-            ) && $globalContext->getOption('item_adjustments_coupon_name', false)) {
-            $flags[]        = CartItem::FLAG_IGNORE;
+        } elseif ($globalContext->getOption('item_adjustments_as_coupon', false)
+            && $globalContext->getOption('item_adjustments_coupon_name', false)
+        ) {
+            $priceAdjBuilder->type(CartItemPriceUpdateTypeEnum::REPLACED_BY_CART_ADJUSTMENT());
             $adjustmentCode = $globalContext->getOption('item_adjustments_coupon_name');
 
             if ($amount > 0) {
@@ -547,30 +518,22 @@ class PriceCalculator
             }
         }
 
-        $item->setPrice($this->rule->getId(), $newPrice, $flags);
-
         if ($handler instanceof ProductsAdjustment) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_SINGLE_ITEM_SIMPLE, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_SINGLE_ITEM_SIMPLE());
         } elseif ($handler instanceof ProductsRangeAdjustments) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_SINGLE_ITEM_RANGE, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_SINGLE_ITEM_RANGE());
         } elseif ($handler instanceof ProductsAdjustmentTotal) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_PACKAGE_SIMPLE, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_PACKAGE_SIMPLE());
         } elseif ($handler instanceof ProductsAdjustmentSplit) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_PACKAGE_SPLIT, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_PACKAGE_SPLIT());
         } elseif ($handler instanceof PackageRangeAdjustments) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_PACKAGE_RANGE, $newPrice);
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_PACKAGE_RANGE());
         } elseif ($handler instanceof RoleDiscount) {
-            $discount = new ItemDiscount($globalContext, ItemDiscount::SOURCE_ROLE, $newPrice);
-        } else {
-            return false;
+            $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_ROLE());
         }
 
-        $discount->setRuleId($this->rule->getId());
-        foreach ($flags as $flag) {
-            $discount->addFlag($flag);
-        }
-
-        $item->setPriceNew($discount);
+        $priceAdjBuilder->ruleId($this->rule->getId());
+        $item->applyPriceAdjustment($priceAdjBuilder->build());
 
         return true;
     }

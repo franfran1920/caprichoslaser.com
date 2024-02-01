@@ -4,7 +4,6 @@ namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule\ProductsAdjustmentSplit;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule\ProductsAdjustmentTotal;
@@ -17,7 +16,7 @@ use ADP\BaseVersion\Includes\Core\RuleProcessor\ProductStock\ProductStockControl
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartItemsCollection;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSet;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSetCollection;
-use ADP\BaseVersion\Includes\Database\Repository\RuleRepository;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 use ADP\Factory;
 use Exception;
 use WC_Product;
@@ -36,6 +35,7 @@ class PackageRuleProcessor implements RuleProcessor
     const STATUS_FILTERS_NOT_PASSED = 5;
     const STATUS_DISABLED_BY_COUPON_CODE_TRIGGER = 6;
     const STATUS_DISABLED_BY_DATE = 7;
+    const STATUS_SUCCESSFULLY_COMPLETED = 8;
 
     protected $status;
     protected $lastUnexpectedErrorMessage;
@@ -252,6 +252,8 @@ class PackageRuleProcessor implements RuleProcessor
         );
 
         $this->applyChangesToCart($cart, $setCollection);
+
+        $this->status = self::STATUS_SUCCESSFULLY_COMPLETED;
     }
 
     /**
@@ -326,8 +328,8 @@ class PackageRuleProcessor implements RuleProcessor
     }
 
     /**
-     * @param CartItem $item1
-     * @param CartItem $item2
+     * @param BasicCartItem $item1
+     * @param BasicCartItem $item2
      *
      * @return float|int
      */
@@ -360,7 +362,7 @@ class PackageRuleProcessor implements RuleProcessor
     }
 
     /**
-     * @param array<int,CartItem> $cartItems
+     * @param array<int,BasicCartItem> $cartItems
      * @param Cart $cart
      *
      * @return CartSetCollection

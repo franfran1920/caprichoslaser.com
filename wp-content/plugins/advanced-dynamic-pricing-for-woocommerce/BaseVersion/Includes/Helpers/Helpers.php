@@ -335,6 +335,21 @@ class Helpers
         }
     }
 
+    public static function getThumbnailSrc( $id) {
+        $product = wc_get_product($id);
+        if (!($product instanceof WC_Product)) {
+            return "";
+        }
+
+		$src = '';
+
+		if ( preg_match( '/src\=["|\'](.*?)["|\']/i', $product->get_image(), $matches ) ) {
+			$src = $matches[1];
+		}
+
+		return $src;
+	}
+
     public static function getProductName($id)
     {
         $post = get_post($id);

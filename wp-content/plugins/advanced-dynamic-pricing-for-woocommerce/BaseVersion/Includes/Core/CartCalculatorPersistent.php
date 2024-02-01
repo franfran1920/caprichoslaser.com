@@ -4,9 +4,10 @@ namespace ADP\BaseVersion\Includes\Core;
 
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Core\Rule\PersistentRule;
 use ADP\BaseVersion\Includes\Database\RulesCollection;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 
 class CartCalculatorPersistent implements ICartCalculator
 {
@@ -41,7 +42,7 @@ class CartCalculatorPersistent implements ICartCalculator
 
     /**
      * @param Cart $cart
-     * @param CartItem $item
+     * @param ICartItem $item
      *
      * @return bool
      */
@@ -81,20 +82,14 @@ class CartCalculatorPersistent implements ICartCalculator
                     }
 
                     if ( ! is_null($wcSalePrice) && $wcSalePrice < $productPrice) {
-                        $newItem = new CartItem($item->getWcItem(), $wcSalePrice, $item->getQty(), $item->getPos());
+                        $newItem = new BasicCartItem($item->getWcItem(), $wcSalePrice, $item->getQty(), $item->getInitialCartPosition());
 
-                        foreach ($item->getAttrs() as $attr) {
-                            $newItem->addAttr($attr);
-                        }
+                        $item->copyAttributesTo($newItem);
 
-                        foreach ($item->getMarks() as $mark) {
-                            $newItem->addMark($mark);
-                        }
-
-                        $minDiscountRangePrice = $item->getMinDiscountRangePrice();
+                        $minDiscountRangePrice = $item->prices()->getMinDiscountRangePrice();
                         if ($minDiscountRangePrice !== null) {
                             $minDiscountRangePrice = $minDiscountRangePrice < $wcSalePrice ? $minDiscountRangePrice : $wcSalePrice;
-                            $newItem->setMinDiscountRangePrice($minDiscountRangePrice);
+                            $newItem->prices()->setMinDiscountRangePrice($minDiscountRangePrice);
                         }
 
                         $item = $newItem;
@@ -116,19 +111,13 @@ class CartCalculatorPersistent implements ICartCalculator
                     }
 
                     if ( ! is_null($wcSalePrice) && count($item->getHistory()) == 0) {
-                        $newItem = new CartItem($item->getWcItem(), $wcSalePrice, $item->getQty(), $item->getPos());
+                        $newItem = new BasicCartItem($item->getWcItem(), $wcSalePrice, $item->getQty(), $item->getInitialCartPosition());
 
-                        foreach ($item->getAttrs() as $attr) {
-                            $newItem->addAttr($attr);
-                        }
+                        $item->copyAttributesTo($newItem);
 
-                        foreach ($item->getMarks() as $mark) {
-                            $newItem->addMark($mark);
-                        }
-
-                        $minDiscountRangePrice = $item->getMinDiscountRangePrice();
+                        $minDiscountRangePrice = $item->prices()->getMinDiscountRangePrice();
                         if ($minDiscountRangePrice !== null) {
-                            $newItem->setMinDiscountRangePrice($minDiscountRangePrice);
+                            $newItem->prices()->setMinDiscountRangePrice($minDiscountRangePrice);
                         }
 
                         $item = $newItem;

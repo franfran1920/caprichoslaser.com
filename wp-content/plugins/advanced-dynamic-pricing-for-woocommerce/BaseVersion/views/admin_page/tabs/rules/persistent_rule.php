@@ -254,7 +254,7 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                                 <?php
                                     echo sprintf(
                                         wp_kses(
-                                            '<a href="%s" target="_blank">' .__('Please, read about difference between Tier and Bulk modes', 
+                                            '<a href="%s" target="_blank">' .__('Please, read about difference between Tier and Bulk modes',
                                                 'advanced-dynamic-pricing-for-woocommerce') .'</a>',
                                             array('a' => array('href' => array(), 'target' => array()), 'br' => array())
                                         ),
@@ -636,6 +636,9 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                     );
                     ?>
                 </p>
+
+                <a href="https://algolplus.com/plugins/downloads/advanced-dynamic-pricing-woocommerce-pro/"
+                   target=_blank><?php _e('Need more conditions?', 'advanced-dynamic-pricing-for-woocommerce') ?></a>
             </div>
             <div class="wdp-wrapper wdp-column">
                 <div class="wdp-conditions-relationship">
@@ -650,9 +653,6 @@ $pleaseEnableText = __("Please, enable coupons to use price replacements.", 'adv
                     <button type="button" class="button"><?php _e('Add condition',
                             'advanced-dynamic-pricing-for-woocommerce'); ?></button>
                 </div>
-
-                <a href="https://algolplus.com/plugins/downloads/advanced-dynamic-pricing-woocommerce-pro/"
-                   target=_blank><?php _e('Need more conditions?', 'advanced-dynamic-pricing-for-woocommerce') ?></a>
             </div>
         </div>
 

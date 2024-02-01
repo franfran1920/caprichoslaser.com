@@ -3,20 +3,16 @@
 namespace ADP\BaseVersion\Includes\PriceDisplay\WcProductProcessor;
 
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
-use ADP\BaseVersion\Includes\Compatibility\SomewhereWarmBundlesCmp;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Container\ContainerCartItem;
 use ADP\BaseVersion\Includes\Debug\ProductCalculatorListener;
 use ADP\BaseVersion\Includes\PriceDisplay\ProcessedGroupedProduct;
+use ADP\BaseVersion\Includes\PriceDisplay\ProcessedProductContainer;
 use ADP\BaseVersion\Includes\PriceDisplay\ProcessedProductSimple;
 use ADP\BaseVersion\Includes\PriceDisplay\ProcessedVariableProduct;
-use ADP\BaseVersion\Includes\ProductExtensions\ProductExtension;
-use ADP\BaseVersion\Includes\WC\DataStores\ProductVariationDataStoreCpt;
-use ADP\BaseVersion\Includes\WC\WcCartItemFacade;
 use ADP\Factory;
-use Exception;
-use ReflectionClass;
-use ReflectionException;
 use WC_Product;
 
 class InCartWcProductProcessor implements IWcProductProcessor
@@ -109,6 +105,18 @@ class InCartWcProductProcessor implements IWcProductProcessor
 
                 $processed->useChild($processedChild);
             }
+        } elseif ( WcProductProcessorHelper::isCalculatingPartOfContainerProduct($product) ) {
+            $containerProduct = WcProductProcessorHelper::getBundleProductFromBundled($product);
+            $processedParent = $this->calculate($containerProduct, $qty, $cartItemData);
+
+            $processed = null;
+            if ($processedParent instanceof ProcessedProductContainer) {
+                foreach ($processedParent->getContainerItemsByPos() as $containerItem) {
+                    if ($containerItem->getProduct()->get_id() === $product->get_id()) {
+                        $processed = $containerItem;
+                    }
+                }
+            }
         } else {
             $processed = $this->calculate($product, $qty, $cartItemData);
         }
@@ -122,7 +130,7 @@ class InCartWcProductProcessor implements IWcProductProcessor
      * @param array $cartItemData
      * @param WC_Product|null $theParentProduct
      *
-     * @return ProcessedProductSimple|null
+     * @return ProcessedProductSimple|ProcessedProductContainer|null
      */
     protected function calculate($theProduct, $qty = 1.0, $cartItemData = array(), $theParentProduct = null)
     {
@@ -231,7 +239,15 @@ class InCartWcProductProcessor implements IWcProductProcessor
         }
 
         $tmpItems = apply_filters("adp_before_processed_product", $tmpItems, $this);
-        $processedProduct = new ProcessedProductSimple($this->context, $product, $tmpItems);
+
+        $processedProduct = WcProductProcessorHelper::tmpItemsToProcessedProduct(
+            $this->context,
+            $product,
+            $tmpItems,
+            [],
+            []
+        );
+
         $processedProduct->setQtyAlreadyInCart($qtyAlreadyInCart);
         $this->listener->processedProduct($processedProduct);
 

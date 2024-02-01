@@ -4,6 +4,9 @@ namespace ADP\BaseVersion\Includes;
 
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\CartProcessor\CartBuilder;
+use ADP\BaseVersion\Includes\CartProcessor\ToPricingCartItemAdapter\ToPricingCartItemAdapter;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemConverter;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
 use ADP\BaseVersion\Includes\Core\CartCalculator;
 use ADP\BaseVersion\Includes\Core\Rule\Rule;
 use ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
@@ -49,14 +52,20 @@ class Functions
     protected $cartBuilder;
 
     /**
+     * @var CartItemConverter
+     */
+    protected $cartItemConverter;
+
+    /**
      * @param Engine|null $engine
      */
     public function __construct($engine = null)
     {
-        $this->context          = adp_context();
-        $this->globalEngine     = $engine;
-        $this->productProcessor = new Processor();
-        $this->cartBuilder      = new CartBuilder();
+        $this->context           = adp_context();
+        $this->globalEngine      = $engine;
+        $this->productProcessor  = new Processor();
+        $this->cartBuilder       = new CartBuilder();
+        $this->cartItemConverter = new CartItemConverter();
     }
 
     public function withContext(Context $context)
@@ -186,6 +195,7 @@ class Functions
         $result = array();
         $cart   = $this->cartBuilder->create(WC()->customer, WC()->session);
 
+        $adapter = new ToPricingCartItemAdapter();
         foreach ($listOfProducts as $data) {
             if ( ! isset($data['product_id'], $data['qty'])) {
                 continue;
@@ -204,7 +214,7 @@ class Functions
 
             $cartItem = WcCartItemFacade::createFromProduct($this->context, $product, $cartItemData);
             $cartItem->setQty($qty);
-            $cart->addToCart($cartItem->createItem());
+            $adapter->adaptFacadeAndPutIntoCart($cart, $cartItem, -1);
         }
 
         $activeRuleCollection = CacheHelper::loadActiveRules($this->context);
@@ -246,11 +256,11 @@ class Functions
             }
 
             $items = array();
+            $adapter = new ToPricingCartItemAdapter();
             foreach ($listOfProductIds as $index => $prodId) {
                 if ($product = CacheHelper::getWcProduct($prodId)) {
-                    $cartItem = WcCartItemFacade::createFromProduct($this->context, $product);
-                    $item     = $cartItem->createItem();
-                    $item->addAttr($item::ATTR_TEMP);
+                    $item = $adapter->adaptWcProduct($product);
+                    $item->addAttr(CartItemAttributeEnum::TEMPORARY());
                     $items[] = $item;
                     $cart->addToCart($item);
                 }
@@ -273,7 +283,7 @@ class Functions
 
             $ruleResult = array();
             foreach ($cart->getItems() as $item) {
-                if ( ! $item->hasAttr($item::ATTR_TEMP)) {
+                if ( ! $item->hasAttr(CartItemAttributeEnum::TEMPORARY())) {
                     continue;
                 }
 

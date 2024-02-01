@@ -40,6 +40,11 @@ class Date extends AbstractCondition implements DateTimeComparisonCondition
             $this->comparisonDate,
             new \DateTimeZone("UTC")
         );
+        
+        if(!$comparisonDate) {
+            return false;
+        }
+
         $comparisonDate->setTime(0, 0, 0);
         $comparisonMethod = $this->comparisonMethod;
 

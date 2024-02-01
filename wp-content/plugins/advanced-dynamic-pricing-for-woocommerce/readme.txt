@@ -5,7 +5,7 @@ Tags: woocommerce, discounts, deals, dynamic pricing, pricing deals, bulk discou
 Requires PHP: 7.0
 Requires at least: 4.8
 Tested up to: 6.4
-Stable tag: 4.5.4
+Stable tag: 4.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,17 @@ You should be PHP programmer to do it. [Please, review sample addon and adapt it
 
 
 == Changelog ==
+
+= 4.6.0 - 2024-01-16 =
+* Fully recoded compatibility with the popular product bundle plugins
+* Reduced size of section "exclude products" (inside product filters)
+* Deleted unused option "Apply pricing rules while doing API request"
+* Bug fixed - fatal PHP error for wrongly formatted date in cart condition "Date"
+* Bug fixed - incorrect bulk table for default variation
+* Added compatibility with "Klarna On-Site Messaging for WooCommerce" plugin, by krokedil
+* Added compatibility with "WC Fields Factory", by Saravana Kumar K
+* Updated compatibility with "TM Extra product options"
+* Updated compatibility with "Yith WooCommerce gift cards"
 
 = 4.5.4 - 2023-12-04 =
 * Speed up generation of bulk table, at product page

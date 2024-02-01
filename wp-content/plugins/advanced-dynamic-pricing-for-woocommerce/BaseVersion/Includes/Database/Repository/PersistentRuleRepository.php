@@ -2,23 +2,23 @@
 
 namespace ADP\BaseVersion\Includes\Database\Repository;
 
+use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\CartProcessor\CartBuilder;
 use ADP\BaseVersion\Includes\Context;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
 use ADP\BaseVersion\Includes\Core\CartCalculatorPersistent;
 use ADP\BaseVersion\Includes\Core\Rule\PersistentRule;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\Discount;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\RangeDiscount;
+use ADP\BaseVersion\Includes\Database\Models\PersistentRuleCache;
 use ADP\BaseVersion\Includes\Database\Models\PersistentRuleCache as PersistentRuleModel;
+use ADP\BaseVersion\Includes\Database\PersistentRuleCacheObject;
+use ADP\BaseVersion\Includes\Database\RuleStorage;
 use ADP\BaseVersion\Includes\PriceDisplay\ProcessedGroupedProduct;
 use ADP\BaseVersion\Includes\PriceDisplay\ProcessedVariableProduct;
 use ADP\BaseVersion\Includes\PriceDisplay\Processor;
 use ADP\BaseVersion\Includes\Shortcodes\SqlGenerator;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 use ADP\Factory;
-use ADP\BaseVersion\Includes\Cache\CacheHelper;
-use ADP\BaseVersion\Includes\Database\Models\PersistentRuleCache;
-use ADP\BaseVersion\Includes\Database\PersistentRuleCacheObject;
-use ADP\BaseVersion\Includes\Database\RuleStorage;
 
 defined('ABSPATH') or exit;
 
@@ -39,7 +39,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
     }
 
     /**
-     * @param CartItem $item
+     * @param BasicCartItem $item
      * @param float|null $qty
      *
      * @return array<int, PersistentRuleCacheObject>
@@ -316,7 +316,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
 
 
     /**
-     * @param CartItem|\WC_Product $item
+     * @param BasicCartItem|\WC_Product $item
      * @param float|null $qty
      *
      * @return array<int, PersistentRuleCacheObject>
@@ -326,7 +326,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
     {
         $context = $this->context;
 
-        if ($item instanceof CartItem) {
+        if ($item instanceof BasicCartItem) {
             $hash = $this->calculateDbHash($item);
             $qty  = ($qty !== null ? (float)$qty : $item->getQty());
         } elseif ($item instanceof \WC_Product) {
@@ -383,7 +383,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
 
 
     /**
-     * @param CartItem $item
+     * @param BasicCartItem $item
      */
     protected function calculateDbHash($item)
     {
@@ -421,7 +421,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
     }
 
     /**
-     * @param CartItem $item
+     * @param BasicCartItem $item
      * @param float|null $qty
      */
     protected function calculateCacheHash($item, $qty = null)

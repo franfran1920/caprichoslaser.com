@@ -2,9 +2,11 @@
 
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 
+use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
-use ADP\BaseVersion\Includes\Core\Cart\FreeCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Free\FreeCartItem;
 use ADP\BaseVersion\Includes\Core\Cart\Notice;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule;
 use ADP\BaseVersion\Includes\Core\Rule\Rule;
@@ -15,11 +17,9 @@ use ADP\BaseVersion\Includes\Core\RuleProcessor\ProductStock\ProductStockControl
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartItemsCollection;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSet;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSetCollection;
-use ADP\BaseVersion\Includes\Enums\BaseEnum;
 use ADP\BaseVersion\Includes\Enums\GiftChoiceMethodEnum;
 use ADP\BaseVersion\Includes\Enums\GiftChoiceTypeEnum;
 use ADP\BaseVersion\Includes\Enums\GiftModeEnum;
-use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\WC\WcTaxFunctions;
 use ADP\Factory;
 use Exception;
@@ -165,7 +165,7 @@ class GiftStrategy
             }
 
             $giftIndex = 0;
-            /** @var CartItem $item */
+            /** @var BasicCartItem $item */
             foreach ($rule->getItemGiftsCollection()->asArray() as $gift) {
                 if ($gift->getQty() <= 0) {
                     continue;
@@ -173,7 +173,7 @@ class GiftStrategy
 
                 $freeCartItemChoices = $this->convertGiftToFreeCartItemChoices($gift, array($item));
                 $hash                = $freeCartItemChoices->generateHash($rule, $giftIndex, $gift);
-                $mapIsTmpItemsByHash[$hash] = ($mapIsTmpItemsByHash[$hash] ?? false) || $item->hasAttr($item::ATTR_TEMP);
+                $mapIsTmpItemsByHash[$hash] = ($mapIsTmpItemsByHash[$hash] ?? false) || $item->hasAttr(CartItemAttributeEnum::TEMPORARY());
 
                 if ($gift->isAllowToSelect()) {
                     continue;
@@ -218,7 +218,7 @@ class GiftStrategy
 
     /**
      * @param Gift $gift
-     * @param array<int,CartItem> $items
+     * @param array<int,BasicCartItem> $items
      *
      * @return FreeCartItemChoices
      */

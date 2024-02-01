@@ -2,14 +2,15 @@
 
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor\Structures;
 
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 
 defined('ABSPATH') or exit;
 
 class CartItemsCollection
 {
     /**
-     * @var CartItem[]
+     * @var ICartItem[]
      */
     private $items = array();
 
@@ -34,16 +35,16 @@ class CartItemsCollection
     }
 
     /**
-     * @param CartItem $item_to_add
+     * @param ICartItem $item_to_add
      *
      * @return boolean
      */
-    public function add(CartItem $item_to_add)
+    public function add(ICartItem $item_to_add)
     {
         $added = false;
         foreach ($this->items as $item) {
             /**
-             * @var $item CartItem
+             * @var $item ICartItem
              */
             if ($item->getHash() === $item_to_add->getHash() && ($item->getOriginalPrice() === $item_to_add->getOriginalPrice())) {
                 $item->setQty($item->getQty() + $item_to_add->getQty());
@@ -52,7 +53,7 @@ class CartItemsCollection
             }
         }
 
-        if ( ! $added) {
+        if (!$added) {
             $this->items[] = $item_to_add;
         }
 
@@ -66,14 +67,14 @@ class CartItemsCollection
         return;
         usort($this->items, function ($item_a, $item_b) {
             /**
-             * @var $item_a CartItem
-             * @var $item_b CartItem
+             * @var $item_a BasicExistingCartItem
+             * @var $item_b BasicExistingCartItem
              */
-            if ( ! $item_a->hasAttr($item_a::ATTR_TEMP) && $item_b->hasAttr($item_b::ATTR_TEMP)) {
+            if (!$item_a->hasAttr(CartItemAttributeEnum::TEMPORARY()) && $item_b->hasAttr(CartItemAttributeEnum::TEMPORARY())) {
                 return -1;
             }
 
-            if ($item_a->hasAttr($item_a::ATTR_TEMP) && ! $item_b->hasAttr($item_b::ATTR_TEMP)) {
+            if ($item_a->hasAttr(CartItemAttributeEnum::TEMPORARY()) && !$item_b->hasAttr(CartItemAttributeEnum::TEMPORARY())) {
                 return 1;
             }
 
@@ -88,7 +89,7 @@ class CartItemsCollection
     }
 
     /**
-     * @return array<int, CartItem>
+     * @return array<int, ICartItem>
      */
     public function get_items()
     {
@@ -127,7 +128,7 @@ class CartItemsCollection
     /**
      * @param string $hash
      *
-     * @return CartItem|null
+     * @return ICartItem|null
      */
     public function getItemByHash($hash)
     {
@@ -143,7 +144,7 @@ class CartItemsCollection
     /**
      * @param string $hash
      *
-     * @return CartItem|null
+     * @return ICartItem|null
      */
     public function getNotEmptyItemWithReferenceByHash($hash)
     {
@@ -169,41 +170,4 @@ class CartItemsCollection
 
         return false;
     }
-
-    /**
-     * @param string $hash
-     * @param float $price
-     * @param float|null $qty
-     */
-    public function setPriceForItem($hash, $price, $qty = null)
-    {
-        foreach ($this->items as &$item) {
-            if ($item->getHash() === $hash) {
-                if ($qty && $item->getQty() > $qty) {
-                    $new_item = clone $item;
-                    $new_item->setQty($qty);
-                    $new_item->setPrice($this->ruleId, $price);
-                    $this->items[] = $new_item;
-
-                    $item->setQty($item->getQty() - $qty);
-                    $this->sort_items();
-                } else {
-                    $item->setPrice($this->ruleId, $price);
-                }
-
-                $this->getHash();
-
-                return;
-            }
-        }
-    }
-
-    public function makeItemsImmutable()
-    {
-        foreach ($this->items as &$item) {
-            $item->addAttr($item::ATTR_IMMUTABLE);
-        }
-    }
-
-
 }

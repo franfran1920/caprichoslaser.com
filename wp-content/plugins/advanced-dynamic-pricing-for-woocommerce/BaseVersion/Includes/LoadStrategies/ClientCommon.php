@@ -23,6 +23,7 @@ use ADP\BaseVersion\Includes\StatsCollector\WcCartStatsCollector;
 use ADP\BaseVersion\Includes\VolumePricingTable\RangeDiscountTableDisplay;
 use ADP\BaseVersion\Includes\WC\WcProductCustomAttributesCache;
 use ADP\Factory;
+use ADP\BaseVersion\Includes\Compatibility\WcffCmp;
 
 defined('ABSPATH') or exit;
 
@@ -116,6 +117,9 @@ class ClientCommon implements LoadStrategy
         /** @var WcProductCustomAttributesCache $productAttributesCache */
         $productAttributesCache  = Factory::get("WC_WcProductCustomAttributesCache");
         $productAttributesCache->installHooks();
+
+        $wcffCmp = new WcffCmp();
+        $wcffCmp->installRenderHooks();
     }
 
     /**

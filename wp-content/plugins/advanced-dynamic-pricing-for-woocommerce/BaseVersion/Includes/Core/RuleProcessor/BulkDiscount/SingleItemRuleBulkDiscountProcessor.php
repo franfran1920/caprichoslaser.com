@@ -5,17 +5,12 @@ namespace ADP\BaseVersion\Includes\Core\RuleProcessor\BulkDiscount;
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
-use ADP\BaseVersion\Includes\Core\Rule\PackageRule;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 use ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
-use ADP\BaseVersion\Includes\Core\Rule\Structures\Discount;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\Filter;
-use ADP\BaseVersion\Includes\Core\Rule\Structures\SetDiscount;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\PriceCalculator;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\ProductFiltering;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartItemsCollection;
-use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSet;
-use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSetCollection;
 use ADP\Factory;
 
 class SingleItemRuleBulkDiscountProcessor
@@ -33,7 +28,7 @@ class SingleItemRuleBulkDiscountProcessor
     /**
      * @param SingleItemRule $rule
      * @param CartItemsCollection $collection
-     * @return CartItem[][]
+     * @return BasicCartItem[][]
      */
     public function calculateItems(SingleItemRule $rule, CartItemsCollection $collection)
     {
@@ -84,7 +79,7 @@ class SingleItemRuleBulkDiscountProcessor
         } elseif ($handler::GROUP_BY_META_DATA === $handler->getGroupBy()) {
             foreach ($collection->get_items() as $item) {
                 /**
-                 * @var CartItem $item
+                 * @var BasicCartItem $item
                  */
                 $facade = $item->getWcItem();
 
@@ -114,7 +109,7 @@ class SingleItemRuleBulkDiscountProcessor
      * @param SingleItemRule $rule
      * @param Cart $cart
      * @param CartItemsCollection $collection
-     * @param CartItem[] $items
+     * @param BasicCartItem[] $items
      * @return float|int
      */
     public function calculateMeasurementValue(
@@ -130,7 +125,7 @@ class SingleItemRuleBulkDiscountProcessor
         if ($measurement->equals(BulkMeasurementEnum::QTY())) {
             $calculationCallback = function ($item) {
                 /**
-                 * @var CartItem $item
+                 * @var BasicCartItem $item
                  */
 
                 return $item->getQty();
@@ -139,7 +134,7 @@ class SingleItemRuleBulkDiscountProcessor
             if ($measurement->equals(BulkMeasurementEnum::SUM())) {
                 $calculationCallback = function ($item) {
                     /**
-                     * @var CartItem $item
+                     * @var BasicCartItem $item
                      */
 
                     return $item->getPrice() * $item->getQty();
@@ -148,13 +143,15 @@ class SingleItemRuleBulkDiscountProcessor
                 if ($measurement->equals(BulkMeasurementEnum::WEIGHT())) {
                     $calculationCallback = function ($item) {
                         /**
-                         * @var CartItem $item
+                         * @var BasicCartItem $item
                          */
 
                         return $item->getWeight() * $item->getQty();
                     };
                 } else {
-                    $calculationCallback = function ($item) {return 0.0;};
+                    $calculationCallback = function ($item) {
+                        return 0.0;
+                    };
                     $this->context->handleError(
                         new \Exception("Unknown measurement value: " . var_export($measurement, true))
                     );
@@ -200,7 +197,7 @@ class SingleItemRuleBulkDiscountProcessor
             $value = floatval(0);
             if ($usedCategoryIds) {
                 foreach (array_merge($collection->get_items(), $cart->getItems()) as $cartItem) {
-                    /** @var CartItem $cartItem */
+                    /** @var BasicCartItem $cartItem */
                     $facade = $cartItem->getWcItem();
 
                     if (!$facade->isVisible()) {
@@ -219,7 +216,7 @@ class SingleItemRuleBulkDiscountProcessor
             $value = floatval(0);
             if ($selectedProductIds) {
                 foreach (array_merge($collection->get_items(), $cart->getItems()) as $cartItem) {
-                    /** @var CartItem $cartItem */
+                    /** @var BasicCartItem $cartItem */
                     $facade = $cartItem->getWcItem();
 
                     if (!$facade->isVisible()) {
@@ -241,7 +238,7 @@ class SingleItemRuleBulkDiscountProcessor
             $value = floatval(0);
             if ($selectedCategoryIds) {
                 foreach (array_merge($collection->get_items(), $cart->getItems()) as $cartItem) {
-                    /** @var CartItem $cartItem */
+                    /** @var BasicCartItem $cartItem */
                     $facade = $cartItem->getWcItem();
 
                     if (!$facade->isVisible()) {
@@ -264,7 +261,7 @@ class SingleItemRuleBulkDiscountProcessor
      * @param SingleItemRule $rule
      * @param Cart $cart
      * @param numeric $rangeValueToCompare
-     * @param CartItem[] $itemsToApply
+     * @param BasicCartItem[] $itemsToApply
      * @return void
      */
     public function discountItems(
@@ -291,14 +288,14 @@ class SingleItemRuleBulkDiscountProcessor
                     continue;
                 }
 
-                $minPrice = $item->getMinDiscountRangePrice();
+                $minPrice = $item->prices()->getMinDiscountRangePrice();
 
                 if ($minPrice !== null) {
                     if ($price < $minPrice) {
-                        $item->setMinDiscountRangePrice($price);
+                        $item->prices()->setMinDiscountRangePrice($price);
                     }
                 } else {
-                    $item->setMinDiscountRangePrice($price);
+                    $item->prices()->setMinDiscountRangePrice($price);
                 }
             }
         }

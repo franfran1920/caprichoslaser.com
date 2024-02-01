@@ -250,7 +250,6 @@ class Options implements AdminTabInterface
 					"suppress_other_pricing_plugins",
 					"allow_to_edit_prices_in_po",
 					"update_prices_while_doing_cron",
-					"update_prices_while_doing_rest_api",
 					"uninstall_remove_data",
 				),
 			),

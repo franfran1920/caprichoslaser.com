@@ -2,7 +2,6 @@
 
 namespace ADP\BaseVersion\Includes\PriceDisplay;
 
-use ADP\BaseVersion\Includes\Compatibility\SomewhereWarmBundlesCmp;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\PriceDisplay\ConcreteProductPriceHtml\GroupedProductPriceHtml;
 use ADP\BaseVersion\Includes\PriceDisplay\ConcreteProductPriceHtml\SimpleProductPriceHtml;

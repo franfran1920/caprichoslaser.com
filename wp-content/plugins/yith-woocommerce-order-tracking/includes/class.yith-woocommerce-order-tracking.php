@@ -242,7 +242,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 		public function enqueue_scripts() {
 			global $post, $pagenow;
 
-			$can_be_enqueue = false;
 
 			wp_register_style( 'tooltipster', YITH_YWOT_URL . 'assets/css/tooltipster.bundle.min.css', array(), '4.2.8' );
 			wp_register_style( 'tooltipster-borderless', YITH_YWOT_URL . 'assets/css/tooltipster-sidetip-borderless.css', array(), '4.2.8' );
@@ -251,9 +250,14 @@ if ( ! class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			wp_register_script( 'tooltipster', YITH_YWOT_URL . 'assets/js/tooltipster.bundle.min.js', array( 'jquery' ), '4.2.8', true );
 			wp_register_script( 'ywot_script', YITH_YWOT_URL . 'assets/js/ywot.js', array(), YITH_YWOT_VERSION, true );
 
-			$current_screen_id = function_exists( 'get_current_screen' ) ? get_current_screen()->id : '';
+			$can_be_enqueue = false;
+			$if_shop_order  = false;
 
-			$if_shop_order = function_exists( 'wc_get_page_screen_id' ) ? wc_get_page_screen_id( 'shop-order' ) === $current_screen_id : 'shop-order' === $current_screen_id;
+			if ( function_exists( 'get_current_screen' ) ) {
+				$current_screen_id = get_current_screen() ? get_current_screen()->id : '';
+			
+				$if_shop_order = function_exists( 'wc_get_page_screen_id' ) ? wc_get_page_screen_id( 'shop-order' ) === $current_screen_id : 'shop-order' === $current_screen_id;
+			}
 
 			if ( ( is_admin() && ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'yith_woocommerce_order_tracking_panel' === $_GET['page'] ) || ( 'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) || ( 'post.php' === $pagenow && isset( $_GET['post'] ) ) || ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) ) || is_account_page() || $if_shop_order ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$can_be_enqueue = true;

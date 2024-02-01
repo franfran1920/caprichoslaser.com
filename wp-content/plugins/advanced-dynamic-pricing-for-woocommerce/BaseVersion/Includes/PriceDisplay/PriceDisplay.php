@@ -3,9 +3,6 @@
 namespace ADP\BaseVersion\Includes\PriceDisplay;
 
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
-use ADP\BaseVersion\Includes\Compatibility\MixAndMatchCmp;
-use ADP\BaseVersion\Includes\Compatibility\SomewhereWarmBundlesCmp;
-use ADP\BaseVersion\Includes\Compatibility\WpcBundleCmp;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\SingleItemRuleProcessor;
@@ -229,21 +226,6 @@ class PriceDisplay
             return $priceHtml;
         }
 
-        $wpCleverBundleCmp = new WpcBundleCmp();
-        if ( $wpCleverBundleCmp->isActive() && $wpCleverBundleCmp->isBundleProduct($product) ) {
-            return $priceHtml;
-        }
-
-        $mixAndMatchCmp = new MixAndMatchCmp();
-        if ($mixAndMatchCmp->isActive() && ($mixAndMatchCmp->isMixAndMatchProduct($product))) {
-            return $priceHtml;
-        }
-
-        $wcBundlesCmp = new SomewhereWarmBundlesCmp();
-        if ( $wcBundlesCmp->isActive() && $wcBundlesCmp->isBundleProduct( $product ) ) {
-            return $priceHtml;
-        }
-
         $qty = floatval(1);
         // only if bulk rule must override QTY input
         if ($this->context->getOption('use_first_range_as_min_qty')) {
@@ -252,6 +234,8 @@ class PriceDisplay
                 $qty = (float)$args['input_value'];
             }
         }
+
+        // todo: mix and match can apply custom qty for sub bundle items
 
         $processedProduct = $this->processor->calculateProduct($product, $qty);
         $processedProduct = apply_filters("adp_get_price_html_processed_product", $processedProduct, $product, $qty);

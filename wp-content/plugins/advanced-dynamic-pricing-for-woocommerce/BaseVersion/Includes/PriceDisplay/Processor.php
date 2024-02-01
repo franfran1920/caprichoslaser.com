@@ -3,15 +3,19 @@
 namespace ADP\BaseVersion\Includes\PriceDisplay;
 
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
-use ADP\BaseVersion\Includes\Compatibility\SomewhereWarmBundlesCmp;
-use ADP\BaseVersion\Includes\Compatibility\WpcBundleCmp;
+use ADP\BaseVersion\Includes\CartProcessor\ToPricingCartItemAdapter\ToPricingCartItemAdapter;
+use ADP\BaseVersion\Includes\Compatibility\Container\SomewhereWarmBundlesCmp;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemConverter;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Container\ContainerCartItem;
 use ADP\BaseVersion\Includes\Core\CartCalculator;
 use ADP\BaseVersion\Includes\Core\ICartCalculator;
 use ADP\BaseVersion\Includes\Debug\ProductCalculatorListener;
 use ADP\BaseVersion\Includes\PriceDisplay\WcProductProcessor\IWcProductProcessor;
+use ADP\BaseVersion\Includes\PriceDisplay\WcProductProcessor\WcProductProcessorHelper;
 use ADP\BaseVersion\Includes\ProductExtensions\ProductExtension;
 use ADP\BaseVersion\Includes\WC\DataStores\ProductVariationDataStoreCpt;
 use ADP\BaseVersion\Includes\WC\WcCartItemFacade;
@@ -53,6 +57,11 @@ class Processor implements IWcProductProcessor
     protected $listener;
 
     /**
+     * @var CartItemConverter
+     */
+    protected $cartItemConverter;
+
+    /**
      * @param Context|ICartCalculator|null $context
      * @param ICartCalculator|null $calc
      */
@@ -68,6 +77,8 @@ class Processor implements IWcProductProcessor
             $this->calc = Factory::callStaticMethod("Core_CartCalculator", 'make', $this->listener);
             /** @see CartCalculator::make() */
         }
+
+        $this->cartItemConverter = new CartItemConverter();
     }
 
     public function withContext(Context $context)
@@ -82,10 +93,7 @@ class Processor implements IWcProductProcessor
     {
         $items = $cart->getItems();
         foreach ($items as $index => $cartItem) {
-            $newCartItem = new CartItem($cartItem->getWcItem(), $cartItem->getOriginalPrice(), $cartItem->getQty(), $cartItem->getPos());
-            $newCartItem->setMinDiscountRangePrice($cartItem->getMinDiscountRangePrice());
-
-            $items[$index] = $newCartItem;
+            $items[$index] = clone $cartItem;
         }
         $cart->setItems($items);
 
@@ -102,7 +110,7 @@ class Processor implements IWcProductProcessor
      * @param float $qty
      * @param array $cartItemData
      *
-     * @return ProcessedProductSimple|ProcessedVariableProduct|ProcessedGroupedProduct|null
+     * @return ProcessedProductSimple|ProcessedVariableProduct|ProcessedGroupedProduct|ProcessedProductContainer|null
      */
     public function calculateProduct($theProduct, $qty = 1.0, $cartItemData = array())
     {
@@ -145,6 +153,18 @@ class Processor implements IWcProductProcessor
 
                 $processed->useChild($processedChild);
             }
+        } elseif ( WcProductProcessorHelper::isCalculatingPartOfContainerProduct($product) ) {
+            $containerProduct = WcProductProcessorHelper::getBundleProductFromBundled($product);
+            $processedParent = $this->calculate($containerProduct, $qty, $cartItemData);
+
+            $processed = null;
+            if ($processedParent instanceof ProcessedProductContainer) {
+                foreach ($processedParent->getContainerItemsByPos() as $containerItem) {
+                    if ($containerItem->getProduct()->get_id() === $product->get_id()) {
+                        $processed = $containerItem;
+                    }
+                }
+            }
         } else {
             $processed = $this->calculate($product, $qty, $cartItemData);
         }
@@ -158,7 +178,7 @@ class Processor implements IWcProductProcessor
      * @param array $cartItemData
      * @param WC_Product|null $theParentProduct
      *
-     * @return ProcessedProductSimple|null
+     * @return ProcessedProductSimple|ProcessedProductContainer|null
      */
     protected function calculate($theProduct, $qty = 1.0, $cartItemData = array(), $theParentProduct = null)
     {
@@ -259,13 +279,6 @@ class Processor implements IWcProductProcessor
         $productExt = new ProductExtension($this->context, $product);
         $productExt->withContext($this->context);
 
-        $wcBundlesCmp = new SomewhereWarmBundlesCmp();
-        if ( $wcBundlesCmp->isActive() && $wcBundlesCmp->isBundleProduct( $product ) ) {
-            $newPrice = $product->get_bundle_price( 'min');
-            $product->set_price($newPrice);
-            $productExt->setCustomPrice($newPrice);
-        }
-
         if ($product->get_price('edit') === '') {
             $this->context->handleError(new Exception("Empty price", self::ERR_PRODUCT_WITH_NO_PRICE));
 
@@ -319,14 +332,12 @@ class Processor implements IWcProductProcessor
             $product->set_regular_price($currencySwitcher->getCurrentCurrencyProductRegularPrice($product));
         }
 
-        $cartItem = WcCartItemFacade::createFromProduct($this->context, $product, $cartItemData);
-        $cartItem->withContext($this->context);
-        $cartItem->setQty($qty);
-
         $cart = clone $this->cart;
 
-        $item = $cartItem->createItem();
-        $item->addAttr($item::ATTR_TEMP);
+        $item = (new ToPricingCartItemAdapter())->adaptWcProduct($product, $cartItemData);
+        $item->setQty($qty);
+
+        $item->addAttr(CartItemAttributeEnum::TEMPORARY());
 
         $cart->addToCart($item);
         $this->listener->startCartProcessProduct($product);
@@ -337,7 +348,7 @@ class Processor implements IWcProductProcessor
         $qtyAlreadyInCart = floatval(0);
         foreach ($cart->getItems() as $loopCartItem) {
             if ($loopCartItem->getWcItem()->getKey() === $item->getWcItem()->getKey()) {
-                if ($loopCartItem->hasAttr($loopCartItem::ATTR_TEMP)) {
+                if ($loopCartItem->hasAttr(CartItemAttributeEnum::TEMPORARY())) {
                     $tmpItems[] = $loopCartItem;
                 }
             }
@@ -371,9 +382,17 @@ class Processor implements IWcProductProcessor
         }
 
         $tmpItems         = apply_filters("adp_before_processed_product", $tmpItems, $this);
-        $processedProduct = new ProcessedProductSimple($this->context, $product, $tmpItems, $tmpFreeItems, $tmpListOfFreeCartItemChoices);
+
+        $processedProduct = WcProductProcessorHelper::tmpItemsToProcessedProduct(
+            $this->context,
+            $product,
+            $tmpItems,
+            $tmpFreeItems,
+            $tmpListOfFreeCartItemChoices
+        );
+
         $processedProduct->setQtyAlreadyInCart($qtyAlreadyInCart);
-        CacheHelper::addProcessedProductToDisplay($cartItem, $processedProduct, $this->cart, $this->calc);
+        CacheHelper::addProcessedProductToDisplay($item->getWcItem(), $processedProduct, $this->cart, $this->calc);
         $this->listener->processedProduct($processedProduct);
 
         return $processedProduct;

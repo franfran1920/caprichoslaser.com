@@ -400,6 +400,7 @@ class ContainerConfigurator implements IContainerConfigurator {
     // Notices
     $container->autowire(\MailPoet\Util\Notices\PermanentNotices::class);
     $container->autowire(\MailPoet\Util\Notices\PendingApprovalNotice::class)->setPublic(true);
+    $container->autowire(\MailPoet\Util\Notices\SenderDomainAuthenticationNotices::class)->setPublic(true);
     //Referrals
     $container->autowire(\MailPoet\Referrals\ReferralDetector::class);
     // Router
@@ -420,6 +421,7 @@ class ContainerConfigurator implements IContainerConfigurator {
     $container->autowire(\MailPoet\Statistics\StatisticsFormsRepository::class)->setPublic(true);
     $container->autowire(\MailPoet\Statistics\StatisticsBouncesRepository::class)->setPublic(true);
     $container->autowire(\MailPoet\Statistics\StatisticsClicksRepository::class)->setPublic(true);
+    $container->autowire(\MailPoet\Statistics\StatisticsNewslettersRepository::class)->setPublic(true);
     $container->autowire(\MailPoet\Statistics\StatisticsOpensRepository::class)->setPublic(true);
     $container->autowire(\MailPoet\Statistics\StatisticsUnsubscribesRepository::class);
     $container->autowire(\MailPoet\Statistics\StatisticsWooCommercePurchasesRepository::class)->setPublic(true);
@@ -600,6 +602,7 @@ class ContainerConfigurator implements IContainerConfigurator {
     // Util
     $container->autowire(\MailPoet\Util\Cookies::class);
     $container->autowire(\MailPoet\Util\DBCollationChecker::class);
+    $container->autowire(\MailPoet\Util\FreeDomains::class);
     $container->autowire(\MailPoet\Util\Url::class)->setPublic(true);
     $container->autowire(\MailPoet\Util\Installation::class);
     $container->autowire(\MailPoet\Util\Security::class);
@@ -608,7 +611,6 @@ class ContainerConfigurator implements IContainerConfigurator {
     $container->register(\MailPoet\Util\CdnAssetUrl::class)
       ->setPublic(true)
       ->setFactory([__CLASS__, 'getCdnAssetsUrl']);
-    $container->autowire(\MailPoet\Util\DmarcPolicyChecker::class)->setPublic(true);
     $container->autowire(\MailPoet\Newsletter\Scheduler\Scheduler::class)->setPublic(true);
     $container->autowire(\MailPoet\Util\Request::class)->setPublic(true);
     // Validator
@@ -649,20 +651,6 @@ class ContainerConfigurator implements IContainerConfigurator {
     // Tags
     $container->autowire(\MailPoet\Tags\TagRepository::class)->setPublic(true);
     return $container;
-  }
-
-  /**
-   * @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements
-   */
-  private function registerPremiumService(ContainerBuilder $container, $id) {
-    $container->register($id)
-      ->setPublic(true)
-      ->addArgument($id)
-      ->addArgument(new Reference('service_container'))
-      ->setFactory([
-        self::class,
-        'getPremiumService',
-      ]);
   }
 
   public static function getPremiumService($id, ContainerInterface $container = null) {

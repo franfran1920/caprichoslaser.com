@@ -408,6 +408,7 @@
 .wdp-list-container .wdp-filter-content-no-remove .two-on-two-column.left-column {
 	display: flex;
 	flex-direction: column;
+  width: 230px;
 }
 
 .wdp-list-container .wdp-filter-content-no-remove .two-on-two-column.right-column {
@@ -1183,4 +1184,13 @@ div.wdp-row.wdp-options select {
 	padding: 0 10px;
     box-sizing: border-box;
 	font-size: 13px;
+}
+
+.wdp-select2-option {
+	display: flex;
+    align-items: center;
+}
+.wdp-select2-img {
+	width: 100px;
+	margin-right: 5px;
 }

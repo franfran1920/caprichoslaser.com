@@ -2,7 +2,8 @@
 
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor\Structures;
 
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 
 defined('ABSPATH') or exit;
 
@@ -14,7 +15,7 @@ class CartSet
     private $hash;
 
     /**
-     * @var CartItem[]
+     * @var ICartItem[]
      */
     private $items;
 
@@ -40,7 +41,7 @@ class CartSet
 
     /**
      * @param int $ruleId int
-     * @param array<int,CartItem> $cartItems
+     * @param array<int,ICartItem> $cartItems
      * @param int $qty
      */
     public function __construct($ruleId, $cartItems, $qty = 1)
@@ -49,14 +50,14 @@ class CartSet
 
         $plainItems = array();
         foreach (array_values($cartItems) as $index => $item) {
-            if ($item instanceof CartItem) {
+            if ($item instanceof ICartItem) {
                 $plainItems[] = array(
                     'pos'  => $index,
                     'item' => $item,
                 );
             } elseif (is_array($item)) {
                 foreach ($item as $subItem) {
-                    if ($subItem instanceof CartItem) {
+                    if ($subItem instanceof ICartItem) {
                         $plainItems[] = array(
                             'pos'  => $index,
                             'item' => $subItem,
@@ -70,12 +71,12 @@ class CartSet
             $itemA = $plainItemA['item'];
             $itemB = $plainItemB['item'];
             /**
-             * @var $itemA CartItem
-             * @var $itemB CartItem
+             * @var $itemA ICartItem
+             * @var $itemB ICartItem
              */
 
-            $tmp_a = $itemA->hasAttr($itemA::ATTR_TEMP);
-            $tmp_b = $itemB->hasAttr($itemA::ATTR_TEMP);
+            $tmp_a = $itemA->hasAttr(CartItemAttributeEnum::TEMPORARY());
+            $tmp_b = $itemB->hasAttr(CartItemAttributeEnum::TEMPORARY());
 
             if ( ! $tmp_a && $tmp_b) {
                 return -1;
@@ -101,14 +102,14 @@ class CartSet
     {
         usort($this->items, function ($itemA, $itemB) {
             /**
-             * @var $itemA CartItem
-             * @var $itemB CartItem
+             * @var $itemA ICartItem
+             * @var $itemB ICartItem
              */
-            if ( ! $itemA->hasAttr($itemA::ATTR_TEMP) && $itemB->hasAttr($itemB::ATTR_TEMP)) {
+            if ( ! $itemA->hasAttr(CartItemAttributeEnum::TEMPORARY()) && $itemB->hasAttr(CartItemAttributeEnum::TEMPORARY())) {
                 return -1;
             }
 
-            if ($itemA->hasAttr($itemA::ATTR_TEMP) && ! $itemB->hasAttr($itemB::ATTR_TEMP)) {
+            if ($itemA->hasAttr(CartItemAttributeEnum::TEMPORARY()) && ! $itemB->hasAttr(CartItemAttributeEnum::TEMPORARY())) {
                 return 1;
             }
 
@@ -154,7 +155,7 @@ class CartSet
     {
         $hashes = array_map(function ($item) {
             /**
-             * @var $item CartItem
+             * @var $item ICartItem
              */
             return $item->getHash() . "_" . $item->getQty();
         }, $this->items);
@@ -163,7 +164,7 @@ class CartSet
     }
 
     /**
-     * @return array<int, CartItem>
+     * @return array<int, ICartItem>
      */
     public function getItems()
     {
@@ -181,68 +182,6 @@ class CartSet
         return $positions;
     }
 
-    /**
-     * @param string $hash
-     * @param float $price
-     * @param float|null $qty
-     * @param int|null $position
-     */
-    public function setPriceForItem($hash, $price, $qty = null, $position = null)
-    {
-        if ($position) {
-            $items = $this->getItemsByPositionWithReference($position);
-        } else {
-            $items = $this->items;
-        }
-
-        foreach ($items as &$item) {
-            if ($item->getHash() === $hash) {
-                if ($qty && $item->getQty() > $qty) {
-                    $new_item = clone $item;
-                    $new_item->setQty($qty);
-                    $new_item->setPrice($this->ruleId, $price);
-                    $this->items[] = $new_item;
-
-                    $item->setQty($item->getQty() - $qty);
-                } else {
-                    $item->setPrice($this->ruleId, $price);
-                }
-
-                break;
-            }
-        }
-        $this->recalculateHash();
-    }
-
-    /**
-     * @param int $index
-     * @param array<int,float> $prices
-     */
-    public function setPriceForItemsByPosition($index, $prices)
-    {
-        $items = $this->getItemsByPositionWithReference($index);
-
-        if ( ! $items) {
-            return;
-        }
-
-        $items  = array_values($items);
-        $prices = array_values($prices);
-
-        if (count($items) !== count($prices)) {
-            return;
-        }
-
-        foreach ($items as $index => $item) {
-            /**
-             * @var $item CartItem
-             */
-            $item->setPrice($this->ruleId, $prices[$index]);
-        }
-
-        $this->recalculateHash();
-    }
-
     public function incQty($qty)
     {
         $this->qty += $qty;
@@ -251,7 +190,7 @@ class CartSet
     /**
      * @param int $index
      *
-     * @return array<int, CartItem>
+     * @return array<int, ICartItem>
      */
     public function getItemsByPosition($index)
     {
@@ -266,7 +205,7 @@ class CartSet
     /**
      * @param int $index
      *
-     * @return array<int, CartItem>
+     * @return array<int, ICartItem>
      */
     private function getItemsByPositionWithReference($index)
     {

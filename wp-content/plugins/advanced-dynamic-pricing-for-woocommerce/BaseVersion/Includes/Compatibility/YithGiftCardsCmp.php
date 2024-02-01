@@ -38,8 +38,12 @@ class YithGiftCardsCmp
         add_filter('adp_get_original_product_from_cart', function($product, $wcCartItem) {
             if ($product instanceof \WC_Product_Gift_Card) {
                 $productExt = new \ADP\BaseVersion\Includes\ProductExtensions\ProductExtension($product);
-                $productExt->setCustomPrice($product->get_meta('price'));
-                $product->set_price($product->get_meta('price'));
+                $cartItemData = $wcCartItem->getCartItemData();
+
+                $price = $cartItemData['ywgc_amount'] ?? $product->get_price();
+                
+                $productExt->setCustomPrice($price);
+                $product->set_price($price);
             }
             return $product;
         }, 10, 2);

@@ -2,8 +2,10 @@
 
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Core\Rule\Rule;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 
 defined('ABSPATH') or exit;
 
@@ -23,14 +25,14 @@ class ExclusivityAllStrategy
     }
 
     /**
-     * @param array<int,CartItem> $items
+     * @param array<int,ICartItem> $items
      *
-     * @return array<int,CartItem>
+     * @return array<int,ICartItem>
      */
     public function makeAffectedItemAsExclusive($items)
     {
         foreach ($items as $item) {
-            $item->addAttr($item::ATTR_IMMUTABLE);
+            $item->addAttr(CartItemAttributeEnum::IMMUTABLE());
         }
 
         return $items;

@@ -4,8 +4,6 @@ namespace ADP\BaseVersion\Includes\VolumePricingTable;
 
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\CartProcessor\CartBuilder;
-use ADP\BaseVersion\Includes\Compatibility\MixAndMatchCmp;
-use ADP\BaseVersion\Includes\Compatibility\WpcBundleCmp;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
 use ADP\BaseVersion\Includes\Core\CartCalculator;
@@ -140,21 +138,28 @@ class RangeDiscountTable
             $product = CacheHelper::getWcProduct($productId);
         }
 
-        $wpCleverBundleCmp = new WpcBundleCmp();
-        if ($wpCleverBundleCmp->isActive() && $wpCleverBundleCmp->isBundleProduct($product)) {
-            return "";
-        }
-
-        $mixAndMatchCmp = new MixAndMatchCmp();
-        if ($mixAndMatchCmp->isActive() && ($mixAndMatchCmp->isMixAndMatchProduct($product))) {
-            return "";
-        }
+        $tableAttr = '';
 
         if ($product instanceof \WC_Product_Variation && array_filter($attributes)) {
             $product->set_attributes(array_filter($attributes));
-        }
 
-        if ( $product instanceof \WC_Product_Variable ) {
+            $parentProduct = wc_get_product( $product->get_parent_id() );
+
+            $availableVariationIds = $parentProduct->get_visible_children();
+
+            if (count($availableVariationIds) === 0) {
+                return '';
+            }
+
+            $availableProductsIDs = array_map(
+                'intval',
+                array_merge([$parentProduct->get_id()], $availableVariationIds)
+            );
+            if ( $this->context->getOption( 'hide_parent_bulk_table' ) ) {
+                $tableAttr .= 'style="display: none" ';
+            }
+            $tableAttr .= 'data-available-ids="' . json_encode( $availableProductsIDs ) . '"';
+        } else if ( $product instanceof \WC_Product_Variable ) {
             $availableVariationIds = $product->get_visible_children();
 
             if (count($availableVariationIds) === 0) {
@@ -165,32 +170,30 @@ class RangeDiscountTable
                 'intval',
                 array_merge([$product->get_id()], $availableVariationIds)
             );
-            $content              = '<span class="wdp_bulk_table_content" ';
             if ( $this->context->getOption( 'hide_parent_bulk_table' ) ) {
-                $content .= 'style="display: none" ';
+                $tableAttr .= 'style="display: none" ';
             }
-            $content .= 'data-available-ids="' . json_encode( $availableProductsIDs ) . '">';
-
-            try {
-                $table = $this->getProductTable( $product );
-                if ( $table ) {
-                    $content .= $table->getHtml();
-                }
-            } catch ( Exception $exception ) {
+            $tableAttr .= 'data-available-ids="' . json_encode( $availableProductsIDs ) . '"';
+        } else if ( $product instanceof \WC_Product_Simple ) {
+            $availableProductsIDs = array_map(
+                'intval',
+                [$product->get_id()]
+            );
+            if ( $this->context->getOption( 'hide_parent_bulk_table' ) ) {
+                $tableAttr .= 'style="display: none" ';
             }
-
-            $content .= '</span>';
-        } else {
-            $content = '<span class="wdp_bulk_table_content"> ';
-            try {
-                $table = $this->getProductTable( $product );
-                if ( $table ) {
-                    $content .= $table->getHtml();
-                }
-            } catch ( Exception $exception ) {
-            }
-            $content .= '</span>';
+            $tableAttr .= 'data-available-ids="' . json_encode( $availableProductsIDs ) . '"';
         }
+
+        $content = '<span class="wdp_bulk_table_content" ' . $tableAttr . '> ';
+        try {
+            $table = $this->getProductTable( $product );
+            if ( $table ) {
+                $content .= $table->getHtml();
+            }
+        } catch ( Exception $exception ) {
+        }
+        $content .= '</span>';
 
         return $content;
     }
@@ -426,6 +429,23 @@ class RangeDiscountTable
     }
 
     /**
+     * Apply properties from external source which override theme options e.g. shortcode
+     *
+     * @param ProductVolumePricingTableProperties $contextOptions
+     * @return ProductVolumePricingTableProperties
+     */
+    protected function applyCurrentProductTableProperties($contextOptions)
+    {
+        foreach ($this->productContextOptions as $optionKey => $optionValue) {
+            if ($optionValue !== null) {
+                $contextOptions->$optionKey = $optionValue;
+            }
+        }
+
+        return $contextOptions;
+    }
+
+    /**
      * @param WC_Product $product
      *
      * @return Table|null
@@ -434,6 +454,7 @@ class RangeDiscountTable
     public function getProductTable($product)
     {
         $contextOptions = $this->buildProductContextOptions();
+        $contextOptions = $this->applyCurrentProductTableProperties($contextOptions);
 
         $context = $this->context;
 
@@ -1007,6 +1028,23 @@ class RangeDiscountTable
     }
 
     /**
+     * Apply properties from external source which override theme options e.g. shortcode
+     *
+     * @param CategoryVolumePricingTableProperties $contextOptions
+     * @return CategoryVolumePricingTableProperties
+     */
+    protected function applyCurrentCatalogTableProperties($contextOptions)
+    {
+        foreach ($this->categoryContextOptions as $optionKey => $optionValue) {
+            if ($optionValue !== null) {
+                $contextOptions->$optionKey = $optionValue;
+            }
+        }
+
+        return $contextOptions;
+    }
+
+    /**
      * @param int|null $termId
      *
      * @return Table|null
@@ -1028,6 +1066,7 @@ class RangeDiscountTable
         }
 
         $contextOptions = $this->buildCategoryContextOptions();
+        $contextOptions = $this->applyCurrentCatalogTableProperties($contextOptions);
 
         $context      = $this->context;
 

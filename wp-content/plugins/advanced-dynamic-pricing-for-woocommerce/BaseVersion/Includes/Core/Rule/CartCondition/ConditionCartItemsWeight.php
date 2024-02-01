@@ -5,6 +5,7 @@ namespace ADP\BaseVersion\Includes\Core\Rule\CartCondition;
 use ADP\BaseVersion\Includes\Core\Rule\CartCondition\Interfaces\ListComparisonCondition;
 use ADP\BaseVersion\Includes\Core\Rule\CartCondition\Interfaces\ValueComparisonCondition;
 use ADP\BaseVersion\Includes\Core\Rule\Internationalization\FilterTranslator;
+use ADP\BaseVersion\Includes\WC\WcCartItemFacade;
 use ADP\Factory;
 use ADP\ProVersion\Includes\Core\Cart\Cart;
 use ADP\ProVersion\Includes\Core\RuleProcessor\ProductFiltering;
@@ -93,7 +94,7 @@ class ConditionCartItemsWeight implements ListComparisonCondition, ValueComparis
             $checked = $productFiltering->checkProductSuitability($item->getWcItem()->getProduct());
 
             if ($checked) {
-                $weight += $item->getWeight() * $item->getQty();
+                $weight += $this->getProductWeightFromFacade($item->getWcItem()) * $item->getQty();
             }
         }
         $comparisonValue  = $this->comparisonValue;
@@ -102,6 +103,12 @@ class ConditionCartItemsWeight implements ListComparisonCondition, ValueComparis
         $result = $this->compareValues($weight, $comparisonValue, $comparisonMethod);
 
         return $invertFiltering ? ! $result : $result;
+    }
+
+    private function getProductWeightFromFacade(WcCartItemFacade $facade): float
+    {
+        $weight = $facade->getProduct()->get_weight("edit");
+        return $weight === '' ? 0.0 : (float)$weight;
     }
 
     public function getInvolvedCartItems()

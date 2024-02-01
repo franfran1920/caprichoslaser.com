@@ -73,6 +73,14 @@ class Database
         return $required_data;
     }
 
+    /**
+     * Retrieves the required product post metadata for a given product ID.
+     *
+     * @param int $productId The ID of the product.
+     *
+     * @return \stdClass|null The product post data with the required metadata,
+     *                                     or null if the product does not exist.
+     */
     public static function getOnlyRequiredProductPostMetaData(int $productId)
     {
         global $wpdb;
@@ -101,6 +109,11 @@ class Database
         $postData = $wpdb->get_row(
             $wpdb->prepare("SELECT * FROM $wpdb->posts WHERE ID = %d", $productId)
         );
+
+        if ( $postData === null ) {
+            return null;
+        }
+
         $postData->meta = [];
 
         foreach ($metaList as $row) {

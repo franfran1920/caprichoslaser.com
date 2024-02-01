@@ -5,17 +5,17 @@ namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
+use ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\Discount;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\Filter;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\RangeDiscount;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\BulkDiscount\SingleItemRuleBulkDiscountProcessor;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Exceptions\RuleExecutionTimeout;
-use ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\ProductStock\ProductStockController;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\ProductStock\ProductStockItem;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartItemsCollection;
-use ADP\BaseVersion\Includes\Database\Repository\RuleRepository;
 use ADP\Factory;
 use Exception;
 use WC_Product;
@@ -34,6 +34,7 @@ class SingleItemRuleProcessor implements RuleProcessor
     const STATUS_FILTERS_NOT_PASSED = 5;
     const STATUS_DISABLED_BY_COUPON_CODE_TRIGGER = 6;
     const STATUS_DISABLED_BY_DATE = 7;
+    const STATUS_SUCCESSFULLY_COMPLETED = 8;
 
     protected $status;
     protected $lastUnexpectedErrorMessage;
@@ -257,6 +258,8 @@ class SingleItemRuleProcessor implements RuleProcessor
         );
 
         $this->applyChangesToCart($cart, $collection);
+
+        $this->status = self::STATUS_SUCCESSFULLY_COMPLETED;
     }
 
     /**
@@ -336,8 +339,8 @@ class SingleItemRuleProcessor implements RuleProcessor
 
         $productStockController = new ProductStockController();
         foreach ($cart->getItems() as $item) {
-            /** @var CartItem $item */
-            if ($item->hasAttr($item::ATTR_IMMUTABLE)) {
+            /** @var ICartItem $item */
+            if ($item->hasAttr(CartItemAttributeEnum::IMMUTABLE())) {
                 $wcCartItemFacade = $item->getWcItem();
                 $product          = $wcCartItemFacade->getProduct();
 
@@ -369,7 +372,7 @@ class SingleItemRuleProcessor implements RuleProcessor
         $totalQtyLeft = $this->rule->getItemsCountLimit() !== -1 ? floatval($this->rule->getItemsCountLimit()) : INF;
 
         foreach ($cartMutableItems as $index => $mutableItem) {
-            /** @var $mutableItem CartItem */
+            /** @var $mutableItem ICartItem */
 
             if ($totalQtyLeft <= floatval(0)) {
                 $cart->addToCart($mutableItem);
@@ -379,7 +382,7 @@ class SingleItemRuleProcessor implements RuleProcessor
             $wcCartItemFacade = $mutableItem->getWcItem();
             $product          = $wcCartItemFacade->getProduct();
 
-            /** @var CartItem[] $filterAffectedItems */
+            /** @var ICartItem[] $filterAffectedItems */
             $filterAffectedItems = array();
 
             /**
@@ -439,7 +442,7 @@ class SingleItemRuleProcessor implements RuleProcessor
                     break;
                 }
 
-                if ($match && !$filterMutableItem->hasAttr($filterMutableItem::ATTR_TEMP)) {
+                if ($match && !$filterMutableItem->hasAttr(CartItemAttributeEnum::TEMPORARY())) {
                     $filter->setCollectedQtyInCart($filter->getCollectedQtyInCart() + $filterMutableItem->getQty());
                 }
 
@@ -494,8 +497,8 @@ class SingleItemRuleProcessor implements RuleProcessor
     }
 
     /**
-     * @param CartItem $item1
-     * @param CartItem $item2
+     * @param ICartItem $item1
+     * @param ICartItem $item2
      *
      * @return float|int
      */
@@ -707,7 +710,7 @@ class SingleItemRuleProcessor implements RuleProcessor
                 $totalQty = floatval(0);
                 if ($selectedProductIds) {
                     foreach (array_merge($collection->get_items(), $cart->getItems()) as $cartItem) {
-                        /** @var CartItem $cartItem */
+                        /** @var ICartItem $cartItem */
                         $facade = $cartItem->getWcItem();
 
                         if ( ! $facade->isVisible()) {
@@ -737,7 +740,7 @@ class SingleItemRuleProcessor implements RuleProcessor
                 $totalQty = floatval(0);
                 if ($selectedCategoryIds) {
                     foreach (array_merge($collection->get_items(), $cart->getItems()) as $cartItem) {
-                        /** @var CartItem $cartItem */
+                        /** @var ICartItem $cartItem */
                         $facade = $cartItem->getWcItem();
 
                         if ( ! $facade->isVisible()) {
@@ -762,7 +765,7 @@ class SingleItemRuleProcessor implements RuleProcessor
 
                 foreach ($collection->get_items() as $item) {
                     /**
-                     * @var CartItem $item
+                     * @var ICartItem $item
                      */
                     $facade = $item->getWcItem();
 

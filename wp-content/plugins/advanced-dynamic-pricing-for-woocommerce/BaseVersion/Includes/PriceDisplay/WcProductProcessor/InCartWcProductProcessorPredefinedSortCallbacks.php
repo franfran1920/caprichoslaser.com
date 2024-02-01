@@ -2,8 +2,8 @@
 
 namespace ADP\BaseVersion\Includes\PriceDisplay\WcProductProcessor;
 
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
 use ADP\BaseVersion\Includes\SpecialStrategies\CompareStrategy;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 
 class InCartWcProductProcessorPredefinedSortCallbacks
 {
@@ -23,8 +23,8 @@ class InCartWcProductProcessorPredefinedSortCallbacks
 
         usort($cartItems, function ($a, $b) use (&$compare) {
             /**
-             * @var CartItem $a
-             * @var CartItem $b
+             * @var BasicCartItem $a
+             * @var BasicCartItem $b
              */
             if ($compare->floatsAreEqual($a->getPrice(), $b->getPrice())) {
                 return 0;
@@ -42,8 +42,8 @@ class InCartWcProductProcessorPredefinedSortCallbacks
 
         usort($cartItems, function ($a, $b) use (&$compare) {
             /**
-             * @var CartItem $a
-             * @var CartItem $b
+             * @var BasicCartItem $a
+             * @var BasicCartItem $b
              */
 
             if ($compare->floatsAreEqual($a->getPrice(), $b->getPrice())) {

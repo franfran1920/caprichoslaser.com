@@ -223,11 +223,6 @@ class OptionsInstaller
                 __('Apply pricing rules while doing cron', 'advanced-dynamic-pricing-for-woocommerce')
             ),
             $builder::boolean(
-                'update_prices_while_doing_rest_api',
-                false,
-                __('Apply pricing rules while doing REST API', 'advanced-dynamic-pricing-for-woocommerce')
-            ),
-            $builder::boolean(
                 'allow_to_edit_prices_in_po',
                 false,
                 __('Allow to edit prices in Phone Orders', 'advanced-dynamic-pricing-for-woocommerce')
@@ -248,7 +243,7 @@ class OptionsInstaller
             $builder::boolean(
                 'create_blank_rule',
                 false,
-                __('Create a blank rule', 'advanced-dynamic-pricing-for-woocommerce')
+                __('Hide rules wizard', 'advanced-dynamic-pricing-for-woocommerce')
             ),
 
             $builder::boolean(
@@ -454,6 +449,11 @@ class OptionsInstaller
                 'readonly_price_for_free_products',
                 true,
                 __('Read-only quantity for free products', 'advanced-dynamic-pricing-for-woocommerce')
+            ),
+            $builder::boolean(
+                'update_prices_while_doing_rest_api',
+                false,
+                __('Apply pricing rules while doing REST API', 'advanced-dynamic-pricing-for-woocommerce')
             )
         );
 

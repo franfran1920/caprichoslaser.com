@@ -5,7 +5,11 @@ namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemPriceAdjustment\CartItemPriceAdjustment;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemPriceAdjustment\CartItemPriceUpdateSourceEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemPriceAdjustment\CartItemPriceUpdateTypeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Core\Cart\Coupon\CouponCartItem;
 use ADP\BaseVersion\Includes\Core\Cart\Fee;
 use ADP\BaseVersion\Includes\Core\Rule\PersistentRule;
@@ -15,6 +19,7 @@ use ADP\BaseVersion\Includes\Core\Rule\Structures\RangeDiscount;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\BulkDiscount\SingleItemRuleBulkDiscountProcessor;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\ProductStock\ProductStockController;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartItemsCollection;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 use ADP\Factory;
 use Exception;
 use WC_Product;
@@ -33,6 +38,7 @@ class PersistentRuleProcessor implements RuleProcessor
     const STATUS_FILTERS_NOT_PASSED = 5;
     const STATUS_DISABLED_BY_COUPON_CODE_TRIGGER = 6;
     const STATUS_DISABLED_BY_DATE = 7;
+    const STATUS_SUCCESSFULLY_COMPLETED = 8;
 
     protected $status;
     protected $lastUnexpectedErrorMessage;
@@ -149,13 +155,13 @@ class PersistentRuleProcessor implements RuleProcessor
 
     /**
      * @param Cart $cart
-     * @param CartItem $item
+     * @param ICartItem $item
      *
      * @return bool
      */
     public function applyToCartItem($cart, $item)
     {
-        if ($item->hasAttr($item::ATTR_IMMUTABLE)) {
+        if ($item->hasAttr(CartItemAttributeEnum::IMMUTABLE())) {
             return true;
         }
 
@@ -171,14 +177,14 @@ class PersistentRuleProcessor implements RuleProcessor
 
     /**
      * @param Cart $cart
-     * @param CartItem $item
+     * @param BasicCartItem $item
      * @param float $price
      *
      * @return bool
      */
     public function applyPriceToCartItem($cart, $item, $price)
     {
-        if ($item->hasAttr($item::ATTR_IMMUTABLE)) {
+        if ($item->hasAttr(CartItemAttributeEnum::IMMUTABLE())) {
             return true;
         }
 
@@ -194,7 +200,7 @@ class PersistentRuleProcessor implements RuleProcessor
 
     /**
      * @param Cart $cart
-     * @param CartItem $item
+     * @param BasicCartItem $item
      * @param float $price
      */
     protected function processWithPrice($cart, $item, $price)
@@ -233,15 +239,21 @@ class PersistentRuleProcessor implements RuleProcessor
             // recalculate price because the item has changed its price and structure
             $this->applyProductAdjustment($cart, $collection);
         } else {
-            $flags = array();
             if ( $handler = $this->rule->getProductAdjustmentHandler() ) {
                 $globalContext = $cart->getContext()->getGlobalContext();
-
                 $amount = ($item->getPrice() - $price) * $item->getQty();
 
+                $priceAdjBuilder = CartItemPriceAdjustment::builder();
+                $priceAdjBuilder->source(CartItemPriceUpdateSourceEnum::SOURCE_PRODUCT_ONLY_LOAD())
+                    ->type(CartItemPriceUpdateTypeEnum::DEFAULT())
+                    ->ruleId($this->rule->getId())
+                    ->originalPrice($item->getPrice())
+                    ->newPrice($price)
+                    ->amount($item->getPrice() - $price);
+
                 if ($handler->isReplaceWithCartAdjustment()) {
-                    $flags[]        = CartItem::FLAG_IGNORE;
                     $adjustmentCode = $handler->getReplaceCartAdjustmentCode();
+                    $priceAdjBuilder->type(CartItemPriceUpdateTypeEnum::REPLACED_BY_CART_ADJUSTMENT());
 
                     if ($amount > 0) {
                         $cart->addCoupon(
@@ -270,8 +282,8 @@ class PersistentRuleProcessor implements RuleProcessor
                 } elseif ($globalContext->getOption('item_adjustments_as_coupon', false)
                           && $globalContext->getOption('item_adjustments_coupon_name', false)
                 ) {
-                    $flags[]        = CartItem::FLAG_IGNORE;
                     $adjustmentCode = $globalContext->getOption('item_adjustments_coupon_name');
+                    $priceAdjBuilder->type(CartItemPriceUpdateTypeEnum::REPLACED_BY_CART_ADJUSTMENT());
 
                     if ($amount > 0) {
                         $cart->addCoupon(
@@ -298,9 +310,9 @@ class PersistentRuleProcessor implements RuleProcessor
                         );
                     }
                 }
-            }
 
-            $item->setPrice($this->rule->getId(), $price, $flags);
+                $item->applyPriceAdjustment($priceAdjBuilder->build());
+            }
         }
 
         $this->addFreeProducts($cart, $collection);
@@ -314,7 +326,7 @@ class PersistentRuleProcessor implements RuleProcessor
 
     /**
      * @param Cart $cart
-     * @param CartItem $item
+     * @param ICartItem $item
      */
     protected function process($cart, $item)
     {
@@ -330,6 +342,8 @@ class PersistentRuleProcessor implements RuleProcessor
         $collection->add($item);
 
         $this->applyProductAdjustment($cart, $collection);
+
+        $this->status = self::STATUS_SUCCESSFULLY_COMPLETED;
     }
 
     /**
@@ -444,7 +458,7 @@ class PersistentRuleProcessor implements RuleProcessor
                 $totalQty = floatval(0);
                 if ($selectedProductIds) {
                     foreach (array_merge($collection->get_items(), $cart->getItems()) as $cartItem) {
-                        /** @var CartItem $cartItem */
+                        /** @var BasicCartItem $cartItem */
                         $facade = $cartItem->getWcItem();
 
                         if ( ! $facade->isVisible()) {
@@ -474,7 +488,7 @@ class PersistentRuleProcessor implements RuleProcessor
                 $totalQty = floatval(0);
                 if ($selectedCategoryIds) {
                     foreach (array_merge($collection->get_items(), $cart->getItems()) as $cartItem) {
-                        /** @var CartItem $cartItem */
+                        /** @var BasicCartItem $cartItem */
                         $facade = $cartItem->getWcItem();
 
                         if ( ! $facade->isVisible()) {
@@ -499,7 +513,7 @@ class PersistentRuleProcessor implements RuleProcessor
 
                 foreach ($collection->get_items() as $item) {
                     /**
-                     * @var CartItem $item
+                     * @var BasicCartItem $item
                      */
                     $facade = $item->getWcItem();
 

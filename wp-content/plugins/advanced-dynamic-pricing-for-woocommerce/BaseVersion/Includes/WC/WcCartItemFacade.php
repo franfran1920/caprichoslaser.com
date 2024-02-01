@@ -2,21 +2,17 @@
 
 namespace ADP\BaseVersion\Includes\WC;
 
-use ADP\BaseVersion\Includes\CartProcessor\OriginalPriceCalculation;
-use ADP\BaseVersion\Includes\Compatibility\PPOMCmp;
-use ADP\BaseVersion\Includes\Compatibility\ThemehighExtraOptionsProCmp;
-use ADP\BaseVersion\Includes\Compatibility\TmExtraOptionsCmp;
-use ADP\BaseVersion\Includes\Compatibility\WcCustomProductAddonsCmp;
-use ADP\BaseVersion\Includes\Compatibility\WcProductAddonsCmp;
-use ADP\BaseVersion\Includes\Compatibility\YithAddonsCmp;
-use ADP\BaseVersion\Includes\Compatibility\FlexibleProductFieldsCmp;
+use ADP\BaseVersion\Includes\CartProcessor\ToPricingCartItemAdapter\SimpleToPricingCartItemAdapter;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Context\Currency;
-use ADP\BaseVersion\Includes\Core\Cart\AutoAddCartItem;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
-use ADP\BaseVersion\Includes\Core\Cart\FreeCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemConverter;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemPriceAdjustment\CartItemPriceAdjustment;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemPriceAdjustment\CartItemPriceUpdateTypeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\AutoAdd\AutoAddCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Container\ContainerPriceTypeEnum;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Free\FreeCartItem;
 use ADP\BaseVersion\Includes\SpecialStrategies\CompareStrategy;
-use ADP\Factory;
 use Exception;
 use ReflectionClass;
 use WC_Product;
@@ -40,6 +36,11 @@ class WcCartItemFacade
     const ADP_AUTO_ADD_CART_ITEM_HASH = 'auto_add_cart_item_hash';
     const ADP_SELECTED_FREE_CART_ITEM = 'selected_free_cart_item';
     const ADP_AUTO_ADD_CAN_BE_REMOVED = 'auto_add_can_be_removed';
+    const ADP_PRICE_ADJUSTMENTS = 'price_adjustments';
+
+    const ADP_TYPE_KEY = "type";
+    const ADP_CONTAINER_DATA_KEY = "container_data";
+    const ADP_CONTAINERED_DATA_KEY = "containered_data";
 
     const KEY_KEY = 'key';
     const KEY_PRODUCT = 'data';
@@ -233,6 +234,18 @@ class WcCartItemFacade
      */
     protected $autoAddCanBeRemoved;
 
+    /** @var array<int, CartItemPriceAdjustment> */
+    protected $priceAdjustments;
+
+    /** @var string */
+    protected $type;
+
+    /** @var array */
+    protected $containerData;
+
+    /** @var array */
+    protected $containeredData;
+
     /**
      * @param Context|array $context
      * @param array|string $wcCartItemOrKey
@@ -295,9 +308,6 @@ class WcCartItemFacade
         $this->discounts     = isset($adp[self::ADP_DISCOUNTS_KEY]) ? $adp[self::ADP_DISCOUNTS_KEY] : array();
         $this->newPrice      = isset($adp[self::ADP_NEW_PRICE_KEY]) ? $adp[self::ADP_NEW_PRICE_KEY] : null;
 
-        $this->visible = boolval(apply_filters('woocommerce_widget_cart_item_visible', true, $this->getData(),
-            $this->getKey()));
-
         $this->replaceWithCoupon = isset($adp[self::ADP_REPLACE_WITH_COUPON]) ? $adp[self::ADP_REPLACE_WITH_COUPON] : null;
         $this->replaceCouponCode = isset($adp[self::ADP_REPLACE_COUPON_NAME]) ? $adp[self::ADP_REPLACE_COUPON_NAME] : null;
 
@@ -312,6 +322,22 @@ class WcCartItemFacade
         $this->autoAddCartItemHash  = isset($adp[self::ADP_AUTO_ADD_CART_ITEM_HASH]) ? $adp[self::ADP_AUTO_ADD_CART_ITEM_HASH] : '';
         $this->selectedFreeCartItem = isset($adp[self::ADP_SELECTED_FREE_CART_ITEM]) ? $adp[self::ADP_SELECTED_FREE_CART_ITEM] : false;
         $this->autoAddCanBeRemoved  = isset($adp[self::ADP_AUTO_ADD_CAN_BE_REMOVED]) ? $adp[self::ADP_AUTO_ADD_CAN_BE_REMOVED] : true;
+
+        $this->priceAdjustments  = $adp[self::ADP_PRICE_ADJUSTMENTS] ?? [];
+        $this->priceAdjustments = array_map(function ($adj) {return CartItemPriceAdjustment::ofDict($adj);}, $this->priceAdjustments);
+
+        $this->visible = boolval(
+            apply_filters(
+                'woocommerce_widget_cart_item_visible',
+                true,
+                $this->getData(),
+                $this->getKey()
+            )
+        );
+
+        $this->type = $adp[self::ADP_TYPE_KEY] ?? "basic";
+        $this->containerData = $adp[self::ADP_CONTAINER_DATA_KEY] ?? [];
+        $this->containeredData = $adp[self::ADP_CONTAINERED_DATA_KEY] ?? [];
     }
 
     public function withContext(Context $context)
@@ -325,323 +351,11 @@ class WcCartItemFacade
     }
 
     /**
-     * @return FreeCartItem|CartItem|AutoAddCartItem|null
-     */
-    public function createItem()
-    {
-        if ($this->isFreeItem()) {
-            return $this->createFreeItem();
-        }
-
-        if($this->isAutoAddItem()) {
-            return $this->createAutoAddItem();
-        }
-
-        return $this->createCommonItem();
-    }
-
-    /**
-     * @return CartItem|null
-     */
-    protected function createCommonItem()
-    {
-        try {
-            $origPriceCalc = new OriginalPriceCalculation($this->context);
-            $origPriceCalc->withContext($this->context);
-        } catch (Exception $e) {
-            return null;
-        }
-
-        Factory::callStaticMethod(
-            'PriceDisplay_PriceDisplay',
-            'processWithout',
-            array($origPriceCalc, 'process'),
-            $this
-        );
-
-        $qty = floatval(apply_filters('wdp_get_product_qty', $this->qty, $this));
-
-        /** Build generic item */
-        $initialCost = $origPriceCalc->priceToAdjust;
-        if ($this->isImmutable() && $this->getHistory()) {
-            foreach ($this->getHistory() as $amounts) {
-                $initialCost += array_sum($amounts);
-            }
-        }
-        $item                   = new CartItem($this, $initialCost, $qty);
-        $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
-        /** Build generic item end */
-
-        $tmCmp = new TmExtraOptionsCmp();
-        $themehighCmp = new ThemehighExtraOptionsProCmp();
-        $wcProductAddonsCmp = new WcProductAddonsCmp();
-        $wcCustomProductAddonsCmp = new WcCustomProductAddonsCmp();
-        $yithAddonsCmp = new YithAddonsCmp();
-        $flexibleProductFieldsCmp = new FlexibleProductFieldsCmp();
-        $ppomCmp = new PPOMCmp();
-
-        if ($tmCmp->isActive()) {
-            if ( $origPriceCalc->basePrice !== "" ) {
-                $initialCost = floatval($origPriceCalc->basePrice);
-            }
-
-            $addons = $tmCmp->getAddonsFromCartItem($this);
-
-            $initialCost += array_sum(array_column($addons, 'price'));
-
-            if ($this->isImmutable() && $this->getHistory()) {
-                foreach ($this->getHistory() as $amounts) {
-                    $initialCost += array_sum($amounts);
-                }
-            }
-
-            $item = new CartItem($this, $initialCost, $qty);
-
-            if (count($addons) > 0) {
-                $item->setAddons($addons);
-            } else {
-                $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
-            }
-        }
-
-        if ($themehighCmp->isActive()) {
-            $initialCost = $origPriceCalc->basePrice;
-
-            $addons = $themehighCmp->getAddonsFromCartItem($this);
-
-            $initialCost += array_sum(array_column($addons, 'price'));
-
-            if ($this->isImmutable() && $this->getHistory()) {
-                foreach ($this->getHistory() as $amounts) {
-                    $initialCost += array_sum($amounts);
-                }
-            }
-
-            $item = new CartItem($this, $initialCost, $qty);
-
-            if (count($addons) > 0) {
-                $item->setAddons($addons);
-            } else {
-                $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
-            }
-        }
-
-        if ($wcProductAddonsCmp->isActive()) {
-            $initialCost = $origPriceCalc->basePrice;
-
-            $addons = $wcProductAddonsCmp->getAddonsFromCartItem($this);
-
-            $initialCost += array_sum(array_column($addons, 'price'));
-
-            if ($this->isImmutable() && $this->getHistory()) {
-                foreach ($this->getHistory() as $amounts) {
-                    $initialCost += array_sum($amounts);
-                }
-            }
-
-            $item = new CartItem($this, $initialCost, $qty);
-
-            if (count($addons) > 0) {
-                $item->setAddons($addons);
-            } else {
-                $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
-            }
-        }
-
-        if ($wcCustomProductAddonsCmp->isActive()) {
-            $initialCost = $origPriceCalc->basePrice;
-
-            $addons = $wcCustomProductAddonsCmp->getAddonsFromCartItem($this);
-
-            $initialCost = $wcCustomProductAddonsCmp->calculateCost($initialCost, $addons, $this->getThirdPartyData());
-
-            if ($this->isImmutable() && $this->getHistory()) {
-                foreach ($this->getHistory() as $amounts) {
-                    $initialCost += array_sum($amounts);
-                }
-            }
-
-            $item = new CartItem($this, $initialCost, $qty);
-
-            if (count($addons) > 0) {
-                $item->setAddons($addons);
-            } else {
-                $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
-            }
-        }
-
-        if ($yithAddonsCmp->isActive()) {
-            $initialCost = $origPriceCalc->basePrice;
-
-            $addons = $yithAddonsCmp->getAddonsFromCartItem($this);
-
-            $initialCost = $wcCustomProductAddonsCmp->calculateCost($initialCost, $addons, $this->getThirdPartyData());
-
-            if ($this->isImmutable() && $this->getHistory()) {
-                foreach ($this->getHistory() as $amounts) {
-                    $initialCost += array_sum($amounts);
-                }
-            }
-
-            $item = new CartItem($this, $initialCost, $qty);
-
-            if (count($addons) > 0) {
-                $item->setAddons($addons);
-            } else {
-                $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
-            }
-        }
-
-        if ($flexibleProductFieldsCmp->isActive()) {
-            $initialCost = $origPriceCalc->basePrice;
-
-            $addons = $flexibleProductFieldsCmp->getAddonsFromCartItem($this);
-
-            $initialCost += array_sum(array_column($addons, 'price'));
-
-            if ($this->isImmutable() && $this->getHistory()) {
-                foreach ($this->getHistory() as $amounts) {
-                    $initialCost += array_sum($amounts);
-                }
-            }
-
-            $item = new CartItem($this, $initialCost, $qty);
-
-            if (count($addons) > 0) {
-                $item->setAddons($addons);
-            } else {
-                $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
-            }
-        }
-
-        if ($ppomCmp->isActive()) {
-            $initialCost = $origPriceCalc->basePrice;
-
-            $addons = $ppomCmp->getAddonsFromCartItem($this);
-
-            $initialCost = $wcCustomProductAddonsCmp->calculateCost($initialCost, $addons, $this->getThirdPartyData());
-
-            if ($this->isImmutable() && $this->getHistory()) {
-                foreach ($this->getHistory() as $amounts) {
-                    $initialCost += array_sum($amounts);
-                }
-            }
-
-            $item = new CartItem($this, $initialCost, $qty);
-
-            if (count($addons) > 0) {
-                $item->setAddons($addons);
-            } else {
-                $item->trdPartyPriceAdj = $origPriceCalc->trdPartyAdjustmentsAmount;
-            }
-        }
-
-        if ($origPriceCalc->isReadOnlyPrice) {
-            $item->addAttr($item::ATTR_READONLY_PRICE);
-        }
-
-        if ($this->isImmutable()) {
-            foreach ($this->getHistory() as $rule_id => $amounts) {
-                $item->setPrice($rule_id, $item->getPrice() - array_sum($amounts));
-            }
-            $item->addAttr($item::ATTR_IMMUTABLE);
-        }
-
-        if ( ! $this->isVisible()) {
-            $item->addAttr($item::ATTR_IMMUTABLE);
-        }
-
-        return $item;
-    }
-
-
-    /**
-     * @return FreeCartItem|null
-     */
-    protected function createFreeItem()
-    {
-        // todo replace keys
-        $rule_id = array_keys($this->getHistory());
-        $rule_id = reset($rule_id);
-
-        $product = clone $this->product;
-
-        try {
-            $reflection = new ReflectionClass($product);
-            $property   = $reflection->getProperty('changes');
-            $property->setAccessible(true);
-            $property->setValue($product, array());
-        } catch (Exception $e) {
-
-        }
-
-        try {
-            $item = new FreeCartItem($product, 0, $rule_id, $this->associatedHash);
-        } catch (Exception $e) {
-            return null;
-        }
-
-        $item->setQtyAlreadyInWcCart($this->qty);
-
-        $item->setVariation($this->variation);
-        $item->setCartItemData($this->thirdPartyData);
-
-        if ($this->getReplaceWithCoupon()) {
-            $item->setReplaceWithCoupon(true);
-            $item->setReplaceCouponCode($this->getReplaceCouponCode());
-        }
-
-        $item->setSelected($this->selectedFreeCartItem);
-
-        return $item;
-    }
-
-    /**
-     * @return AutoAddCartItem|null
-     */
-    protected function createAutoAddItem()
-    {
-        $rule_id = array_keys($this->getHistory());
-        $rule_id = reset($rule_id);
-
-        $product = clone $this->product;
-
-        try {
-            $reflection = new ReflectionClass($product);
-            $property   = $reflection->getProperty('changes');
-            $property->setAccessible(true);
-            $property->setValue($product, array());
-        } catch (Exception $e) {
-
-        }
-
-        try {
-            $item = new AutoAddCartItem($product, 0, $rule_id, $this->associatedHash);
-        } catch (Exception $e) {
-            return null;
-        }
-
-        $item->setQtyAlreadyInWcCart($this->qty);
-
-        $item->setVariation($this->variation);
-        $item->setCartItemData($this->thirdPartyData);
-
-        if ($this->getReplaceWithCoupon()) {
-            $item->setReplaceWithCoupon(true);
-            $item->setReplaceCouponCode($this->getReplaceCouponCode());
-        }
-
-        $item->setCanBeRemoved($this->autoAddCanBeRemoved());
-
-        return $item;
-    }
-
-    /**
      * @return bool
      */
     public function isAffected()
     {
-        return ! empty($this->history);
+        return count($this->priceAdjustments) > 0;
     }
 
     public function sanitize()
@@ -651,7 +365,7 @@ class WcCartItemFacade
         $this->originalData  = null;
         $this->discounts     = array();
 
-        if ($this->history && $this->compareStrategy->floatsAreEqual($this->newPrice,
+        if (count($this->priceAdjustments) > 0 && $this->compareStrategy->floatsAreEqual($this->newPrice,
                 $this->product->get_price('edit'))) {
             try {
                 $reflection = new ReflectionClass($this->product);
@@ -673,6 +387,7 @@ class WcCartItemFacade
         $this->autoAddCartItemHash  = '';
         $this->selectedFreeCartItem = false;
         $this->autoAddCanBeRemoved  = true;
+        $this->priceAdjustments     = [];
     }
 
     public function getClearData()
@@ -793,8 +508,8 @@ class WcCartItemFacade
             self::ADP_PARENT_CART_ITEM_KEY    => $this->parentItemKey,
             self::ADP_ATTRIBUTES_KEY          => $this->attributes,
             self::ADP_ORIGINAL_KEY            => $this->originalData,
-            self::ADP_HISTORY_KEY             => $this->history,
-            self::ADP_DISCOUNTS_KEY           => $this->discounts,
+            self::ADP_HISTORY_KEY             => $this->getHistory(),
+            self::ADP_DISCOUNTS_KEY           => $this->getDiscounts(),
             self::ADP_NEW_PRICE_KEY           => $this->newPrice,
             self::ADP_REPLACE_WITH_COUPON     => $this->replaceWithCoupon,
             self::ADP_REPLACE_COUPON_NAME     => $this->replaceCouponCode,
@@ -804,6 +519,10 @@ class WcCartItemFacade
             self::ADP_AUTO_ADD_CART_ITEM_HASH => $this->autoAddCartItemHash,
             self::ADP_SELECTED_FREE_CART_ITEM => $this->selectedFreeCartItem,
             self::ADP_AUTO_ADD_CAN_BE_REMOVED => $this->autoAddCanBeRemoved,
+            self::ADP_PRICE_ADJUSTMENTS       => array_map(function ($adj){return $adj->toDict();}, $this->priceAdjustments),
+            self::ADP_TYPE_KEY                => $this->type,
+            self::ADP_CONTAINER_DATA_KEY      => $this->containerData,
+            self::ADP_CONTAINERED_DATA_KEY    => $this->containeredData,
         );
     }
 
@@ -933,7 +652,16 @@ class WcCartItemFacade
      */
     public function getHistory()
     {
-        return $this->history;
+        $history = [];
+        foreach ( $this->priceAdjustments as $adjustment ) {
+            if ( ! isset($history[$adjustment->getRuleId()]) ) {
+                $history[$adjustment->getRuleId()] = [];
+            }
+
+            $history[$adjustment->getRuleId()][] = $adjustment->getAmount();
+        }
+
+        return $history;
     }
 
     /**
@@ -941,9 +669,7 @@ class WcCartItemFacade
      */
     public function setHistory($history)
     {
-        if (is_array($history)) {
-            $this->history = $history;
-        }
+
     }
 
     /**
@@ -951,7 +677,20 @@ class WcCartItemFacade
      */
     public function getDiscounts()
     {
-        return $this->discounts;
+        $discounts = [];
+        foreach ( $this->priceAdjustments as $adjustment ) {
+            if ( ! $adjustment->getType()->equals(CartItemPriceUpdateTypeEnum::DEFAULT()) ) {
+                continue;
+            }
+
+            if ( ! isset($discounts[$adjustment->getRuleId()]) ) {
+                $discounts[$adjustment->getRuleId()] = [];
+            }
+
+            $discounts[$adjustment->getRuleId()][] = $adjustment->getAmount();
+        }
+
+        return $discounts;
     }
 
     /**
@@ -959,9 +698,7 @@ class WcCartItemFacade
      */
     public function setDiscounts($discounts)
     {
-        if (is_array($discounts)) {
-            $this->discounts = $discounts;
-        }
+
     }
 
     /**
@@ -1268,6 +1005,99 @@ class WcCartItemFacade
     }
 
     /**
+     * @param mixed $priceAdjustments
+     */
+    public function setPriceAdjustments($priceAdjustments)
+    {
+        $this->priceAdjustments = $priceAdjustments;
+    }
+
+    public function getPriceAdjustments()
+    {
+        return $this->priceAdjustments;
+    }
+
+    public function isBasicType()
+    {
+        return $this->type === "basic";
+    }
+
+    public function isContainerType()
+    {
+        return $this->type === "container";
+    }
+
+    public function isContaineredType()
+    {
+        return $this->type === "containered";
+    }
+
+    public function setBasicType()
+    {
+        $this->type = "basic";
+    }
+
+    public function setContainerType()
+    {
+        $this->type = "container";
+    }
+
+    public function setContaineredType()
+    {
+        $this->type = "containered";
+    }
+
+    public function setContainerPriceType(ContainerPriceTypeEnum $typeEnum)
+    {
+        $this->containerData["price_type"] = $typeEnum;
+    }
+
+    public function getContainerPriceType(): ?ContainerPriceTypeEnum
+    {
+        return $this->containerData["price_type"] ?? null;
+    }
+
+    public function setContainerChildrenHashes(array $childrenHashes)
+    {
+        $this->containerData["children_hashes"] = $childrenHashes;
+    }
+
+    public function getContainerChildrenHashes(): array
+    {
+        return $this->containerData["children_hashes"] ?? [];
+    }
+
+    public function setParentContainerPriceType(ContainerPriceTypeEnum $typeEnum)
+    {
+        $this->containeredData["parent_price_type"] = $typeEnum;
+    }
+
+    public function getParentContainerPriceType(): ?ContainerPriceTypeEnum
+    {
+        return $this->containeredData["parent_price_type"] ?? null;
+    }
+
+    public function setParentContainerCartItemHash(string $hash)
+    {
+        $this->containeredData["parent_hash"] = $hash;
+    }
+
+    public function getParentContainerCartItemHash(): ?string
+    {
+        return $this->containeredData["parent_hash"] ?? null;
+    }
+
+    public function setContaineredPricedIndividually(bool $pricedIndividually)
+    {
+        $this->containeredData["priced_individually"] = $pricedIndividually;
+    }
+
+    public function isContaineredPricedIndividually(): ?bool
+    {
+        return $this->containeredData["priced_individually"] ?? null;
+    }
+
+    /**
      * @param Context $context
      * @param \WC_Product $product
      * @param array $cartItemData
@@ -1380,5 +1210,24 @@ class WcCartItemFacade
             'type'       => $product->get_type(),
             'attributes' => 'variation' === $product->get_type() ? $product->get_variation_attributes() : '',
         ), $product)));
+    }
+
+    /**
+     * @depreacted
+     * @return FreeCartItem|BasicCartItem|AutoAddCartItem|null
+     */
+    public function createItem(int $pos = -1)
+    {
+        $converter = new CartItemConverter();
+
+        if ($this->isFreeItem()) {
+            return $converter->fromFacadeToFreeCartItem($this, $pos);
+        }
+
+        if ($this->isAutoAddItem()) {
+            return $converter->fromFacadeToAutoAddCartItem($this, $pos);
+        }
+
+        return (new SimpleToPricingCartItemAdapter())->adapt($this, $pos);
     }
 }

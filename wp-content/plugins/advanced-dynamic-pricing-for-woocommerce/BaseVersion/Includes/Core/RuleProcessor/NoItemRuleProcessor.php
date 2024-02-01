@@ -27,6 +27,7 @@ class NoItemRuleProcessor implements RuleProcessor
     const STATUS_FILTERS_NOT_PASSED = 5;
     const STATUS_DISABLED_BY_COUPON_CODE_TRIGGER = 6;
     const STATUS_DISABLED_BY_DATE = 7;
+    const STATUS_SUCCESSFULLY_COMPLETED = 8;
 
     protected $status;
     protected $lastUnexpectedErrorMessage;
@@ -209,6 +210,8 @@ class NoItemRuleProcessor implements RuleProcessor
         $this->ruleTimer->checkExecutionTime();
 
         $this->applyCartAdjustments($cart);
+
+        $this->status = self::STATUS_SUCCESSFULLY_COMPLETED;
     }
 
     /**

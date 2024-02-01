@@ -3,8 +3,10 @@
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
+use ADP\BaseVersion\Includes\Core\Cart\CartCustomer;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule;
 use ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
+use ADP\BaseVersion\Includes\Core\Rule\Structures\RoleDiscount;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartItemsCollection;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSetCollection;
 use ADP\Factory;
@@ -27,26 +29,37 @@ class RoleDiscountStrategy
     }
 
     /**
+     * @param CartCustomer $cartCustomer
+     * @return array<int, RoleDiscount>
+     */
+    public function findMatchedRoleDiscounts(CartCustomer $cartCustomer): array
+    {
+        $roleDiscounts = $this->rule->getRoleDiscounts();
+
+        if (!$roleDiscounts) {
+            return [];
+        }
+
+        if (!($currentUserRoles = $cartCustomer->getRoles())) {
+            return [];
+        }
+
+        $matchedRoleDiscounts = [];
+        foreach ($roleDiscounts as $roleDiscount) {
+            if (count(array_intersect($roleDiscount->getRoles(), $currentUserRoles))) {
+                $matchedRoleDiscounts[] = $roleDiscount;
+            }
+        }
+        return $matchedRoleDiscounts;
+    }
+
+    /**
      * @param Cart $cart
      * @param CartItemsCollection $collection
      */
     public function processItems(&$cart, &$collection)
     {
-        $roleDiscounts = $this->rule->getRoleDiscounts();
-
-        if ( ! $roleDiscounts) {
-            return;
-        }
-
-        if ( ! ($currentUserRoles = $cart->getContext()->getCustomer()->getRoles())) {
-            return;
-        }
-
-        foreach ($roleDiscounts as $roleDiscount) {
-            if ( ! count(array_intersect($roleDiscount->getRoles(), $currentUserRoles))) {
-                continue;
-            }
-
+        foreach ($this->findMatchedRoleDiscounts($cart->getContext()->getCustomer()) as $roleDiscount) {
             if ( ! $roleDiscount->getDiscount()) {
                 continue;
             }
@@ -70,21 +83,7 @@ class RoleDiscountStrategy
      */
     public function processSets(&$cart, &$collection)
     {
-        $roleDiscounts = $this->rule->getRoleDiscounts();
-
-        if ( ! $roleDiscounts) {
-            return;
-        }
-
-        if ( ! ($currentUserRoles = $cart->getContext()->getCustomer()->getRoles())) {
-            return;
-        }
-
-        foreach ($roleDiscounts as $roleDiscount) {
-            if ( ! count(array_intersect($roleDiscount->getRoles(), $currentUserRoles))) {
-                continue;
-            }
-
+        foreach ($this->findMatchedRoleDiscounts($cart->getContext()->getCustomer()) as $roleDiscount) {
             /** @var PriceCalculator $priceCalculator */
             $priceCalculator = Factory::get(
                 "Core_RuleProcessor_PriceCalculator",

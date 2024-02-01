@@ -39,6 +39,13 @@ class Currency
         }
     }
 
+    public function hash(): string
+    {
+        $props = [$this->code, $this->symbol, $this->rate];
+
+        return md5(serialize($props));
+    }
+
     /**
      * @param string $code
      *

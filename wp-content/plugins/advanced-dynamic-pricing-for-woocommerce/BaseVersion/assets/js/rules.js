@@ -510,14 +510,22 @@ jQuery(document).ready(function ($) {
                 } else if (! el.val().length) {
                   beforeSendValidation = false;
                   attachErrorTo.push(el);
+                } else if(el.hasClass('hasDatepicker') && !el.val().match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)) {
+                  beforeSendValidation = false;
+                  el.data('customError', 'Incorrect date format');
+                  attachErrorTo.push(el);
+                } else if(el.hasClass('datetimepicker') && !el.val().match(/^(\d{4})\/(\d{1,2})\/(\d{1,2}) (\d{1,2}):(\d{1,2})$/)) {
+                  beforeSendValidation = false;
+                  el.data('customError', 'Incorrect date format');
+                  attachErrorTo.push(el);
                 }
               });
               attachErrorTo.forEach(function (val) {
                 if (!beforeSendValidation && !val.next('.cart-conditions__error-wrapper').length) {
                   let $elEmptyValue = $("<div class=\"cart-conditions__error-wrapper\"><span class=\"cart-conditions__onempty-error\"></span></div>");
                   val.after($elEmptyValue);
-                  $('.cart-conditions__onempty-error').text('You must provide at least one value');
-
+                  $elEmptyValue.find('.cart-conditions__onempty-error').text(val.data('customError') || 'You must provide at least one value');
+                  val.removeData("customError");
                   setTimeout(function () {
                     $form.find('.inside .cart-conditions__error-wrapper').remove();
                   }, 5000);
@@ -1698,6 +1706,7 @@ jQuery(document).ready(function ($) {
             }
 
             $container.find(".wdp-matched-previous-filters-container").first().hide();
+			$container.find('.wdp-filter-type option[value="same_previous_filter"]').first().hide();
         });
 
         if (!wdp_data.options.enable_product_exclude) {
@@ -1711,6 +1720,7 @@ jQuery(document).ready(function ($) {
 
         if ( product_filter_index === 0 ) {
           $container.find(".wdp-matched-previous-filters-container").hide();
+		  $container.find('.wdp-filter-type option[value="same_previous_filter"]').hide();
         }
 
         // render controls for selected filter type
@@ -1839,6 +1849,8 @@ jQuery(document).ready(function ($) {
     function update_product_filter_fields($el, data, option) {
         var $container = $el.closest('.wdp-filter-item');
         var type = $el.val();
+
+		$container.toggleClass('wdp-filter-item_same_previous_filter', type == 'same_previous_filter');
 
         // prepare template for filter type
         var template = get_template('filter_' + type, {
@@ -2009,6 +2021,17 @@ jQuery(document).ready(function ($) {
         var $container = $el.closest('.wdp-condition');
         var type = $el.val();
 
+        if(type == 'date' && data?.options?.comparison_datetime) {
+          var m = data.options.comparison_datetime.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2}) (\d{1,2}):(\d{1,2})$/);
+          if(m) {
+            data.options.comparison_datetime = $.datepicker.formatDate("yy-mm-dd", new Date(m[1], m[2] - 1, m[3]));
+          }
+          // When change type from Time to Date
+          if(!data.options.comparison_datetime.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)) {
+            data.options.comparison_datetime = '';
+          }
+        }
+
         var template = get_template(type, {
             r: get_current_rule_index($el),
             c: $container.data('index')
@@ -2116,6 +2139,7 @@ jQuery(document).ready(function ($) {
 
         $container.find('[data-field="date"]').removeClass('hasDatepicker').datepicker({dateFormat:"yy-mm-dd"});
         $container.find('[class="datetimepicker"]').datetimepicker();
+        $container.find('[class="datetimepicker"]').datetimepicker('validate');
         make_select2_tags($container.find('[data-field="tags"]'));
 
         make_select2_products($container.find('[data-field="autocomplete"]'));
@@ -2992,7 +3016,9 @@ jQuery(document).ready(function ($) {
         var $type_val = $rule.find('.wdp-get-products-repeat select').val();
 
         if ( $type_val === 'based_on_subtotal' || $type_val === 'based_on_subtotal_after_discount'
-          || $type_val === 'based_on_subtotal_inc' || $type_val === 'based_on_subtotal_after_discount_inc' ) {
+          || $type_val === 'based_on_subtotal_inc' || $type_val === 'based_on_subtotal_after_discount_inc' 
+          || $type_val === 'based_on_subtotal_with_coupons_after_discount'
+          || $type_val === 'based_on_subtotal_with_coupons_after_discount_inc') {
             $rule.find('.wdp-get-products-repeat .repeat-subtotal').show();
         } else {
             $rule.find('.wdp-get-products-repeat .repeat-subtotal').hide();
@@ -3211,6 +3237,17 @@ jQuery(document).ready(function ($) {
                     processResults: function (response) {
                         return { results: response.data || [] };
                     }
+                },
+                templateResult: function (data) {
+                  var html = '<span class="wdp-select2-option">';
+                  if(data.img) {
+                    html += `<img class="wdp-select2-img" src="${data.img}"/>`;
+                  }
+                  var title = [data.text, data.price].filter(Boolean).join(' | ');
+                  html += `<span>${title}</span>`;
+
+                  html += '</span>';
+                  return $(html);
                 },
 				templateSelection: function (data) {
 					if (!data.id) {

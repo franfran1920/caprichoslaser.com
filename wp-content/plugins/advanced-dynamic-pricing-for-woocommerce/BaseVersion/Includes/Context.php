@@ -4,13 +4,14 @@ namespace ADP\BaseVersion\Includes;
 
 use ADP\BaseVersion\Includes\AdminExtensions\AdminNotice;
 use ADP\BaseVersion\Includes\AdminExtensions\AdminPage;
-use ADP\BaseVersion\Includes\Compatibility\AeliaSwitcherCmp;
-use ADP\BaseVersion\Includes\Compatibility\AlgWcCurrencySwitcherCmp;
 use ADP\BaseVersion\Includes\Compatibility\PriceBasedOnCountryCmp;
+use ADP\BaseVersion\Includes\Context\Container\ContainerCompatibilityManager;
+use ADP\BaseVersion\Includes\Context\ContextBuilder;
 use ADP\BaseVersion\Includes\Compatibility\VillaThemeMultiCurrencyCmp;
 use ADP\BaseVersion\Includes\Compatibility\WoocsCmp;
 use ADP\BaseVersion\Includes\Compatibility\YayCurrencyCmp;
 use ADP\BaseVersion\Includes\Compatibility\WooCommerceMultiCurrencyCmp;
+use ADP\BaseVersion\Includes\Compatibility\KlarnaOnSiteMessagingCmp;
 use ADP\BaseVersion\Includes\Context\Currency;
 use ADP\BaseVersion\Includes\Context\CurrencyController;
 use ADP\BaseVersion\Includes\Context\Geolocation;
@@ -139,6 +140,8 @@ class Context
      */
     public $language;
 
+    private $containerCompatibilityManager;
+
     /**
      * @param OptionsManager|null $settings
      *
@@ -216,36 +219,10 @@ class Context
         $this->currencyController = new CurrencyController($this, new Currency($currencyCode, $symbol, 1));
         $this->currencyController->setCurrencySymbols($symbols);
 
-        $woocsCmp = new WoocsCmp();
-        if ($woocsCmp->isActive()) {
-            $woocsCmp->modifyContext($this);
-            $woocsCmp->prepareHooks();
+        $klarnaOsmCmp = new KlarnaOnSiteMessagingCmp();
+        if ($klarnaOsmCmp->isActive()) {
+            $klarnaOsmCmp->prepareHooks();
         }
-
-        $villaCmp = new VillaThemeMultiCurrencyCmp();
-        if ($villaCmp->isActive()) {
-            $villaCmp->modifyContext($this);
-            $villaCmp->prepareHooks();
-        }
-
-        $aeliaCmp = new AeliaSwitcherCmp();
-        if ($aeliaCmp->isActive()) {
-            $aeliaCmp->modifyContext($this);
-            $aeliaCmp->prepareHooks();
-        }
-
-        $algCmp = new AlgWcCurrencySwitcherCmp();
-        if ($algCmp->isActive()) {
-            $algCmp->modifyContext($this);
-        }
-
-        $yayCmp = new YayCurrencyCmp();
-        if ($yayCmp->isActive()) {
-            $yayCmp->modifyContext($this);
-            $yayCmp->prepareHooks();
-        }
-
-        $wcMultiCurrencyCmp = new WooCommerceMultiCurrencyCmp($this);
 
         $priceBasedOnCountryCmp = new PriceBasedOnCountryCmp();
         if ($priceBasedOnCountryCmp->isActive()) {
@@ -260,6 +237,13 @@ class Context
         $this->adminNotice = new AdminNotice($this);
 
         $this->language = Language::buildAsDefault();
+
+        $this->containerCompatibilityManager = new ContainerCompatibilityManager();
+    }
+
+    public static function builder(): ContextBuilder
+    {
+        return new ContextBuilder();
     }
 
     public function fetchQueryProps()
@@ -732,5 +716,10 @@ class Context
             $isHPOSEnabled = OrderUtil::custom_orders_table_usage_is_enabled();
         }
         return $isHPOSEnabled;
+    }
+
+    public function getContainerCompatibilityManager(): ContainerCompatibilityManager
+    {
+        return $this->containerCompatibilityManager;
     }
 }

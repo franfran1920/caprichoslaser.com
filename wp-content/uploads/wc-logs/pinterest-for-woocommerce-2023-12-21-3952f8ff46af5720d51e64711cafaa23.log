@@ -1,7 +1,0 @@
-2023-12-21T06:00:26+00:00 ERROR Solicitud de GET: https://api.pinterest.com/ads/v4/advertisers/549766434797/discounts?active=true
-Código de estado: 1
-Respuesta del API: cURL error 28: Operation timed out after 15001 milliseconds with 0 bytes received
-2023-12-21T06:00:37+00:00 ERROR Solicitud de GET: https://api.pinterest.com/ads/v4/advertisers/549766434797/discounts?active=true
-Código de estado: 500
-Respuesta del API: Something went wrong on our end. Sorry about that.
-Código de Pinterest: 12

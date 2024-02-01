@@ -3,8 +3,9 @@
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\Coupon\CouponCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAttributeEnum;
 use ADP\BaseVersion\Includes\Core\Cart\Coupon\CouponCart;
+use ADP\BaseVersion\Includes\Core\Cart\Coupon\CouponCartItem;
 use ADP\BaseVersion\Includes\WC\WcCustomerConverter;
 use ADP\Factory;
 
@@ -52,7 +53,7 @@ class CartTotals
 
         $itemsSubtotals = floatval(0);
         foreach ($cart->getItems() as $item) {
-            if (in_array("immutable", $item->getAttrs())) {
+            if ($item->hasAttr(CartItemAttributeEnum::IMMUTABLE())) {
                 continue;
             }
             $product          = $item->getWcItem()->getProduct();

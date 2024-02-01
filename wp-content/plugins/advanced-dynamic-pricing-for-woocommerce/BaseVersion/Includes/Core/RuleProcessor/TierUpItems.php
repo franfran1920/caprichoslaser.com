@@ -3,7 +3,7 @@
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule\PackageRangeAdjustments;
 use ADP\BaseVersion\Includes\Core\Rule\Rule;
@@ -13,6 +13,7 @@ use ADP\BaseVersion\Includes\Core\Rule\Structures\Discount;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\RangeDiscount;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\SetDiscount;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSet;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 use ADP\Factory;
 
 defined('ABSPATH') or exit;
@@ -34,50 +35,55 @@ class TierUpItems
      */
     protected $cart;
 
-    const MARK_CALCULATED = 'tier_calculated';
-
     /**
      * @param SingleItemRule|PackageRule $rule
      * @param Cart $cart
      */
     public function __construct($rule, $cart)
     {
-        $this->rule    = $rule;
-        $this->cart    = $cart;
+        $this->rule = $rule;
+        $this->cart = $cart;
         $this->handler = $rule->getProductRangeAdjustmentHandler();
     }
 
     /**
-     * @param array<int,CartItem> $items
+     * @param array<int,ICartItem> $items
      *
-     * @return array<int,CartItem>
+     * @return array<int,ICartItem>
      */
     public function executeItems($items)
     {
-        foreach ($this->handler->getRanges() as $range) {
-            $items = $this->processRange($items, $range);
+        $tierItems = [];
+        foreach ($items as $item) {
+            $tierItems[] = TierItemProxy::ofCartItem($item);
         }
 
-        foreach ($items as $index => $item) {
-            if ( ! $item->hasMark(self::MARK_CALCULATED)) {
-                unset($items[$index]);
-                array_splice($items, 0, 0, array($item));
+        foreach ($this->handler->getRanges() as $range) {
+            $tierItems = $this->processRange($tierItems, $range);
+        }
+
+        foreach ($tierItems as $index => $tierItem) {
+            if (!$tierItem->hasMark(TierItemProxy::MARK_CALCULATED)) {
+                unset($tierItems[$index]);
+                array_splice($tierItems, 0, 0, array($tierItem));
             }
         }
-        $items = array_values($items);
+        $tierItems = array_values($tierItems);
 
-        foreach ($items as $item) {
-            $item->removeMark(self::MARK_CALCULATED);
+        foreach ($tierItems as $tierItem) {
+            $tierItem->removeMark(TierItemProxy::MARK_CALCULATED);
         }
 
-        return $items;
+        return array_map(function ($tierItem) {
+            return $tierItem->getItem();
+        }, $tierItems);
     }
 
     /**
-     * @param array<int,CartItem> $items
+     * @param array<int,ICartItem> $items
      * @param float $customQty
      *
-     * @return array<int,CartItem>
+     * @return array<int,ICartItem>
      */
     public function executeItemsWithCustomQty($items, $customQty)
     {
@@ -85,56 +91,64 @@ class TierUpItems
             return $items;
         }
 
+        $tierItems = [];
+        foreach ($items as $item) {
+            $tierItems = TierItemProxy::ofCartItem($item);
+        }
+
         foreach ($this->handler->getRanges() as $range) {
-            if ( ! is_null($customQty) && $range->isIn($customQty)) {
-                $range = new RangeDiscount($range->getFrom(), $customQty, $range->getData());
-                $items = $this->processRange($items, $range);
+            if (!is_null($customQty) && $range->isIn($customQty)) {
+                $tierItems = $this->processRange(
+                    $tierItems,
+                    new RangeDiscount($range->getFrom(), $customQty, $range->getData())
+                );
                 break;
             }
 
-            $items = $this->processRange($items, $range);
+            $tierItems = $this->processRange($tierItems, $range);
         }
 
-        foreach ($items as $item) {
-            $item->removeMark(self::MARK_CALCULATED);
-        }
-
-        return $items;
+        return array_map(function ($tierItem) {
+            return $tierItem->getItem();
+        }, $tierItems);
     }
 
     /**
-     * @param array<int,CartSet> $items
+     * @param array<int,CartSet> $cartSets
      *
      * @return array<int,CartSet>
      */
-    public function executeSets($items)
+    public function executeSets($cartSets)
     {
+        $tierItems = [];
+        foreach ($cartSets as $cartSet) {
+            $tierItems = TierItemProxy::ofCartSet($cartSet);
+        }
+
         foreach ($this->handler->getRanges() as $range) {
-            $items = $this->processRange($items, $range);
+            $tierItems = $this->processRange($tierItems, $range);
         }
 
-        foreach ($items as $item) {
-            $item->removeMark(self::MARK_CALCULATED);
-        }
-
-        return $items;
+        return array_map(function ($tierItem) {
+            return $tierItem->getItem();
+        }, $tierItems);
     }
 
     /**
-     * @param array<int,CartItem>|array<int,CartSet> $elements
+     * @param array<int,TierItemProxy> $elements
      * @param RangeDiscount $range
      *
-     * @return array<int,CartItem>|array<int,CartSet>
+     * @return array<int,TierItemProxy>
      */
     protected function processRange($elements, $range)
     {
-        $processedQty          = 1;
-        $newElements           = array();
+        $processedQty = 1;
+        $newElements = array();
         $indexOfItemsToProcess = array();
         foreach ($elements as $element) {
-            if ($element->hasMark(self::MARK_CALCULATED)) {
+            if ($element->hasMark(TierItemProxy::MARK_CALCULATED)) {
                 $newElements[] = $element;
-                $processedQty  += $element->getQty();
+                $processedQty += $element->getQty();
                 continue;
             }
 
@@ -145,16 +159,16 @@ class TierUpItems
                     if ($requireQty > 0) {
                         $newItem = clone $element;
                         $newItem->setQty($requireQty);
-                        $newElements[]           = $newItem;
+                        $newElements[] = $newItem;
                         $indexOfItemsToProcess[] = count($newElements) - 1;
-                        $processedQty            += $requireQty;
+                        $processedQty += $requireQty;
                     }
 
                     if (($element->getQty() - $requireQty) > 0) {
                         $newItem = clone $element;
                         $newItem->setQty($element->getQty() - $requireQty);
                         $newElements[] = $newItem;
-                        $processedQty  += $element->getQty() - $requireQty;
+                        $processedQty += $element->getQty() - $requireQty;
                     }
                 } elseif ($range->isGreater($processedQty + $element->getQty())) {
                     $requireQty = $range->getQtyInc();
@@ -162,21 +176,21 @@ class TierUpItems
                     if ($requireQty > 0) {
                         $newItem = clone $element;
                         $newItem->setQty($requireQty);
-                        $newElements[]           = $newItem;
+                        $newElements[] = $newItem;
                         $indexOfItemsToProcess[] = count($newElements) - 1;
-                        $processedQty            += $requireQty;
+                        $processedQty += $requireQty;
                     }
 
                     if (($element->getQty() - $requireQty) > 0) {
                         $newItem = clone $element;
                         $newItem->setQty($element->getQty() - $requireQty);
                         $newElements[] = $newItem;
-                        $processedQty  += $element->getQty() - $requireQty;
+                        $processedQty += $element->getQty() - $requireQty;
                     }
 
                 } else {
                     $newElements[] = $element;
-                    $processedQty  += $element->getQty();
+                    $processedQty += $element->getQty();
                 }
             } elseif ($range->isIn($processedQty)) {
                 $requireQty = $range->getTo() + 1 - $processedQty;
@@ -185,29 +199,30 @@ class TierUpItems
                 if ($requireQty > 0) {
                     $newItem = clone $element;
                     $newItem->setQty($requireQty);
-                    $newElements[]           = $newItem;
+                    $newElements[] = $newItem;
                     $indexOfItemsToProcess[] = count($newElements) - 1;
-                    $processedQty            += $requireQty;
+                    $processedQty += $requireQty;
                 }
 
                 if (($element->getQty() - $requireQty) > 0) {
                     $newItem = clone $element;
                     $newItem->setQty($element->getQty() - $requireQty);
                     $newElements[] = $newItem;
-                    $processedQty  += $element->getQty() - $requireQty;
+                    $processedQty += $element->getQty() - $requireQty;
                 }
 
             } elseif ($range->isGreater($processedQty)) {
                 $newElements[] = $element;
-                $processedQty  += $element->getQty();
+                $processedQty += $element->getQty();
             }
         }
 
-        $discount        = $range->getData();
+        $discount = $range->getData();
         /** @var PriceCalculator $priceCalculator */
         $priceCalculator = Factory::get("Core_RuleProcessor_PriceCalculator", $this->rule, $discount);
         foreach ($indexOfItemsToProcess as $index) {
-            $elementToProcess = $newElements[$index];
+            $tierItem = $newElements[$index];
+            $elementToProcess = $tierItem->getItem();
 
             if ($elementToProcess instanceof CartSet) {
                 if ($discount instanceof SetDiscount) {
@@ -217,12 +232,11 @@ class TierUpItems
                         $priceCalculator->applyItemDiscount($element, $this->cart, $this->handler);
                     }
                 }
-                $elementToProcess->addMark(self::MARK_CALCULATED);
-            } elseif ($elementToProcess instanceof CartItem) {
+                $tierItem->addMark(TierItemProxy::MARK_CALCULATED);
+            } elseif ($elementToProcess instanceof ICartItem) {
                 $priceCalculator->applyItemDiscount($elementToProcess, $this->cart, $this->handler);
-                $elementToProcess->addMark(self::MARK_CALCULATED);
+                $tierItem->addMark(TierItemProxy::MARK_CALCULATED);
             }
-
         }
 
         return $newElements;

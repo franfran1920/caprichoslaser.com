@@ -48,7 +48,7 @@ class WcAdpMergedCouponHelper
 
             $wcCoupon = new \WC_Coupon();
             $wcCoupon->set_code($couponCode);
-            if ($id = wc_get_coupon_id_by_code($couponCode)) {
+            if ($id = self::getCouponIdByCode($couponCode)) {
                 $wcCoupon->set_id($id);
                 $dataStore = \WC_Data_Store::load('coupon');
                 $dataStore->read($wcCoupon);
@@ -58,6 +58,30 @@ class WcAdpMergedCouponHelper
         }
 
         return $coupon;
+    }
+
+    /**
+     * Wrapper method for `wc_get_coupon_id_by_code` method.
+     * If you get "virtual" coupon code which does not exist in DB, the query repeats over and over again with every call,
+     * because we miss the cache.
+     * So, we update the cache manually.
+     *
+     * @param string $couponCode
+     * @return int
+     */
+    private static function getCouponIdByCode(string $couponCode): int
+    {
+        $id = wc_get_coupon_id_by_code($couponCode);
+
+        if ($id === 0) {
+            wp_cache_set(
+                \WC_Cache_Helper::get_cache_prefix('coupons') . 'coupon_id_from_code_' . $couponCode,
+                [],
+                'coupons'
+            );
+        }
+
+        return $id;
     }
 
     public static function store(WcAdpMergedCoupon $wcAdpMergedCoupon)

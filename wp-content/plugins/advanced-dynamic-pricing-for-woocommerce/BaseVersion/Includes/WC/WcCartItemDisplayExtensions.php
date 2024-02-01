@@ -2,11 +2,9 @@
 
 namespace ADP\BaseVersion\Includes\WC;
 
-use ADP\BaseVersion\Includes\Compatibility\MixAndMatchCmp;
-use ADP\BaseVersion\Includes\Compatibility\SomewhereWarmBundlesCmp;
 use ADP\BaseVersion\Includes\Compatibility\WcSubscriptionsCmp;
-use ADP\BaseVersion\Includes\Compatibility\WpcBundleCmp;
 use ADP\BaseVersion\Includes\Context;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Container\ContainerPriceTypeEnum;
 
 defined('ABSPATH') or exit;
 
@@ -45,8 +43,9 @@ class WcCartItemDisplayExtensions
 
     public function register()
     {
-        add_filter('woocommerce_cart_item_price', array($this, 'wcCartItemPrice'), 10, 3);
-        add_filter('woocommerce_cart_item_subtotal', array($this, 'wcCartItemSubtotal'), 10, 3);
+        // 10000 for WPC bundles
+        add_filter('woocommerce_cart_item_price', array($this, 'wcCartItemPrice'), 10000, 3);
+        add_filter('woocommerce_cart_item_subtotal', array($this, 'wcCartItemSubtotal'), 10000, 3);
     }
 
     /**
@@ -58,23 +57,6 @@ class WcCartItemDisplayExtensions
      */
     public function wcCartItemPrice($price, $cartItem, $cartItemKey)
     {
-        $facade = new WcCartItemFacade($this->context, $cartItem, $cartItemKey);
-
-        $wcBundlesCmp = new SomewhereWarmBundlesCmp();
-        if ($wcBundlesCmp->isBundled($facade)) {
-            return $price;
-        }
-
-        $wpCleverBundleCmp = new WpcBundleCmp();
-        if ( $wpCleverBundleCmp->isActive() && $wpCleverBundleCmp->isBundled($facade) ) {
-            return $price;
-        }
-
-        $mixAndMatchCmp = new MixAndMatchCmp();
-        if ( $mixAndMatchCmp->isActive() && $mixAndMatchCmp->isMixAndMatchChild($facade) ) {
-            return $price;
-        }
-
         if ($this->context->getOption('show_striked_prices')) {
             $price = $this->wcMainCartItemPrice($price, $cartItem, $cartItemKey);
         }
@@ -112,27 +94,16 @@ class WcCartItemDisplayExtensions
         }
 
         $context = $this->context;
-        $facade  = new WcCartItemFacade($context, $cartItem, $cartItemKey);
+        $facade = new WcCartItemFacade($context, $cartItem, $cartItemKey);
         $subsCmp = new WcSubscriptionsCmp($context);
 
         $newPriceHtml = $price;
+        $displayPricesIncludingTax = 'incl' === $context->getTaxDisplayCartMode();
+        $oldPrice = $this->getOriginalPriceToDisplayForCartItem($facade, $displayPricesIncludingTax);
+        $newPrice = $this->getCalculatedPriceToDisplayForCartItem($facade, $displayPricesIncludingTax);
 
-        if ('incl' === $context->getTaxDisplayCartMode()) {
-            if ($this->context->getOption('regular_price_for_striked_price')) {
-                $oldPrice = $facade->getRegularPriceWithoutTax() + $facade->getRegularPriceTax();
-            } else {
-                $oldPrice = $facade->getOriginalPriceWithoutTax() + $facade->getOriginalPriceTax();
-            }
-
-            $newPrice = ($facade->getSubtotal() + $facade->getExactSubtotalTax()) / $facade->getQty();
-        } else {
-            if ($this->context->getOption('regular_price_for_striked_price')) {
-                $oldPrice = $facade->getRegularPriceWithoutTax();
-            } else {
-                $oldPrice = $facade->getOriginalPriceWithoutTax();
-            }
-
-            $newPrice = $facade->getSubtotal() / $facade->getQty();
+        if ($oldPrice === null || $newPrice === null) {
+            return $price;
         }
 
         $newPrice = apply_filters('wdp_cart_item_new_price', $newPrice, $cartItem, $cartItemKey);
@@ -178,41 +149,19 @@ class WcCartItemDisplayExtensions
         }
 
         $context = $this->context;
-        $facade  = new WcCartItemFacade($context, $cartItem, $cartItemKey);
+        $facade = new WcCartItemFacade($context, $cartItem, $cartItemKey);
 
-        $wpCleverBundleCmp = new WpcBundleCmp();
-        if ( $wpCleverBundleCmp->isActive() && $wpCleverBundleCmp->isBundled($facade) ) {
-            return $price;
-        }
-
-        $mixAndMatchCmp = new MixAndMatchCmp();
-        if ( $mixAndMatchCmp->isActive() && $mixAndMatchCmp->isMixAndMatchChild($facade) ) {
+        $containerCmp = $this->context->getContainerCompatibilityManager()->getCompatibilityFromPartOfContainerFacade($facade);
+        if ($containerCmp && ! $containerCmp->adaptContainerPartCartItem($facade)->isPricedIndividually()) {
             return $price;
         }
 
         $subsCmp = new WcSubscriptionsCmp($context);
 
         $newPriceHtml = $price;
-
         $displayPricesIncludingTax = 'incl' === $context->getTaxDisplayCartMode();
-
-        if ($displayPricesIncludingTax) {
-            if ($this->context->getOption('regular_price_for_striked_price')) {
-                $oldPrice = $facade->getRegularPriceWithoutTax() + $facade->getRegularPriceTax();
-            } else {
-                $oldPrice = $facade->getOriginalPriceWithoutTax() + $facade->getOriginalPriceTax();
-            }
-
-            $newPrice = ($facade->getSubtotal() + $facade->getExactSubtotalTax()) / $facade->getQty();
-        } else {
-            if ($this->context->getOption('regular_price_for_striked_price')) {
-                $oldPrice = $facade->getRegularPriceWithoutTax();
-            } else {
-                $oldPrice = $facade->getOriginalPriceWithoutTax();
-            }
-
-            $newPrice = $facade->getSubtotal() / $facade->getQty();
-        }
+        $oldPrice = $this->getOriginalPriceToDisplayForCartItem($facade, $displayPricesIncludingTax);
+        $newPrice = $this->getCalculatedPriceToDisplayForCartItem($facade, $displayPricesIncludingTax);
 
         $newPrice *= $facade->getQty();
         $oldPrice *= $facade->getQty();
@@ -228,7 +177,7 @@ class WcCartItemDisplayExtensions
                 $priceHtml = $this->priceFunctions->formatSalePrice($oldPrice, $newPrice);
 
                 if ($displayPricesIncludingTax) {
-                    if ( ! $context->getIsPricesIncludeTax() && $facade->getExactSubtotalTax() > 0) {
+                    if (!$context->getIsPricesIncludeTax() && $facade->getExactSubtotalTax() > 0) {
                         $priceHtml .= ' <small class="tax_label">' . WC()->countries->inc_tax_or_vat() . '</small>';
                     }
                 } else {
@@ -255,4 +204,217 @@ class WcCartItemDisplayExtensions
 
         return $priceHtml;
     }
+
+    protected function getOriginalPriceToDisplayForCartItem(WcCartItemFacade $facade, bool $inclTax): ?float
+    {
+        $context = $this->context;
+        $useRegularPriceForOriginalPrice = $context->getOption('regular_price_for_striked_price');
+
+        if ($facade->isContainerType()) {
+            $parentPriceType = $facade->getContainerPriceType();
+
+            if ($parentPriceType === null) {
+                return null;
+            }
+
+            if ($parentPriceType->equals(ContainerPriceTypeEnum::FIXED())) {
+                if ($inclTax) {
+                    if ($useRegularPriceForOriginalPrice) {
+                        $originalPrice = $facade->getRegularPriceWithoutTax() + $facade->getRegularPriceTax();
+                    } else {
+                        $originalPrice = $facade->getOriginalPriceWithoutTax() + $facade->getOriginalPriceTax();
+                    }
+                } else {
+                    if ($useRegularPriceForOriginalPrice) {
+                        $originalPrice = $facade->getRegularPriceWithoutTax();
+                    } else {
+                        $originalPrice = $facade->getOriginalPriceWithoutTax();
+                    }
+                }
+            } elseif ($parentPriceType->equals(ContainerPriceTypeEnum::BASE_PLUS_SUM_OF_SUB_ITEMS())) {
+                $children = array_map(function ($key) {
+                    return new WcCartItemFacade(WC()->cart->cart_contents[$key], $key);
+                }, $facade->getContainerChildrenHashes());
+
+                if ($inclTax) {
+                    if ($useRegularPriceForOriginalPrice) {
+                        $originalPrice = $facade->getRegularPriceWithoutTax() + $facade->getRegularPriceTax();
+
+                        $originalPrice += array_sum(
+                            array_map(function ($child) use ($facade) {
+                                if ($child->isContaineredPricedIndividually()) {
+                                    return ($child->getRegularPriceWithoutTax() + $child->getRegularPriceTax()) * $child->getQty() / $facade->getQty();
+                                } else {
+                                    return 0.0;
+                                }
+                            }, $children)
+                        );
+                    } else {
+                        $originalPrice = $facade->getOriginalPriceWithoutTax() + $facade->getOriginalPriceTax();
+
+                        $originalPrice += array_sum(
+                            array_map(function ($child) use ($facade) {
+                                if ($child->isContaineredPricedIndividually()) {
+                                    return ($child->getOriginalPriceWithoutTax() + $child->getOriginalPriceTax()) * $child->getQty() / $facade->getQty();
+                                } else {
+                                    return 0.0;
+                                }
+                            }, $children)
+                        );
+                    }
+                } else {
+                    if ($useRegularPriceForOriginalPrice) {
+                        $originalPrice = $facade->getRegularPriceWithoutTax();
+
+                        $originalPrice += array_sum(
+                            array_map(function ($child) use ($facade) {
+                                if ($child->isContaineredPricedIndividually()) {
+                                    return $child->getRegularPriceWithoutTax() * $child->getQty() / $facade->getQty();
+                                } else {
+                                    return 0.0;
+                                }
+                            }, $children)
+                        );
+                    } else {
+                        $originalPrice = $facade->getOriginalPriceWithoutTax();
+
+                        $originalPrice += array_sum(
+                            array_map(function ($child) use ($facade) {
+                                if ($child->isContaineredPricedIndividually()) {
+                                    return $child->getOriginalPriceWithoutTax() * $child->getQty() / $facade->getQty();
+                                } else {
+                                    return 0.0;
+                                }
+                            }, $children)
+                        );
+                    }
+                }
+            } else {
+                return null;
+            }
+        } elseif ($facade->isContaineredType()) {
+            $parentPriceType = $facade->getParentContainerPriceType();
+
+            if ($parentPriceType === null) {
+                return null;
+            }
+
+            if ($parentPriceType->equals(ContainerPriceTypeEnum::FIXED())) {
+                return null; // do nothing
+            } elseif ($parentPriceType->equals(ContainerPriceTypeEnum::BASE_PLUS_SUM_OF_SUB_ITEMS())) {
+                if ($inclTax) {
+                    if ($useRegularPriceForOriginalPrice) {
+                        $originalPrice = $facade->getRegularPriceWithoutTax() + $facade->getRegularPriceTax();
+                    } else {
+                        $originalPrice = $facade->getOriginalPriceWithoutTax() + $facade->getOriginalPriceTax();
+                    }
+                } else {
+                    if ($useRegularPriceForOriginalPrice) {
+                        $originalPrice = $facade->getRegularPriceWithoutTax();
+                    } else {
+                        $originalPrice = $facade->getOriginalPriceWithoutTax();
+                    }
+                }
+            } else {
+                return null;
+            }
+        } else {
+            if ($inclTax) {
+                if ($useRegularPriceForOriginalPrice) {
+                    $originalPrice = $facade->getRegularPriceWithoutTax() + $facade->getRegularPriceTax();
+                } else {
+                    $originalPrice = $facade->getOriginalPriceWithoutTax() + $facade->getOriginalPriceTax();
+                }
+            } else {
+                if ($useRegularPriceForOriginalPrice) {
+                    $originalPrice = $facade->getRegularPriceWithoutTax();
+                } else {
+                    $originalPrice = $facade->getOriginalPriceWithoutTax();
+                }
+            }
+        }
+
+        return $originalPrice;
+    }
+
+    protected function getCalculatedPriceToDisplayForCartItem(WcCartItemFacade $facade, bool $inclTax): ?float
+    {
+        $context = $this->context;
+
+        if ($facade->isContainerType()) {
+            $parentPriceType = $facade->getContainerPriceType();
+
+            if ($parentPriceType === null) {
+                return null;
+            }
+
+            if ($parentPriceType->equals(ContainerPriceTypeEnum::FIXED())) {
+                if ($inclTax) {
+                    $calculatedPrice = ($facade->getSubtotal() + $facade->getExactSubtotalTax()) / $facade->getQty();
+                } else {
+                    $calculatedPrice = $facade->getSubtotal() / $facade->getQty();
+                }
+            } elseif ($parentPriceType->equals(ContainerPriceTypeEnum::BASE_PLUS_SUM_OF_SUB_ITEMS())) {
+                $children = array_map(function ($key) {
+                    return new WcCartItemFacade(WC()->cart->cart_contents[$key], $key);
+                }, $facade->getContainerChildrenHashes());
+
+                if ($inclTax) {
+                    $calculatedPrice = ($facade->getSubtotal() + $facade->getExactSubtotalTax()) / $facade->getQty();
+
+                    $calculatedPrice += array_sum(
+                        array_map(function ($child) use ($facade) {
+                            if ($child->isContaineredPricedIndividually()) {
+                                return ($child->getSubtotal() + $child->getExactSubtotalTax()) / $facade->getQty();
+                            } else {
+                                return 0.0;
+                            }
+                        }, $children)
+                    );
+                } else {
+                    $calculatedPrice = $facade->getSubtotal() / $facade->getQty();
+
+                    $calculatedPrice += array_sum(
+                        array_map(function ($child) use ($facade) {
+                            if ($child->isContaineredPricedIndividually()) {
+                                return $child->getSubtotal() / $facade->getQty();
+                            } else {
+                                return 0.0;
+                            }
+                        }, $children)
+                    );
+                }
+            } else {
+                return null;
+            }
+        } elseif ($facade->isContaineredType()) {
+            $parentPriceType = $facade->getParentContainerPriceType();
+
+            if ($parentPriceType === null) {
+                return null;
+            }
+
+            if ($parentPriceType->equals(ContainerPriceTypeEnum::FIXED())) {
+                return null; // do nothing
+            } elseif ($parentPriceType->equals(ContainerPriceTypeEnum::BASE_PLUS_SUM_OF_SUB_ITEMS())) {
+                if ($inclTax) {
+                    $calculatedPrice = ($facade->getSubtotal() + $facade->getExactSubtotalTax()) / $facade->getQty();
+                } else {
+                    $calculatedPrice = $facade->getSubtotal() / $facade->getQty();
+                }
+            } else {
+                return null;
+            }
+        } else {
+            if ($inclTax) {
+                $calculatedPrice = ($facade->getSubtotal() + $facade->getExactSubtotalTax()) / $facade->getQty();
+            } else {
+                $calculatedPrice = $facade->getSubtotal() / $facade->getQty();
+            }
+        }
+
+        return $calculatedPrice;
+    }
+
+
 }

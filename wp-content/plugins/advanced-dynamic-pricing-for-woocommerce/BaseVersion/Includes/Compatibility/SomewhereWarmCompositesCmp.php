@@ -56,17 +56,22 @@ class SomewhereWarmCompositesCmp
         return function_exists('wc_cp_maybe_is_composited_cart_item') && wc_cp_maybe_is_composited_cart_item($facade->getThirdPartyData());
     }
 
+    /** @param \WC_Product $product */
+    public function isCompositeProduct($product): bool
+    {
+        return class_exists('WC_Product_Composite') && $product instanceof \WC_Product_Composite;
+    }
+
     /**
      * @param WcCartItemFacade $facade
-     * @param \WC_Cart $WcCart
      *
      * @return bool
      */
-    public function isCompositeItemNotPricedIndividually(WcCartItemFacade $facade, \WC_Cart $WcCart)
+    public function isCompositeItemNotPricedIndividually(WcCartItemFacade $facade)
     {
         $thirdPartyData = $facade->getThirdPartyData();
 
-        if ( ! (function_exists('wc_cp_maybe_is_composited_cart_item') && wc_cp_maybe_is_composited_cart_item($thirdPartyData))) {
+        if (!(function_exists('wc_cp_maybe_is_composited_cart_item') && wc_cp_maybe_is_composited_cart_item($thirdPartyData))) {
             return false;
         }
 
@@ -74,6 +79,6 @@ class SomewhereWarmCompositesCmp
         $composite = WC()->cart->cart_contents[$thirdPartyData['composite_parent']]['data'];
         $component = $composite->get_component($thirdPartyData['composite_item']);
 
-        return $component && ! $component->is_priced_individually();
+        return $component && !$component->is_priced_individually();
     }
 }

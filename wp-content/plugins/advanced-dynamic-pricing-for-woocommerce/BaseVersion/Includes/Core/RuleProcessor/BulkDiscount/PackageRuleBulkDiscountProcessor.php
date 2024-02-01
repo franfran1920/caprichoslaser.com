@@ -2,18 +2,13 @@
 
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor\BulkDiscount;
 
-use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\Context;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule;
-use ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\Discount;
-use ADP\BaseVersion\Includes\Core\Rule\Structures\Filter;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\SetDiscount;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\PriceCalculator;
-use ADP\BaseVersion\Includes\Core\RuleProcessor\ProductFiltering;
-use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartItemsCollection;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSet;
 use ADP\BaseVersion\Includes\Core\RuleProcessor\Structures\CartSetCollection;
 use ADP\Factory;
@@ -42,7 +37,7 @@ class PackageRuleBulkDiscountProcessor
         if ($measurement->equals(BulkMeasurementEnum::QTY())) {
             $calculationCallback = function ($item) {
                 /**
-                 * @var CartItem $item
+                 * @var BasicCartItem $item
                  */
 
                 return $item->getQty();
@@ -51,7 +46,7 @@ class PackageRuleBulkDiscountProcessor
             if ($measurement->equals(BulkMeasurementEnum::SUM())) {
                 $calculationCallback = function ($item) {
                     /**
-                     * @var CartItem $item
+                     * @var BasicCartItem $item
                      */
 
                     return $item->getPrice();
@@ -60,7 +55,7 @@ class PackageRuleBulkDiscountProcessor
                 if ($measurement->equals(BulkMeasurementEnum::WEIGHT())) {
                     $calculationCallback = function ($item) {
                         /**
-                         * @var CartItem $item
+                         * @var BasicCartItem $item
                          */
 
                         return $item->getWeight();
@@ -94,7 +89,7 @@ class PackageRuleBulkDiscountProcessor
             $value = array_sum(array_map(function ($set) use (&$products, $calculationCallback) {
                 /**
                  * @var CartSet $set
-                 * @var CartItem[] $items
+                 * @var BasicCartItem[] $items
                  */
                 $items = $set->getItems();
                 $valueSet = floatval(0);
@@ -113,7 +108,7 @@ class PackageRuleBulkDiscountProcessor
             $value = array_sum(array_map(function ($set) use (&$variations, $calculationCallback) {
                 /**
                  * @var CartSet $set
-                 * @var CartItem[] $items
+                 * @var BasicCartItem[] $items
                  */
                 $items = $set->getItems();
                 $valueSet = floatval(0);
@@ -254,7 +249,7 @@ class PackageRuleBulkDiscountProcessor
             $value = array_sum(array_map(function ($set) use (&$productsByMeta, $calculationCallback) {
                 /**
                  * @var CartSet $set
-                 * @var CartItem[] $items
+                 * @var BasicCartItem[] $items
                  */
                 $items = $set->getItems();
                 $valueSet = floatval(0);

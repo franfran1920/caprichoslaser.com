@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Dynamic Pricing for WooCommerce (Pro)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 06:19+0000\n"
+"POT-Creation-Date: 2024-01-16 05:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -176,7 +176,7 @@ msgid "Add product"
 msgstr ""
 
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:243
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:619
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:609
 msgid "Add product filter"
 msgstr ""
 
@@ -249,7 +249,7 @@ msgstr ""
 msgid "After cart contents"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:301
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:296
 #: BaseVersion/views/admin_page/tabs/options/process_product_strategy.php:25
 msgid "After matching condition"
 msgstr ""
@@ -302,13 +302,13 @@ msgstr ""
 msgid "all time"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:233
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:228
 #: BaseVersion/views/admin_page/tabs/options/allow_to_edit_prices_in_po.php:7
 #: BaseVersion/views/admin_page/tabs/options/allow_to_edit_prices_in_po.php:12
 msgid "Allow to edit prices in Phone Orders"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:245
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:240
 #: BaseVersion/views/admin_page/tabs/options/allow_to_exclude_products.php:7
 #: BaseVersion/views/admin_page/tabs/options/allow_to_exclude_products.php:12
 msgid "Allow to exclude products in filters"
@@ -356,9 +356,9 @@ msgstr ""
 msgid "Applied to visible products"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:360
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:386
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:445
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:355
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:381
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:440
 #: BaseVersion/views/admin_page/tabs/rules.php:81
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:19
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:38
@@ -369,12 +369,8 @@ msgstr ""
 msgid "Apply at first to:"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:419
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:414
 msgid "Apply pricing rules to backend orders"
-msgstr ""
-
-#: BaseVersion/views/admin_page/tabs/options/update_prices_while_doing_rest_api.php:8
-msgid "Apply pricing rules while doing API request"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:223
@@ -382,7 +378,7 @@ msgstr ""
 msgid "Apply pricing rules while doing cron"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:228
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:456
 msgid "Apply pricing rules while doing REST API"
 msgstr ""
 
@@ -390,11 +386,11 @@ msgstr ""
 msgid "Apply to category/tag pages"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:361
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:356
 msgid "Apply to unmodified cart"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:387
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:382
 msgid "Apply to unmodified cart items only"
 msgstr ""
 
@@ -429,7 +425,7 @@ msgstr ""
 msgid "Available tags"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:671
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:661
 msgid "Available tags: {{qty}}, {{product}}, {{discount}}, {{cart_condition}}"
 msgstr ""
 
@@ -501,7 +497,7 @@ msgstr ""
 msgid "Before cart contents"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:297
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:292
 #: BaseVersion/views/admin_page/tabs/options/process_product_strategy.php:21
 msgid "Before matching condition"
 msgstr ""
@@ -531,11 +527,11 @@ msgstr ""
 msgid "Below product summary"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:365
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:360
 msgid "Best between coupon and rule"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:269
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:264
 #: BaseVersion/views/admin_page/tabs/options/apply_discount_for_onsale_products.php:22
 msgid "Best between discounted regular price and sale price"
 msgstr ""
@@ -567,7 +563,7 @@ msgstr ""
 msgid "Bulk deal"
 msgstr ""
 
-#: BaseVersion/Includes/VolumePricingTable/RangeDiscountTable.php:1283
+#: BaseVersion/Includes/VolumePricingTable/RangeDiscountTable.php:1322
 msgid "Bulk pricing will be applied to package:"
 msgstr ""
 
@@ -697,11 +693,11 @@ msgstr ""
 msgid "Cents"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:284
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:279
 msgid "Cents|If selected, prices will end with: 0."
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:278
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:273
 msgid "Cents|Override the cents on the calculated price."
 msgstr ""
 
@@ -709,7 +705,7 @@ msgstr ""
 msgid "Cheap products"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:321
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:316
 #: BaseVersion/views/admin_page/tabs/options/process_product_strategy_after_use_price.php:23
 msgid "Cheapest"
 msgstr ""
@@ -812,12 +808,6 @@ msgstr ""
 msgid "Coupons"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:251
-#: BaseVersion/views/admin_page/tabs/options/create_blank_rule.php:7
-#: BaseVersion/views/admin_page/tabs/options/create_blank_rule.php:12
-msgid "Create a blank rule"
-msgstr ""
-
 #: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Help.php:93
 msgid "Creating a Rule"
 msgstr ""
@@ -868,7 +858,7 @@ msgstr ""
 
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:653
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:595
-#: BaseVersion/Includes/Core/Rule/CartCondition/Impl/Date.php:56
+#: BaseVersion/Includes/Core/Rule/CartCondition/Impl/Date.php:61
 msgid "Date"
 msgstr ""
 
@@ -904,7 +894,7 @@ msgstr ""
 msgid "deactivate"
 msgstr ""
 
-#: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Options.php:258
+#: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Options.php:257
 msgid "Debug"
 msgstr ""
 
@@ -957,23 +947,23 @@ msgstr ""
 msgid "Didn’t find a necessary condition?"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:373
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:395
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:448
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:368
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:390
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:443
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:27
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:46
 msgid "Disable all if any of cart items updated"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:369
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:391
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:446
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:364
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:386
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:441
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:23
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:42
 msgid "Disable all if any rule applied"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:406
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:401
 msgid "Disable external coupons"
 msgstr ""
 
@@ -983,7 +973,7 @@ msgstr ""
 msgid "Disable rule if it runs longer than X seconds"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:434
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:429
 #: BaseVersion/views/admin_page/tabs/options/disable_shipping_calc_during_process.php:7
 #: BaseVersion/views/admin_page/tabs/options/disable_shipping_calc_during_process.php:12
 msgid "Disable shipping calculation"
@@ -1019,12 +1009,12 @@ msgstr ""
 msgid "discount name"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:265
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:260
 #: BaseVersion/views/admin_page/tabs/options/apply_discount_for_onsale_products.php:16
 msgid "Discount regular price"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:267
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:262
 #: BaseVersion/views/admin_page/tabs/options/apply_discount_for_onsale_products.php:19
 msgid "Discount sale price"
 msgstr ""
@@ -1057,12 +1047,12 @@ msgstr ""
 msgid "Docs site"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:264
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:259
 #: BaseVersion/views/admin_page/tabs/options/apply_discount_for_onsale_products.php:14
 msgid "Don't apply discount if product is already on sale"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:408
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:403
 msgid "Don't disable"
 msgstr ""
 
@@ -1110,8 +1100,7 @@ msgstr ""
 msgid "Exclude on sale products"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:243
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:264
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:246
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:517
 msgid "Exclude products"
 msgstr ""
@@ -1158,16 +1147,16 @@ msgstr ""
 msgid "Export settings"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:443
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:438
 #: BaseVersion/views/admin_page/tabs/options/external_coupons_behavior.php:9
 msgid "External coupons"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:358
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:353
 msgid "External coupons|Cart coupons"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:384
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:379
 msgid "External coupons|Product coupons"
 msgstr ""
 
@@ -1200,7 +1189,7 @@ msgstr ""
 msgid "File must contain one rule or more."
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:313
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:308
 #: BaseVersion/views/admin_page/tabs/options/process_product_strategy_after_use_price.php:15
 msgid "First matched"
 msgstr ""
@@ -1211,8 +1200,8 @@ msgid "First Order"
 msgstr ""
 
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:294
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:529
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:644
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:519
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:634
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:181
 msgid "Fixed discount"
 msgstr ""
@@ -1242,7 +1231,7 @@ msgstr ""
 #: BaseVersion/Includes/CustomizerExtensions/CustomizerExtensions.php:321
 #: BaseVersion/Includes/CustomizerExtensions/CustomizerExtensions.php:528
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:298
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:533
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:523
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:185
 msgid "Fixed price"
 msgstr ""
@@ -1257,7 +1246,7 @@ msgstr ""
 msgid "Fixed price for set"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:648
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:638
 msgid "Fixed unit price"
 msgstr ""
 
@@ -1294,7 +1283,7 @@ msgid "from"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:212
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:428
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:423
 msgid "From {{price}} {{price_suffix}}"
 msgstr ""
 
@@ -1326,7 +1315,7 @@ msgid ""
 "the condition"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:585
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:575
 msgid "Give gift from the list (1st available)"
 msgstr ""
 
@@ -1357,10 +1346,16 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:290
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:285
 #: BaseVersion/views/admin_page/tabs/options/hide_coupon_word_in_totals.php:7
 #: BaseVersion/views/admin_page/tabs/options/hide_coupon_word_in_totals.php:12
 msgid "Hide \"Coupon\" word in cart totals"
+msgstr ""
+
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:246
+#: BaseVersion/views/admin_page/tabs/options/create_blank_rule.php:7
+#: BaseVersion/views/admin_page/tabs/options/create_blank_rule.php:12
+msgid "Hide rules wizard"
 msgstr ""
 
 #: BaseVersion/templates/reporter/tabs/products.php:15
@@ -1372,7 +1367,7 @@ msgstr ""
 msgid "How to add a new rule."
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:262
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:257
 #: BaseVersion/views/admin_page/tabs/options/apply_discount_for_onsale_products.php:8
 msgid "How to apply rules to a product that already has a sale price"
 msgstr ""
@@ -1389,11 +1384,11 @@ msgstr ""
 msgid "https://algolplus.com/"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:411
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:406
 msgid "If any of cart items updated"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:409
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:404
 msgid "If any rule applied"
 msgstr ""
 
@@ -1433,7 +1428,7 @@ msgstr ""
 msgid "Import settings"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:311
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:306
 #: BaseVersion/views/admin_page/tabs/options/process_product_strategy_after_use_price.php:9
 msgid "In \"After matching condition\" mode - use product price from cart"
 msgstr ""
@@ -1450,15 +1445,15 @@ msgstr ""
 #: BaseVersion/views/conditions/datetime/days-of-week.php:10
 #: BaseVersion/views/conditions/customer/role.php:10
 #: BaseVersion/views/conditions/shipping/country.php:10
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:316
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:351
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:373
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:395
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:418
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:442
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:463
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:485
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:507
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:306
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:341
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:363
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:385
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:408
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:432
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:453
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:475
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:497
 msgid "in list"
 msgstr ""
 
@@ -1514,7 +1509,7 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:317
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:312
 #: BaseVersion/views/admin_page/tabs/options/process_product_strategy_after_use_price.php:19
 msgid "Last matched"
 msgstr ""
@@ -1576,7 +1571,7 @@ msgstr ""
 msgid "Migrate \"Product only\" rule type to \"Common\" rule type"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:24
+#: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:26
 msgid "Migrate rules"
 msgstr ""
 
@@ -1584,7 +1579,7 @@ msgstr ""
 msgid "Mini Cart"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:280
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:262
 msgid "modified by other pricing rules"
 msgstr ""
 
@@ -1618,7 +1613,7 @@ msgstr ""
 msgid "More detailed about Tools tab."
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:325
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:320
 #: BaseVersion/views/admin_page/tabs/options/process_product_strategy_after_use_price.php:27
 msgid "Most expensive"
 msgstr ""
@@ -1645,7 +1640,7 @@ msgstr ""
 msgid "No changes!"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:612
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:602
 msgid "No filters"
 msgstr ""
 
@@ -1694,23 +1689,23 @@ msgstr ""
 #: BaseVersion/views/conditions/datetime/days-of-week.php:11
 #: BaseVersion/views/conditions/customer/role.php:11
 #: BaseVersion/views/conditions/shipping/country.php:11
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:318
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:353
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:375
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:397
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:420
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:444
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:466
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:488
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:510
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:308
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:343
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:365
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:387
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:410
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:434
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:456
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:478
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:500
 msgid "not in list"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:670
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:660
 msgid "Offer message."
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:272
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:254
 msgid "on sale products"
 msgstr ""
 
@@ -1792,8 +1787,8 @@ msgstr ""
 
 #: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Rules.php:751
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:296
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:531
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:646
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:521
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:636
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:183
 msgid "Percentage discount"
 msgstr ""
@@ -2021,7 +2016,7 @@ msgstr ""
 #: BaseVersion/templates/reporter/main.php:18
 #: BaseVersion/Includes/Debug/DebugBar.php:68
 #: BaseVersion/views/admin_page/tabs/rules/templates.php:155
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:609
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:599
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:444
 #: BaseVersion/Includes/Core/Rule/CartCondition/Impl/ProductsAll.php:22
 msgid "Products"
@@ -2081,12 +2076,12 @@ msgstr ""
 
 #: BaseVersion/views/admin_page/tabs/tools.php:50
 #: BaseVersion/views/admin_page/tabs/options/support_shortcode_products_on_sale.php:19
-#: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:26
+#: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:24
 #: BaseVersion/views/admin_page/tabs/options/support_shortcode_products_bogo.php:19
 msgid "Read short guide"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:456
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:451
 msgid "Read-only quantity for free products"
 msgstr ""
 
@@ -2108,7 +2103,7 @@ msgstr ""
 msgid "Remove rule?"
 msgstr ""
 
-#: BaseVersion/Includes/CartProcessor/CartProcessor.php:922
+#: BaseVersion/Includes/CartProcessor/CartProcessor.php:1000
 msgid "Removed {{qty}} free {{product_name}}"
 msgstr ""
 
@@ -2122,12 +2117,12 @@ msgid "Replace price with lowest bulk price"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:208
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:424
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:419
 msgid "Replace price with lowest bulk price|Enable"
 msgstr ""
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:213
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:429
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:424
 msgid "Replace price with lowest bulk price|Output template"
 msgstr ""
 
@@ -2295,18 +2290,18 @@ msgstr ""
 #: BaseVersion/views/conditions/shipping/country.php:19
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:464
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:474
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:249
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:328
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:341
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:363
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:385
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:407
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:431
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:453
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:475
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:497
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:519
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:634
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:270
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:318
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:331
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:353
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:375
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:397
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:421
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:443
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:465
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:487
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:509
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:624
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:290
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:300
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:523
@@ -2391,19 +2386,19 @@ msgstr ""
 msgid "Shipping Country"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:352
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:347
 msgid "Show Amount saved in in the order backend"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:336
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:331
 msgid "Show Amount saved in the cart"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:341
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:336
 msgid "Show Amount saved in the mini cart"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:346
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:341
 msgid "Show Amount saved on the checkout page"
 msgstr ""
 
@@ -2425,7 +2420,7 @@ msgstr ""
 msgid "Show bulk table regardless of conditions"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:257
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:252
 #: BaseVersion/views/admin_page/tabs/options/show_debug_bar.php:8
 #: BaseVersion/views/admin_page/tabs/options/show_debug_bar.php:16
 msgid "Show debug panel at bottom of the page"
@@ -2600,7 +2595,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:439
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:434
 #: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:7
 #: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:17
 msgid "Support Product only rules"
@@ -2618,7 +2613,7 @@ msgstr ""
 msgid "Support shortcode [adp_products_on_sale]"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:238
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:233
 #: BaseVersion/views/admin_page/tabs/options/suppress_other_pricing_plugins.php:7
 #: BaseVersion/views/admin_page/tabs/options/suppress_other_pricing_plugins.php:12
 msgid "Suppress other pricing plugins in frontend"
@@ -2775,7 +2770,7 @@ msgstr ""
 msgid "Use prices modified by get_price hook"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:589
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:579
 msgid "Use product from filter"
 msgstr ""
 
@@ -2815,7 +2810,7 @@ msgstr ""
 msgid "Weight"
 msgstr ""
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:295
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:290
 #: BaseVersion/views/admin_page/tabs/options/process_product_strategy.php:9
 msgid "When the striked price should be shown"
 msgstr ""

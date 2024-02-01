@@ -1,14 +1,14 @@
-# Copyright (C) 2023 YITH
+# Copyright (C) 2024 YITH
 # This file is distributed under the same license as the YITH WooCommerce Order & Shipment Tracking package.
 msgid ""
 msgstr ""
-"Project-Id-Version: YITH WooCommerce Order & Shipment Tracking 2.21.0\n"
+"Project-Id-Version: YITH WooCommerce Order & Shipment Tracking 2.22.1\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-12-15 16:33:59+00:00\n"
+"POT-Creation-Date: 2024-01-24 14:20:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: YITH <info@yithemes.com>\n"
 "Language: en\n"
@@ -67,48 +67,48 @@ msgstr ""
 msgid "Regular updates, translations, and premium support."
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:304
+#: includes/class.yith-woocommerce-order-tracking.php:308
 msgid "Order tracking"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:332
+#: includes/class.yith-woocommerce-order-tracking.php:336
 msgid "Order picked up by Carrier"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:340
+#: includes/class.yith-woocommerce-order-tracking.php:344
 msgid "Pickup date:"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:347
+#: includes/class.yith-woocommerce-order-tracking.php:351
 msgid "Enter pickup date"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:360
+#: includes/class.yith-woocommerce-order-tracking.php:364
 msgid "Tracking code:"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:361
+#: includes/class.yith-woocommerce-order-tracking.php:365
 msgid "Enter tracking code"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:364
+#: includes/class.yith-woocommerce-order-tracking.php:368
 msgid "Carrier name:"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:365
+#: includes/class.yith-woocommerce-order-tracking.php:369
 msgid "Enter carrier name"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:374
+#: includes/class.yith-woocommerce-order-tracking.php:378
 msgid "Carrier website link:"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:375
+#: includes/class.yith-woocommerce-order-tracking.php:379
 msgid "Enter carrier website link"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:429
-#: includes/class.yith-woocommerce-order-tracking.php:600
+#: includes/class.yith-woocommerce-order-tracking.php:433
+#: includes/class.yith-woocommerce-order-tracking.php:604
 #: plugin-options/general-options.php:40
 msgid ""
 "Your order has been picked up by <b>[carrier_name]</b> on "
@@ -116,17 +116,17 @@ msgid ""
 "tracking on [carrier_link]"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:432
+#: includes/class.yith-woocommerce-order-tracking.php:436
 msgid ""
 "Picked up by <b>[carrier_name]</b> on <b>[pickup_date]</b>. Tracking code: "
 "<b>[track_code]</b>. Live tracking on [carrier_link]"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:479
+#: includes/class.yith-woocommerce-order-tracking.php:483
 msgid "Track"
 msgstr ""
 
-#: includes/class.yith-woocommerce-order-tracking.php:600
+#: includes/class.yith-woocommerce-order-tracking.php:604
 msgid "Tracking info"
 msgstr ""
 

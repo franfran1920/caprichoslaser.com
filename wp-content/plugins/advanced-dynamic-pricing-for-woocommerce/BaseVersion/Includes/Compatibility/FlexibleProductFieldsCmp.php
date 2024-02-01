@@ -3,7 +3,7 @@
 namespace ADP\BaseVersion\Includes\Compatibility;
 
 use ADP\BaseVersion\Includes\Context;
-use ADP\BaseVersion\Includes\Core\Cart\CartItemAddon;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Base\CartItemAddon;
 use ADP\BaseVersion\Includes\WC\WcCartItemFacade;
 
 defined('ABSPATH') or exit;

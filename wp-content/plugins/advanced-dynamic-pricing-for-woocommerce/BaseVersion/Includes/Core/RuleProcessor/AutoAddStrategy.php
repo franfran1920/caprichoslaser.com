@@ -3,9 +3,9 @@
 namespace ADP\BaseVersion\Includes\Core\RuleProcessor;
 
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
-use ADP\BaseVersion\Includes\Core\Cart\AutoAddCartItem;
 use ADP\BaseVersion\Includes\Core\Cart\Cart;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\AutoAdd\AutoAddCartItem;
 use ADP\BaseVersion\Includes\Core\Rule\PackageRule;
 use ADP\BaseVersion\Includes\Core\Rule\Rule;
 use ADP\BaseVersion\Includes\Core\Rule\SingleItemRule;
@@ -153,7 +153,7 @@ class AutoAddStrategy
             }
 
             $giftIndex = 0;
-            /** @var CartItem $item */
+            /** @var BasicCartItem $item */
             foreach ($rule->getAutoAddsCollection()->asArray() as $autoAdd) {
                 if ($autoAdd->getQty() <= 0) {
                     continue;
@@ -208,7 +208,7 @@ class AutoAddStrategy
 
     /**
      * @param AutoAdd $autoAdd
-     * @param array<int,CartItem> $items
+     * @param array<int,BasicCartItem> $items
      *
      * @return AutoAddCartItemChoices
      */

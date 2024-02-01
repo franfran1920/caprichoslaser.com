@@ -31,6 +31,10 @@ class RestApi implements LoadStrategy
 
     public function start()
     {
+        if (!apply_filters("adp_wp_rest_api_strategy_load", true)) {
+            return false;
+        }
+
         /**
          * We do not need this if "WooCommerce Blocks" < 2.6.0 is installed.
          * In future versions method "maybe_init_cart_session" has been removed.
