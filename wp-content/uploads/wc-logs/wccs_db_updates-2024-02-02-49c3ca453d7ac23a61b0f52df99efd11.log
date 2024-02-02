@@ -1,0 +1,10 @@
+2024-02-02T16:36:38+00:00 INFO Queuing 8.0.0 - WCCS_Updates::update_800
+2024-02-02T16:36:38+00:00 INFO Queuing 8.5.0 - WCCS_Updates::update_850
+2024-02-02T16:36:38+00:00 INFO Queuing 8.5.1 - WCCS_Updates::clear_pricing_caches
+2024-02-02T16:36:39+00:00 INFO Running WCCS_Updates::update_800 callback
+2024-02-02T16:36:39+00:00 INFO Finished WCCS_Updates::update_800 callback
+2024-02-02T16:36:39+00:00 INFO Running WCCS_Updates::update_850 callback
+2024-02-02T16:36:39+00:00 INFO Finished WCCS_Updates::update_850 callback
+2024-02-02T16:36:39+00:00 INFO Running WCCS_Updates::clear_pricing_caches callback
+2024-02-02T16:36:39+00:00 INFO Finished WCCS_Updates::clear_pricing_caches callback
+2024-02-02T16:36:39+00:00 INFO Data update complete
