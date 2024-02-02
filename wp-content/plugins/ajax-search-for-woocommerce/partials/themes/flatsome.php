@@ -195,11 +195,17 @@ add_action( 'wp_footer', function () {
 
 				// Mobile
 				$(document).on('click', '.mobile-nav .header-search .icon-search', function () {
-
 					var $handler = $('.mobile-nav .header-search').find('.js-dgwt-wcas-enable-mobile-form');
 					if ($handler.length) {
 						$handler[0].click();
 					}
+					// Close unused modal.
+					setTimeout(function () {
+						var $modalClose = $('.mfp-wrap .mfp-close');
+						if ($modalClose.length) {
+							$modalClose[0].click();
+						}
+					}, 300);
 				});
 			});
 		})(jQuery);

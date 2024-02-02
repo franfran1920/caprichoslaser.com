@@ -25,7 +25,7 @@ class Multilingual {
 			return false;
 		}
 
-		if ( count( self::getLanguages() ) > 1 && self::getProvider() !== 'not set' ) {
+		if ( count( self::getLanguages() ) > 0 && self::getProvider() !== 'not set' ) {
 			$isMultilingual = true;
 		}
 
@@ -189,16 +189,19 @@ class Multilingual {
 			$elementType      = 'tax_' . sanitize_key( $taxonomy );
 			$tranlationsTable = $wpdb->prefix . 'icl_translations';
 
-			$sql = $wpdb->prepare( "SELECT language_code
+			$term = \WP_Term::get_instance( $termID, $taxonomy );
+			if ( is_a( $term, 'WP_Term' ) ) {
+				$sql = $wpdb->prepare( "SELECT language_code
                                           FROM $tranlationsTable
                                           WHERE element_type = %s
                                           AND element_id=%d",
-				$elementType, $termID );
+					$elementType, $term->term_taxonomy_id );
 
-			$result = $wpdb->get_var( $sql );
+				$result = $wpdb->get_var( $sql );
 
-			if ( self::isLangCode( $result ) ) {
-				$lang = $result;
+				if ( self::isLangCode( $result ) ) {
+					$lang = $result;
+				}
 			}
 		}
 
@@ -253,7 +256,9 @@ class Multilingual {
 	 * @return array
 	 */
 	public static function getLanguages( $includeInvalid = false ) {
-		if ( self::$langs !== null && ! $includeInvalid ) {
+		$includeHidden = apply_filters( 'dgwt/wcas/multilingual/languages/include-hidden', false );
+
+		if ( self::$langs !== null && ! $includeInvalid && ! $includeHidden ) {
 			return self::$langs;
 		}
 
@@ -270,9 +275,16 @@ class Multilingual {
 				}
 			}
 
-			$hiddenLangs = apply_filters( 'wpml_setting', array(), 'hidden_languages' );
-			if ( ! empty( $hiddenLangs ) && is_array( $hiddenLangs ) ) {
-				$langs = array_unique( array_merge( $langs, $hiddenLangs ) );
+			if ( ! $includeHidden ) {
+				$hiddenLangs = apply_filters( 'wpml_setting', array(), 'hidden_languages' );
+				if ( ! empty( $hiddenLangs ) && is_array( $hiddenLangs ) ) {
+					foreach ( $hiddenLangs as $hiddenLang ) {
+						if ( ! self::isLangCode( $hiddenLang ) && $includeInvalid ) {
+							continue;
+						}
+						$langs = array_diff( $langs, [ $hiddenLang ] );
+					}
+				}
 			}
 		}
 
@@ -299,9 +311,9 @@ class Multilingual {
 			$langs[] = self::getDefaultLanguage();
 		}
 
-		$langs = apply_filters( 'dgwt/wcas/multilingual/languages', $langs, $includeInvalid );
+		$langs = apply_filters( 'dgwt/wcas/multilingual/languages', $langs, $includeInvalid, $includeHidden );
 
-		if ( ! $includeInvalid ) {
+		if ( ! $includeInvalid && ! $includeHidden ) {
 			self::$langs = $langs;
 		}
 

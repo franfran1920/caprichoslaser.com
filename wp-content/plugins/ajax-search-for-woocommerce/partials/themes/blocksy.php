@@ -18,12 +18,12 @@ add_action( 'wp_head', function () {
 	<style>
 		.dgwt-wcas-ico-magnifier, .dgwt-wcas-ico-magnifier-handler {
 			max-width: none;
-			fill: var(--icon-color, var(--color));
-			max-height: var(--icon-size, 15px);
+			fill: var(--theme-icon-color, var(--theme-text-color));
+			max-height: var(--theme-icon-size, 15px);
 		}
 
 		.dgwt-wcas-ico-magnifier:hover, .dgwt-wcas-ico-magnifier-handler:hover {
-			fill: var(--icon-hover-color, var(--paletteColor2));
+			fill: var(--theme-icon-hover-color, var(--theme-palette-color-2));
 		}
 
 		.dgwt-wcas-suggestion {

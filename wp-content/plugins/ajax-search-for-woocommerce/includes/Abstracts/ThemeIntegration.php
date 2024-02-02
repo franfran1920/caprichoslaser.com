@@ -135,8 +135,20 @@ abstract class ThemeIntegration {
 	 * @return void
 	 */
 	protected function maybeOverwriteSearch() {
+
+		// Don't include partials when you are on dashboard.
+		if ( is_admin() ) {
+			return;
+		}
+
 		$partialFilename = ! empty( $this->args['partialFilename'] ) ? $this->args['partialFilename'] : $this->themeSlug . '.php';
 		$partialPath     = DGWT_WCAS_DIR . 'partials/themes/' . $partialFilename;
+		$partialMuPath   = str_replace( '.php', '-mu.php', $partialPath );
+
+		// Load "must-use" partials
+		if ( file_exists( $partialMuPath ) ) {
+			require_once( $partialMuPath );
+		}
 
 		if ( $this->canReplaceSearch() && file_exists( $partialPath ) ) {
 			require_once( $partialPath );

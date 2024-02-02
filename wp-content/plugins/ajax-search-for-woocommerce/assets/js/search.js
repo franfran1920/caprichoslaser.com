@@ -34,7 +34,8 @@
                     return value.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
                 },
                 formatHtml: function (string) {
-                    return string.replace(/&/g, '&amp;')
+                    return string.replace(/&/g, '&amp;') // Edge case: "&amp;" >> "&amp;amp;".
+                        .replace(/&amp;amp;/g, '&amp;') // Fix for above case: "&amp;amp;" >> "&amp;".
                         .replace(/</g, '&lt;')
                         .replace(/>/g, '&gt;')
                         .replace(/"/g, '&quot;')
@@ -46,8 +47,8 @@
                         .replace(/&lt;\/sub/g, '</sub')
                         .replace(/sub&gt;/g, 'sub>')
                         .replace(/&lt;br\s?\/?&gt;/g, '<br/>')
-                        .replace(/&lt;(\/?(strong|b|br|span))&gt;/g, '<$1>')
-                        .replace(/&lt;(strong|span)\s+class\s*=\s*&quot;([^&]+)&quot;&gt;/g, '<$1 class="$2">');
+                        .replace(/&lt;(\/?(strong|b|br|span|i))&gt;/g, '<$1>')
+                        .replace(/&lt;(strong|span|i)\s+class\s*=\s*&quot;([^&]+)&quot;&gt;/g, '<$1 class="$2">');
                 },
                 createNode: function (containerClass) {
                     var div = document.createElement('div');
@@ -56,6 +57,42 @@
                     div.style.display = 'none';
                     div.setAttribute('unselectable', 'on');
                     return div;
+                },
+                matchGreekAccents: function (phrase) {
+                    // Break early if the phrase does not contain Greek characters.
+                    if (!/[\u0370-\u03FF\u1F00-\u1FFF]+/.test(phrase)) {
+                        return phrase;
+                    }
+
+                    // Remove Greek accents.
+                    phrase = phrase.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+                    var accents = {
+                        'Α': 'Ά',
+                        'α': 'ά',
+                        'Ε': 'Έ',
+                        'ε': 'έ',
+                        'Ι': 'Ί',
+                        'ι': 'ί',
+                        'ϊ': 'ΐ',
+                        'Υ': 'Ύ',
+                        'υ': 'ύ',
+                        'ϋ': 'ΰ',
+                        'Η': 'Ή',
+                        'η': 'ή',
+                        'Ο': 'Ό',
+                        'ο': 'ό',
+                        'Ω': 'Ώ',
+                        'ω': 'ώ'
+                    };
+                    // Replace eg. "ε" >> "[εέ]".
+                    for (let [key, value] of Object.entries(accents)) {
+                        if (phrase.indexOf(key) > -1) {
+                            phrase = phrase.replaceAll(key, '[' + key + value + ']');
+                        }
+                    }
+
+                    return phrase;
                 },
                 highlight: function (suggestionValue, phrase) {
                     var i,
@@ -77,10 +114,13 @@
                                 if (token.length > 0) {
                                     if (token.trim().length === 1 && tokens[i] !== last) {
                                         var pattern = '((\\s|^)' + utils.escapeRegExChars(token.trim()) + '\\s)';
+                                        pattern = utils.matchGreekAccents(pattern);
                                     } else if (token.trim().length === 1 && tokens[i] === last) {
                                         var pattern = '((\\s|^)' + utils.escapeRegExChars(token.trim()) + ')';
+                                        pattern = utils.matchGreekAccents(pattern);
                                     } else {
                                         var pattern = '(' + utils.escapeRegExChars(token.trim()) + ')';
+                                        pattern = utils.matchGreekAccents(pattern);
                                     }
 
                                     suggestionValue = suggestionValue.replace(new RegExp(pattern, 'gi'), '\^\^$1\@\@');

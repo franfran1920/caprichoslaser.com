@@ -12,8 +12,9 @@ class ET_Builder_Module_br_cart_notice extends ET_Builder_Module {
 	);
 
 	public function init() {
-        $this->name             = __( 'Cart Notice', 'BeRocket_AJAX_domain' );
+        $this->name             = __( 'Cart Notice', 'cart-notices-for-woocommerce' );
 		$this->folder_name = 'et_pb_berocket_modules';
+		$this->main_css_element = '%%order_class%%';
         
         $this->fields_defaults = array(
             'display_inline' => array('on'),
@@ -86,7 +87,7 @@ class ET_Builder_Module_br_cart_notice extends ET_Builder_Module {
     function get_fields() {
         $fields = array(
             'display_inline' => array(
-                'label'             => esc_html__( 'Notice example in builder', 'BeRocket_AJAX_domain' ),
+                'label'             => esc_html__( 'Notice example in builder', 'cart-notices-for-woocommerce' ),
                 'type'              => 'yes_no_button',
                 'options'           => array(
                     'off' => esc_html__( "No", 'et_builder' ),

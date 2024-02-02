@@ -1963,4 +1963,3 @@ if( ! class_exists( 'berocket_admin_notices_rate_stars' ) ) {
     }
     new berocket_admin_notices_rate_stars;
 }
-?>

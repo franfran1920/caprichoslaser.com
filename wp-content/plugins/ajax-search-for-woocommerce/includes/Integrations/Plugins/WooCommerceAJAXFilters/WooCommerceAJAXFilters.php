@@ -2,6 +2,8 @@
 
 namespace DgoraWcas\Integrations\Plugins\WooCommerceAJAXFilters;
 
+use DgoraWcas\Helpers;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -23,6 +25,7 @@ class WooCommerceAJAXFilters {
 		}
 
 		add_filter( 'berocket_aapf_get_attribute_values_post__in_outside', array( $this, 'filterPostInIds' ), 20 );
+		add_filter( 'dgwt/wcas/helpers/is_search_query', array( $this, 'markQueryToProcess' ), 10, 2 );
 	}
 
 	/**
@@ -48,5 +51,20 @@ class WooCommerceAJAXFilters {
 		}
 
 		return $post__in;
+	}
+
+	/**
+	 * @since 1.27.0
+	 */
+	public function markQueryToProcess( $enabled, $query ) {
+		if (
+			$query->is_search() &&
+			( $query->get( 'post_type' ) && is_string( $query->get( 'post_type' ) ) && $query->get( 'post_type' ) === 'product' ) &&
+			Helpers::is_running_inside_class('BeRocket_AAPF_Widget', 20)
+		) {
+			$enabled = true;
+		}
+
+		return $enabled;
 	}
 }

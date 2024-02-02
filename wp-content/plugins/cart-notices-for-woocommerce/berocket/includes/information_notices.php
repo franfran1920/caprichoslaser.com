@@ -262,4 +262,3 @@ if( ! class_exists( 'berocket_information_notices' ) ) {
     add_action( 'admin_notices', array('berocket_information_notices', 'display_notice') );
     add_action( 'wp_ajax_berocket_information_close_notice', array('berocket_information_notices', 'close_notice') );
 }
-?>

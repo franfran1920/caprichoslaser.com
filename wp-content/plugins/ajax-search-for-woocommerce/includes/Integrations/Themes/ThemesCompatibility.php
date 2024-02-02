@@ -360,6 +360,14 @@ class ThemesCompatibility {
 					'alwaysEnabled' => true,
 				),
 			),
+			'betheme'         => array(
+				'slug' => 'betheme',
+				'name' => 'Betheme',
+				'args' => array(
+					'forceMobileOverlay'           => true,
+					'forceMobileOverlayBreakpoint' => 767,
+				),
+			),
 		);
 	}
 

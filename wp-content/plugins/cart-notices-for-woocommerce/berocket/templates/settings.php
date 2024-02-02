@@ -22,4 +22,3 @@ $options       = $this->get_option();
 
 <?php
 include 'settings_footer.php';
-?>

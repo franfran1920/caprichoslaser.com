@@ -4,8 +4,8 @@ Contributors: dholovnia, berocket
 Donate link: https://berocket.com/?utm_source=wordpress_org&utm_medium=donate&utm_campaign=cart_notices
 Tags: cart, notices, message, cart notices, notifications, cart notifications, show notice, checkout notice, checkout message, deadline notices, deadline message, products cart, product notice, show notice in cart, notice for product, shopping cart notice, shopping cart message, conversion optimized cart, cart promo, cart alerts, ad in cart, berocket, berocket cart notices for woocommerce, berocket cart messages for woocommerce
 Requires at least: 5.0
-Tested up to: 6.3.1
-Stable tag: 3.5.7.8
+Tested up to: 6.4
+Stable tag: 3.5.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,11 @@ You can try this plugin's admin side [here](https://berocket.com/product/woocomm
 ---
 
 == Changelog ==
+
+= 3.5.7.9 =
+* Enhancement - Compatibility version: Wordpress 6.4 and WooCommerce 8.4
+* Fix - Divi module styles
+* Fix - New plugin framework
 
 = 3.5.7.8 =
 * Enhancement - WooCommerce High-Performance Order Storage support enable

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - YITH WooCommerce Order &amp; Shipment Tracking - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-11-22 07:09:43+0000\n"
+"PO-Revision-Date: 2024-01-17 16:00:48+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,10 @@ msgstr ""
 "X-Generator: GlotPress/4.0.0-alpha.11\n"
 "Language: es\n"
 "Project-Id-Version: Plugins - YITH WooCommerce Order &amp; Shipment Tracking - Stable (latest release)\n"
+
+#: plugin-fw/includes/class-yit-assets.php:108
+msgid "F j, Y"
+msgstr "F j, Y"
 
 #. translators: Hidden accessibility text.
 #: plugin-fw/includes/class-yith-post-type-admin.php:387
@@ -145,37 +149,37 @@ msgstr "Arrastrar o subir un archivo."
 msgid "Options reset correctly!"
 msgstr "¡Opciones restablecidas correctamente!"
 
-#: plugin-fw/includes/class-yit-assets.php:138
+#: plugin-fw/includes/class-yit-assets.php:214
 msgid "You cannot drop files here."
 msgstr "Aquí no se pueden soltar archivos."
 
-#: plugin-fw/includes/class-yit-assets.php:137
+#: plugin-fw/includes/class-yit-assets.php:213
 msgid "No file provided."
 msgstr "No se proporcionó ningún archivo."
 
-#: plugin-fw/includes/class-yit-assets.php:136
+#: plugin-fw/includes/class-yit-assets.php:212
 msgctxt "Title"
 msgid "Error"
 msgstr "Error"
 
 #. translators: %s is the number of characters.
-#: plugin-fw/includes/class-yit-assets.php:124
+#: plugin-fw/includes/class-yit-assets.php:200
 msgctxt "Enhanced select"
 msgid "Searching&hellip;"
 msgstr "Buscando&hellip;"
 
 #. translators: %s is the number of characters.
-#: plugin-fw/includes/class-yit-assets.php:123
+#: plugin-fw/includes/class-yit-assets.php:199
 msgctxt "Enhanced select"
 msgid "Please enter %s or more characters"
 msgstr "Por favor, introduce %s o más caracteres"
 
-#: plugin-fw/includes/class-yit-assets.php:121
+#: plugin-fw/includes/class-yit-assets.php:197
 msgctxt "Enhanced select"
 msgid "Please enter 1 or more characters"
 msgstr "Por favor, introduce 1 o más caracteres"
 
-#: plugin-fw/includes/class-yit-assets.php:120
+#: plugin-fw/includes/class-yit-assets.php:196
 msgctxt "Enhanced select"
 msgid "No matches found"
 msgstr "No se han encontrado coincidencias"
@@ -355,61 +359,61 @@ msgstr "No puedes activar la versión gratuita de %s mientras estés usando la p
 msgid "%s is enabled but not effective. It requires WooCommerce in order to work."
 msgstr "%s está activado pero no es efectivo. Requiere WooCommerce para funcionar. "
 
-#: includes/class.yith-woocommerce-order-tracking.php:585
+#: includes/class.yith-woocommerce-order-tracking.php:604
 msgid "Tracking info"
 msgstr "Información de seguimiento"
 
-#: includes/class.yith-woocommerce-order-tracking.php:464
+#: includes/class.yith-woocommerce-order-tracking.php:483
 msgid "Track"
 msgstr "Seguimiento"
 
-#: includes/class.yith-woocommerce-order-tracking.php:417
+#: includes/class.yith-woocommerce-order-tracking.php:436
 msgid "Picked up by <b>[carrier_name]</b> on <b>[pickup_date]</b>. Tracking code: <b>[track_code]</b>. Live tracking on [carrier_link]"
 msgstr "Recogido por <b>[carrier_name]</b> el <b>[pickup_date]</b>. Código de seguimiento: <b>[track_code]</b>"
 
-#: includes/class.yith-woocommerce-order-tracking.php:414
-#: includes/class.yith-woocommerce-order-tracking.php:585
+#: includes/class.yith-woocommerce-order-tracking.php:433
+#: includes/class.yith-woocommerce-order-tracking.php:604
 #: plugin-options/general-options.php:40
 msgid "Your order has been picked up by <b>[carrier_name]</b> on <b>[pickup_date]</b>. Your tracking code is <b>[track_code]</b>. Live tracking on [carrier_link]"
 msgstr "Tu pedido ha sido recogido por <b>[carrier_name]</b> el <b>[pickup_date]</b>. Tu código de seguimiento es <b>[track_code]</b>. Seguimiento en vivo en [carrier_link]"
 
-#: includes/class.yith-woocommerce-order-tracking.php:360
+#: includes/class.yith-woocommerce-order-tracking.php:379
 msgid "Enter carrier website link"
 msgstr "Introduce el enlace del sitio web del transportista"
 
-#: includes/class.yith-woocommerce-order-tracking.php:359
+#: includes/class.yith-woocommerce-order-tracking.php:378
 msgid "Carrier website link:"
 msgstr "Enlace al sitio web del transportista:"
 
-#: includes/class.yith-woocommerce-order-tracking.php:317
+#: includes/class.yith-woocommerce-order-tracking.php:336
 msgid "Order picked up by Carrier"
 msgstr "Pedido recogido por el Transportista"
 
-#: includes/class.yith-woocommerce-order-tracking.php:172
+#: includes/class.yith-woocommerce-order-tracking.php:175
 msgid "Regular updates, translations, and premium support."
 msgstr "Actualizaciones periódicas, traducciones y soporte premium."
 
-#: includes/class.yith-woocommerce-order-tracking.php:171
+#: includes/class.yith-woocommerce-order-tracking.php:174
 msgid "Use the built-in shortcode to <b>create a custom order tracking page</b> on your shop."
 msgstr "Utiliza el shortcode incorporado para <b>crear una página de seguimiento de pedidos personalizada</b> en tu tienda."
 
-#: includes/class.yith-woocommerce-order-tracking.php:170
+#: includes/class.yith-woocommerce-order-tracking.php:173
 msgid "Automatically change the order status to \"Completed\" after the tracking data insertion."
 msgstr "Cambia automáticamente el estado del pedido a «completado» tras la inserción de los datos de seguimiento. "
 
-#: includes/class.yith-woocommerce-order-tracking.php:169
+#: includes/class.yith-woocommerce-order-tracking.php:172
 msgid "Save time by <b>importing multiple tracking info into your orders from a CSV file.</b>"
 msgstr "Ahorra tiempo al <b>importar información de seguimiento múltiple en tus pedidos desde un archivo CSV.</b>"
 
-#: includes/class.yith-woocommerce-order-tracking.php:168
+#: includes/class.yith-woocommerce-order-tracking.php:171
 msgid "Enter also the <b>Estimated Delivery Date</b> and <b>share the tracking info via email</b> with customers when the order is completed."
 msgstr "Introduce también la <b>fecha estimada de entrega</b> y <b>comparte la información de seguimiento por correo electrónico</b> con los clientes cuando se complete el pedido."
 
-#: includes/class.yith-woocommerce-order-tracking.php:167
+#: includes/class.yith-woocommerce-order-tracking.php:170
 msgid "Choose your carriers from a list of <b>480+ carriers</b> supported to <b>automatically get the tracking URL.</b>"
 msgstr "Elige tus transportistas de una lista de <b>+480 transportistas</b> compatibles para <b>obtener automáticamente la URL de seguimiento.</b>"
 
-#: includes/class.yith-woocommerce-order-tracking.php:145
+#: includes/class.yith-woocommerce-order-tracking.php:148
 msgid "General options"
 msgstr "Opciones generales"
 
@@ -576,16 +580,16 @@ msgstr "Ayuda"
 msgid "There was an error with your request; please try again later."
 msgstr "Ha habido un error con tu solicitud. Por favor, inténtalo de nuevo más tarde."
 
-#: plugin-fw/includes/class-yit-assets.php:165
+#: plugin-fw/includes/class-yit-assets.php:241
 msgid "Are you sure you want to delete the selected items?"
 msgstr "¿Seguro que quieres borrar los elementos seleccionados?"
 
-#: plugin-fw/includes/class-yit-assets.php:162 plugin-fw/yit-functions.php:1985
+#: plugin-fw/includes/class-yit-assets.php:238 plugin-fw/yit-functions.php:1985
 msgctxt "Trash confirmation action"
 msgid "Yes, move to trash"
 msgstr "Sí, mover a la papelera"
 
-#: plugin-fw/includes/class-yit-assets.php:161
+#: plugin-fw/includes/class-yit-assets.php:237
 msgid "Are you sure you want to trash the selected items?"
 msgstr "¿Seguro que quieres mover a la papelera los elementos seleccionados?"
 
@@ -614,13 +618,13 @@ msgstr "Ver"
 msgid "Further actions"
 msgstr "Más acciones"
 
-#: plugin-fw/includes/class-yit-assets.php:166 plugin-fw/yit-functions.php:2003
+#: plugin-fw/includes/class-yit-assets.php:242 plugin-fw/yit-functions.php:2003
 #: plugin-fw/yit-functions.php:2129
 msgctxt "Delete confirmation action"
 msgid "Yes, delete"
 msgstr "Sí, borrar"
 
-#: plugin-fw/includes/class-yit-assets.php:164 plugin-fw/yit-functions.php:2000
+#: plugin-fw/includes/class-yit-assets.php:240 plugin-fw/yit-functions.php:2000
 #: plugin-fw/yit-functions.php:2127
 msgid "Confirm delete"
 msgstr "Confirmar borrado"
@@ -630,7 +634,7 @@ msgctxt "Post action"
 msgid "Delete Permanently"
 msgstr "Borrar permanentemente"
 
-#: plugin-fw/includes/class-yit-assets.php:160 plugin-fw/yit-functions.php:1982
+#: plugin-fw/includes/class-yit-assets.php:236 plugin-fw/yit-functions.php:1982
 msgid "Confirm trash"
 msgstr "Confirmar el envío a la papelera"
 
@@ -665,7 +669,7 @@ msgid "Preview"
 msgstr "Vista previa"
 
 #. translators: %s is the title of the post object.
-#: plugin-fw/includes/class-yit-assets.php:165 plugin-fw/yit-functions.php:1916
+#: plugin-fw/includes/class-yit-assets.php:241 plugin-fw/yit-functions.php:1916
 #: plugin-fw/yit-functions.php:2075
 msgid "This action cannot be undone and you will not be able to recover this data."
 msgstr "Esta acción no se puede deshacer y no podrás recuperar estos datos."
@@ -692,12 +696,12 @@ msgstr "Volver a la lista"
 msgid "Back to \"%s\""
 msgstr "Volver a «%s»"
 
-#: plugin-fw/includes/class-yit-assets.php:149
+#: plugin-fw/includes/class-yit-assets.php:225
 msgctxt "Button text"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: plugin-fw/includes/class-yit-assets.php:148
+#: plugin-fw/includes/class-yit-assets.php:224
 msgctxt "Button text"
 msgid "Confirm"
 msgstr "Confirmar"
@@ -808,32 +812,32 @@ msgstr "La comprobación del sistema no ha podido determinar qué versión %1$s 
 msgid "Contact your hosting company in order to install it."
 msgstr "Contacta con tu empresa de alojamiento para instalarlo."
 
-#: plugin-fw/includes/class-yit-assets.php:202
+#: plugin-fw/includes/class-yit-assets.php:278
 msgid "Color value"
 msgstr "Valor del color"
 
-#: plugin-fw/includes/class-yit-assets.php:201
+#: plugin-fw/includes/class-yit-assets.php:277
 msgid "Select Color"
 msgstr "Seleccionar el color"
 
-#: plugin-fw/includes/class-yit-assets.php:200
+#: plugin-fw/includes/class-yit-assets.php:276
 msgid "Select default color"
 msgstr "Seleccionar el color por defecto"
 
-#: plugin-fw/includes/class-yit-assets.php:199
+#: plugin-fw/includes/class-yit-assets.php:275
 msgid "Default"
 msgstr "Por defecto"
 
-#: plugin-fw/includes/class-yit-assets.php:198
+#: plugin-fw/includes/class-yit-assets.php:274
 msgid "Clear color"
 msgstr "Vaciar el color"
 
-#: plugin-fw/includes/class-yit-assets.php:197
+#: plugin-fw/includes/class-yit-assets.php:273
 msgid "Clear"
 msgstr "Vaciar"
 
-#: plugin-fw/includes/class-yit-assets.php:163
-#: plugin-fw/includes/class-yit-assets.php:167
+#: plugin-fw/includes/class-yit-assets.php:239
+#: plugin-fw/includes/class-yit-assets.php:243
 #: plugin-fw/templates/sysinfo/tabs/main.php:46
 #: plugin-fw/templates/sysinfo/tabs/main.php:54
 #: plugin-fw/yit-functions.php:1984 plugin-fw/yit-functions.php:2002
@@ -1323,7 +1327,7 @@ msgstr "Ajustes guardados"
 msgid "The element you have entered already exists. Please, enter another name."
 msgstr "El elemento que has introducido ya existe. Por favor, introduce otro nombre."
 
-#: plugin-fw/includes/class-yit-assets.php:185
+#: plugin-fw/includes/class-yit-assets.php:261
 #: plugin-fw/includes/class-yit-plugin-subpanel.php:134
 #: plugin-fw/templates/panel/panel-content-page.php:14
 msgid "Are you sure?"
@@ -1334,7 +1338,7 @@ msgstr "¿Estás seguro?"
 msgid "Reset to default"
 msgstr "Restablecer valores predeterminados"
 
-#: plugin-fw/includes/class-yit-assets.php:186
+#: plugin-fw/includes/class-yit-assets.php:262
 #: plugin-fw/includes/class-yit-plugin-subpanel.php:134
 #: plugin-fw/templates/panel/panel-content-page.php:14
 msgid "If you continue with this action, you will reset all options in this page."
@@ -1362,31 +1366,31 @@ msgstr "Los cambios que has hecho se perderán si abandonas esta página."
 msgid "Name"
 msgstr "Nombre"
 
-#: includes/class.yith-woocommerce-order-tracking.php:332
+#: includes/class.yith-woocommerce-order-tracking.php:351
 msgid "Enter pickup date"
 msgstr "Introduce una fecha de recogida"
 
-#: includes/class.yith-woocommerce-order-tracking.php:325
+#: includes/class.yith-woocommerce-order-tracking.php:344
 msgid "Pickup date:"
 msgstr "Fecha de recogida:"
 
-#: includes/class.yith-woocommerce-order-tracking.php:350
+#: includes/class.yith-woocommerce-order-tracking.php:369
 msgid "Enter carrier name"
 msgstr "Introduce el nombre del transportista"
 
-#: includes/class.yith-woocommerce-order-tracking.php:349
+#: includes/class.yith-woocommerce-order-tracking.php:368
 msgid "Carrier name:"
 msgstr "Nombre del transportista"
 
-#: includes/class.yith-woocommerce-order-tracking.php:346
+#: includes/class.yith-woocommerce-order-tracking.php:365
 msgid "Enter tracking code"
 msgstr "Introduce un código de seguimiento"
 
-#: includes/class.yith-woocommerce-order-tracking.php:345
+#: includes/class.yith-woocommerce-order-tracking.php:364
 msgid "Tracking code:"
 msgstr "Código de seguimiento:"
 
-#: includes/class.yith-woocommerce-order-tracking.php:294
+#: includes/class.yith-woocommerce-order-tracking.php:308
 msgid "Order tracking"
 msgstr "Seguimiento de pedido"
 
@@ -1394,7 +1398,7 @@ msgstr "Seguimiento de pedido"
 msgid "Settings"
 msgstr "Configurar"
 
-#: includes/class.yith-woocommerce-order-tracking.php:146
+#: includes/class.yith-woocommerce-order-tracking.php:149
 #: plugin-options/carriers-options.php:16
 msgid "Carriers"
 msgstr "Transportistas"

@@ -78,7 +78,7 @@ class JetSmartFilters
             $enable = true;
         }
         // @since 1.26.0.
-        if ( is_object( $query ) && is_a( $query, 'WP_Query' ) && $query->get( 'wc_query' ) === 'product_query' && isset( $query->query_vars['s'] ) && Helpers::is_running_inside_class( 'Jet_Smart_Filters_Indexer_Data', 20 ) && Helpers::isRunningInsideFunction( 'get_queried_ids', 20 ) ) {
+        if ( is_object( $query ) && is_a( $query, 'WP_Query' ) && $query->get( 'wc_query' ) === 'product_query' && !empty($query->query_vars['s']) && Helpers::is_running_inside_class( 'Jet_Smart_Filters_Indexer_Data', 20 ) && Helpers::isRunningInsideFunction( 'get_queried_ids', 20 ) ) {
             $enable = true;
         }
         return $enable;

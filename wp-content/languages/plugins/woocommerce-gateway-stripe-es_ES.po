@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - WooCommerce Stripe Payment Gateway - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-12-21 20:20:24+0000\n"
+"PO-Revision-Date: 2023-12-28 17:54:02+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,24 +20,24 @@ msgid "Small (40px)"
 msgstr "Pequeño (40px)"
 
 #. translators: %1 The field name, %2 <br> tag, %3 Validation error messages
-#: includes/class-wc-gateway-stripe.php:1109
+#: includes/class-wc-gateway-stripe.php:1114
 msgid "The %1$s is invalid. Please make sure it: %2$s%3$s"
 msgstr "El %1$s no es válido. Por favor, asegúrate de que: %2$s%3$s"
 
-#: includes/class-wc-gateway-stripe.php:1096
+#: includes/class-wc-gateway-stripe.php:1101
 msgid "- Contains only Latin characters"
 msgstr "- Contiene solo caracteres latinos"
 
-#: includes/class-wc-gateway-stripe.php:1088
+#: includes/class-wc-gateway-stripe.php:1093
 msgid "- Does not contain any of the following special characters: ' \" * &lt; &gt;"
 msgstr "- No contiene ninguno de los siguientes caracteres especiales: ' \" * &lt; &gt;"
 
-#: includes/class-wc-gateway-stripe.php:1083
+#: includes/class-wc-gateway-stripe.php:1088
 msgid "- Contains at least one letter"
 msgstr "- Contiene al menos una letra"
 
 #. translators: Number of the maximum characters allowed
-#: includes/class-wc-gateway-stripe.php:1076
+#: includes/class-wc-gateway-stripe.php:1081
 msgid "- Has between 5 and %s characters"
 msgstr "- Tiene entre 5 y %s caracteres"
 
@@ -167,15 +167,15 @@ msgstr "Todos los demás ajustes generales de Stripe se pueden ajustar %1$saquí
 
 #. translators: %1$s Link to Stripe API details, %2$s Link to register a Stripe
 #. account
-#: includes/class-wc-gateway-stripe.php:1152
+#: includes/class-wc-gateway-stripe.php:1157
 msgid "Your API details can be obtained from your <a href=\"%1$s\">Stripe account</a>. Don’t have a Stripe account? <a href=\"%2$s\">Create one.</a>"
 msgstr "Tus datos de la API se pueden obtener en tu <a href=\"%1$s\">cuenta de Stripe</a>. ¿No tienes una cuenta de Stripe? <a href=\"%2$s\">Crea una.</a>"
 
-#: includes/class-wc-gateway-stripe.php:1104
+#: includes/class-wc-gateway-stripe.php:1109
 msgid "shortened customer bank statement"
 msgstr "extracto bancario reducido del cliente"
 
-#: includes/class-wc-gateway-stripe.php:1101
+#: includes/class-wc-gateway-stripe.php:1106
 msgid "customer bank statement"
 msgstr "extracto bancario del cliente"
 
@@ -1289,11 +1289,11 @@ msgstr "WooCommerce Stripe - Esta es la última versión del plugin, compatible 
 msgid "The public and/or secret keys for the Stripe gateway have been changed. This might cause errors for existing customers and saved payment methods. %1$sClick here to learn more%2$s."
 msgstr "Las claves pública y/o secreta para la pasarela Stripe han sido cambiadas. Esto podría producir errores para los clientes existentes y los métodos de pago guardados. %1$sHaz clic aquí para aprender más%2$s."
 
-#: includes/compat/trait-wc-stripe-subscriptions.php:875
+#: includes/compat/trait-wc-stripe-subscriptions.php:879
 msgid "Payment authorization for the renewal order was unsuccessful, please try again."
 msgstr "La autorización de pago para el pedido de renovación no ha sido correcta, por favor, inténtalo de nuevo."
 
-#: includes/compat/trait-wc-stripe-subscriptions.php:862
+#: includes/compat/trait-wc-stripe-subscriptions.php:866
 msgid "Your early renewal order was successful."
 msgstr "Tu pedido de renovación anticipada ha sido correcto."
 
@@ -1357,7 +1357,7 @@ msgstr "Ha fallado la identificación SCA para la renovación de la suscripción
 #. translators: %s is the stripe charge Id
 #: includes/compat/trait-wc-stripe-pre-orders.php:239
 #: includes/compat/trait-wc-stripe-subscriptions.php:343
-#: includes/compat/trait-wc-stripe-subscriptions.php:831
+#: includes/compat/trait-wc-stripe-subscriptions.php:835
 msgid "Stripe charge awaiting authentication by user: %s."
 msgstr "El cargo de Stripe está a la espera de la identificación del usuario: %s."
 
@@ -1378,7 +1378,7 @@ msgid "Payment Authentication Requested Email"
 msgstr "Correo electrónico de solicitud de identificación para el pago"
 
 #. translators: %s is the order Id
-#: includes/class-wc-gateway-stripe.php:666
+#: includes/class-wc-gateway-stripe.php:671
 msgid "Payment Intent not found for order #%s"
 msgstr "No se ha encontrado un intento de pago para el pedido #%s"
 
@@ -1464,18 +1464,18 @@ msgstr "ID de pedido que falta para la confirmación del pago"
 msgid "CSRF verification failed."
 msgstr "La verificación CSRF ha fallado."
 
-#: includes/class-wc-gateway-stripe.php:914
+#: includes/class-wc-gateway-stripe.php:919
 msgid "Stripe SCA authentication failed."
 msgstr "La identificación Stripe SCA ha fallado."
 
 #. translators: 1) The error message that was received from Stripe.
-#: includes/class-wc-gateway-stripe.php:913
+#: includes/class-wc-gateway-stripe.php:918
 #: includes/class-wc-stripe-webhook-handler.php:904
 #: includes/class-wc-stripe-webhook-handler.php:955
 msgid "Stripe SCA authentication failed. Reason: %s"
 msgstr "La identificación Stripe SCA ha fallado. Motivo: %s"
 
-#: includes/class-wc-gateway-stripe.php:644
+#: includes/class-wc-gateway-stripe.php:649
 msgid ""
 "Almost there!\n"
 "\n"
@@ -1647,7 +1647,7 @@ msgid "Stripe EPS"
 msgstr "Stripe EPS"
 
 #. translators: 1) last 4 digits of SEPA Direct Debit
-#: includes/compat/trait-wc-stripe-subscriptions.php:762
+#: includes/compat/trait-wc-stripe-subscriptions.php:766
 msgid "Via SEPA Direct Debit ending in %1$s"
 msgstr "La domiciliación bancaria SEPA termina en %1$s"
 
@@ -1657,23 +1657,23 @@ msgstr "La domiciliación bancaria SEPA termina en %1$s"
 msgid "Refunded %1$s - Refund ID: %2$s - %3$s"
 msgstr "Reembolsado %1$s - ID del reembolso: %2$s - %3$s"
 
-#: includes/class-wc-gateway-stripe.php:565
+#: includes/class-wc-gateway-stripe.php:570
 msgid "Stripe Payout:"
 msgstr "Depósito de Stripe:"
 
-#: includes/class-wc-gateway-stripe.php:564
+#: includes/class-wc-gateway-stripe.php:569
 msgid "This represents the net total that will be credited to your Stripe bank account. This may be in the currency that is set in your Stripe account."
 msgstr "Esto representa el neto total que se abonará a tu cuenta bancaria de Stripe. Podría estar en la moneda que esté configurada en tu cuenta de Stripe. "
 
-#: includes/class-wc-gateway-stripe.php:528
+#: includes/class-wc-gateway-stripe.php:533
 msgid "Stripe Fee:"
 msgstr "Cuota de Stripe:"
 
-#: includes/class-wc-gateway-stripe.php:527
+#: includes/class-wc-gateway-stripe.php:532
 msgid "This represents the fee Stripe collects for the transaction."
 msgstr "Esto representa la cuota que Stripe cobra por la transacción."
 
-#: includes/class-wc-gateway-stripe.php:591
+#: includes/class-wc-gateway-stripe.php:596
 #: includes/class-wc-stripe-order-handler.php:153
 #: includes/class-wc-stripe-webhook-handler.php:256
 #: includes/compat/trait-wc-stripe-subscriptions.php:306
@@ -1683,7 +1683,7 @@ msgid "Sorry, we are unable to process your payment at this time. Please retry l
 msgstr "Lo siento, no hemos podido procesar tu pago en este momento. Por favor, inténtalo más tarde."
 
 #. translators: 1) Opening anchor tag 2) closing anchor tag
-#: includes/class-wc-gateway-stripe.php:158
+#: includes/class-wc-gateway-stripe.php:163
 msgid "If your billing address has been changed for saved payment methods, be sure to remove any %1$ssaved payment methods%2$s on file and re-add them."
 msgstr "Si tu dirección de facturación ha cambiado en los métodos de pago guardados asegúrate de quitar cualquier %1$smétodo de pago guardado%2$s en los registros y de volver a añadirla."
 
@@ -1752,15 +1752,15 @@ msgstr "Se necesita un valor de «ID de cliente de Stripe»."
 msgid "The billing country is not accepted by Sofort. Please try another country."
 msgstr "El país de facturación no está aceptado por Sofort. Por favor, prueba con otro país."
 
-#: includes/class-wc-gateway-stripe.php:286
+#: includes/class-wc-gateway-stripe.php:291
 msgid "Card Code (CVC)"
 msgstr "Código de verificación"
 
-#: includes/class-wc-gateway-stripe.php:278 build/index.js:1
+#: includes/class-wc-gateway-stripe.php:283 build/index.js:1
 msgid "Expiry Date"
 msgstr "Fecha de caducidad"
 
-#: includes/class-wc-gateway-stripe.php:267 build/index.js:1
+#: includes/class-wc-gateway-stripe.php:272 build/index.js:1
 msgid "Card Number"
 msgstr "Número de la tarjeta"
 
@@ -1852,8 +1852,8 @@ msgstr "Stripe Alipay"
 
 #. translators: 1) card brand 2) last 4 digits
 #: includes/admin/class-wc-stripe-privacy.php:40
-#: includes/compat/trait-wc-stripe-subscriptions.php:738
-#: includes/compat/trait-wc-stripe-subscriptions.php:759
+#: includes/compat/trait-wc-stripe-subscriptions.php:742
+#: includes/compat/trait-wc-stripe-subscriptions.php:763
 msgid "N/A"
 msgstr "N/D"
 
@@ -1910,7 +1910,7 @@ msgstr "Por favor, introduce el número IBAN de tu cuenta."
 msgid "Please enter your IBAN account name."
 msgstr "Por favor, introduce el nombre de IBAN de tu cuenta."
 
-#: includes/class-wc-gateway-stripe.php:259
+#: includes/class-wc-gateway-stripe.php:264
 msgid "Credit or debit card"
 msgstr "Tarjeta de crédito y débito"
 
@@ -2493,7 +2493,7 @@ msgid "Please accept the terms and conditions first"
 msgstr "Por favor, antes acepta los términos y condiciones"
 
 #. translators: link to Stripe testing page
-#: includes/class-wc-gateway-stripe.php:220
+#: includes/class-wc-gateway-stripe.php:225
 msgid "TEST MODE ENABLED. In test mode, you can use the card number 4242424242424242 with any CVC and a valid expiration date or check the <a href=\"%s\" target=\"_blank\">Testing Stripe documentation</a> for more card numbers."
 msgstr "MODO DE PRUEBAS ACTIVO. En el modo de pruebas puedes usar el número de tarjeta 4242424242424242 con cualquier CVC y una fecha de caducidad válida, o sino revisa la documentación de «<a href=\"%s\" target=\"_blank\">Documentación sobre pruebas de Stripe</a>» para obtener más números de tarjeta."
 
@@ -2509,7 +2509,7 @@ msgid "Stripe"
 msgstr "Stripe"
 
 #. translators: 1) card brand 2) last 4 digits
-#: includes/compat/trait-wc-stripe-subscriptions.php:759
+#: includes/compat/trait-wc-stripe-subscriptions.php:763
 msgid "Via %1$s card ending in %2$s"
 msgstr "Mediante a la tarjeta %1$s terminada en %2$s"
 

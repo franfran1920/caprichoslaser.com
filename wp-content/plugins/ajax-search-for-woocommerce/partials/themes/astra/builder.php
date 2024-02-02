@@ -67,15 +67,6 @@ add_filter( 'astra_addon_get_template', function ( $located, $template_name, $ar
 	return $located;
 }, 100, 5 );
 
-add_filter( 'dgwt/wcas/form/html', function ( $html ) {
-	// We're removing the 'woocommerce' class on these pages because it makes it impossible to update the cart contents.
-	if ( is_checkout() || is_cart() ) {
-		return preg_replace( '/class="([0-9a-zA-Z-\s]+)woocommerce([0-9a-zA-Z-\s]+)"/m', "class=\"$1$2\"", $html );
-	}
-
-	return $html;
-} );
-
 add_action( 'wp_footer', function () {
 	$header_break_point = dgwt_wcas_astra_header_break_point();
 	$search_box_type    = dgwt_wcas_astra_search_box_type();
@@ -101,38 +92,38 @@ add_action( 'wp_footer', function () {
 			<?php } ?>
 
 			// Autofocus
-			$('.astra-search-icon').on('click', function () {
-				setTimeout(function () {
-					// Slide Search, Search Box
-					$input = $('.ast-search-menu-icon .dgwt-wcas-search-input');
-					if ($input.length > 0) {
-						$input.trigger('focus');
-					}
+			$(document).on('click', '.astra-search-icon', function (event) {
+				if ($(window).width() > <?php echo $header_break_point ?>) {
+					setTimeout(function () {
+						// Slide Search, Search Box
+						$input = $(event.target).closest('.ast-search-menu-icon').find('.dgwt-wcas-search-input');
+						if ($input.length > 0) {
+							$input.trigger('focus');
+						}
 
-					// Header Cover Search
-					var $inputHeaderCover = $('.ast-search-box.header-cover .dgwt-wcas-search-input');
-					if ($inputHeaderCover.length > 0) {
-						$inputHeaderCover.trigger('focus');
-					}
+						// Header Cover Search
+						var $inputHeaderCover = $('.ast-search-box.header-cover .dgwt-wcas-search-input');
+						if ($inputHeaderCover.length > 0) {
+							$inputHeaderCover.trigger('focus');
+						}
 
-					// Full Screen Search
-					var $inputFullScreen = $('.ast-search-box.full-screen .dgwt-wcas-search-input');
-					if ($inputFullScreen.length > 0) {
-						$inputFullScreen.trigger('focus');
-					}
-				}, 100);
-
-				if ($(window).width() <= <?php echo $header_break_point ?>) {
+						// Full Screen Search
+						var $inputFullScreen = $('.ast-search-box.full-screen .dgwt-wcas-search-input');
+						if ($inputFullScreen.length > 0) {
+							$inputFullScreen.trigger('focus');
+						}
+					}, 100);
+				} else {
 					// Slide Search, Search Box
 					var $mobile = $('.ast-search-menu-icon .js-dgwt-wcas-enable-mobile-form');
 					if ($mobile.length > 0) {
-						$mobile.trigger('click');
+						$mobile[0].click();
 					}
 
 					// Header Cover Search / Full Screen Search
 					var $mobile2 = $('.ast-search-box.header-cover .js-dgwt-wcas-enable-mobile-form, .ast-search-box.full-screen .js-dgwt-wcas-enable-mobile-form');
 					if ($mobile2.length > 0) {
-						$mobile2.trigger('click');
+						$mobile2[0].click();
 					}
 				}
 			});

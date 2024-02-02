@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Advanced Dynamic Pricing for WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-12-04 06:26:57+0000\n"
+"PO-Revision-Date: 2024-01-16 06:51:01+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -62,7 +62,7 @@ msgstr "Diseño de tabla de categorías"
 msgid "Enable"
 msgstr "Activar"
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:257
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:252
 #: BaseVersion/views/admin_page/tabs/options/show_debug_bar.php:8
 #: BaseVersion/views/admin_page/tabs/options/show_debug_bar.php:16
 msgid "Show debug panel at bottom of the page"
@@ -72,12 +72,12 @@ msgstr "Mostrar el panel de depuración en parte inferior de la página"
 msgid "Exclude on sale products"
 msgstr "Excluir productos en oferta"
 
-#: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Options.php:258
+#: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Options.php:257
 msgid "Debug"
 msgstr "Depuración"
 
 #: BaseVersion/Includes/Settings/OptionsInstaller.php:212
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:428
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:423
 msgid "From {{price}} {{price_suffix}}"
 msgstr "Desde {{price}} {{price_suffix}}"
 
@@ -178,7 +178,7 @@ msgstr "¡Regalado!"
 msgid "Product Collections"
 msgstr "Colecciones de productos"
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:290
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:285
 #: BaseVersion/views/admin_page/tabs/options/hide_coupon_word_in_totals.php:7
 #: BaseVersion/views/admin_page/tabs/options/hide_coupon_word_in_totals.php:12
 msgid "Hide \"Coupon\" word in cart totals"
@@ -246,7 +246,7 @@ msgstr "El contador de repetición es el importe del subtotal dividido por"
 msgid "Any product"
 msgstr "Cualquier producto"
 
-#: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:26
+#: BaseVersion/views/admin_page/tabs/options/support_persistence_rules.php:24
 #: BaseVersion/views/admin_page/tabs/options/support_shortcode_products_bogo.php:19
 #: BaseVersion/views/admin_page/tabs/options/support_shortcode_products_on_sale.php:19
 #: BaseVersion/views/admin_page/tabs/tools.php:50
@@ -319,13 +319,12 @@ msgstr "Desactivar regla si tarda más de X segundos en ejecutarse"
 #: BaseVersion/Includes/CustomizerExtensions/CustomizerExtensions.php:528
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:185
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:298
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:533
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:523
 msgid "Fixed price"
 msgstr "Precio fijo"
 
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:517
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:243
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:264
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:246
 msgid "Exclude products"
 msgstr "Excluir productos"
 
@@ -406,7 +405,7 @@ msgstr "Se desactivó la regla excluyente, se estaba ejecutando demasiado lento.
 msgid "The common rule was turned off, it was running too slow."
 msgstr "Se desactivó la regla común, se estaba ejecutando demasiado lento."
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:245
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:240
 #: BaseVersion/views/admin_page/tabs/options/allow_to_exclude_products.php:7
 #: BaseVersion/views/admin_page/tabs/options/allow_to_exclude_products.php:12
 msgid "Allow to exclude products in filters"
@@ -416,7 +415,7 @@ msgstr "Permitir la exclusión de productos en los filtros"
 msgid "Paste text into this field to import settings into the current WordPress install."
 msgstr "Pegar el texto dentro de este campo para importar ajustes en la actual instalación de WordPress."
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:233
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:228
 #: BaseVersion/views/admin_page/tabs/options/allow_to_edit_prices_in_po.php:7
 #: BaseVersion/views/admin_page/tabs/options/allow_to_edit_prices_in_po.php:12
 msgid "Allow to edit prices in Phone Orders"
@@ -492,7 +491,7 @@ msgstr "Página de categorías"
 
 #: BaseVersion/Includes/CustomizerExtensions/CustomizerExtensions.php:730
 #: BaseVersion/Includes/Debug/CalculationProfiler.php:158
-#: BaseVersion/Includes/Functions.php:181
+#: BaseVersion/Includes/Functions.php:190
 msgid "%1$s should not be called before the %2$s action."
 msgstr "%1$s no debería ser llamado antes de la acción %2$s."
 
@@ -520,18 +519,18 @@ msgstr "No modificar el precio del producto en la página del producto "
 msgid "Based on all items in the cart"
 msgstr "Basada en todos los artículos del carrito"
 
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:646
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:704
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:649
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:707
 msgid "OR"
 msgstr "O"
 
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:644
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:702
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:647
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:705
 msgid "AND"
 msgstr "Y"
 
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:642
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:700
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:645
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:703
 msgid "Conditions relationship"
 msgstr "Relación entre condiciones "
 
@@ -539,7 +538,7 @@ msgstr "Relación entre condiciones "
 msgid "Checkout"
 msgstr "Finalizar compra"
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:419
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:414
 msgid "Apply pricing rules to backend orders"
 msgstr "Aplicar reglas de precios a pedidos creados desde la administración"
 
@@ -744,7 +743,7 @@ msgstr "Slug de categoría de producto"
 msgid "Slug"
 msgstr "Slug"
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:238
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:233
 #: BaseVersion/views/admin_page/tabs/options/suppress_other_pricing_plugins.php:7
 #: BaseVersion/views/admin_page/tabs/options/suppress_other_pricing_plugins.php:12
 msgid "Suppress other pricing plugins in frontend"
@@ -776,8 +775,8 @@ msgstr "Reglas de dtos. por volumen"
 msgid "Product filters"
 msgstr "Filtros de productos"
 
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:655
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:713
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:641
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:699
 msgid "Need more conditions?"
 msgstr "¿Necesitas más condiciones?"
 
@@ -822,15 +821,15 @@ msgstr "Mensaje de dtos. por volumen"
 msgid "Add product"
 msgstr "Añadir producto"
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:648
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:638
 msgid "Fixed unit price"
 msgstr "Precio fijo por unidad"
 
 #: BaseVersion/Includes/AdminExtensions/AdminPage/Tabs/Rules.php:751
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:183
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:296
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:531
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:646
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:521
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:636
 msgid "Percentage discount"
 msgstr "Porcentaje de descuento"
 
@@ -840,7 +839,7 @@ msgid "Total"
 msgstr "Total"
 
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:243
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:619
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:609
 msgid "Add product filter"
 msgstr "Añadir filtro de producto"
 
@@ -897,17 +896,17 @@ msgstr "Añadir límite"
 msgid "Limits"
 msgstr "Límites"
 
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:650
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:708
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:653
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:711
 msgid "Add condition"
 msgstr "Añadir condición"
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:265
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:260
 #: BaseVersion/views/admin_page/tabs/options/apply_discount_for_onsale_products.php:16
 msgid "Discount regular price"
 msgstr "Descuento sobre el precio normal"
 
-#: BaseVersion/Includes/Settings/OptionsInstaller.php:267
+#: BaseVersion/Includes/Settings/OptionsInstaller.php:262
 #: BaseVersion/views/admin_page/tabs/options/apply_discount_for_onsale_products.php:19
 msgid "Discount sale price"
 msgstr "Descuento sobre el precio rebajado"
@@ -928,10 +927,6 @@ msgstr "Recargos con el mismo nombre son agrupados en el carrito."
 msgid "Split"
 msgstr "Repartir"
 
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:366
-msgid "Can be applied "
-msgstr "Se puede aplicar"
-
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:753
 msgid "Cart adjustments"
 msgstr "Ajustes del carrito"
@@ -949,7 +944,7 @@ msgstr "Posición de la tabla de dtos. por volumen de la categoría"
 msgid "If you leave this field empty, we will show default bulk description"
 msgstr "Si dejas este campo vacío mostraremos la descripción por defecto de dtos. por volumen"
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:612
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:602
 msgid "No filters"
 msgstr "No hay filtros"
 
@@ -1024,6 +1019,10 @@ msgstr "Nombre por defecto de la cuota"
 #: BaseVersion/views/admin_page/tabs/compatibility.php:7
 msgid "Buy a pro version of our plugin and get an access to compatibility"
 msgstr "Compra una versión pro de nuestro plugin y obtén acceso la compatibilidad"
+
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:366
+msgid "Can be applied "
+msgstr "Se puede aplicar: "
 
 #: BaseVersion/views/conditions/customer/subscriptions.php:15
 msgid "none of selected"
@@ -1159,18 +1158,18 @@ msgstr "Perfil"
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:523
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:464
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:474
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:249
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:328
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:341
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:363
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:385
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:407
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:431
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:453
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:475
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:497
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:519
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:634
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:270
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:318
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:331
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:353
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:375
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:397
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:421
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:443
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:465
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:487
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:509
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:624
 #: BaseVersion/views/cart_adjustments/shipping-cost.php:10
 #: BaseVersion/views/conditions/customer/role.php:19
 #: BaseVersion/views/conditions/customer/subscriptions.php:23
@@ -1267,15 +1266,15 @@ msgstr "&lt;="
 msgid "&lt;"
 msgstr "&lt;"
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:318
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:353
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:375
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:397
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:420
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:444
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:466
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:488
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:510
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:308
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:343
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:365
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:387
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:410
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:434
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:456
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:478
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:500
 #: BaseVersion/views/conditions/customer/role.php:11
 #: BaseVersion/views/conditions/datetime/days-of-week.php:11
 #: BaseVersion/views/conditions/products/product-attributes.php:22
@@ -1291,15 +1290,15 @@ msgstr "&lt;"
 msgid "not in list"
 msgstr "no están en la lista"
 
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:316
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:351
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:373
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:395
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:418
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:442
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:463
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:485
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:507
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:306
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:341
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:363
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:385
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:408
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:432
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:453
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:475
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:497
 #: BaseVersion/views/conditions/customer/role.php:10
 #: BaseVersion/views/conditions/datetime/days-of-week.php:10
 #: BaseVersion/views/conditions/products/product-attributes.php:21
@@ -1381,14 +1380,14 @@ msgstr "Estadísticas"
 #: BaseVersion/templates/reporter/main.php:18
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:444
 #: BaseVersion/views/admin_page/tabs/rules/templates.php:155
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:609
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:599
 msgid "Products"
 msgstr "Productos"
 
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:181
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:294
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:529
-#: BaseVersion/views/admin_page/tabs/rules/templates.php:644
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:519
+#: BaseVersion/views/admin_page/tabs/rules/templates.php:634
 msgid "Fixed discount"
 msgstr "Descuento fijo"
 
@@ -1396,7 +1395,7 @@ msgstr "Descuento fijo"
 msgid "Date & time"
 msgstr "Fecha y hora"
 
-#: BaseVersion/Includes/Core/Rule/CartCondition/Impl/Date.php:56
+#: BaseVersion/Includes/Core/Rule/CartCondition/Impl/Date.php:61
 #: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:595
 #: BaseVersion/views/admin_page/tabs/rules/rule.php:653
 msgid "Date"
@@ -1492,10 +1491,6 @@ msgstr "nombre del descuento"
 msgid "fee name"
 msgstr "nombre del recargo"
 
-#: BaseVersion/Includes/Loader.php:109
-msgid "Advanced Dynamic Pricing for WooCommerce requires WooCommerce version %s or later."
-msgstr "Advanced Dynamic Pricing for WooCommerce necesita la versión %s o superior de WooCommerce."
-
 #: BaseVersion/Includes/Core/Rule/CartCondition/Impl/ProductTagsAll.php:22
 msgid "Product tags"
 msgstr "Etiquetas del producto"
@@ -1508,7 +1503,7 @@ msgstr "Atributos del producto"
 msgid "Product categories"
 msgstr "Categorías del producto"
 
-#: BaseVersion/Includes/VolumePricingTable/RangeDiscountTable.php:1283
+#: BaseVersion/Includes/VolumePricingTable/RangeDiscountTable.php:1322
 msgid "Bulk pricing will be applied to package:"
 msgstr "Los dtos. por volumen se aplicarán al paquete:"
 
@@ -1535,3 +1530,7 @@ msgstr "Producto(s) con etiquetas que no están en la lista: %s"
 #: BaseVersion/Includes/VolumePricingTable/FiltersFormatter.php:68
 msgid "Product with attributes from list: %s"
 msgstr "Producto(s) con atributos que están en la lista: %s"
+
+#: BaseVersion/Includes/Loader.php:109
+msgid "Advanced Dynamic Pricing for WooCommerce requires WooCommerce version %s or later."
+msgstr "Advanced Dynamic Pricing for WooCommerce necesita la versión %s o superior de WooCommerce."

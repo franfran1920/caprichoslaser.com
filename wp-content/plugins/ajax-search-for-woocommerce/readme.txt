@@ -3,8 +3,8 @@ Contributors: damian-gora, matczar
 Tags: woocommerce search, ajax search, search by sku, product search, woocommerce
 Requires at least: 5.0
 Tested up to: 6.4
-Requires PHP: 7.0
-Stable tag: 1.26.1
+Requires PHP: 7.4
+Stable tag: 1.27.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,28 @@ You can read more and compare Pro and Free features here: [Full comparison - Pro
 5. Settings page
 
 == Changelog ==
+
+= 1.27.0, January 31, 2024 =
+* ADDED: Integration with the “Betheme theme”
+* ADDED: Highlight words in search results with Greek letters regardless of accent
+* ADDED: Support for “Full-width Search” in the “XStore theme”
+* FIXED: Multiple search containers on mobile in the “Astra theme” integration
+* FIXED: No focus on search input for mobile devices in the “Astra theme” integration
+* FIXED: Allow an HTML `&lt;i&gt;` tag in suggestion titles and headlines
+* FIXED: Multilingual support is active even for one language
+* FIXED: Overriding the search icon and form in the header was not working properly in the “WoodMart integration”
+* FIXED: Missing filters from “Advanced AJAX Product Filters” plugin in the “Divi theme”
+* FIXED: Replace `&#37` for more stable format `%%` in a `sprintf` function
+* FIXED: An unwanted modal after closing the search overlay on mobile in the “Flatsome theme”
+* FIXED: Missing colors after updating the “Bloksy theme” to 2.x
+* FIXED: Incorrect calculation of a product's position in search results when it contains Greek letters
+* FIXED: Incorrect term language detection in the WPML plugin. Replacing `term_id` with `term_taxonomy_id`
+* FIXED: Unwanted ampersand entity in the product description of search results
+
+* UPDATED: Requires PHP: 7.4
+* UPDATED: The `.pot` file
+* UPDATED: Polish translation
+* UPDATED: Freemius SDK v2.6.2
 
 = 1.26.1, October 19, 2023 =
 * FIXED: Details panel - wrong HTML format of stock status element 

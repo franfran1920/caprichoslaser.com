@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Plugins - FiboSearch &#8211; Ajax Search for WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-07-05 17:49:06+0000\n"
+"PO-Revision-Date: 2024-01-31 16:07:43+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.4\n"
+"X-Generator: GlotPress/4.0.0-beta.2\n"
 "Language: es\n"
 "Project-Id-Version: Plugins - FiboSearch &#8211; Ajax Search for WooCommerce - Stable (latest release)\n"
 
@@ -28,31 +28,31 @@ msgstr "Barra de búsqueda inferior"
 msgid "This phrase returns some results."
 msgstr "Esta frase devuelve algunos resultados."
 
-#: ajax-search-for-woocommerce.php:323
+#: ajax-search-for-woocommerce.php:327
 msgid "No interaction! This is only a preview."
 msgstr "¡Sin interacción posible! Esto es solo una vista previa."
 
-#: partials/themes/flatsome.php:228
+#: partials/themes/flatsome.php:257
 msgid "(Flatsome settings) Go to <code>Appearance -> <a href=\"%s\" target=\"_blank\">Customize</a> -> Header -> Cart</code> and change <code>Cart Style</code> option to <code>Dropdown</code> or <code>Link only</code>."
 msgstr "(Ajustes de Flatsome) Ve a <code>Apariencia -> <a href=\"%s\" target=\"_blank\">Personalizar</a> -> Cabecera -> Carrito</code> y cambia la opción de <code>Estilo del carrito</code> a <code>Desplegable</code> o a <code>Solo enlace</code>."
 
-#: partials/themes/flatsome.php:227
+#: partials/themes/flatsome.php:256
 msgid "(Flatsome settings) Go to <code>Appearance -> <a href=\"%s\" target=\"_blank\">Customize</a> -> Header -> Search</code> and change <code>Search Icon Type</code> option to <code>Dropdown</code>."
 msgstr "(Ajustes de Flatsome) Ve a <code>Apariencia -> <a href=\"%s\" target=\"_blank\">Personalizar</a> -> Cabecera -> Búsqueda</code> y cambia la opción de <code>Tipo de icono de búsqueda</code> a <code>Desplegable</code>."
 
-#: partials/themes/flatsome.php:226
+#: partials/themes/flatsome.php:255
 msgid "(FiboSearch settings) Go to <code>Autocomplete</code> tab and disable <code>Show Details Panel</code> option."
 msgstr "(Ajustes de FiboSearch) Ve a la pestaña de <code>Autocompletar</code> y desactiva la opción de <code>Mostrar panel de detalles</code>."
 
-#: partials/themes/flatsome.php:225
+#: partials/themes/flatsome.php:254
 msgid "Solutions (you only need to use one of them)"
 msgstr "Soluciones (solo necesitas usar una de ellas)"
 
-#: partials/themes/flatsome.php:224
+#: partials/themes/flatsome.php:253
 msgid "There is a rare combination of <b>FiboSearch</b> and <b>Flatsome</b> settings that might cause issues when adding a product to the cart from the autocomplete search results. Unfortunately, you have this combination. You can't use <b>Off-Canvas Sidebar</b> as <b>Cart Style (Flatsome)</b>, <b>Search Icon Type</b> as <b>Search Icon Type (Flatsome)</b>, and <b>Details Panel (FiboSearch)</b> at the same time. The solution is to resign from one of these options."
 msgstr "Hay una extraña combinación de ajustes de <b>FiboSearch</b> y <b>Flatsome</b> que podría provoar problemas al añadir un producto al carrito desee el autocompletado de resultados de búsqueda. Desafortunadamente, tienes que tener esta combinación. Puedes usar la <b>barra lateral fuera del lienzo</b> como <b>estilo del carrito (Flatsome)</b>, <b>tipo de icono de búsqueda</b> como <b>tipo de icono de búsqueda (Flatsome)</b>, y <b>panel de detalles (FiboSearch)</b> al mismo tiempo. La solución es resignarse a una de estas opciones."
 
-#: partials/themes/flatsome.php:223
+#: partials/themes/flatsome.php:252
 msgid "There is a conflict between Flatsome theme settings and our plugin"
 msgstr "Hay un conflicto entre los ajustes del tema Flatsome y nuestro plugin"
 
@@ -86,11 +86,11 @@ msgctxt "Solaris is proper name."
 msgid "Solaris"
 msgstr "Solaris"
 
-#: includes/Helpers.php:1233
+#: includes/Helpers.php:1334
 msgid "Clear"
 msgstr "Vaciar"
 
-#: includes/Helpers.php:1232
+#: includes/Helpers.php:1333
 msgid "Your search history"
 msgstr "Tu historial de búsqueda"
 
@@ -126,23 +126,23 @@ msgstr "Como bloque"
 msgid "learn how to use blocks"
 msgstr "aprende a usar bloques"
 
-#: includes/Admin/Troubleshooting.php:743
+#: includes/Admin/Troubleshooting.php:746
 msgid "Not regenerated images"
 msgstr "Imágenes no regeneradas"
 
-#: includes/Admin/Troubleshooting.php:692
+#: includes/Admin/Troubleshooting.php:695
 msgid "If you have regenerated the images or do not think it is necessary, you can ignore and dismiss this message: %s"
 msgstr "Si has regenerado las imágenes o no crees que sea necesario, puedes ignorar y descartar este mensaje: %s"
 
-#: includes/Admin/Troubleshooting.php:690
+#: includes/Admin/Troubleshooting.php:693
 msgid "You can do it by clicking %s or use an external plugin such as %s."
 msgstr "Puedes hacerlo haciendo clic en %s o usando un plugin externo como %s."
 
-#: includes/Admin/Troubleshooting.php:689
+#: includes/Admin/Troubleshooting.php:692
 msgid "It is recommended to generate a special small image size for existing products to ensure a better user experience. This is a one-time action."
 msgstr "Se recomienda generar un tamaño pequeño especial de imagen para los productos existentes, para asegurar una mejor experiencia a los usuarios. Esto es una acción que solo hay que hacer una vez."
 
-#: includes/Admin/Troubleshooting.php:688
+#: includes/Admin/Troubleshooting.php:691
 msgid "Regenerate images"
 msgstr "Regenerar imágenes"
 
@@ -309,23 +309,23 @@ msgstr "Icono en ordenadores de escritorio, barra de búsqueda en móviles"
 msgid "Poor!"
 msgstr "¡Pobre!"
 
-#: includes/Admin/Troubleshooting.php:734
+#: includes/Admin/Troubleshooting.php:737
 msgid "Incompatible \"Try to ajaxify the shop\" option in WOOF - WooCommerce Products Filter"
 msgstr "Incompatible con la opción «Intentar ajaxificar la tienda» de WOOF - WooCommerce Products Filter"
 
-#: includes/Admin/Troubleshooting.php:730
+#: includes/Admin/Troubleshooting.php:733
 msgid "Incompatible \"HUSKY - Advanced searching by Text\" extension in WOOF - WooCommerce Products Filter"
 msgstr "Extensión «HUSKY - Búsqueda avanzada por texto» en WOOF - WooCommerce Products Filter"
 
-#: includes/Admin/Troubleshooting.php:568
+#: includes/Admin/Troubleshooting.php:571
 msgid "Go to <code>WooCommerce -> Settings -> <a href=\"%s\" target=\"_blank\">Products Filter (tab)</a> -> Options (tab)</code>, set <code>Try to ajaxify the shop</code> option to <code>No</code> and save changes."
 msgstr "Ve a <code>WooCommerce -> Ajustes -> <a href=\"%s\" target=\"_blank\">Filtro de productos (pestaña)</a> -> Opciones (pestaña)</code>, pon la opción <code>Intentar ajaxificar la tienda</code> en <code>No</code> y guarda cambios."
 
-#: includes/Admin/Troubleshooting.php:566
+#: includes/Admin/Troubleshooting.php:569
 msgid "Incompatible \"Try to ajaxify the shop\" option from WOOF - WooCommerce Products Filter plugin is enabled"
 msgstr "Incompatible con la opción «Intentar ajaxificar la tienda» de WOOF - WooCommerce Products Filter"
 
-#: includes/Admin/Troubleshooting.php:532
+#: includes/Admin/Troubleshooting.php:535
 msgid "Go to <code>WooCommerce -> Settings -> <a href=\"%s\" target=\"_blank\">Products Filter (tab)</a> -> Extensions (tab)</code>, uncheck <code>HUSKY - Advanced searching by Text</code> extension and save changes."
 msgstr "Ir a <code>WooCommerce -> Ajustes -> <a href=\"%s\" target=\"_blank\">Filtro de productos (pestaña)</a> -> Extensiones (pestaña)</code>, desmarcar la extensión <code>HUSKY - Búsqueda avanzada por texto</code> y guardar cambios."
 
@@ -345,7 +345,7 @@ msgstr "Reemplazarlas"
 msgid "Replace your theme's default search bars."
 msgstr "Reemplaza las barras de búsqueda por defecto de tu tema."
 
-#: ajax-search-for-woocommerce.php:222
+#: ajax-search-for-woocommerce.php:226
 msgid "%s is enabled but not effective. It is missing core files. Please reinstall the plugin."
 msgstr "%s está activo pero no efectivo. Le faltan archivos esenciales. Por favor, reinstala el plugin."
 
@@ -503,36 +503,36 @@ msgstr "Oscurecer el fondo de la página mientras la función de autocompletar e
 msgid "Darkened background"
 msgstr "Fondo oscurecido"
 
-#: includes/Helpers.php:1098
+#: includes/Helpers.php:1199
 msgid "Furthermore, you can override this option for a specific search bar via shortcode params. <a href=\"%s\" target=\"_blank\">Learn more about shortcodes parameters</a>."
 msgstr "Además, puedes anular esta opción para una barra de búsqueda específica a través de parámetros de shortcodes. <a href=\"%s\" target=\"_blank\">Obtén más información sobre los parámetros de shortcodes</a>."
 
-#: includes/Helpers.php:1097
+#: includes/Helpers.php:1198
 msgid "This option is <b>overridden</b> by the seamless integration with the %s theme. If you want to change the value of this option, disable the integration in <br /><b>WooCommerce -> FiboSearch -> Starting (tab)</b>."
 msgstr "Esta opción se <b>omite</b> para la perfecta integración con el tema %s. Si deseas cambiar el valor de esta opción, desactiva la integración en <br /><b>WooCommerce -> FiboSearch -> Inicio (pestaña)</b>."
 
-#: includes/Admin/Troubleshooting.php:738
+#: includes/Admin/Troubleshooting.php:741
 msgid "Elementor search results template"
 msgstr "Plantilla de resultados de búsqueda de Elementor"
 
-#: includes/Admin/Troubleshooting.php:633
+#: includes/Admin/Troubleshooting.php:636
 msgid "If you think the search results page is displaying your products correctly, you can ignore and dismiss this message: %s"
 msgstr "Si crees que la página de resultados de búsqueda está mostrando correctamente tus productos, puedes ignorar y descartar este mensaje: %s"
 
-#: includes/Admin/Troubleshooting.php:631
+#: includes/Admin/Troubleshooting.php:634
 msgid "Add <strong>Archive Products</strong> widget to the template <strong>%s</strong> or create a new template dedicated to the WooCommerce search results page. Learn how to do it in <a href=\"%s\" target=\"_blank\">our documentation</a>."
 msgstr "Añade el widget <strong>Archivo de productos</strong> a la plantilla <strong>%s</strong> o crea una nueva plantilla dedicada para la página de resultados de búsqueda de WooCommerce. Aprende cómo hacerlo en <a href=\"%s\" target=\"_blank\">nuestra documentación</a>."
 
-#: includes/Admin/Troubleshooting.php:629
+#: includes/Admin/Troubleshooting.php:632
 msgid "You are using Elementor and we noticed that the template used in the search results page titled <strong>%s</strong> does not include the <strong>Archive Products</strong> widget."
 msgstr "Estás usando Elementor y hemos visto que la plantilla usada en la página de resultados de búsqueda, titulada <strong>%s</strong>, no incluye el widget <strong>Archivo de productos</strong>."
 
-#: includes/Admin/Troubleshooting.php:628
+#: includes/Admin/Troubleshooting.php:631
 msgid "There is no correct template in the Elementor Theme Builder for the WooCommerce search results page."
 msgstr "No hay una plantilla correcta en el maquetador de temas Elementor para la página de resultados de WooCommerce."
 
-#: includes/Admin/Troubleshooting.php:619
-#: includes/Admin/Troubleshooting.php:670
+#: includes/Admin/Troubleshooting.php:622
+#: includes/Admin/Troubleshooting.php:673
 msgid "Dismiss"
 msgstr "Descartar"
 
@@ -597,7 +597,7 @@ msgstr "Añade FiboSearch como elemento del menú"
 msgid "Note: We currently only support the header type: \"Header 10\""
 msgstr "Nota: Actualmente solo es compatible el tipo de cabecera: «Cabecera 10»"
 
-#: includes/Admin/Troubleshooting.php:750
+#: includes/Admin/Troubleshooting.php:753
 msgid "TranslatePress"
 msgstr "TranslatePress"
 
@@ -631,11 +631,11 @@ msgstr "Motor de búsqueda moderno basado en un índice invertido y algoritmos a
 msgid "FiboSearch"
 msgstr "FiboSearch"
 
-#: ajax-search-for-woocommerce.php:204
+#: ajax-search-for-woocommerce.php:208
 msgid "%s is enabled but not effective. It requires %s in order to work."
 msgstr "%s está activado, pero no es efectivo. Necesita %s para funcionar."
 
-#: ajax-search-for-woocommerce.php:186
+#: ajax-search-for-woocommerce.php:190
 msgid "%s: You need PHP version at least 7.0 to run this plugin. You are currently using PHP version %s."
 msgstr "%s: Para ejecutar este plugin, necesitas al menos la versión 7.0 de PHP. Actualmente estás usando la versión %s de PHP "
 
@@ -658,7 +658,7 @@ msgstr "Ajustes"
 msgid "FiboSearch - AJAX Search for WooCommerce"
 msgstr "FiboSearch - AJAX Search for WooCommerce"
 
-#: includes/Admin/Troubleshooting.php:874
+#: includes/Admin/Troubleshooting.php:877
 msgid "Server environment"
 msgstr "Entorno del servidor"
 
@@ -674,24 +674,24 @@ msgstr "Sin reglas"
 msgid "Filters"
 msgstr "Filtros"
 
-#: includes/Helpers.php:1222
+#: includes/Helpers.php:1323
 msgid "Sold by:"
 msgstr "Vendido por:"
 
-#: includes/Helpers.php:1219
+#: includes/Helpers.php:1320
 msgid "Vendors"
 msgstr "Vendedores"
 
-#: includes/Helpers.php:1215
+#: includes/Helpers.php:1316
 msgid "Vendor"
 msgstr "Vendedor"
 
-#: includes/Admin/Troubleshooting.php:726
+#: includes/Admin/Troubleshooting.php:729
 msgid "Incompatible \"Searching by Text\" extension in WOOF - WooCommerce Products Filter"
 msgstr "Extensión «Búsqueda por texto» incompatible en WOOF - WooCommerce Products Filter"
 
 #: includes/Admin/Troubleshooting.php:487
-#: includes/Admin/Troubleshooting.php:533
+#: includes/Admin/Troubleshooting.php:536
 msgid "Extensions should looks like the picture below:"
 msgstr "Las extensiones deben verse como la siguiente imagen:"
 
@@ -699,7 +699,7 @@ msgstr "Las extensiones deben verse como la siguiente imagen:"
 msgid "Go to <code>WooCommerce -> Settings -> <a href=\"%s\" target=\"_blank\">Products Filter (tab)</a> -> Extensions (tab)</code>, uncheck <code>Searching by Text</code> extension and save changes."
 msgstr "Ir a <code>WooCommerce -> Ajustes -> <a href=\"%s\" target=\"_blank\">Filtro de productos (pestaña)</a> -> Extensiones (pestaña)</code>, desmarcar la extensión <code>Buscando por texto</code> y guardar cambios."
 
-#: includes/Admin/Troubleshooting.php:530
+#: includes/Admin/Troubleshooting.php:533
 msgid "Incompatible \"HUSKY - Advanced searching by Text\" extension from \"WOOF - WooCommerce Products Filter plugin\" is active"
 msgstr "Extensión «Buscando por texto» incompatible desde que está activo el plugin WOOF - WooCommerce Products Filter"
 
@@ -708,11 +708,11 @@ msgstr "Extensión «Buscando por texto» incompatible desde que está activo el
 msgid "Search icon color"
 msgstr "Color del icono de buscar"
 
-#: includes/Admin/Troubleshooting.php:718
+#: includes/Admin/Troubleshooting.php:721
 msgid "Incompatible plugins"
 msgstr "Los plugins no son compatibles"
 
-#: includes/Admin/Troubleshooting.php:714
+#: includes/Admin/Troubleshooting.php:717
 msgid "PHP extensions"
 msgstr "Extensiones de PHP"
 
@@ -726,14 +726,14 @@ msgstr "Ve a <code>WooCommerce -> Ajustes -> <a href=\"%s\" target=\"_blank\">Pr
 
 #: includes/Admin/Troubleshooting.php:434
 #: includes/Admin/Troubleshooting.php:485
-#: includes/Admin/Troubleshooting.php:531
-#: includes/Admin/Troubleshooting.php:567
-#: includes/Admin/Troubleshooting.php:630
+#: includes/Admin/Troubleshooting.php:534
+#: includes/Admin/Troubleshooting.php:570
+#: includes/Admin/Troubleshooting.php:633
 msgid "Solution"
 msgstr "Solución"
 
 #: includes/Admin/Troubleshooting.php:433
-#: includes/Admin/Troubleshooting.php:722
+#: includes/Admin/Troubleshooting.php:725
 msgid "Incorrect \"Add to cart\" behaviour in WooCommerce settings"
 msgstr "Comportamiento incorrecto en «Añadir al carrito» en los ajustes de WooCommerce"
 
@@ -750,7 +750,7 @@ msgid "Great! Our plugin works great with this version of WordPress."
 msgstr "¡Fantástico! Nuestro plugin funciona muy bien con esta versión de WordPress."
 
 #: includes/Admin/Troubleshooting.php:394
-#: includes/Admin/Troubleshooting.php:710
+#: includes/Admin/Troubleshooting.php:713
 msgid "WordPress version"
 msgstr "Versión de WordPress"
 
@@ -859,7 +859,7 @@ msgstr "Por defecto"
 msgid "Regeneration of images started. The process will continue in the background."
 msgstr "Se inició la regeneración de imágenes. El proceso continuará en segundo plano."
 
-#: includes/Admin/Troubleshooting.php:679
+#: includes/Admin/Troubleshooting.php:682
 msgid "Regenerate WooCommerce images"
 msgstr "Regenerar imágenes de WooCommerce"
 
@@ -903,7 +903,7 @@ msgstr "<b>Nuevo motor de búsqueda ultrarrápido</b>: funciona muy rápido incl
 msgid "Update now and boost your sales. You will receive a <b>30-day satisfaction guarantee</b>.  A return on investment will come very quickly."
 msgstr "Actualiza ahora y aumenta tus ventas. Recibirás <b>garantía de satisfacción de 30 días</b>. Un retorno de la inversión vendrá muy rápidamente."
 
-#: includes/Helpers.php:1225
+#: includes/Helpers.php:1326
 msgid "continue reading"
 msgstr "seguir leyendo"
 
@@ -1041,11 +1041,11 @@ msgstr "Ajustes de búsqueda"
 msgid "Starting"
 msgstr "Iniciando"
 
-#: includes/Helpers.php:1223
+#: includes/Helpers.php:1324
 msgid "Featured"
 msgstr "Destacado"
 
-#: includes/Helpers.php:1221
+#: includes/Helpers.php:1322
 msgid "Sale"
 msgstr "Oferta"
 
@@ -1077,7 +1077,7 @@ msgstr "Nombre del producto de ejemplo"
 msgid "Lorem <strong>ipsum</strong> dolor sit amet, consectetur adipiscing elit. Quisque gravida lacus nec diam porttitor pharetra. Nulla facilisi. Proin pharetra imperdiet neque, non varius."
 msgstr "Lorem <strong>ipsum</strong> dolor sit amet, consectetur adipiscing elit. Quisque gravida lacus nec diam porttitor pharetra. Nulla facilisi. Proin pharetra imperdiet neque, non varius."
 
-#: includes/Helpers.php:1220
+#: includes/Helpers.php:1321
 msgid "SKU"
 msgstr "SKU"
 
@@ -1085,7 +1085,7 @@ msgstr "SKU"
 msgid "Sample product <strong>name</strong>"
 msgstr "<strong>Nombre</strong> del producto de muestra"
 
-#: includes/Helpers.php:1216 includes/Settings.php:413
+#: includes/Helpers.php:1317 includes/Settings.php:413
 msgid "Products"
 msgstr "Productos"
 
@@ -1093,11 +1093,11 @@ msgstr "Productos"
 msgid "Sample page <strong>name</strong>"
 msgstr "<strong>Nombre</strong> de la página de muestra"
 
-#: includes/Helpers.php:1214
+#: includes/Helpers.php:1315
 msgid "Page"
 msgstr "Página"
 
-#: includes/Helpers.php:1218
+#: includes/Helpers.php:1319
 msgid "Pages"
 msgstr "Páginas"
 
@@ -1105,11 +1105,11 @@ msgstr "Páginas"
 msgid "Sample post <strong>name</strong>"
 msgstr "<strong>Nombre</strong> de la entrada de muestra "
 
-#: includes/Helpers.php:1213
+#: includes/Helpers.php:1314
 msgid "Post"
 msgstr "Entrada"
 
-#: includes/Helpers.php:1217
+#: includes/Helpers.php:1318
 msgid "Posts"
 msgstr "Entradas"
 
@@ -1117,7 +1117,7 @@ msgstr "Entradas"
 msgid "Sample tag <strong>name</strong>"
 msgstr "<strong>Nombre</strong> de la etiqueta de muestra"
 
-#: includes/Engines/WordPressNative/Search.php:1005
+#: includes/Engines/WordPressNative/Search.php:1013
 msgid "Tags"
 msgstr "Etiquetas"
 
@@ -1125,7 +1125,7 @@ msgstr "Etiquetas"
 msgid "Sample category <strong>name</strong>"
 msgstr "<strong>Nombre</strong> de la categoría de muestra"
 
-#: includes/Engines/WordPressNative/Search.php:1003
+#: includes/Engines/WordPressNative/Search.php:1011
 msgid "Categories"
 msgstr "Categorías"
 
@@ -1154,7 +1154,7 @@ msgstr "Barra de búsqueda"
 msgid "Preview"
 msgstr "Vista previa"
 
-#: includes/Helpers.php:1211 includes/Settings.php:447
+#: includes/Helpers.php:1312 includes/Settings.php:447
 msgid "See all products..."
 msgstr "Ver todos los productos..."
 
@@ -1319,7 +1319,7 @@ msgstr "¡Acelera la búsqueda! (incluso 10 veces más rápido) - ¡A los usuari
 msgid "Contact"
 msgstr "Contacto"
 
-#: includes/Helpers.php:1224
+#: includes/Helpers.php:1325
 msgctxt "in categories fe. in Books > Crime stories"
 msgid "in"
 msgstr "en"
@@ -1360,7 +1360,7 @@ msgstr "El equipo de FiboSearch ha invertido incontables horas desarrollándolo 
 msgid "Hey %s, it's Damian Góra from %s. You have used this free plugin for some time now, and I hope you like it!"
 msgstr "Hola %s, soy Damian Góra de %s. Has usando este plugin gratuito desde hace tiempo ya, y espero que estés satisfecho con él!"
 
-#: includes/Helpers.php:1209 includes/Helpers.php:1227
+#: includes/Helpers.php:1310 includes/Helpers.php:1328
 #: includes/Settings.php:409
 msgid "No results"
 msgstr "No hay resultados"
@@ -1386,11 +1386,11 @@ msgstr "Ajax (en vivo) formulario de búsqueda para WooCommerce"
 msgid "Products search"
 msgstr "Búsqueda de productos"
 
-#: includes/Engines/WordPressNative/Search.php:1006
+#: includes/Engines/WordPressNative/Search.php:1014
 msgid "Tag"
 msgstr "Etiqueta"
 
-#: includes/Engines/WordPressNative/Search.php:1004
+#: includes/Engines/WordPressNative/Search.php:1012
 msgid "Category"
 msgstr "Categoría"
 
@@ -1458,7 +1458,7 @@ msgstr "Mostrar imagen de producto"
 msgid "The Details Panel is an additional container for extended information. The details change dynamically when the cursor hovers over one of the suggestions."
 msgstr "El panel de detalles es un contenedor adicional para información extendida. Los detalles se cambian dinámicamente cuando un usuario pasa el cursor sobre una de las sugerencias."
 
-#: includes/Helpers.php:1230 includes/Settings.php:251
+#: includes/Helpers.php:1331 includes/Settings.php:251
 msgid "Search for products..."
 msgstr "Buscar productos ..."
 
