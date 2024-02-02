@@ -11,7 +11,7 @@ if ( $view_args['products']->have_posts() ) {
 	$_wp_query           = $GLOBALS['wp_query'];
 	$GLOBALS['wp_query'] = $view_args['products'];
 
-	if ( WCCS()->WCCS_Helpers->wc_version_check( '3.3' ) ) {
+	if ( WCCS_Helpers::wc_version_check( '3.3' ) ) {
 		$paginated = ! $view_args['products']->get( 'no_found_rows' );
 		// Setup the loop.
 		wc_setup_loop( array(
@@ -36,11 +36,11 @@ if ( $view_args['products']->have_posts() ) {
 
 	woocommerce_product_loop_start();
 
-	if ( ! WCCS()->WCCS_Helpers->wc_version_check( '3.3' ) ) {
+	if ( ! WCCS_Helpers::wc_version_check( '3.3' ) ) {
 		woocommerce_product_subcategories();
 	}
 
-	if ( WCCS()->WCCS_Helpers->wc_version_check( '3.3' ) ) {
+	if ( WCCS_Helpers::wc_version_check( '3.3' ) ) {
 		if ( wc_get_loop_prop( 'total' ) ) {
 			while ( $view_args['products']->have_posts() ) {
 				$view_args['products']->the_post();
@@ -65,7 +65,7 @@ if ( $view_args['products']->have_posts() ) {
 
 	wp_reset_postdata();
 
-	if ( WCCS()->WCCS_Helpers->wc_version_check( '3.3' ) ) {
+	if ( WCCS_Helpers::wc_version_check( '3.3' ) ) {
 		wc_reset_loop();
 	}
 

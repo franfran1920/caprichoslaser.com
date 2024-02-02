@@ -210,13 +210,13 @@ class WCCS_Settings_Manager {
 								'change_display_price' => array(
 									'id'      => 'change_display_price',
 									'name'    => __( 'Change Display Price', 'easy-woocommerce-discounts' ),
-									'desc'    => sprintf( __( 'When change with HTML selected it shows discounted price as %1$s In other words the main price shown as a deleted price.%2$sWhen change without HTML selected it shows discounted price as %3$s and does not show the product main price.', 'easy-woocommerce-discounts' ), '<code><del>40$</del> 20$</code>', '<br/>', '<code>20$</code>' ),
 									'type'    => 'select',
-									'std'     => 'simple',
+									'std'     => 'all',
 									'options' => array(
 										'none'           => __( 'Do not change', 'easy-woocommerce-discounts' ),
-										'simple'         => __( 'Change with HTML - Include simple adjustments', 'easy-woocommerce-discounts' ),
-										'simple_ex_html' => __( 'Change whithout HTML - Include simple adjustments', 'easy-woocommerce-discounts' ),
+										'all'            => __( 'Change price - simple and bulk prices', 'easy-woocommerce-discounts' ),
+										'simple'         => __( 'Change price - simple prices', 'easy-woocommerce-discounts' ),
+										'simple_ex_html' => __( 'Change price - simple prices without strikethrough price', 'easy-woocommerce-discounts' ),
 									),
 								),
 								'sale_badge' => array(

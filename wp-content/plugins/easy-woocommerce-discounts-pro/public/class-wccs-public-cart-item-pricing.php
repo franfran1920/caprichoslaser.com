@@ -286,7 +286,7 @@ class WCCS_Public_Cart_Item_Pricing {
 		}
 
 		// Get discount limit.
-		$discount_limit = WCCS()->WCCS_Helpers->get_pricing_discount_limit( $base_price );
+		$discount_limit = WCCS_Helpers::get_pricing_discount_limit( $base_price );
 
 		$discount_amounts = array();
 		foreach ( $discounts as $discount_id => $discount ) {

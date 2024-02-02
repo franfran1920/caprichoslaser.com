@@ -17,7 +17,7 @@ class WCCS_Order_Helpers {
 	 *                             paginate is true, or just an array of values.
 	 */
 	public function wc_get_orders( array $args = array() ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return wc_get_orders( $args );
 		}
 
@@ -106,7 +106,7 @@ class WCCS_Order_Helpers {
 	 * @return array
 	 */
 	public function wc_get_is_paid_statuses() {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return wc_get_is_paid_statuses();
 		}
 
@@ -123,7 +123,7 @@ class WCCS_Order_Helpers {
 	 * @return string
 	 */
 	public function get_order_date_created( $order ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return (string) $order->get_date_created();
 		}
 

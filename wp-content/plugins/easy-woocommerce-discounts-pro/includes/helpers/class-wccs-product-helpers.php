@@ -49,7 +49,7 @@ class WCCS_Product_Helpers {
 	 * @return int
 	 */
 	public function get_parent_id( WC_Product $product ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return $product->get_parent_id();
 		}
 
@@ -67,7 +67,7 @@ class WCCS_Product_Helpers {
 	 * @return array
 	 */
 	public function wc_get_product_term_ids( $product_id, $taxonomy ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return wc_get_product_term_ids( $product_id, $taxonomy );
 		}
 
@@ -96,7 +96,7 @@ class WCCS_Product_Helpers {
 			WCCS()->WCCS_Product_Price_Replace->disable_hooks();
 		}
 
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			$price_to_display = (float) wc_get_price_to_display( $product, $args );
 			if ( true === $wc_price ) {
 				// Enable plugin price replacer hooks.
@@ -276,7 +276,7 @@ class WCCS_Product_Helpers {
 			if ( empty( $cats_array ) && empty( $tags_array ) && ! apply_filters( 'woocommerce_conditions_product_related_posts_force_display', false, $product_id ) ) {
 				$related_posts = array();
 			} else {
-				if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+				if ( WCCS_Helpers::wc_version_check() ) {
 					$data_store    = WC_Data_Store::load( 'product' );
 					$related_posts = $data_store->get_related_products( $cats_array, $tags_array, $exclude_ids, ( $limit > 0 ? $limit + 10 : 9999999 ), $product_id );
 				} else {
@@ -348,7 +348,7 @@ class WCCS_Product_Helpers {
 			$product = wc_get_product( $product );
 		}
 
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return $product->is_on_sale( $context );
 		}
 

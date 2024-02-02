@@ -32,7 +32,7 @@ class WCCS_Condition_Validator {
 			return;
 		}
 
-		if ( isset( WCCS()->cart ) ) {
+		if ( WCCS()->cart ) {
 			$this->cart = WCCS()->cart;
 		}
 	}
@@ -43,6 +43,29 @@ class WCCS_Condition_Validator {
 		}
 
 		$this->init_cart();
+
+		// New structure conditions that supports OR conditions too.
+		if ( is_array( $conditions[0] ) && ! isset( $conditions[0]['condition'] ) ) {
+			$empty = true;
+			foreach ( $conditions as $group ) {
+				if ( empty( $group ) ) {
+					continue;
+				}
+
+				$empty = false;
+				$valid = true;
+				foreach ( $group as $condition ) {
+					if ( ! $this->is_valid( $condition ) ) {
+						$valid = false;
+						break;
+					}
+				}
+				if ( $valid ) {
+					return true;
+				}
+			}
+			return $empty;
+		}
 
 		foreach ( $conditions as $condition ) {
 			if ( 'one' === $match_mode && $this->is_valid( $condition ) ) {

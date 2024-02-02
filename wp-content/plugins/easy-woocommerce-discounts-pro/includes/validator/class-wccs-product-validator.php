@@ -24,6 +24,27 @@ class WCCS_Product_Validator {
 			return false;
 		}
 
+		// New structure conditions that supports OR conditions too.
+		if ( is_array( $items[0] ) && ! isset( $items[0]['item'] ) && ! isset( $items[0]['condition'] ) ) {
+			foreach ( $items as $group ) {
+				if ( empty( $group ) ) {
+					continue;
+				}
+
+				$valid = true;
+				foreach ( $group as $item ) {
+					if ( ! $this->is_valid( $item, $product, $variation, $variations ) ) {
+						$valid = false;
+						break;
+					}
+				}
+				if ( $valid ) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 		foreach ( $items as $item ) {
 			if ( ! $this->is_valid( $item, $product, $variation, $variations ) ) {
 				return false;
@@ -137,6 +158,9 @@ class WCCS_Product_Validator {
 		}
 
 		$variation = is_numeric( $variation ) ? $variation : $variation->get_id();
+		if ( 0 >= $variation ) {
+			$variation = is_numeric( $product ) ? $product : $product->get_id();
+		}
 
 		return $variation > 0 &&
 			in_array( $variation, array_filter( array_map( 'WCCS_Helpers::maybe_get_exact_item_id', $item['variations'] ) ) );
@@ -148,6 +172,9 @@ class WCCS_Product_Validator {
 		}
 
 		$variation = is_numeric( $variation ) ? $variation : $variation->get_id();
+		if ( 0 >= $variation ) {
+			$variation = is_numeric( $product ) ? $product : $product->get_id();
+		}
 
 		return $variation === 0 ||
 			! in_array( $variation, array_filter( array_map( 'WCCS_Helpers::maybe_get_exact_item_id', $item['variations'] ) ) );

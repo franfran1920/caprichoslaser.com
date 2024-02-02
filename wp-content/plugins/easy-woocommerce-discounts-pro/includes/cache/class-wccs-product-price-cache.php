@@ -60,6 +60,51 @@ class WCCS_Product_Price_Cache extends WCCS_Abstract_Cache {
         return $price;
     }
 
+    public function cache_price( $product, $price, array $args ) {
+        if ( ! $product || empty( $price ) || empty( $args ) ) {
+            return false;
+        }
+
+        $product = is_numeric( $product ) ? $product : $product->get_id();
+
+        $transient_name = $this->get_transient_name( array( 'product_id' => $product ) );
+        $transient_key  = md5( wp_json_encode( $args ) );
+        $transient      = get_transient( $transient_name );
+        $transient      = false === $transient ? array() : $transient;
+
+        /**
+         * Fix compatibility issue with Improved Product Options for WooCommerce plugin.
+         * https://codecanyon.net/item/improved-variable-product-attributes-for-woocommerce/9981757
+         * Because it changes variable product to a simple product in the
+         * XforWC_Improved_Options_Frontend::init_globals() method.
+         */
+        if ( ! is_array( $transient ) ) {
+            return false;
+        }
+
+        if ( ! isset( $transient[ $transient_key ] ) ) {
+            $transient[ $transient_key ] = $price;
+            set_transient( $transient_name, $transient );
+        }
+
+        return true;
+    }
+
+    public function get_cached_price( $product, array $args ) {
+        if ( ! $product || empty( $args ) ) {
+            return false;
+        }
+
+        $product = is_numeric( $product ) ? $product : $product->get_id();
+
+        $transient_name = $this->get_transient_name( array( 'product_id' => $product ) );
+        $transient_key  = md5( wp_json_encode( $args ) );
+        $transient      = get_transient( $transient_name );
+        $transient      = false === $transient ? array() : $transient;
+
+        return isset( $transient[ $transient_key ] ) ? $transient[ $transient_key ] : false;
+    }
+
     protected function get_valid_rules() {
         if ( ! $this->product_pricing ) {
             return array();

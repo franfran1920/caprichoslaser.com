@@ -5,6 +5,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div id="wc-conditions-wrapper">
-	<div id="wc-conditions-app">
-	</div>
+	<div id="wc-conditions-app"></div>
 </div>

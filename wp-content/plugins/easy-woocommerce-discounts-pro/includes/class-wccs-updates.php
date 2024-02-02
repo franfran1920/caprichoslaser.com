@@ -92,7 +92,7 @@ class WCCS_Updates {
 		if ( wp_using_ext_object_cache() ) {
             return;
 		}
-		
+
 		global $wpdb;
 
         $wpdb->query(
@@ -103,6 +103,148 @@ class WCCS_Updates {
                 $wpdb->esc_like( '_transient_timeout_wccs-product-' ) . '%'
             )
         );
+	}
+
+	public static function update_800() {
+		global $wpdb;
+
+		$results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}wccs_condition_meta WHERE meta_key IN ( 'conditions', 'date_time', 'items', 'exclude_items', 'purchased_items' )" );
+		if ( empty( $results ) ) {
+			return;
+		}
+
+		foreach ( $results as $row ) {
+			switch ( $row->meta_key ) {
+				case 'conditions':
+					self::add_or_condition( $row );
+					break;
+
+				case 'date_time':
+					self::add_or_date_time( $row );
+					break;
+
+				case 'items':
+					self::add_or_item( $row );
+					break;
+
+				default:
+					self::add_or_rule( $row, $row->meta_key );
+					break;
+			}
+		}
+
+		self::clear_pricing_caches();
+	}
+
+	public static function update_850() {
+		$settings = get_option( 'wccs_settings' );
+		if ( empty( $settings ) || ! isset( $settings['change_display_price'] ) ) {
+			return;
+		}
+
+		if ( 'simple' === $settings['change_display_price'] ) {
+			$settings['change_display_price'] = 'all';
+			update_option( 'wccs_settings', $settings );
+		}
+	}
+
+	public static function update_required() {
+		$current_db_version = get_option( 'woocommerce_conditions_db_version' );
+		$upgraded_from      = get_option( 'wccs_version_upgraded_from' );
+		return false !== $upgraded_from && ( false === $current_db_version || version_compare( $current_db_version, '8.0.0', '<' ) );
+	}
+
+	protected static function add_or_condition( $row ) {
+		if ( empty( $row ) || empty( $row->wccs_condition_id ) ) {
+			return;
+		}
+
+		$rules = maybe_unserialize( $row->meta_value );
+		if ( empty( $rules ) || isset( $rules[0][0] ) ) {
+			return;
+		}
+
+		global $wpdb;
+		$type = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->prefix}wccs_condition_meta WHERE wccs_condition_id = %d AND meta_key = 'conditions_match_mode'", (int) $row->wccs_condition_id ) );
+		$type = ! empty( $type ) ? strtolower( $type ) : 'all';
+
+		$update = array();
+		if ( 'all' === $type ) {
+			$update[] = $rules;
+		} elseif ( 'one' === $type ) {
+			foreach ( $rules as $rule ) {
+				$update[] = array( $rule );
+			}
+		}
+
+		WCCS()->condition_meta->update_meta( (int) $row->wccs_condition_id, 'conditions', $update );
+	}
+
+	protected static function add_or_date_time( $row ) {
+		if ( empty( $row ) || empty( $row->wccs_condition_id ) ) {
+			return;
+		}
+
+		$rules = maybe_unserialize( $row->meta_value );
+		if ( empty( $rules ) || isset( $rules[0][0] ) ) {
+			return;
+		}
+
+		global $wpdb;
+		$type = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->prefix}wccs_condition_meta WHERE wccs_condition_id = %d AND meta_key = 'date_times_match_mode'", (int) $row->wccs_condition_id ) );
+		$type = ! empty( $type ) ? strtolower( $type ) : 'one';
+
+		$update = array();
+		if ( 'all' === $type ) {
+			$update[] = $rules;
+		} elseif ( 'one' === $type ) {
+			foreach ( $rules as $rule ) {
+				$update[] = array( $rule );
+			}
+		}
+
+		WCCS()->condition_meta->update_meta( (int) $row->wccs_condition_id, 'date_time', $update );
+	}
+
+	protected static function add_or_item( $row ) {
+		if ( empty( $row ) || empty( $row->wccs_condition_id ) ) {
+			return;
+		}
+
+		$rules = maybe_unserialize( $row->meta_value );
+		if ( empty( $rules ) || isset( $rules[0][0] ) ) {
+			return;
+		}
+
+		global $wpdb;
+
+		$type = $wpdb->get_var( $wpdb->prepare( "SELECT `type` FROM {$wpdb->prefix}wccs_conditions WHERE id = %d", (int) $row->wccs_condition_id ) );
+		if ( empty( $type ) || 'auto-add-products' === $type ) {
+			return;
+		}
+
+		if ( 'pricing' === $type ) {
+			$mode = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->prefix}wccs_condition_meta WHERE wccs_condition_id = %d AND meta_key = 'mode'", (int) $row->wccs_condition_id ) );
+			// Do not update pricing products-group mode items.
+			if ( ! empty( $mode ) && 'products_group' === $mode ) {
+				return;
+			}
+		}
+
+		WCCS()->condition_meta->update_meta( (int) $row->wccs_condition_id, 'items', array( $rules ) );
+	}
+
+	protected static function add_or_rule( $row, $type ) {
+		if ( empty( $row ) || empty( $type )|| empty( $row->wccs_condition_id ) ) {
+			return;
+		}
+
+		$rules = maybe_unserialize( $row->meta_value );
+		if ( empty( $rules ) || isset( $rules[0][0] ) ) {
+			return;
+		}
+
+		WCCS()->condition_meta->update_meta( (int) $row->wccs_condition_id, sanitize_text_field( $type ), array( $rules ) );
 	}
 
 }

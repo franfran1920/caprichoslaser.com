@@ -36,7 +36,7 @@ class WCCS_Coupon_Helpers {
 	 * @return int
 	 */
 	public function wc_get_coupon_id_by_code( $code, $exclude = 0 ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return wc_get_coupon_id_by_code( $code, $exclude );
 		}
 

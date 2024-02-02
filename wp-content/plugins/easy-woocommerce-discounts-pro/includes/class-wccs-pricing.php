@@ -64,6 +64,7 @@ class WCCS_Pricing {
 			}
 
 			$this->cache['simple'][ $pricing->id ] = array(
+				'id'                    => absint( $pricing->id ),
 				'mode'                  => 'simple',
 				'apply_mode'            => ! empty( $pricing->apply_mode ) ? $pricing->apply_mode : 'all',
 				'order'                 => (int) $pricing->ordering,
@@ -116,6 +117,7 @@ class WCCS_Pricing {
 			}
 
 			$this->cache['bulk'][ $pricing->id ] = array(
+				'id'                    => absint( $pricing->id ),
 				'mode'                  => 'bulk',
 				'apply_mode'            => ! empty( $pricing->apply_mode ) ? $pricing->apply_mode : 'all',
 				'order'                 => (int) $pricing->ordering,
@@ -172,6 +174,7 @@ class WCCS_Pricing {
 			}
 
 			$this->cache['tiered'][ $pricing->id ] = array(
+				'id'                    => absint( $pricing->id ),
 				'mode'                  => 'tiered',
 				'apply_mode'            => ! empty( $pricing->apply_mode ) ? $pricing->apply_mode : 'all',
 				'order'                 => (int) $pricing->ordering,
@@ -236,7 +239,7 @@ class WCCS_Pricing {
 			}
 
 			$rule = array(
-				'id'                        => (int) $pricing->id,
+				'id'                        => absint( $pricing->id ),
 				'mode'                      => 'purchase',
 				'mode_type'                 => $pricing->mode,
 				'apply_mode'                => ! empty( $pricing->apply_mode ) ? $pricing->apply_mode : 'all',
@@ -296,6 +299,7 @@ class WCCS_Pricing {
 			}
 
 			$this->cache['products_group'][ $pricing->id ] = array(
+				'id'                    => absint( $pricing->id ),
 				'mode'                  => 'products_group',
 				'apply_mode'            => ! empty( $pricing->apply_mode ) ? $pricing->apply_mode : 'all',
 				'order'                 => (int) $pricing->ordering,
@@ -337,28 +341,41 @@ class WCCS_Pricing {
 
 		$product = 0;
 
-		// Pricing should exactly discount one product or one variation.
 		if ( empty( $pricing['items'] ) || 1 < count( $pricing['items'] ) ) {
 			return false;
-		} elseif ( 'products_in_list' !== $pricing['items'][0]['item'] && 'product_variations_in_list' !== $pricing['items'][0]['item'] ) {
+		}
+
+		// Find item
+		$item = null;
+		if ( isset( $pricing['items'][0][0] ) ) {
+			$item = $pricing['items'][0][0];
+		} elseif ( isset( $pricing['items'][0]['item'] ) ) {
+			$item = $pricing['items'][0];
+		}
+		if ( empty( $item ) || empty( $item['item'] ) ) {
 			return false;
-		} elseif ( 'products_in_list' === $pricing['items'][0]['item'] ) {
-			if ( empty( $pricing['items'][0]['products'] ) || 1 < count( $pricing['items'][0]['products'] ) ) {
+		}
+
+		// Pricing should exactly discount one product or one variation.
+		if ( 'products_in_list' !== $item['item'] && 'product_variations_in_list' !== $item['item'] ) {
+			return false;
+		} elseif ( 'products_in_list' === $item['item'] ) {
+			if ( empty( $item['products'] ) || 1 < count( $item['products'] ) ) {
 				return false;
 			}
 
-			$product = $pricing['items'][0]['products'][0];
+			$product = $item['products'][0];
 			$product = wc_get_product( $product );
 			if ( ! $product || 'simple' !== $product->get_type() ) {
 				return false;
 			}
 			$product = $product->get_id();
-		} elseif ( 'product_variations_in_list' === $pricing['items'][0]['item'] ) {
-			if ( empty( $pricing['items'][0]['variations'] ) || 1 < count( $pricing['items'][0]['variations'] ) ) {
+		} elseif ( 'product_variations_in_list' === $item['item'] ) {
+			if ( empty( $item['variations'] ) || 1 < count( $item['variations'] ) ) {
 				return false;
 			}
 
-			$product = $pricing['items'][0]['variations'][0];
+			$product = $item['variations'][0];
 		}
 
 		// Discounted product price should be zero or free.
@@ -401,6 +418,7 @@ class WCCS_Pricing {
 			}
 
 			$this->cache['exclude'][ $pricing->id ] = array(
+				'id'            => absint( $pricing->id ),
 				'mode'          => $pricing->mode,
 				'items'         => $pricing->items,
 				'exclude_items' => ! empty( $pricing->exclude_items ) ? $pricing->exclude_items : array(),

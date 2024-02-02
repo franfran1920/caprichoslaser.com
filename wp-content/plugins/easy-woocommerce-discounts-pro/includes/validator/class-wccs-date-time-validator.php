@@ -19,6 +19,28 @@ class WCCS_Date_Time_Validator {
 			return true;
 		}
 
+		if ( is_array( $date_times[0] ) && ! isset( $date_times[0]['type'] ) ) {
+			$empty = true;
+			foreach ( $date_times as $group ) {
+				if ( empty( $group ) ) {
+					continue;
+				}
+
+				$empty = false;
+				$valid = true;
+				foreach ( $group as $date_time ) {
+					if ( ! $this->is_valid( $date_time ) ) {
+						$valid = false;
+						break;
+					}
+				}
+				if ( $valid ) {
+					return true;
+				}
+			}
+			return $empty;
+		}
+
 		foreach ( $date_times as $date_time ) {
 			if ( 'one' === $match_mode && $this->is_valid( $date_time ) ) {
 				return true;

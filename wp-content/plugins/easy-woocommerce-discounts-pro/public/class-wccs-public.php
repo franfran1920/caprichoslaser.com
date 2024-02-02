@@ -157,7 +157,9 @@ class WCCS_Public {
 	public function enqueue_styles() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_style( 'wccs-public', plugin_dir_url( __FILE__ ) . 'css/wccs-public' . $suffix . '.css' );
+		if ( WCCS_Helpers::is_product_page() || is_cart() ) {
+			wp_enqueue_style( 'wccs-public', plugin_dir_url( __FILE__ ) . 'css/wccs-public' . $suffix . '.css' );
+		}
 	}
 
 	/**
@@ -170,7 +172,7 @@ class WCCS_Public {
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		if ( is_product() || ( ! empty( $post->post_content ) && false !== strpos( $post->post_content, '[product_page' ) ) ) {
+		if ( WCCS_Helpers::is_product_page() ) {
 			$display_countdown_timer = (int) WCCS()->settings->get_setting( 'display_countdown_timer', 0 );
 			if ( $display_countdown_timer ) {
 				wp_enqueue_script( 'flipdown', plugin_dir_url( __FILE__ ) . 'js/flipdown/flipdown.js', array(), '0.2.2', true );

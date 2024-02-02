@@ -1,15 +1,15 @@
-# Copyright (C) 2023 Discount Team
+# Copyright (C) 2024 Discount Team
 # This file is distributed under the http://www.gnu.org/licenses/gpl-2.0.html.
 msgid ""
 msgstr ""
-"Project-Id-Version: Discount Rules and Dynamic Pricing for WooCommerce 7.14.0\n"
+"Project-Id-Version: Discount Rules and Dynamic Pricing for WooCommerce 8.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easy-woocommerce-discounts-pro\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-08-10T21:12:27+08:00\n"
+"POT-Creation-Date: 2024-01-31T20:51:21+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: easy-woocommerce-discounts\n"
@@ -42,139 +42,139 @@ msgstr ""
 msgid "Some errors occurred in saving condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:220
+#: admin/class-wccs-admin-ajax.php:218
 msgid "Condition %s successfully."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:230
+#: admin/class-wccs-admin-ajax.php:228
 msgid "Errors occurred in saving condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:254
+#: admin/class-wccs-admin-ajax.php:252
 msgid "Condition id required to deleting it."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:262
+#: admin/class-wccs-admin-ajax.php:260
 msgid "Some errors occurred in deleting condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:278
+#: admin/class-wccs-admin-ajax.php:276
 msgid "Condition deleted successfully."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:288
+#: admin/class-wccs-admin-ajax.php:286
 msgid "Errors occurred in deleting condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:311
+#: admin/class-wccs-admin-ajax.php:309
 msgid "ID is required to updating condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:315
+#: admin/class-wccs-admin-ajax.php:313
 msgid "Type is required to updating condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:319
+#: admin/class-wccs-admin-ajax.php:317
 msgid "Data is required to updating condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:327
+#: admin/class-wccs-admin-ajax.php:325
 msgid "Some errors occurred in updating condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:377
+#: admin/class-wccs-admin-ajax.php:375
 msgid "Condition updated successfully."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:388
+#: admin/class-wccs-admin-ajax.php:386
 msgid "Errors occurred in updating condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:411
+#: admin/class-wccs-admin-ajax.php:409
 msgid "Conditions required for ordering"
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:415
+#: admin/class-wccs-admin-ajax.php:413
 msgid "Type required for ordering."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:423
+#: admin/class-wccs-admin-ajax.php:421
 msgid "Some errors occurred in ordering conditions."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:439
+#: admin/class-wccs-admin-ajax.php:437
 msgid "Conditions ordered successfully."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:450
+#: admin/class-wccs-admin-ajax.php:448
 msgid "Conditions did not ordered successfully."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:474
+#: admin/class-wccs-admin-ajax.php:472
 msgid "Condition id required to duplicate it."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:478
+#: admin/class-wccs-admin-ajax.php:476
 msgid "Type required for duplicating."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:486
+#: admin/class-wccs-admin-ajax.php:484
 msgid "Some errors occurred in duplicating condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:499
+#: admin/class-wccs-admin-ajax.php:497
 msgid "Errors occurred in duplicating condition."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:511
+#: admin/class-wccs-admin-ajax.php:509
 msgid "Condition duplicated successfully."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:533
+#: admin/class-wccs-admin-ajax.php:531
 msgid "Data is required to get live price."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:583
+#: admin/class-wccs-admin-ajax.php:581
 msgid "Error occurred in getting live price."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:606
+#: admin/class-wccs-admin-ajax.php:604
 msgid "Search term is required to select data."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:610
+#: admin/class-wccs-admin-ajax.php:608
 msgid "Type is required to select data."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:618
+#: admin/class-wccs-admin-ajax.php:616
 msgid "Some errors occurred in selecting data."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:687
+#: admin/class-wccs-admin-ajax.php:685
 msgid "Options are required to get select data."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:691
+#: admin/class-wccs-admin-ajax.php:689
 msgid "Type is required to get select data."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:699
+#: admin/class-wccs-admin-ajax.php:697
 msgid "Some errors occurred in getting select data."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:759
+#: admin/class-wccs-admin-ajax.php:757
 msgid "Bundle"
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:772
+#: admin/class-wccs-admin-ajax.php:770
 msgid "Addons"
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:815
+#: admin/class-wccs-admin-ajax.php:821
 msgid "Coupon name is required."
 msgstr ""
 
-#: admin/class-wccs-admin-ajax.php:823
+#: admin/class-wccs-admin-ajax.php:829
 msgid "Some errors occurred in getting coupon code."
 msgstr ""
 
@@ -200,8 +200,8 @@ msgid "Action failed. Please refresh the page and retry."
 msgstr ""
 
 #: admin/class-wccs-admin-notices.php:102
-#: includes/class-wc-conditions.php:166
-#: includes/class-wc-conditions.php:178
+#: includes/class-wc-conditions.php:173
+#: includes/class-wc-conditions.php:185
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
@@ -213,11 +213,11 @@ msgstr ""
 msgid "Total Discounts"
 msgstr ""
 
-#: admin/class-wccs-admin.php:201
+#: admin/class-wccs-admin.php:199
 msgid "settings"
 msgstr ""
 
-#: admin/class-wccs-admin.php:203
+#: admin/class-wccs-admin.php:201
 msgid "To receive automatic updates, license activation is required. Please visit %s to activate your plugin."
 msgstr ""
 
@@ -235,6 +235,7 @@ msgid "We need to update database to the latest version."
 msgstr ""
 
 #: admin/partials/admin_notices/update.php:15
+#: admin/partials/menu/update-required.php:15
 msgid "Run the updater"
 msgstr ""
 
@@ -264,6 +265,10 @@ msgstr ""
 
 #: admin/partials/admin_notices/updating.php:14
 msgid "Taking a while? Click here to run it now."
+msgstr ""
+
+#: admin/partials/menu/update-required.php:14
+msgid "Please update the plugin database then reload the page!"
 msgstr ""
 
 #: includes/api/class-wccs-rest-base-controller.php:29
@@ -303,16 +308,16 @@ msgstr ""
 msgid "Action not found."
 msgstr ""
 
-#: includes/class-wccs-activator.php:349
+#: includes/class-wccs-activator.php:358
 msgid "New discount addons added to the plugin, please visit the %s for more information."
 msgstr ""
 
-#: includes/class-wccs-activator.php:350
 #: includes/class-wccs-activator.php:359
+#: includes/class-wccs-activator.php:368
 msgid "Addons Page"
 msgstr ""
 
-#: includes/class-wccs-activator.php:358
+#: includes/class-wccs-activator.php:367
 msgid "URL Coupons for WooCommerce addon added to the plugin, please visit the %s for more information."
 msgstr ""
 
@@ -393,7 +398,7 @@ msgstr ""
 #: includes/class-wccs-settings-manager.php:82
 #: includes/class-wccs-settings-manager.php:930
 #: includes/class-wccs-settings-manager.php:950
-#: public/class-wccs-public-pricing-hooks.php:322
+#: public/class-wccs-public-pricing-hooks.php:324
 msgid "Discount Page"
 msgstr ""
 
@@ -548,7 +553,7 @@ msgstr ""
 #: includes/class-wccs-settings-manager.php:985
 #: includes/class-wccs-settings-manager.php:987
 #: public/class-wccs-public-cart-discount-hooks.php:184
-#: public/class-wccs-public-product-pricing.php:416
+#: public/class-wccs-public-product-pricing.php:552
 #: admin/js/conditions/index.js:1
 msgid "Discount"
 msgstr ""
@@ -565,20 +570,20 @@ msgstr ""
 msgid "Change Display Price"
 msgstr ""
 
-#: includes/class-wccs-settings-manager.php:213
-msgid "When change with HTML selected it shows discounted price as %1$s In other words the main price shown as a deleted price.%2$sWhen change without HTML selected it shows discounted price as %3$s and does not show the product main price."
-msgstr ""
-
-#: includes/class-wccs-settings-manager.php:217
+#: includes/class-wccs-settings-manager.php:216
 msgid "Do not change"
 msgstr ""
 
+#: includes/class-wccs-settings-manager.php:217
+msgid "Change price - simple and bulk prices"
+msgstr ""
+
 #: includes/class-wccs-settings-manager.php:218
-msgid "Change with HTML - Include simple adjustments"
+msgid "Change price - simple prices"
 msgstr ""
 
 #: includes/class-wccs-settings-manager.php:219
-msgid "Change whithout HTML - Include simple adjustments"
+msgid "Change price - simple prices without strikethrough price"
 msgstr ""
 
 #: includes/class-wccs-settings-manager.php:224
@@ -868,7 +873,7 @@ msgid "Title of Quantity Table"
 msgstr ""
 
 #: includes/class-wccs-settings-manager.php:538
-#: public/class-wccs-public-product-pricing.php:414
+#: public/class-wccs-public-product-pricing.php:550
 msgid "Discount per Quantity"
 msgstr ""
 
@@ -1001,7 +1006,7 @@ msgid "Label of the live price."
 msgstr ""
 
 #: includes/class-wccs-settings-manager.php:637
-#: public/class-wccs-public.php:180
+#: public/class-wccs-public.php:182
 msgid "Your Price"
 msgstr ""
 
@@ -1014,7 +1019,7 @@ msgid "Label of the live total price."
 msgstr ""
 
 #: includes/class-wccs-settings-manager.php:644
-#: public/class-wccs-public.php:181
+#: public/class-wccs-public.php:183
 msgid "Total Price"
 msgstr ""
 
@@ -1180,7 +1185,7 @@ msgstr ""
 
 #: includes/class-wccs-settings-manager.php:830
 #: includes/class-wccs-settings-manager.php:833
-#: public/class-wccs-public.php:182
+#: public/class-wccs-public.php:184
 #: admin/js/conditions/index.js:1
 msgid "Days"
 msgstr ""
@@ -1191,7 +1196,7 @@ msgstr ""
 
 #: includes/class-wccs-settings-manager.php:837
 #: includes/class-wccs-settings-manager.php:840
-#: public/class-wccs-public.php:183
+#: public/class-wccs-public.php:185
 msgid "Hours"
 msgstr ""
 
@@ -1201,7 +1206,7 @@ msgstr ""
 
 #: includes/class-wccs-settings-manager.php:844
 #: includes/class-wccs-settings-manager.php:847
-#: public/class-wccs-public.php:184
+#: public/class-wccs-public.php:186
 msgid "Minutes"
 msgstr ""
 
@@ -1211,7 +1216,7 @@ msgstr ""
 
 #: includes/class-wccs-settings-manager.php:851
 #: includes/class-wccs-settings-manager.php:854
-#: public/class-wccs-public.php:185
+#: public/class-wccs-public.php:187
 msgid "Seconds"
 msgstr ""
 
@@ -1320,7 +1325,7 @@ msgid "%s is a placeholder for discount page url and should be exists in the mes
 msgstr ""
 
 #: includes/class-wccs-settings-manager.php:943
-#: public/class-wccs-public-pricing-hooks.php:321
+#: public/class-wccs-public-pricing-hooks.php:323
 msgid "Visit our %1$s to view new discounted products based on your cart."
 msgstr ""
 
@@ -1338,14 +1343,14 @@ msgstr ""
 
 #: includes/class-wccs-settings-manager.php:973
 #: includes/class-wccs-settings-manager.php:975
-#: public/class-wccs-public-product-pricing.php:415
+#: public/class-wccs-public-product-pricing.php:551
 #: admin/js/conditions/index.js:1
 msgid "Price"
 msgstr ""
 
 #: includes/class-wccs-settings-manager.php:979
 #: includes/class-wccs-settings-manager.php:981
-#: public/class-wccs-public-product-pricing.php:417
+#: public/class-wccs-public-product-pricing.php:553
 #: admin/js/conditions/index.js:1
 msgid "Quantity"
 msgstr ""
@@ -1493,6 +1498,282 @@ msgstr ""
 
 #: admin/js/conditions/index.js:1
 msgid "There is not any item."
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "All products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Products in list"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Products not in list"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product variations in list"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product variations not in list"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Discounted Products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product attributes"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Products have tags"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Featured products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "On-sale products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Top rated products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Recently viewed products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Products added"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Top seller products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Top earner products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Top free products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Similar products to customer bought products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Similar products to customer cart products"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product Properties"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product regular price"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product display price"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product is on sale"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product stock quantity"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product meta field"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Products of"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Categories in list"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Categories not in list"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Product Taxonomies"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "At least one of"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "All of"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Only"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "None of"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Today"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "This week"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "This month"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Last month"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "This year"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Date"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Date Time"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Current"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Year"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "After"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Before"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Meta field key"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Empty"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Is not empty"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Contains"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Does not contain"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Begins with"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Ends with"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Equal to"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Equal to one in comma separated list"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Not equal to"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Not equal to all in comma separated list"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Less than"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Less equal to"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Greater than"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Greater equal to"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Is checked"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Is not checked"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Value"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Specific Date"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Time"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Start"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "End"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "%s And New Rule"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Delete Group"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "OR"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "%s OR New Group"
 msgstr ""
 
 #: admin/js/conditions/index.js:1
@@ -1944,31 +2225,7 @@ msgid "Quantity of bought"
 msgstr ""
 
 #: admin/js/conditions/index.js:1
-msgid "Product Taxonomies"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Before"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "After"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
 msgid "All time"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Date"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Date Time"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Current"
 msgstr ""
 
 #: admin/js/conditions/index.js:1
@@ -1988,27 +2245,7 @@ msgid "Previous years"
 msgstr ""
 
 #: admin/js/conditions/index.js:1
-msgid "Year"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "At least one of"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
 msgid "At least number of"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "All of"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Only"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "None of"
 msgstr ""
 
 #: admin/js/conditions/index.js:1
@@ -2064,78 +2301,6 @@ msgid "e.g. 96969, 969**, [96960 - 96970], SIQQ 1ZZ, TKCA 1ZZ"
 msgstr ""
 
 #: admin/js/conditions/index.js:1
-msgid "Meta field key"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Empty"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Is not empty"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Contains"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Does not contain"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Begins with"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Ends with"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Equal to"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Equal to one in comma separated list"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Not equal to"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Not equal to all in comma separated list"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Less than"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Less equal to"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Greater than"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Greater equal to"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Is checked"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Is not checked"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Value"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
 msgid "Equal to comma separated list"
 msgstr ""
 
@@ -2145,150 +2310,6 @@ msgstr ""
 
 #: admin/js/conditions/index.js:1
 msgid "Comma separated email addresses with (*) support. E.g: john@yahoo.com,*@gmail.com,*.edu"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Specific Date"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Time"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Start"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "End"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "All products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Products in list"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Products not in list"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product variations in list"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product variations not in list"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Discounted Products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product attributes"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Products have tags"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Featured products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "On-sale products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Top rated products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Recently viewed products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Products added"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Top seller products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Top earner products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Top free products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Similar products to customer bought products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Similar products to customer cart products"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product Properties"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product regular price"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product display price"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product is on sale"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product stock quantity"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Product meta field"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Products of"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Categories in list"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Categories not in list"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Today"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "This week"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "This month"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "Last month"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "This year"
 msgstr ""
 
 #: admin/js/conditions/index.js:1
@@ -2356,31 +2377,11 @@ msgid "Products that will be excluded from results of products list."
 msgstr ""
 
 #: admin/js/conditions/index.js:1
-msgid "Matching Mode"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "At least one date time should match"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "All date times should match"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
 msgid "There is not any date time."
 msgstr ""
 
 #: admin/js/conditions/index.js:1
 msgid "Conditions"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "At least one condition should match"
-msgstr ""
-
-#: admin/js/conditions/index.js:1
-msgid "All conditions should match"
 msgstr ""
 
 #: admin/js/conditions/index.js:1
@@ -2981,6 +2982,14 @@ msgstr ""
 
 #: admin/js/conditions/index.js:1
 msgid "Is it removable from the cart?"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Download Free"
+msgstr ""
+
+#: admin/js/conditions/index.js:1
+msgid "Buy Pro"
 msgstr ""
 
 #: admin/js/review/index.js:1

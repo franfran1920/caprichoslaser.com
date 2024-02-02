@@ -270,6 +270,15 @@ class WCCS_Activator {
 			'7.0.0' => array(
 				'WCCS_Updates::clear_pricing_caches',
 			),
+			'8.0.0' => array(
+				'WCCS_Updates::update_800',
+			),
+			'8.5.0' => array(
+				'WCCS_Updates::update_850',
+			),
+			'8.5.1' => array(
+				'WCCS_Updates::clear_pricing_caches',
+			),
 		);
 	}
 
@@ -313,13 +322,13 @@ class WCCS_Activator {
 	 */
 	private static function update() {
 		$current_db_version = get_option( 'woocommerce_conditions_db_version' );
-		$logger             = WCCS()->WCCS_Helpers->wc_get_logger();
+		$logger             = WCCS_Helpers::wc_get_logger();
 		$update_queued      = false;
 
 		foreach ( self::get_db_update_callbacks() as $version => $update_callbacks ) {
 			if ( version_compare( $current_db_version, $version, '<' ) ) {
 				foreach ( $update_callbacks as $update_callback ) {
-					if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+					if ( WCCS_Helpers::wc_version_check() ) {
 						$logger->info(
 							sprintf( 'Queuing %s - %s', $version, $update_callback ),
 							array( 'source' => 'wccs_db_updates' )
@@ -360,6 +369,17 @@ class WCCS_Activator {
 						) . '</p>'
 				);
 			}
+		}
+
+		if ( 
+			! defined( 'ASNP_WESB_PRO_VERSION' ) && 
+			! WC_Admin_Notices::has_notice( 'ewd_sale_badges' ) &&
+			! get_user_meta( get_current_user_id(), 'dismissed_ewd_sale_badges_notice', true )
+		) {
+			WC_Admin_Notices::add_custom_notice(
+				'ewd_sale_badges',
+				'<p><a href="https://www.asanaplugins.com/product/woocommerce-sale-badges-and-product-labels/" target="_blank"><strong>Sale Badges and Product Labels for WooCommerce</strong></a> Add beautiful sale badges and product labels or countdown timers to your products, categories, and discount or pricing rules.</p>'
+			);
 		}
 	}
 

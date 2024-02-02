@@ -62,7 +62,7 @@ class WCCS_Service_Manager {
 	public function get( $key, array $arguments = array(), $default = null, $create = true ) {
 		if ( isset( $this->container[ $key ] ) ) {
 			return $this->container[ $key ];
-		} elseif ( $create && class_exists( $key ) ) {
+		} elseif ( $create && false !== strpos( $key, 'WCCS' ) && class_exists( $key ) ) {
 			if ( empty( $arguments ) ) {
 				$class = new $key;
 				$this->set( $key, $class );

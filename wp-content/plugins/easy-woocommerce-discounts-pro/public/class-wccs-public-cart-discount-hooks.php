@@ -170,7 +170,7 @@ class WCCS_Public_Cart_Discount_Hooks {
 			return $label;
 		}
 
-		$code = WCCS()->WCCS_Helpers->wc_version_check() ? $coupon->get_code() : $coupon->code;
+		$code = WCCS_Helpers::wc_version_check() ? $coupon->get_code() : $coupon->code;
 		if ( ! WCCS()->cart_discount->is_cart_discount_coupon( $code ) ) {
 			return $label;
 		}
@@ -220,7 +220,7 @@ class WCCS_Public_Cart_Discount_Hooks {
 			}
 
 			$coupon = new WC_Coupon( $coupon_code );
-			$amount = WCCS()->WCCS_Helpers->wc_version_check() ? $coupon->get_amount() : $coupon->amount;
+			$amount = WCCS_Helpers::wc_version_check() ? $coupon->get_amount() : $coupon->amount;
 			if ( $amount <= 0 ) {
 				WC()->cart->remove_coupon( $coupon_code );
 			}
@@ -241,7 +241,7 @@ class WCCS_Public_Cart_Discount_Hooks {
 			return $msg;
 		}
 
-		$code = WCCS()->WCCS_Helpers->wc_version_check() ? $coupon->get_code() : $coupon->code;
+		$code = WCCS_Helpers::wc_version_check() ? $coupon->get_code() : $coupon->code;
 		if ( WCCS()->cart_discount->is_cart_discount_coupon( $code ) ) {
 			return '';
 		}

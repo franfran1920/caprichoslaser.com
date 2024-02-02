@@ -15,24 +15,24 @@ class WCCS_Shortcode_Products_List {
 
 		$wccs = WCCS();
 
-		$this->condition = $wccs->conditions->get_conditions( array( 'id' => $atts['id'], 'type' => 'products-list' ) );
-		$this->condition = ! empty( $this->condition ) ? $this->condition[0] : null;
-		if ( ! $this->condition ) {
+		$condition = $wccs->conditions->get_conditions( array( 'id' => $atts['id'], 'type' => 'products-list' ) );
+		$condition = ! empty( $condition ) ? $condition[0] : null;
+		if ( ! $condition ) {
 			return '';
 		}
 
-		if ( ! empty( $this->condition->date_time ) && ! $wccs->WCCS_Date_Time_Validator->is_valid_date_times( $this->condition->date_time, ( ! empty( $this->condition->date_times_match_mode ) ? $this->condition->date_times_match_mode : 'one' ) ) ) {
+		if ( ! empty( $condition->date_time ) && ! $wccs->WCCS_Date_Time_Validator->is_valid_date_times( $condition->date_time, ( ! empty( $condition->date_times_match_mode ) ? $condition->date_times_match_mode : 'one' ) ) ) {
 			return do_action( 'woocommerce_no_products_found' );
 		}
 
-		if ( ! empty( $this->condition->conditions ) && ! $wccs->WCCS_Condition_Validator->is_valid_conditions( $this->condition->conditions, ( ! empty( $this->condition->conditions_match_mode ) ? $this->condition->conditions_match_mode : 'all' ) ) ) {
+		if ( ! empty( $condition->conditions ) && ! $wccs->WCCS_Condition_Validator->is_valid_conditions( $condition->conditions, ( ! empty( $condition->conditions_match_mode ) ? $condition->conditions_match_mode : 'all' ) ) ) {
 			return do_action( 'woocommerce_no_products_found' );
 		}
 
 		$products_selector = new WCCS_Products_Selector();
 
-		$includes = $products_selector->select_products( $this->condition->include );
-		$excludes = $products_selector->select_products( $this->condition->exclude, 'exclude' );
+		$includes = $products_selector->select_products( $condition->include );
+		$excludes = $products_selector->select_products( $condition->exclude, 'exclude' );
 
 		if ( array( 'all_products' ) === $includes['include'] || array( 'all_products' ) === $excludes['include'] ) {
 			$include = array( 'all_products' );
@@ -61,7 +61,7 @@ class WCCS_Shortcode_Products_List {
 			array(
 				'include' => $include,
 				'exclude' => $exclude,
-				'paginate' => ! empty( $this->condition->paginate ) ? wc_string_to_bool( $this->condition->paginate ) : true,
+				'paginate' => ! empty( $condition->paginate ) ? wc_string_to_bool( $condition->paginate ) : true,
 			)
 		);
 

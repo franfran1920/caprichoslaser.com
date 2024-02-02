@@ -48,6 +48,30 @@ class WCCS_Discounted_Products_Selector {
 	}
 
 	public function get_products( array $items ) {
+		if ( empty( $items ) ) {
+			return array();
+		}
+
+		// OR-conditions support.
+		if ( isset( $items[0][0] ) ) {
+			$products = array();
+			foreach ( $items as $group ) {
+				$group_products = $this->get_group_products( $group );
+				if ( ! empty( $group_products ) ) {
+					$products = array_merge( $products, $group_products );
+				}
+			}
+			return $products;
+		}
+
+		return $this->get_group_products( $items );
+	}
+
+	protected function get_group_products( array $items ) {
+		if ( empty( $items ) ) {
+			return array();
+		}
+
 		$items = $this->sort_items( $items );
 		if ( empty( $items ) ) {
 			return array();

@@ -3,9 +3,9 @@ Contributors: asanaplugins
 Donate link: https://www.asanaplugins.com/
 Tags: woocommerce, woocommerce discounts, woocommerce pricing deals, woocommerce Buy One Get One Free, woocommerce bulk discounts, woocommerce pricing, woocommerce price rules, woocommerce advanced discounts, woocommerce pricing deals, woocommerce bulk discounts, woocommerce cart discounts, woocommerce pricing deals, woocommerce discount rules, discount rules for woocommerce, woocommerce shipping, dynamic shipping
 Requires at least: 4.4.2
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 5.3.0
-Stable tag: 7.14.0
+Stable tag: 8.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,11 +145,13 @@ It is an addon for the PRO version.
 
 == 🎉 Our Other Free Plugins ==
 * <strong>[WooCommerce Product Bundles](https://wordpress.org/plugins/easy-product-bundles-for-woocommerce/)
-* <strong>[WhatsApp Chat Button Plugin](https://wordpress.org/plugins/live-chat-button/)
+* <strong>[Sale Badges and Product Labels](https://wordpress.org/plugins/easy-sale-badges-for-woocommerce/)
+* <strong>[AI Content Writing and WhatsApp Chat](https://wordpress.org/plugins/live-chat-button/)
 
 == 💡 Our Other Pro Plugins ==
 * <strong>[WooCommerce Product Bundles Pro](https://www.asanaplugins.com/product/woocommerce-product-bundles/?utm_source=wp-org&utm_campaign=easy-woocommerce-discounts-free&utm_medium=link)
-* <strong>[WhatsApp Chat Button Pro](https://www.asanaplugins.com/product/whatsapp-chat-wordpress/?utm_source=wp-org&utm_campaign=easy-woocommerce-discounts-free&utm_medium=link)
+* <strong>[Sale Badges and Product Labels Pro](https://www.asanaplugins.com/product/woocommerce-sale-badges-and-product-labels/)
+* <strong>[AI Content Writing and WhatsApp Chat Pro](https://www.asanaplugins.com/product/whatsapp-chat-wordpress/?utm_source=wp-org&utm_campaign=easy-woocommerce-discounts-free&utm_medium=link)
 
 = Tags =
 
@@ -257,6 +259,40 @@ Just install the plugin pro version and create a purchase rule easily and we hav
 
 == Changelog ==
 
+= 8.5.1 - 31-01-2024 =
+* Fixed an issue in showing price range for the bulk pricing rules on the product and archive page.
+* Ensure compatibility with WooCommerce 8.5.2
+Note: We kindly request your support in spreading the word by leaving a 5-star review. ❤️😍 Feel free to include your ideas in the review, as we always value and consider your feedback. 🌹
+
+= 8.5.0 - 24-01-2024 =
+* Change product price based on bulk pricing rules on archive and product page.
+* Ensure compatibility with WooCommerce 8.5.1
+
+= 8.4.0 - 27-12-2023 =
+* Implemented a filter hook to disable changing the cart item price.
+* Implemented a cache mechanism for discounted products.
+* Resolved the issue where the countdown timer was not being displayed after adding OR conditions.
+
+= 8.3.1 - 16-11-2023 =
+* Fixed an issue in add new button for products group rules.
+
+= 8.3.0 - 16-11-2023 =
+* Fixed add products issue to the product bundle or group rules.
+* Fixed add products issue to the products list rules.
+* Ensure compatibility with WordPress 6.4
+* Ensure compatibility with WooCommerce 8.2.2
+
+= 8.2.0 - 26-10-2023 =
+* Fix issues in the plugin rules creation interface.
+
+= 8.1.0 - 09-10-2023 =
+* Added Run the Updater button to update required message in the plugin page.
+
+= 8.0.0 - 03-10-2023 =
+* Support for OR conditions, products and exclude products is added.
+* Fix an issue in validating product variations.
+* Compatibility with WooComemrce 8.1.1
+
 = 7.14.0 - 10-08-2023 =
 * Add WooCommerce HPOS(High Performance Order Storage) support.
 * Lock quantity change for auto added products in Woodmart theme mini cart.
@@ -268,7 +304,6 @@ Just install the plugin pro version and create a purchase rule easily and we hav
 * Update checkout feeds apply method to all of applicable rules.
 * Compatibility with WooComemrce 8.0.1
 * Compatibility with WordPress 6.3
-Note: Please help us spread the word with your 5-star review. ❤️😍 You can include your ideas in 5-star reviews as we always read them. 🌹
 
 = 7.13.0 - 19-07-2023 =
 * Fix an issue in checking product simple attributes in conditions.

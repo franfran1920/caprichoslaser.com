@@ -49,7 +49,9 @@ class WCCS_Public_Pricing_Hooks extends WCCS_Public_Controller {
 		$this->loader->add_action( 'woocommerce_cart_item_removed', $this, 'reset_applied_pricings' );
 		$this->loader->add_action( 'woocommerce_checkout_update_order_review', $this, 'reset_applied_pricings' );
 		$this->loader->add_action( 'woocommerce_after_cart_item_quantity_update', $this, 'reset_applied_pricings' );
-		$this->loader->add_filter( 'woocommerce_cart_item_price', $this, 'cart_item_price', 10, 3 );
+		if ( apply_filters( 'wccs_change_cart_item_price', true ) ) {
+			$this->loader->add_filter( 'woocommerce_cart_item_price', $this, 'cart_item_price', 10, 3 );
+		}
 		$this->loader->add_filter( 'woocommerce_widget_cart_item_quantity', $this, 'widget_cart_item_quantity', 10, 3 );
 
 		// Fix mini cart issue with subtotal conditions of simple pricing rules.
@@ -117,7 +119,7 @@ class WCCS_Public_Pricing_Hooks extends WCCS_Public_Controller {
 
 		$this->enable_change_price_hooks();
 
-		if ( WCCS_Helpers::should_change_display_price_html() ) {
+		if ( WCCS_Helpers::should_change_display_price_html( 'all' ) ) {
 			add_filter( 'woocommerce_get_price_html', array( &$this, 'get_price_html' ), 10, 2 );
 		}
 
@@ -143,7 +145,7 @@ class WCCS_Public_Pricing_Hooks extends WCCS_Public_Controller {
 	}
 
 	public function rest_api() {
-		if ( ! WCCS()->WCCS_Helpers->wc_is_rest_api_request() ) {
+		if ( ! WCCS_Helpers::wc_is_rest_api_request() ) {
 			return;
 		}
 

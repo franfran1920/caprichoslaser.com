@@ -68,7 +68,7 @@ class WCCS_Admin_Assets {
 			$this->enqueue_style( 'wp-color-picker' );
 		}
 
-		if ( isset( $menus['wc_conditions'] ) && $menus['wc_conditions'] === $screen_id ) {
+		if ( isset( $menus['wc_conditions'] ) && $menus['wc_conditions'] === $screen_id && ! WCCS_Updates::update_required() ) {
 			$this->enqueue_style( 'select2', $this->get_asset_url( 'admin/css/select2/select2.css' ), array(), '4.0.3' );
 			$this->enqueue_style( 'easy-woocommerce-discounts', $this->get_asset_url( 'admin/css/conditions/style.css' ) );
 			$this->enqueue_style( 'wccs-font-awesome', $this->get_asset_url( 'admin/css/font-awesome.css' ), array(), '4.6.3' );
@@ -153,6 +153,7 @@ class WCCS_Admin_Assets {
 					),
 					'urlCouponsEnabled' => $wccs->is_addon_active( 'url_coupons' ),
 					'dateTime' => date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ),
+					'saleBadgesAdv' => ! defined( 'ASNP_WESB_VERSION' ),
 				);
 			break;
 		}
@@ -191,6 +192,7 @@ class WCCS_Admin_Assets {
 	protected function localize_scripts() {
 		foreach ( $this->scripts as $handle ) {
 			$this->localize_script( $handle );
+
 		}
 	}
 

@@ -49,7 +49,15 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 	public function get_price_html( $price = '' ) {
 		do_action( 'wccs_public_product_pricing_before_get_price_html', $this, $price );
 
-		if ( 'variable' === $this->product_type ) {
+		if ( 'all' === WCCS()->settings->get_setting( 'change_display_price', 'all' ) ) {
+			$bulk = $this->get_bulk_price_html( $price );
+			if ( ! empty( $bulk ) ) {
+				do_action( 'wccs_public_product_pricing_after_get_price_html', $this, $price );
+				return apply_filters( 'wccs_public_product_pricing_' . __FUNCTION__, $bulk, $this );
+			}
+		}
+
+		if ( WCCS()->product_helpers->is_variable_product( $this->product ) ) {
 			$product_discounted_price = WCCS()->product_helpers->wc_get_variation_prices( $this->product, true, false );
 			if ( empty( $product_discounted_price['price'] ) ) {
 				do_action( 'wccs_public_product_pricing_after_get_price_html', $this, $price );
@@ -86,13 +94,13 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 			}
 
 			if ( $min_price !== $max_price ) {
-				$display_price = WCCS()->WCCS_Helpers->wc_format_price_range( $min_price, $max_price );
+				$display_price = WCCS_Helpers::wc_format_price_range( $min_price, $max_price );
 			} else {
 				$display_price = wc_price( $min_price );
 			}
 
 			if ( $min_product_discounted_price !== $max_product_discounted_price ) {
-				$discounted_price = WCCS()->WCCS_Helpers->wc_format_price_range( $min_product_discounted_price, $max_product_discounted_price );
+				$discounted_price = WCCS_Helpers::wc_format_price_range( $min_product_discounted_price, $max_product_discounted_price );
 			} else {
 				$discounted_price = wc_price( $min_product_discounted_price );
 			}
@@ -120,6 +128,120 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 		do_action( 'wccs_public_product_pricing_after_get_price_html', $this, $price );
 
 		return apply_filters( 'wccs_product_pricing_get_price_html', $discounted_price, $this->product );
+	}
+
+	protected function get_bulk_price_html( $price = '' ) {
+		if ( $this->is_in_exclude_rules() ) {
+			return false;
+		}
+
+		$rule = null;
+
+		if (
+			! $this->product->get_manage_stock() ||
+			! (int) WCCS()->settings->get_setting( 'quantity_table_stock_management', 0 ) ||
+			1 < $this->product->get_stock_quantity()
+		) {
+			$rule = $this->get_bulk_pricings();
+			$rule = ! empty( $rule ) ? current( $rule ) : null;
+		}
+
+		if ( empty( $rule ) || empty( $rule['quantities'] ) ) {
+			return false;
+		}
+
+		$cached_content = WCCS()->WCCS_Product_Price_Cache->get_cached_price( $this->product, array( 'rule' => absint( $rule['id'] ), 'price' => $price ) );
+		if ( false !== $cached_content ) {
+			return $cached_content;
+		}
+
+		$min = $rule['quantities'][ count( $rule['quantities'] ) - 1 ];
+		$max = $rule['quantities'][0];
+
+		$regular_price = '';
+		$prices        = array();
+
+		if ( WCCS()->product_helpers->is_variable_product( $this->product ) ) {
+			$variable_prices = WCCS()->product_helpers->wc_get_variation_prices( $this->product, true );
+			if ( empty( $variable_prices['price'] ) ) {
+				return false;
+			}
+
+			if ( ! isset( $max['min'] ) || 1 != $max['min'] ) {
+				$prices[] = current( $variable_prices['price'] );
+				$prices[] = end( $variable_prices['price'] );
+			} elseif ( isset( $max['min'] ) && 1 == $max['min'] && 0 == $max['discount'] ) {
+				if ( 'fixed_price' !== $max['discount_type'] ) {
+					$prices[] = current( $variable_prices['price'] );
+					$prices[] = end( $variable_prices['price'] );
+				}
+			}
+			
+			$v_price = $this->calculate_discounted_price( $min['discount'], $min['discount_type'] );
+			if ( isset( $v_price['min'] ) ) {
+				$prices[] = $v_price['min'];
+			}
+			if ( isset( $v_price['max'] ) ) {
+				$prices[] = $v_price['max'];
+			}
+
+			$v_price = $this->calculate_discounted_price( $max['discount'], $max['discount_type'] );
+			if ( isset( $v_price['min'] ) ) {
+				$prices[] = $v_price['min'];
+			}
+			if ( isset( $v_price['max'] ) ) {
+				$prices[] = $v_price['max'];
+			}
+
+			$min_reg = current( $variable_prices['regular_price'] );
+			$max_reg = end( $variable_prices['regular_price'] );
+			if ( $min_reg !== $max_reg ) {
+				$regular_price = WCCS_Helpers::wc_format_price_range( $min_reg, $max_reg );
+			} else {
+				$regular_price = wc_price( $min_reg );
+			}
+		} else {
+			$prices[] = $this->calculate_discounted_price( $min['discount'], $min['discount_type'] );
+			$prices[] = $this->calculate_discounted_price( $max['discount'], $max['discount_type'] );
+
+			if ( ! isset( $max['min'] ) || 1 != $max['min'] ) {
+				$prices[] = WCCS()->product_helpers->wc_get_price_to_display( $this->product );
+			} elseif ( isset( $max['min'] ) && 1 == $max['min'] && 0 == $max['discount'] ) {
+				if ( 'fixed_price' !== $max['discount_type'] ) {
+					$prices[] = WCCS()->product_helpers->wc_get_price_to_display( $this->product );
+				}
+			}
+
+			$regular_price = WCCS()->product_helpers->wc_get_price_to_display( $this->product, array( 'price' => WCCS()->product_helpers->wc_get_regular_price( $this->product ) ) );
+			$regular_price = wc_price( $regular_price );
+		}
+		
+		$prices = array_filter( $prices );
+		if ( empty( $prices ) ) {
+			return false;
+		}
+
+		$from = min( $prices );
+		$to   = max( $prices );
+
+		$content = '';
+		if ( isset( $from ) && isset( $to ) && $from != $to ) {
+			$content = wc_format_price_range( $from, $to );
+		} elseif ( isset( $from ) ) {
+			$content = wc_price( $from ) . $this->product->get_price_suffix();
+		} elseif ( isset( $to ) ) {
+			$content = wc_price( $to ) . $this->product->get_price_suffix();
+		}
+
+		if ( '' !== $regular_price && $regular_price != $content ) {
+			$content = '<del aria-hidden="true">' . $regular_price . '</del> <ins>' . $content . '</ins>' . $this->product->get_price_suffix();
+		}
+
+		$content = apply_filters( 'wccs_public_product_pricing_' . __FUNCTION__, $content, $this );
+
+		WCCS()->WCCS_Product_Price_Cache->cache_price( $this->product, $content, array( 'rule' => absint( $rule['id'] ), 'price' => $price ) );
+
+		return $content;
 	}
 
 	/**
@@ -209,12 +331,36 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 		}
 
 		do_action( 'wccs_public_product_pricing_before_get_discounted_price', $discount, $discount_type, $this );
+		$price = $this->calculate_discounted_price( $discount, $discount_type );
+		do_action( 'wccs_public_product_pricing_after_get_discounted_price', $discount, $discount_type, $this );
 
-		if ( 'variable' === $this->product_type ) {
+		if ( false === $price ) {
+			return WCCS()->product_helpers->wc_get_price_html( $this->product );
+		}
+
+		if ( is_array( $price ) ) {
+			if ( $price['min'] !== $price['max'] ) {
+				$price = WCCS_Helpers::wc_format_price_range( $price['min'], $price['max'] );
+			} else {
+				$price = wc_price( $price['min'] );
+			}
+		} else {
+			$price = wc_price( $price );
+		}
+
+		return $price . $this->product->get_price_suffix( $price );
+	}
+
+	public function calculate_discounted_price( $discount, $discount_type ) {
+		$discount = (float) $discount;
+		if ( $discount <= 0 || empty( $discount_type ) ) {
+			return false;
+		}
+
+		if ( WCCS()->product_helpers->is_variable_product( $this->product ) ) {
 			$variation_ids = $this->product->get_visible_children();
 			if ( empty( $variation_ids ) ) {
-				do_action( 'wccs_public_product_pricing_after_get_discounted_price', $discount, $discount_type, $this );
-				return WCCS()->product_helpers->wc_get_price_html( $this->product );
+				return false;
 			}
 
 			$variable_prices = array();
@@ -225,7 +371,7 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 					continue;
 				}
 
-				$discount_limit = WCCS()->WCCS_Helpers->get_pricing_discount_limit( $base_price );
+				$discount_limit = WCCS_Helpers::get_pricing_discount_limit( $base_price );
 
 				$discount_amount = 0;
 				if ( 'percentage_discount' === $discount_type ) {
@@ -285,21 +431,16 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 				$min_price = min( $variable_prices );
 				$max_price = max( $variable_prices );
 
-				if ( $min_price !== $max_price ) {
-					$price = WCCS()->WCCS_Helpers->wc_format_price_range( $min_price, $max_price );
-				} else {
-					$price = wc_price( $min_price );
-				}
-
-				do_action( 'wccs_public_product_pricing_after_get_discounted_price', $discount, $discount_type, $this );
-
-				return $price . $this->product->get_price_suffix( $price );
+				return array(
+					'min' => $min_price,
+					'max' => $max_price,
+				);
 			}
 		} // End if().
 		// Simple and Variation product.
 		else {
 			$base_price      = $this->get_base_price();
-			$discount_limit  = WCCS()->WCCS_Helpers->get_pricing_discount_limit( $base_price );
+			$discount_limit  = WCCS_Helpers::get_pricing_discount_limit( $base_price );
 			$discount_amount = 0;
 			if ( 'percentage_discount' === $discount_type ) {
 				if ( $discount / 100 * $base_price > 0 ) {
@@ -343,7 +484,7 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 				$price = WCCS_Helpers::maybe_exchange_price( $price );
 			}
 
-			$price = apply_filters(
+			return apply_filters(
 				'wccs_public_product_pricing_get_discounted_price_product',
 				$price,
 				$this->product,
@@ -352,14 +493,9 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 				$this
 			);
 
-			do_action( 'wccs_public_product_pricing_after_get_discounted_price', $discount, $discount_type, $this );
-
-			return wc_price( $price ) . $this->product->get_price_suffix( $price );
 		}
 
-		do_action( 'wccs_public_product_pricing_after_get_discounted_price', $discount, $discount_type, $this );
-
-		return WCCS()->product_helpers->wc_get_price_html( $this->product );
+		return false;
 	}
 
 	/**
@@ -851,7 +987,7 @@ class WCCS_Public_Product_Pricing extends WCCS_Public_Controller {
 		}
 
 		// Get discount limit.
-		$discount_limit = WCCS()->WCCS_Helpers->get_pricing_discount_limit( $base_price );
+		$discount_limit = WCCS_Helpers::get_pricing_discount_limit( $base_price );
 
 		$discount_amounts = array();
 		foreach ( $discounts as $discount ) {

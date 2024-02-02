@@ -37,7 +37,7 @@ class WCCS_Public_Products_List extends WCCS_Public_Controller {
 			'meta_query' => array(),
 		);
 
-		if ( WCCS()->WCCS_Helpers->wc_version_check( '3.3' ) ) {
+		if ( WCCS_Helpers::wc_version_check( '3.3' ) ) {
 			if ( $query_args['paginate'] ) {
 				$query_args['page'] = absint( empty( $_GET['product-page'] ) ? 1 : $_GET['product-page'] );
 			}

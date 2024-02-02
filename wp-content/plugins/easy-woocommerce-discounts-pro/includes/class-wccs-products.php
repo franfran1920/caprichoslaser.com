@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WCCS_Products {
 
+	protected $custom_taxonomies;
+
 	public function get_products( array $args = array() ) {
 		$args = wp_parse_args( $args, array(
 			'status'         => array( 'draft', 'pending', 'private', 'publish' ),
@@ -225,13 +227,11 @@ class WCCS_Products {
 			return array();
 		}
 
-		$helpers    = WCCS()->WCCS_Helpers;
 		$categories = array();
-
 		foreach ( $terms as $category ) {
 			$categories[] = (object) array(
 				'id'   => $category->term_id,
-				'text' => rtrim( $helpers->get_term_hierarchy_name( $category->term_id, 'product_cat', $args['separator'], $args['nicename'] ), $args['separator'] ),
+				'text' => rtrim( WCCS_Helpers::get_term_hierarchy_name( $category->term_id, 'product_cat', $args['separator'], $args['nicename'] ), $args['separator'] ),
 				'slug' => $category->slug,
 				'name' => $category->name,
 			);
@@ -556,6 +556,21 @@ class WCCS_Products {
 	 * @return array|string all_products string when all of products discounted.
 	 */
 	public function get_discounted_products( array $args = array() ) {
+		$args = wp_parse_args( $args, array(
+			'status'  => 'publish',
+			'return'  => 'ids',
+			'limit'   => -1,
+			'include' => array(),
+			'exclude' => array(),
+		) );
+
+		if ( 'ids' === $args['return'] ) {
+			$discounted_products = get_transient( 'wccs_discounted_products' );
+			if ( false !== $discounted_products ) {
+				return $discounted_products;
+			}
+		}
+
 		$wccs_pricing = WCCS()->pricing;
 		$pricings     = array();
 
@@ -576,14 +591,6 @@ class WCCS_Products {
 		if ( empty( $pricings['simple'] ) && empty( $pricings['bulk'] ) && empty( $pricings['tiered'] ) && empty( $pricings['purchase'] ) ) {
 			return array();
 		}
-
-		$args = wp_parse_args( $args, array(
-			'status'  => 'publish',
-			'return'  => 'ids',
-			'limit'   => -1,
-			'include' => array(),
-			'exclude' => array(),
-		) );
 
 		$product_selector = new WCCS_Discounted_Products_Selector();
 
@@ -633,7 +640,13 @@ class WCCS_Products {
 			return array();
 		}
 
-		return $this->get_products( $args );
+		$discounted_products = $this->get_products( $args );
+
+		if ( 'ids' === $args['return'] ) {
+			set_transient( 'wccs_discounted_products', $discounted_products, DAY_IN_SECONDS * 30 );
+		}
+
+		return $discounted_products;
 	}
 
 	/**

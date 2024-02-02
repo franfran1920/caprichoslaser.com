@@ -35,10 +35,10 @@ class WCCS_Background_Updater extends WP_Background_Process {
 	 */
 	public function dispatch() {
 		$dispatched = parent::dispatch();
-		$logger     = WCCS()->WCCS_Helpers->wc_get_logger();
+		$logger     = WCCS_Helpers::wc_get_logger();
 
 		if ( is_wp_error( $dispatched ) ) {
-			if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+			if ( WCCS_Helpers::wc_version_check() ) {
 				$logger->error(
 					sprintf( 'Unable to dispatch WooCommerce Conditions updater: %s', $dispatched->get_error_message() ),
 					array( 'source' => 'wccs_db_updates' )
@@ -103,26 +103,26 @@ class WCCS_Background_Updater extends WP_Background_Process {
 			define( 'WCCS_UPDATING', true );
 		}
 
-		$logger = WCCS()->WCCS_Helpers->wc_get_logger();
+		$logger = WCCS_Helpers::wc_get_logger();
 
 		if ( ! class_exists( 'WCCS_Updates' ) ) {
 			include_once( dirname( __FILE__ ) . '/class-wccs-updates.php' );
 		}
 
 		if ( is_callable( $callback ) ) {
-			if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+			if ( WCCS_Helpers::wc_version_check() ) {
 				$logger->info( sprintf( 'Running %s callback', $callback ), array( 'source' => 'wccs_db_updates' ) );
 			} else {
 				$logger->add( 'wccs_db_updates', sprintf( 'Running %s callback', $callback ) );
 			}
 			call_user_func( $callback );
-			if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+			if ( WCCS_Helpers::wc_version_check() ) {
 				$logger->info( sprintf( 'Finished %s callback', $callback ), array( 'source' => 'wccs_db_updates' ) );
 			} else {
 				$logger->add( 'wccs_db_updates', sprintf( 'Finished %s callback', $callback ) );
 			}
 		} else {
-			if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+			if ( WCCS_Helpers::wc_version_check() ) {
 				$logger->notice( sprintf( 'Could not find %s callback', $callback ), array( 'source' => 'wccs_db_updates' ) );
 			} else {
 				$logger->add( 'wccs_db_updates', sprintf( 'Could not find %s callback', $callback ) );
@@ -139,8 +139,8 @@ class WCCS_Background_Updater extends WP_Background_Process {
 	 * performed, or, call parent::complete().
 	 */
 	protected function complete() {
-		$logger = WCCS()->WCCS_Helpers->wc_get_logger();
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		$logger = WCCS_Helpers::wc_get_logger();
+		if ( WCCS_Helpers::wc_version_check() ) {
 			$logger->info( 'Data update complete', array( 'source' => 'wccs_db_updates' ) );
 		} else {
 			$logger->add( 'wccs_db_updates', 'Data update complete' );

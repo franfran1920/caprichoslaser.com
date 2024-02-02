@@ -693,10 +693,11 @@ class WCCS_Cart_Item_Pricing_Discounts {
 			$in_group       = array();
 			$group_quantity = 0;
 			foreach ( $pricing['groups'] as $group ) {
-				$group_quantity += $group['quantity'];
 				if ( WCCS()->WCCS_Product_Validator->is_valid_product( $group['items'], $this->product_id, $this->variation_id, ( ! empty( $this->item['variation'] ) ? $this->item['variation'] : array() ), $this->item ) ) {
 					if ( empty( $pricing['exclude_items'] ) || ! WCCS()->WCCS_Product_Validator->is_valid_product( $pricing['exclude_items'], $this->product_id, $this->variation_id, ( ! empty( $this->item['variation'] ) ? $this->item['variation'] : array() ), $this->item ) ) {
 						$in_group = $group;
+						$group_quantity += $group['quantity'];
+						break;
 					}
 				}
 			}

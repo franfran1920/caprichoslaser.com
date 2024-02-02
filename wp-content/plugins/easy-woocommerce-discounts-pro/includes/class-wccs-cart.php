@@ -315,7 +315,7 @@ class WCCS_Cart {
 
 		$cart_items = array();
 		foreach ( $cart_contents as $cart_item_key => $cart_item ) {
-			if ( $filter_auto_added_products && WCCS()->WCCS_Helpers->is_auto_added_product( $cart_item ) ) {
+			if ( $filter_auto_added_products && WCCS_Helpers::is_auto_added_product( $cart_item ) ) {
 				continue;
 			}
 

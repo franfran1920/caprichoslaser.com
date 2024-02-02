@@ -428,12 +428,24 @@ class WCCS_Helpers {
 		return ! empty( $simples );
 	}
 
-	public static function should_change_display_price_html() {
-		if ( 'simple' !== WCCS()->settings->get_setting( 'change_display_price', 'simple' ) ) {
+	public static function should_change_display_price_html( $type = 'simple' ) {
+		$change = WCCS()->settings->get_setting( 'change_display_price', 'all' );
+		if ( 'all' !== $change && 'simple' !== $change ) {
 			return false;
 		}
+		
 		$simples = WCCS()->pricing->get_simple_pricings();
-		return ! empty( $simples );
+		if ( ! empty( $simples ) ) {
+			return true;
+		}
+
+		if ( 'all' !== $type ) {
+			return false;
+		}
+
+		$bulks = WCCS()->pricing->get_bulk_pricings();
+
+		return ! empty( $bulks );
 	}
 
 	public static function is_allowed_auto_add_product_type( $type ) {
@@ -521,6 +533,15 @@ class WCCS_Helpers {
 		}
 
 		return array_filter( array_map( 'WCCS_Helpers::maybe_get_exact_attribute_id', $attributes ) );
+	}
+
+	public static function is_product_page() {
+		if ( is_product() ) {
+			return true;
+		}
+
+		global $post;
+		return ! empty( $post->post_content ) && false !== strpos( $post->post_content, '[product_page' );
 	}
 
 	public static function register_polyfills( $react = false ) {

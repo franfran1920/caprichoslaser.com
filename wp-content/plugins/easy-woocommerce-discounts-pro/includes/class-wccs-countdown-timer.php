@@ -13,7 +13,16 @@ class WCCS_Countdown_Timer {
     }
 
     public function get_valid_nearest_end_time( array $date_times, $match_mode = 'one' ) {
-        if ( ! $this->date_time_validator->is_valid_date_times( $date_times, $match_mode ) ) {
+        if ( empty( $date_times ) ) {
+			return false;
+		}
+
+		// It is a OR condition.
+		if ( is_array( $date_times[0] ) && ! isset( $date_times[0]['type'] ) ) {
+			return $this->get_or_rules_nearest_end_time( $date_times );
+		}
+
+		if ( ! $this->date_time_validator->is_valid_date_times( $date_times, $match_mode ) ) {
 			return false;
 		}
 
@@ -22,6 +31,53 @@ class WCCS_Countdown_Timer {
 		}
 
 		return $this->get_one_valid_nearest_end_time( $date_times );
+	}
+
+	protected function get_or_rules_nearest_end_time( array $date_times ) {
+		if ( empty( $date_times ) ) {
+			return false;
+		}
+
+		$valids = array();
+		foreach ( $date_times as $group ) {
+			if ( empty( $group ) ) {
+				continue;
+			}
+
+			$valid = true;
+			foreach ( $group as $date_time ) {
+				if ( empty( $date_time ) || ! $this->date_time_validator->is_valid( $date_time ) ) {
+					$valid = false;
+					break;
+				}
+			}
+			if ( $valid ) {
+				$valids[] = $group;
+			}
+		}
+		if ( empty( $valids ) ) {
+			return false;
+		}
+
+		$ends = array();
+		foreach ( $valids as $valid ) {
+			if ( $end = $this->get_all_valid_nearest_end_time( $valid ) ) {
+				$ends[] = $end;
+			}
+		}
+		if ( empty( $ends ) ) {
+			return false;
+		}
+
+		// Find nearest end time or minimum one.
+		$end = $ends[0];
+		for ( $i = 1; $i < count( $ends ); $i++ ) {
+			if ( strtotime( $end ) > strtotime( $ends[ $i ] ) ) {
+				$end = $ends[ $i ];
+			}
+		}
+
+		return $end;
 	}
 
 	protected function get_one_valid_nearest_end_time( array $date_times ) {

@@ -331,7 +331,7 @@ class WCCS_Product_Price_Replace {
         }
 
         // Do not replace price till woocommerce_cart_loaded_from_session done.
-        if ( ! did_action( 'woocommerce_cart_loaded_from_session' ) && ! WCCS()->WCCS_Helpers->wc_is_rest_api_request() ) {
+        if ( ! did_action( 'woocommerce_cart_loaded_from_session' ) && ! WCCS_Helpers::wc_is_rest_api_request() ) {
             return apply_filters( 'wccs_product_price_replace_should_replace', false, $price, $product, $price_type, $this  );
         }
 

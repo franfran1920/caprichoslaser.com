@@ -8,7 +8,7 @@ class WCCS_Background_Batch_Price_Updater {
 
     /**
      * Background process to update products price.
-     * 
+     *
      * @var WCCS_Background_Price_Updater
      */
     protected $background_process;
@@ -31,7 +31,7 @@ class WCCS_Background_Batch_Price_Updater {
             add_action( 'woocommerce_settings_saved', array( &$this, 'maybe_update_prices' ) );
             add_action( 'update_option_wccs_settings', array( &$this, 'maybe_update_prices' ) );
         }
-        
+
         add_action( 'admin_init', array( &$this, 'updating_prices_notice' ) );
         add_action( 'wccs_hide_updating_prices_notice', array( &$this, 'dismiss_updating_prices_notice' ) );
 
@@ -89,8 +89,8 @@ class WCCS_Background_Batch_Price_Updater {
         }
 
         $this->background_process->kill_process();
-        $logger = WCCS()->WCCS_Helpers->wc_get_logger();
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+        $logger = WCCS_Helpers::wc_get_logger();
+		if ( WCCS_Helpers::wc_version_check() ) {
 			$logger->info( __( 'Cancelled product price update job.', 'easy-woocommerce-discounts' ), array( 'source' => 'wccs_price_updater' ) );
 		} else {
 			$logger->add( 'wccs_price_updater', __( 'Cancelled product price update job.', 'easy-woocommerce-discounts' ) );

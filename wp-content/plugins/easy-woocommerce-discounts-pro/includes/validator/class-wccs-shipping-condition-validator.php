@@ -13,6 +13,29 @@ class WCCS_Shipping_Condition_Validator extends WCCS_Condition_Validator {
 
 		$this->init_cart();
 
+		// New structure conditions that supports OR conditions too.
+		if ( is_array( $conditions[0] ) && ! isset( $conditions[0]['condition'] ) ) {
+			$empty = true;
+			foreach ( $conditions as $group ) {
+				if ( empty( $group ) ) {
+					continue;
+				}
+
+				$empty = false;
+				$valid = true;
+				foreach ( $group as $condition ) {
+					if ( ! $this->is_valid( $condition, $package ) ) {
+						$valid = false;
+						break;
+					}
+				}
+				if ( $valid ) {
+					return true;
+				}
+			}
+			return $empty;
+		}
+
 		foreach ( $conditions as $condition ) {
 			if ( 'one' === $match_mode && $this->is_valid( $condition, $package ) ) {
 				return true;

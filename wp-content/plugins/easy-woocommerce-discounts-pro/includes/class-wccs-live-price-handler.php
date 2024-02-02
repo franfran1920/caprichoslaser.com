@@ -61,7 +61,7 @@ class WCCS_Live_Price_Handler {
 
 		$this->base_cart_contents = $this->cart->get_cart();
 
-		$add_to_cart_handler = WCCS()->WCCS_Helpers->wc_version_check() ? $adding_to_cart->get_type() : $adding_to_cart->product_type;
+		$add_to_cart_handler = WCCS_Helpers::wc_version_check() ? $adding_to_cart->get_type() : $adding_to_cart->product_type;
 
         if ( 'variable' === $add_to_cart_handler || 'variation' === $add_to_cart_handler ) {
             $cart_item_key = $this->add_to_cart_handler_variable( $product_id );
@@ -135,7 +135,7 @@ class WCCS_Live_Price_Handler {
 
 		// If no variation ID is set, attempt to get a variation ID from posted attributes.
 		if ( empty( $variation_id ) ) {
-			if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+			if ( WCCS_Helpers::wc_version_check() ) {
 				$data_store   = WC_Data_Store::load( 'product' );
 				$variation_id = $data_store->find_matching_product_variation( $adding_to_cart, $posted_attributes );
 			} else {

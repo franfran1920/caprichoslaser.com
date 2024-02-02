@@ -116,6 +116,8 @@ class WCCS_Admin {
 		require_once plugin_dir_path( __FILE__ ) . 'class-wccs-admin-select-data-provider.php';
 		require_once dirname( __FILE__ ) . '/class-wccs-admin-conditions-hooks.php';
 		require_once dirname( __FILE__ ) . '/class-wccs-admin-order-hooks.php';
+
+		include_once dirname( __FILE__ ) . '/class-wccs-admin-update-checker.php';
 	}
 
 	/**
@@ -156,11 +158,7 @@ class WCCS_Admin {
 	 * @return void
 	 */
 	private function update_checker() {
-		if ( ! class_exists( 'Puc_v4_Factory' ) ) {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/vendor/plugin-update-checker/plugin-update-checker.php';
-		}
-
-		$update_checker = Puc_v4_Factory::buildUpdateChecker(
+		$update_checker = WCCS_Admin_Update_Checker::buildUpdateChecker(
 			'https://wpupdate.asanaplugins.com/?action=get_metadata&slug=easy-woocommerce-discounts-pro',
 			WCCS_PLUGIN_FILE,
 			'easy-woocommerce-discounts-pro'

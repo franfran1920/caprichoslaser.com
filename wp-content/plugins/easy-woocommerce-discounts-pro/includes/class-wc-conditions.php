@@ -86,6 +86,13 @@ final class WC_Conditions {
 	public $public;
 
 	/**
+	 * The plugin cart instance.
+	 *
+	 * @var WCCS_Cart
+	 */
+	public $cart;
+
+	/**
 	 * Apply custom props on objects.
 	 *
 	 * @var WCCS_Custom_Props
@@ -219,6 +226,7 @@ final class WC_Conditions {
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		require_once dirname( __FILE__ ) . '/class-wccs-updates.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wccs-activator.php';
 
 		/**
@@ -669,8 +677,8 @@ final class WC_Conditions {
 	 * @return void
 	 */
 	public function woocommerce_init() {
-		if ( $this->is_request( 'frontend' ) || WCCS()->WCCS_Helpers->wc_is_rest_api_request() ) {
-			$this->services->set( 'cart', new WCCS_Cart() );
+		if ( $this->is_request( 'frontend' ) || WCCS_Helpers::wc_is_rest_api_request() ) {
+			$this->cart = new WCCS_Cart();
 			$pricing = new WCCS_Pricing(
 				$this->WCCS_Conditions_Provider->get_pricings( array( 'status' => 1 ) )
 			);

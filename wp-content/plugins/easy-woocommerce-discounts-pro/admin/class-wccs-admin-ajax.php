@@ -93,9 +93,7 @@ class WCCS_Admin_Ajax {
 			$condition_meta->update_meta( $condition_id, 'conditions', $conditions );
 
 			$meta_data = array(
-				'date_time'             => ! empty( $_POST['date_time'] ) ? map_deep( $_POST['date_time'], 'sanitize_text_field' ) : array(),
-				'date_times_match_mode' => ! empty( $_POST['date_times_match_mode'] ) && in_array( $_POST['date_times_match_mode'], array( 'one', 'all' ) ) ? sanitize_text_field( $_POST['date_times_match_mode'] ) : 'one',
-				'conditions_match_mode' => ! empty( $_POST['conditions_match_mode'] ) && in_array( $_POST['conditions_match_mode'], array( 'one', 'all' ) ) ? sanitize_text_field( $_POST['conditions_match_mode'] ) : 'all',
+				'date_time' => ! empty( $_POST['date_time'] ) ? map_deep( $_POST['date_time'], 'sanitize_text_field' ) : array(),
 			);
 
 			// Products list condition meta data.
@@ -771,6 +769,14 @@ class WCCS_Admin_Ajax {
 			'addons'  => array(
 				'title' => __( 'Addons', 'easy-woocommerce-discounts' ),
 				'items' => array(
+					array(
+						'id'         => 'sale-badges-woocommerce',
+						'name'       => 'Sale Badges and Product Labels',
+						'desc'       => 'The WooCommerce Sale Badges and Product Labels plugin enhances your store appeal by offering custom badges and countdown timers. Unleash the full potential of your WooCommerce store with attractive sale badges, product labels, and countdown timers. This all-in-one plugin empowers you to create eye-catching labels and scheduled badges for products, categories, and tags. These labels convey valuable information to your customers, such as discount values, product quantities, ratings, shipping classes, stock status, and sale status. Additionally, you can utilize countdown timers to instill urgency and boost conversions. With an intuitive interface, effortlessly customize labels and replace WooCommerce default on-sale badges. Elevate your WooCommerce store with visually appealing badges, labels, and countdown timers tailored to your unique offerings.',
+						'url'        => 'https://www.asanaplugins.com/product/woocommerce-sale-badges-and-product-labels/',
+						'price'      => '60',
+						'sale_price' => '30',
+					),
 					array(
 						'id'         => 'auto-add-products-to-cart-woocommerce',
 						'name'       => 'Auto Add Products to Cart',

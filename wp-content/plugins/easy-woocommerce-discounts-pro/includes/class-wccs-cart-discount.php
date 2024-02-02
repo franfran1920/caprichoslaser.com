@@ -119,7 +119,7 @@ class WCCS_Cart_Discount {
 
 			$discount = clone $discount;
 
-			$discount->code = WCCS()->WCCS_Helpers->wc_version_check() ? wc_format_coupon_code( $discount->name ) : apply_filters( 'woocommerce_coupon_code', $discount->name );
+			$discount->code = WCCS_Helpers::wc_version_check() ? wc_format_coupon_code( $discount->name ) : apply_filters( 'woocommerce_coupon_code', $discount->name );
 			if ( ! strlen( trim( $discount->code ) ) ) {
 				continue;
 			}
@@ -272,7 +272,7 @@ class WCCS_Cart_Discount {
 	public function get_combine_coupon_code() {
 		$coupon_code = WCCS()->settings->get_setting( 'coupon_label', 'discount' );
 		if ( strlen( trim( $coupon_code ) ) ) {
-			$coupon_code = WCCS()->WCCS_Helpers->wc_version_check() ? wc_format_coupon_code( $coupon_code ) : apply_filters( 'woocommerce_coupon_code', $coupon_code );
+			$coupon_code = WCCS_Helpers::wc_version_check() ? wc_format_coupon_code( $coupon_code ) : apply_filters( 'woocommerce_coupon_code', $coupon_code );
 		}
 		$coupon_code = strlen( $coupon_code ) ? $coupon_code : 'discount';
 
@@ -350,7 +350,7 @@ class WCCS_Cart_Discount {
 		}
 
 		// Applying limit on discount amount.
-		$discount_limit = WCCS()->WCCS_Helpers->get_cart_discount_limit( $cart_subtotal );
+		$discount_limit = WCCS_Helpers::get_cart_discount_limit( $cart_subtotal );
 		if ( '' !== $discount_limit && 0 <= (float) $discount_limit ) {
 			$discount_amount = $discount_amount > $discount_limit ? $discount_limit : $discount_amount;
 		}

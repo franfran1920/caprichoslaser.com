@@ -1,0 +1,15 @@
+2024-02-02T16:21:17+00:00 CRITICAL Uncaught TypeError: call_user_func(): Argument #1 ($callback) must be a valid callback, class "Puc_v4p7_Plugin_Info" not found in /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/includes/vendor/plugin-update-checker/Puc/v4p7/UpdateChecker.php:610
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/includes/vendor/plugin-update-checker/Puc/v4p7/Plugin/UpdateChecker.php(130): Puc_v4p7_UpdateChecker->requestMetadata()
+#1 /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/includes/vendor/plugin-update-checker/Puc/v4p7/Plugin/UpdateChecker.php(152): Puc_v4p7_Plugin_UpdateChecker->requestInfo()
+#2 /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/includes/vendor/plugin-update-checker/Puc/v4p7/UpdateChecker.php(251): Puc_v4p7_Plugin_UpdateChecker->requestUpdate()
+#3 /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/includes/vendor/plugin-update-checker/Puc/v4p7/Scheduler.php(163): Puc_v4p7_UpdateChecker->checkForUpdates()
+#4 /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/includes/vendor/plugin-update-checker/Puc/v4p7/Scheduler.php(130): Puc_v4p7_Scheduler->maybeCheckForUpdates()
+#5 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(324): Puc_v4p7_Scheduler->upgraderProcessComplete()
+#6 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters()
+#7 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#8 /var/www/html/caprichoslaser.com/wp-admin/includes/class-plugin-upgrader.php(421): do_action()
+#9 /var/www/html/caprichoslaser.com/wp-admin/update.php(51): Plugin_Upgrader->bulk_upgrade()
+#10 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/easy-woocommerce-discounts-pro/includes/vendor/plugin-update-checker/Puc/v4p7/UpdateChecker.php en la línea 610
+

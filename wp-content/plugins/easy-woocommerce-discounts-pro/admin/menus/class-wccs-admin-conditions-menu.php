@@ -20,6 +20,14 @@ class WCCS_Admin_Conditions_Menu extends WCCS_Admin_Controller {
 	 * @return void
 	 */
 	public function create_menu() {
+		if ( WCCS_Updates::update_required() ) {
+			return $this->render_view( 'menu.update-required',
+				array(
+					'controller' => $this,
+				)
+			);
+		}
+
 		$this->render_view( 'menu.conditions-menu',
 			array(
 				'controller' => $this,

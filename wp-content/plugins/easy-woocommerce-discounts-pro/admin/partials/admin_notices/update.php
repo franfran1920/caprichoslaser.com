@@ -10,7 +10,7 @@ $update_url = wp_nonce_url(
 	'wccs_db_update_nonce'
 );
 ?>
-<div id="message" class="updated woocommerce-message wc-connect">
+<div id="message" class="updated woocommerce-message wc-connect asnp-ewd-update-message">
 	<p><strong><?php _e( 'Easy WooCommerce Discounts Pro data update', 'easy-woocommerce-discounts' ); ?></strong> &#8211; <?php _e( 'We need to update database to the latest version.', 'easy-woocommerce-discounts' ); ?></p>
 	<p class="submit"><a href="<?php echo esc_url( $update_url ); ?>" class="wccs-update-now button-primary"><?php _e( 'Run the updater', 'easy-woocommerce-discounts' ); ?></a></p>
 </div>

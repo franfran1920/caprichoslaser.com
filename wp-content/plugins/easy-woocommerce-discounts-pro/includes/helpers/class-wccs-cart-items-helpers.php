@@ -294,7 +294,7 @@ class WCCS_Cart_Items_Helpers {
 		}
 
 		for ( $i = 0; $i < count( $taxonomies ); $i++ ) {
-			$taxonomies[ $i ] = WCCS()->WCCS_Helpers::maybe_get_exact_item_id( $taxonomies[ $i ], $taxonomy );
+			$taxonomies[ $i ] = WCCS_Helpers::maybe_get_exact_item_id( $taxonomies[ $i ], $taxonomy );
 		}
 
 		$product_helpers = WCCS()->product_helpers;

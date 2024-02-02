@@ -18,7 +18,7 @@ class WCCS_Order_Item_Product_Helpers {
 	 * @return mixed
 	 */
 	public static function get_meta( $order_item, $key, $single = true ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return is_callable( array( $order_item, 'get_meta' ) ) ? $order_item->get_meta( $key, $single ) : false;
 		}
 
@@ -39,7 +39,7 @@ class WCCS_Order_Item_Product_Helpers {
 	 * @return string|false
 	 */
 	public static function get_quantity( $order_item, $context = 'view' ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return is_callable( array( $order_item, 'get_quantity' ) ) ? $order_item->get_quantity( $context ) : false;
 		}
 
@@ -57,7 +57,7 @@ class WCCS_Order_Item_Product_Helpers {
 	 * @return string|false
 	 */
 	public static function get_subtotal( $order_item, $context = 'view' ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return is_callable( array( $order_item, 'get_subtotal' ) ) ? $order_item->get_subtotal( $context ) : false;
 		}
 
@@ -75,7 +75,7 @@ class WCCS_Order_Item_Product_Helpers {
 	 * @return string|false
 	 */
 	public static function get_subtotal_tax( $order_item, $context = 'view' ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return is_callable( array( $order_item, 'get_subtotal_tax' ) ) ? $order_item->get_subtotal_tax( $context ) : false;
 		}
 
@@ -93,7 +93,7 @@ class WCCS_Order_Item_Product_Helpers {
 	 * @return string|false
 	 */
 	public static function get_total( $order_item, $context = 'view' ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return is_callable( array( $order_item, 'get_total' ) ) ? $order_item->get_total( $context ) : false;
 		}
 
@@ -111,7 +111,7 @@ class WCCS_Order_Item_Product_Helpers {
 	 * @return string|false
 	 */
 	public static function get_total_tax( $order_item, $context = 'view' ) {
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		if ( WCCS_Helpers::wc_version_check() ) {
 			return is_callable( array( $order_item, 'get_total_tax' ) ) ? $order_item->get_total_tax( $context ) : false;
 		}
 

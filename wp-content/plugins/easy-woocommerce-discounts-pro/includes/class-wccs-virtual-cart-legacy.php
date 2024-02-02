@@ -88,7 +88,7 @@ class WCCS_Virtual_Cart extends WCCS_Abstract_Virtual_Cart {
             $line_subtotal     = 0;
             $line_subtotal_tax = 0;
 
-            $tax_class = WCCS()->WCCS_Helpers->wc_version_check() ? $product->get_tax_class( true ) : $product->tax_class;
+            $tax_class = WCCS_Helpers::wc_version_check() ? $product->get_tax_class( true ) : $product->tax_class;
 
             /**
              * No tax to calculate.
@@ -210,7 +210,7 @@ class WCCS_Virtual_Cart extends WCCS_Abstract_Virtual_Cart {
                 $line_subtotal_tax     = 0;
                 $line_subtotal         = $line_price;
                 $line_tax              = 0;
-                $line_total            = round( $discounted_price * $values['quantity'], WCCS()->WCCS_Helpers->wc_get_rounding_precision() );
+                $line_total            = round( $discounted_price * $values['quantity'], WCCS_Helpers::wc_get_rounding_precision() );
 
             /**
              * Prices include tax.
@@ -233,7 +233,7 @@ class WCCS_Virtual_Cart extends WCCS_Abstract_Virtual_Cart {
                     $taxes             = WC_Tax::calc_tax( $line_price, $base_tax_rates, true, true );
 
                     // Now we have a new item price (excluding TAX)
-                    $line_subtotal     = round( $line_price - array_sum( $taxes ), WCCS()->WCCS_Helpers->wc_get_rounding_precision() );
+                    $line_subtotal     = round( $line_price - array_sum( $taxes ), WCCS_Helpers::wc_get_rounding_precision() );
                     $taxes             = WC_Tax::calc_tax( $line_subtotal, $item_tax_rates );
                     $line_subtotal_tax = array_sum( $taxes );
 

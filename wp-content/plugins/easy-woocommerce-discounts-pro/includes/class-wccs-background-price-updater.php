@@ -38,10 +38,10 @@ class WCCS_Background_Price_Updater extends WCCS_Background_Process {
 	 */
 	public function dispatch() {
 		$dispatched = parent::dispatch();
-		$logger     = WCCS()->WCCS_Helpers->wc_get_logger();
+		$logger     = WCCS_Helpers::wc_get_logger();
 
 		if ( is_wp_error( $dispatched ) ) {
-			if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+			if ( WCCS_Helpers::wc_version_check() ) {
 				$logger->error(
 					sprintf( __( 'Unable to dispatch WooCommerce Conditions price updater: %s', 'easy-woocommerce-discounts' ), $dispatched->get_error_message() ),
 					array( 'source' => 'wccs_price_updater' )
@@ -125,8 +125,8 @@ class WCCS_Background_Price_Updater extends WCCS_Background_Process {
 	 * performed, or, call parent::complete().
 	 */
 	protected function complete() {
-		$logger = WCCS()->WCCS_Helpers->wc_get_logger();
-		if ( WCCS()->WCCS_Helpers->wc_version_check() ) {
+		$logger = WCCS_Helpers::wc_get_logger();
+		if ( WCCS_Helpers::wc_version_check() ) {
 			$logger->info( __( 'Completed product price update job.', 'easy-woocommerce-discounts' ), array( 'source' => 'wccs_price_updater' ) );
 		} else {
 			$logger->add( 'wccs_price_updater', __( 'Completed product price update job.', 'easy-woocommerce-discounts' ) );
