@@ -2129,7 +2129,7 @@ if($waf->match_targets(array (
   'args' => 
   array (
   ),
-),'rx','#(?:(?:_(?:\\$\\$ND_FUNC\\$\\$_|_js_function)|(?:new\\s+Function|\\beval)\\s*\\(|String\\s*\\.\\s*fromCharCode|function\\s*\\(\\s*\\)\\s*{|this\\.constructor)|module\\.exports\\s*=)#Ds',false,true)) {
+),'rx','#(?:(?:_(?:\\$\\$ND_FUNC\\$\\$_|_js_function)|(?:new\\s+Function|\\b)\\s*\\(|String\\s*\\.\\s*fromCharCode|function\\s*\\(\\s*\\)\\s*{|this\\.constructor)|module\\.exports\\s*=)#Ds',false,true)) {
 $waf->inc_var('tx.rce_score',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $waf->inc_var('tx.anomaly_score_pl1',htmlentities($waf->get_var('tx.critical_anomaly_score'), ENT_QUOTES, 'UTF-8') );
 $rule->reason = 'Node.js Injection Attack Matched Data: '.htmlentities($waf->get_var('tx.0'), ENT_QUOTES, 'UTF-8') .' found within '. htmlentities($waf->matched_var_name, ENT_QUOTES, 'UTF-8') .': '. htmlentities($waf->matched_var, ENT_QUOTES, 'UTF-8') ;
