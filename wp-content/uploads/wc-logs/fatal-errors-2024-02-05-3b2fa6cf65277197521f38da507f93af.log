@@ -1,0 +1,17 @@
+2024-02-05T06:58:04+00:00 CRITICAL Uncaught TypeError: WC_Stripe_API::detach_payment_method_from_customer(): Argument #2 ($payment_method_id) must be of type string, null given, called in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-gateway-stripe/includes/class-wc-stripe-customer.php on line 489 and defined in /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-gateway-stripe/includes/class-wc-stripe-api.php:327
+Stack trace:
+#0 /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-gateway-stripe/includes/class-wc-stripe-customer.php(489): WC_Stripe_API::detach_payment_method_from_customer()
+#1 /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-gateway-stripe/includes/class-wc-stripe-intent-controller.php(133): WC_Stripe_Customer->delete_source()
+#2 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(324): WC_Stripe_Intent_Controller->verify_intent()
+#3 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters()
+#4 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#5 /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce/includes/class-wc-ajax.php(96): do_action()
+#6 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(324): WC_AJAX::do_wc_ajax()
+#7 /var/www/html/caprichoslaser.com/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters()
+#8 /var/www/html/caprichoslaser.com/wp-includes/plugin.php(517): WP_Hook->do_action()
+#9 /var/www/html/caprichoslaser.com/wp-includes/template-loader.php(13): do_action()
+#10 /var/www/html/caprichoslaser.com/wp-blog-header.php(19): require_once('...')
+#11 /var/www/html/caprichoslaser.com/index.php(17): require('...')
+#12 {main}
+  thrown en /var/www/html/caprichoslaser.com/wp-content/plugins/woocommerce-gateway-stripe/includes/class-wc-stripe-api.php en la línea 327
+
