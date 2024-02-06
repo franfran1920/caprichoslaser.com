@@ -251,7 +251,9 @@ class RuleSetCollector
     private function handleUniqueLimitations($limitation, $validHashes, $range, &$collectedQtyInCart = 0)
     {
         $packageSetItems   = array();
-        $validItemsGrouped = array();
+
+        /** @var ICartItem[] $validItemsGrouped */
+        $validItemsGrouped = [];
 
         foreach ($validHashes as $index => $validCartItemHash) {
             $cartItem = $this->mutableItemsCollection->getNotEmptyItemWithReferenceByHash($validCartItemHash);
@@ -276,7 +278,14 @@ class RuleSetCollector
             }
         }
 
-        $collectedQtyInCart = count(array_filter($validItemsGrouped, function ($v) { return !$v->hasAttr($v::ATTR_TEMP); }));
+        $collectedQtyInCart = count(
+            array_filter(
+                $validItemsGrouped,
+                function ($v) {
+                    return !$v->hasAttr(CartItemAttributeEnum::TEMPORARY());
+                }
+            )
+        );
 
         if ($range->isLess(count($validItemsGrouped))) {
             return null;

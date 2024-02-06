@@ -50,7 +50,7 @@ class ToPricingAddonsAdapter
             $initialCost = $this->calculateInitialCost(
                 $origPriceCalc,
                 $facade,
-                CartItemAddonsCollection::ofList($tmCmp->getAddonsFromCartItem($facade))
+                CartItemAddonsCollection::ofList($addons)
             );
             $cartItem->prices()->setOriginalPrice($initialCost);
         } else {

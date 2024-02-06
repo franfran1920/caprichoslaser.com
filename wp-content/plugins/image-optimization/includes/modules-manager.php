@@ -1,11 +1,11 @@
 <?php
 
-namespace ImageOptimizer;
+namespace ImageOptimization;
 
-use ImageOptimizer\Classes\Module_Base;
+use ImageOptimization\Classes\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 final class Manager {
@@ -64,6 +64,6 @@ final class Manager {
 	}
 
 	public function include_external_libraries() {
-		require_once IMAGE_OPTIMIZER_PATH . 'vendor/woocommerce/action-scheduler/action-scheduler.php';
+		require_once IMAGE_OPTIMIZATION_PATH . 'vendor/woocommerce/action-scheduler/action-scheduler.php';
 	}
 }

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use ImageOptimizer\Classes\File_Utils;
+use ImageOptimization\Classes\File_Utils;
 
 ?>
 
@@ -14,22 +14,22 @@ use ImageOptimizer\Classes\File_Utils;
 		data-image-optimization-image-id="<?php echo esc_attr( $args['image_id'] ); ?>"
 		data-image-optimization-can-be-restored="<?php echo esc_attr( $args['can_be_restored'] ); ?>">
 	<p class="image-optimization-control__property">
-		<?php esc_html_e( 'Image sizes optimized', 'image-optimizer' ); ?>:
+		<?php esc_html_e( 'Image sizes optimized', 'image-optimization' ); ?>:
 		<span><?php echo esc_html( $args['sizes_optimized_count'] ); ?></span>
 	</p>
 
 	<p class="image-optimization-control__property">
 		<?php if ( 0 === $args['saved']['absolute'] ) { ?>
 			<span>
-				<?php esc_html_e( 'Image is fully optimized', 'image-optimizer' ); ?>
+				<?php esc_html_e( 'Image is fully optimized', 'image-optimization' ); ?>
 			</span>
 		<?php } else { ?>
-			<?php esc_html_e( 'Overall saving', 'image-optimizer' ); ?>:
+			<?php esc_html_e( 'Overall saving', 'image-optimization' ); ?>:
 
 			<span>
 				<?php
 				printf(
-					esc_html__( '%1$s%% (%2$s)', 'image-optimizer' ),
+					esc_html__( '%1$s%% (%2$s)', 'image-optimization' ),
 					esc_html( $args['saved']['relative'] ),
 					esc_html( File_Utils::format_file_size( $args['saved']['absolute'], 1 ) )
 				);
@@ -42,13 +42,13 @@ use ImageOptimizer\Classes\File_Utils;
 		<?php if ( $args['can_be_restored'] ) { ?>
 			<button type="button"
 							class="button button-secondary image-optimization-control__button image-optimization-control__button--restore-original">
-				<?php esc_html_e( 'Restore original', 'image-optimizer' ); ?>
+				<?php esc_html_e( 'Restore original', 'image-optimization' ); ?>
 			</button>
 		<?php } ?>
 
 		<button type="button"
 						class="button button-secondary image-optimization-control__button image-optimization-control__button--reoptimize">
-			<?php esc_html_e( 'Reoptimize', 'image-optimizer' ); ?>
+			<?php esc_html_e( 'Reoptimize', 'image-optimization' ); ?>
 		</button>
 	</div>
 </div>

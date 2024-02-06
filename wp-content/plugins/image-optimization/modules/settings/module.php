@@ -1,8 +1,8 @@
 <?php
 
-namespace ImageOptimizer\Modules\Settings;
+namespace ImageOptimization\Modules\Settings;
 
-use ImageOptimizer\Classes\Module_Base;
+use ImageOptimization\Classes\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Module extends Module_Base {
 	const SETTING_PREFIX = 'image_optimizer_';
 	const SETTING_GROUP = 'image_optimizer_settings';
-	const SETTING_BASE_SLUG = 'image-optimizer-settings';
+	const SETTING_BASE_SLUG = 'image-optimization-settings';
 	const SETTING_CAPABILITY = 'manage_options';
 
 	public function get_name(): string {
@@ -84,14 +84,14 @@ class Module extends Module_Base {
 			<h1 style="display: none;" role="presentation"></h1>
 		</div>
 
-		<div id="image-optimizer-app"></div>
+		<div id="image-optimization-app"></div>
 		<?php
 	}
 
 	public function register_page() {
 		add_media_page(
-			'',
-			__( 'Image Optimizer', 'image-optimizer' ),
+			__( 'Image Optimizer', 'image-optimization' ),
+			__( 'Image Optimizer', 'image-optimization' ),
 			self::SETTING_CAPABILITY,
 			self::SETTING_BASE_SLUG,
 			[ $this, 'render_app' ],

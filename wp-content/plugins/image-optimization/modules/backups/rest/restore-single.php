@@ -1,17 +1,21 @@
 <?php
 
-namespace ImageOptimizer\Modules\Backups\Rest;
+namespace ImageOptimization\Modules\Backups\Rest;
 
-use ImageOptimizer\Modules\Optimization\Classes\Validate_Image;
-use ImageOptimizer\Modules\Backups\Classes\{
+use ImageOptimization\Modules\Optimization\Classes\Validate_Image;
+use ImageOptimization\Modules\Backups\Classes\{
 	Restore_Images,
 	Route_Base,
 };
 use Throwable;
 use WP_REST_Request;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 class Restore_Single extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-restore-single';
+	const NONCE_NAME = 'image-optimization-restore-single';
 
 	protected string $path = 'restore/(?P<image_id>\d+)';
 
@@ -33,7 +37,7 @@ class Restore_Single extends Route_Base {
 
 		if ( empty( $image_id ) ) {
 			return $this->respond_error_json( [
-				'message' => esc_html__( 'Invalid image id', 'image-optimizer' ),
+				'message' => esc_html__( 'Invalid image id', 'image-optimization' ),
 				'code' => 'internal_server_error',
 			] );
 		}

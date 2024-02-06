@@ -3,13 +3,13 @@
 namespace ADP\BaseVersion\Includes\Database\Repository;
 
 use ADP\BaseVersion\Includes\Context;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Core\Rule\PersistentRule;
 use ADP\BaseVersion\Includes\Database\PersistentRuleCacheObject;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 
 interface PersistentRuleRepositoryInterface {
     /**
-     * @param BasicCartItem $item
+     * @param ICartItem $item
      * @param float|null $qty
      *
      * @return array<int,PersistentRuleCacheObject>

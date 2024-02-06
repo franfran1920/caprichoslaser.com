@@ -1,11 +1,11 @@
 <?php
 
-namespace ImageOptimizer\Modules\Oauth\Classes;
+namespace ImageOptimization\Modules\Oauth\Classes;
 
-use ImageOptimizer\Modules\Oauth\Components\Connect;
+use ImageOptimization\Modules\Oauth\Components\Connect;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**

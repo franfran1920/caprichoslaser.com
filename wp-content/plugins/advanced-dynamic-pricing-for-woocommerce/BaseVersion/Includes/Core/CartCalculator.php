@@ -140,7 +140,7 @@ class CartCalculator implements ICartCalculator
 
         foreach ($this->ruleCollection->getRules() as $rule) {
             $proc = $rule->buildProcessor($this->context);
-            if ($proc->applyToCart($cart)) {
+            if ($proc->applyToCart($cart) && $proc->getStatus() === $proc::STATUS_SUCCESSFULLY_COMPLETED) {
                 $appliedRules++;
             }
 
@@ -172,8 +172,7 @@ class CartCalculator implements ICartCalculator
                 }
 
                 if ( ! is_null($wcSalePrice) && $wcSalePrice < $productPrice) {
-                    $newItem = new BasicCartItem($item->getWcItem(), $wcSalePrice, $item->getQty(), $item->getInitialCartPosition());
-
+                    $newItem = $this->recreateItem($item, $wcSalePrice);
                     $item->copyAttributesTo($newItem);
 
                         $minDiscountRangePrice = $item->prices()->getMinDiscountRangePrice();
@@ -251,7 +250,7 @@ class CartCalculator implements ICartCalculator
                 $item->getCompatibility(),
                 $item->getContainerPriceTypeEnum(),
                 $wcSalePrice,
-                $item->getBasePrice(),
+                $wcSalePrice,
                 $subItems,
                 $item->getQty(),
                 $item->getInitialCartPosition()
@@ -317,7 +316,7 @@ class CartCalculator implements ICartCalculator
         /** Finish accumulating non-temporary quantity */
 
         /**
-         * @var array<int, BasicCartItem> $newItems
+         * @var array<int, ICartItem> $newItems
          * Create the list of cloned items with modified prices, so modifications do not affect the work of conditions.
          */
         $newItems = [];

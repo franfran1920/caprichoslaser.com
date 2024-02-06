@@ -1,8 +1,12 @@
 <?php
 
-namespace ImageOptimizer\Classes\Image;
+namespace ImageOptimization\Classes\Image;
 
-use ImageOptimizer\Classes\Basic_Enum;
+use ImageOptimization\Classes\Basic_Enum;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 final class Image_Status extends Basic_Enum {
 	public const NOT_OPTIMIZED = 'not-optimized';

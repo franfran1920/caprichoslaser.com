@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageOptimizer\Classes\Image;
+namespace ImageOptimization\Classes\Image;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -95,7 +95,7 @@ class Image_Meta {
 	}
 
 	public function get_original_file_size( string $image_size ): ?int {
-		if ( ! isset( $this->image_meta['original_data']['sizes'][ $image_size ] ) ) {
+		if ( ! isset( $this->image_meta['original_data']['sizes'][ $image_size ]['filesize'] ) ) {
 			return null;
 		}
 

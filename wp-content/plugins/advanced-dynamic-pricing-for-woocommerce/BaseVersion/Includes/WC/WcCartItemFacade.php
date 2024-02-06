@@ -628,6 +628,14 @@ class WcCartItemFacade
     /**
      * @return bool
      */
+    public function isHasReadOnlyPrice()
+    {
+        return ! empty($this->attributes) && in_array(self::ATTRIBUTE_READONLY_PRICE, $this->attributes);
+    }
+
+    /**
+     * @return bool
+     */
     public function isFreeItem()
     {
         return ! empty($this->attributes) && in_array(self::ATTRIBUTE_FREE, $this->attributes);

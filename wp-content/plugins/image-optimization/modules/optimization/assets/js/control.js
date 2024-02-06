@@ -29,7 +29,7 @@ class OptimizationControl {
 			return;
 		}
 
-		speak( __( 'Optimization is in progress', 'image-optimizer' ), 'assertive' );
+		speak( __( 'Optimization is in progress', 'image-optimization' ), 'assertive' );
 
 		const controlWrapper = e.target.closest( SELECTORS.controlWrapperSelector );
 		const states = new ControlStates( controlWrapper );
@@ -51,7 +51,7 @@ class OptimizationControl {
 			return;
 		}
 
-		speak( __( 'Reoptimizing is in progress', 'image-optimizer' ), 'assertive' );
+		speak( __( 'Reoptimizing is in progress', 'image-optimization' ), 'assertive' );
 
 		const controlWrapper = e.target.closest( SELECTORS.controlWrapperSelector );
 		const states = new ControlStates( controlWrapper );
@@ -73,7 +73,7 @@ class OptimizationControl {
 			return;
 		}
 
-		speak( __( 'Image restoring is in progress', 'image-optimizer' ), 'assertive' );
+		speak( __( 'Image restoring is in progress', 'image-optimization' ), 'assertive' );
 
 		const controlWrapper = e.target.closest( SELECTORS.controlWrapperSelector );
 		const states = new ControlStates( controlWrapper );

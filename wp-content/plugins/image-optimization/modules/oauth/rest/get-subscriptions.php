@@ -1,14 +1,22 @@
 <?php
 
-namespace ImageOptimizer\Modules\Oauth\Rest;
+namespace ImageOptimization\Modules\Oauth\Rest;
 
-use ImageOptimizer\Classes\Utils;
-use ImageOptimizer\Modules\Oauth\Classes\Route_Base;
-use ImageOptimizer\Modules\Oauth\Components\Connect;
+use ImageOptimization\Modules\Oauth\{
+	Classes\Route_Base,
+	Components\Connect,
+};
+
+use Throwable;
 use WP_REST_Request;
 
-class GetSubscriptions extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-get-subscription';
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+class Get_Subscriptions extends Route_Base {
+	const NONCE_NAME = 'image-optimization-get-subscription';
+
 	protected string $path = 'get-subscriptions';
 
 	public function get_name(): string {
@@ -27,30 +35,20 @@ class GetSubscriptions extends Route_Base {
 
 		if ( ! Connect::is_connected() ) {
 			return $this->respond_error_json( [
-				'message' => esc_html__( 'Please connect first', 'image-optimizer' ),
+				'message' => esc_html__( 'Please connect first', 'image-optimization' ),
 				'code' => 'forbidden',
 			] );
 		}
 
-		$response = Utils::get_api_client()->make_request(
-			'POST',
-			'activation/get-subscriptions'
-		);
+		try {
+			$subscriptions = Connect::get_subscriptions();
 
-		if ( is_wp_error( $response ) ) {
+			return $this->respond_success_json( $subscriptions );
+		} catch ( Throwable $t ) {
 			return $this->respond_error_json( [
-				'message' => $response->get_error_message(),
+				'message' => $t->getMessage(),
 				'code' => 'internal_server_error',
 			] );
 		}
-
-		if ( ! isset( $response->subscriptions ) ) {
-			return $this->respond_error_json( [
-				'message' => esc_html__( 'Invalid response from server', 'image-optimizer' ),
-				'code' => 'internal_server_error',
-			] );
-		}
-
-		return $this->respond_success_json( $response->subscriptions );
 	}
 }

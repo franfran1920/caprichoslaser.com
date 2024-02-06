@@ -1,15 +1,15 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Rest;
+namespace ImageOptimization\Modules\Optimization\Rest;
 
-use ImageOptimizer\Classes\Async_Operation\Exceptions\Async_Operation_Exception;
-use ImageOptimizer\Modules\Optimization\Classes\{
-	Bulk_Optimization,
+use ImageOptimization\Classes\Async_Operation\Exceptions\Async_Operation_Exception;
+use ImageOptimization\Modules\Optimization\Classes\{
+	Bulk_Optimization_Controller,
 	Route_Base,
 };
-use ImageOptimizer\Classes\Image\Exceptions\Invalid_Image_Exception;
-use ImageOptimizer\Modules\Oauth\Classes\Exceptions\Quota_Exceeded_Error;
-use ImageOptimizer\Modules\Oauth\Components\Connect;
+use ImageOptimization\Classes\Image\Exceptions\Invalid_Image_Exception;
+use ImageOptimization\Modules\Oauth\Classes\Exceptions\Quota_Exceeded_Error;
+use ImageOptimization\Modules\Oauth\Components\Connect;
 use Throwable;
 use WP_REST_Request;
 
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Optimize_Bulk extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-optimize-bulk';
+	const NONCE_NAME = 'image-optimization-optimize-bulk';
 
 	protected string $path = 'bulk';
 
@@ -38,7 +38,7 @@ class Optimize_Bulk extends Route_Base {
 
 		if ( ! Connect::is_activated() ) {
 			return $this->respond_error_json([
-				'message' => esc_html__( 'Invalid activation', 'image-optimizer' ),
+				'message' => esc_html__( 'Invalid activation', 'image-optimization' ),
 				'code' => 'unauthorized',
 			]);
 		}
@@ -64,16 +64,16 @@ class Optimize_Bulk extends Route_Base {
 	 * @throws Async_Operation_Exception|Invalid_Image_Exception|Quota_Exceeded_Error
 	 */
 	private function handle_bulk_optimization() {
-		$is_in_progress = Bulk_Optimization::is_optimization_in_progress();
+		$is_in_progress = Bulk_Optimization_Controller::is_optimization_in_progress();
 
 		if ( $is_in_progress ) {
 			return $this->respond_error_json( [
-				'message' => esc_html__( 'Bulk optimization is already in progress', 'image-optimizer' ),
+				'message' => esc_html__( 'Bulk optimization is already in progress', 'image-optimization' ),
 				'code'    => 'forbidden',
 			] );
 		}
 
-		Bulk_Optimization::find_images_and_schedule_optimization();
+		Bulk_Optimization_Controller::find_images_and_schedule_optimization();
 
 		return $this->respond_success_json();
 	}
@@ -82,16 +82,16 @@ class Optimize_Bulk extends Route_Base {
 	 * @throws Async_Operation_Exception|Quota_Exceeded_Error
 	 */
 	private function handle_bulk_reoptimization() {
-		$is_in_progress = Bulk_Optimization::is_reoptimization_in_progress();
+		$is_in_progress = Bulk_Optimization_Controller::is_reoptimization_in_progress();
 
 		if ( $is_in_progress ) {
 			return $this->respond_error_json( [
-				'message' => esc_html__( 'Bulk re-optimization is already in progress', 'image-optimizer' ),
+				'message' => esc_html__( 'Bulk re-optimization is already in progress', 'image-optimization' ),
 				'code'    => 'forbidden',
 			] );
 		}
 
-		Bulk_Optimization::find_optimized_images_and_schedule_reoptimization();
+		Bulk_Optimization_Controller::find_optimized_images_and_schedule_reoptimization();
 
 		return $this->respond_success_json();
 	}

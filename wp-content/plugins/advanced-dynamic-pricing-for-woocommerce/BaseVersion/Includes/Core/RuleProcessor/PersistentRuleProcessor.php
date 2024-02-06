@@ -177,7 +177,7 @@ class PersistentRuleProcessor implements RuleProcessor
 
     /**
      * @param Cart $cart
-     * @param BasicCartItem $item
+     * @param ICartItem $item
      * @param float $price
      *
      * @return bool
@@ -200,7 +200,7 @@ class PersistentRuleProcessor implements RuleProcessor
 
     /**
      * @param Cart $cart
-     * @param BasicCartItem $item
+     * @param ICartItem $item
      * @param float $price
      */
     protected function processWithPrice($cart, $item, $price)

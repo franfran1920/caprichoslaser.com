@@ -1,16 +1,20 @@
 <?php
 
-namespace ImageOptimizer\Modules\Backups\Rest;
+namespace ImageOptimization\Modules\Backups\Rest;
 
-use ImageOptimizer\Modules\Backups\Classes\{
+use ImageOptimization\Modules\Backups\Classes\{
 	Restore_Images,
 	Route_Base,
 };
 use Throwable;
 use WP_REST_Request;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 class Restore_All extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-restore-all';
+	const NONCE_NAME = 'image-optimization-restore-all';
 
 	protected string $path = 'restore';
 

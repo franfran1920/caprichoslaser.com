@@ -1,10 +1,10 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Rest;
+namespace ImageOptimization\Modules\Optimization\Rest;
 
-use ImageOptimizer\Classes\Image\Image;
-use ImageOptimizer\Modules\Oauth\Components\Connect;
-use ImageOptimizer\Modules\Optimization\Classes\{
+use ImageOptimization\Classes\Image\Image;
+use ImageOptimization\Modules\Oauth\Components\Connect;
+use ImageOptimization\Modules\Optimization\Classes\{
 	Route_Base,
 	Single_Optimization,
 	Validate_Image,
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Optimize_Single_Image extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-optimize-image';
+	const NONCE_NAME = 'image-optimization-optimize-image';
 	const IMAGE_ID_PARAM = 'imageId';
 
 	protected string $path = 'image';
@@ -38,7 +38,7 @@ class Optimize_Single_Image extends Route_Base {
 
 		if ( ! Connect::is_activated() ) {
 			return $this->respond_error_json([
-				'message' => esc_html__( 'Invalid activation', 'image-optimizer' ),
+				'message' => esc_html__( 'Invalid activation', 'image-optimization' ),
 				'code' => 'unauthorized',
 			]);
 		}
@@ -48,8 +48,8 @@ class Optimize_Single_Image extends Route_Base {
 
 		if ( empty( $image_id ) ) {
 			return $this->respond_error_json([
-				'message' => esc_html__( 'Invalid image id', 'image-optimizer' ),
-				'code' => 'internal_server_error',
+				'message' => esc_html__( 'Invalid image id', 'image-optimization' ),
+				'code' => 'bad_request',
 			]);
 		}
 

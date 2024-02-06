@@ -55,7 +55,7 @@ class SimpleToPricingCartItemAdapter implements IToPricingCartItemAdapter
         $item->prices()->setTrdPartyAdjustmentsTotal($origPriceCalc->trdPartyAdjustmentsAmount);
         /** Build generic item end */
 
-        if ($origPriceCalc->isReadOnlyPrice) {
+        if ($origPriceCalc->isReadOnlyPrice || $facade->isHasReadOnlyPrice()) {
             $item->addAttr(CartItemAttributeEnum::READONLY_PRICE());
         }
 

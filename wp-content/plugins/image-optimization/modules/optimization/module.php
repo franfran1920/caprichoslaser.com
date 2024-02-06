@@ -1,9 +1,9 @@
 <?php
-namespace ImageOptimizer\Modules\Optimization;
+namespace ImageOptimization\Modules\Optimization;
 
-use ImageOptimizer\Classes\Module_Base;
-use ImageOptimizer\Modules\Backups\Rest\Restore_Single;
-use ImageOptimizer\Modules\Optimization\Rest\Optimize_Single_Image;
+use ImageOptimization\Classes\Module_Base;
+use ImageOptimization\Modules\Backups\Rest\Restore_Single;
+use ImageOptimization\Modules\Optimization\Rest\Optimize_Single_Image;
 use Throwable;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,7 +19,7 @@ class Module extends Module_Base {
 		return [
 			'Optimize_Single_Image',
 			'Optimize_Bulk',
-			'Get_Bulk_Optimization_Operations',
+			'Get_Bulk_Optimization_Images',
 			'Optimization_Status',
 			'Cancel_Bulk_Optimization',
 		];
@@ -41,31 +41,31 @@ class Module extends Module_Base {
 	 * Enqueue styles and scripts
 	 */
 	public function enqueue_scripts() {
-		$asset_file = include IMAGE_OPTIMIZER_ASSETS_PATH . 'build/control.asset.php';
+		$asset_file = include IMAGE_OPTIMIZATION_ASSETS_PATH . 'build/control.asset.php';
 
 		foreach ( $asset_file['dependencies'] as $style ) {
 			wp_enqueue_style( $style );
 		}
 
 		wp_enqueue_style(
-			'image-optimizer-control',
+			'image-optimization-control',
 			$this->get_css_assets_url( 'control' ),
 			[],
-			IMAGE_OPTIMIZER_VERSION,
+			IMAGE_OPTIMIZATION_VERSION,
 		);
 
 		wp_enqueue_script(
-			'image-optimizer-control',
+			'image-optimization-control',
 			$this->get_js_assets_url( 'control' ),
 			$asset_file['dependencies'],
-			IMAGE_OPTIMIZER_VERSION,
+			IMAGE_OPTIMIZATION_VERSION,
 			true
 		);
 
-		wp_set_script_translations( 'image-optimizer-control', 'image-optimizer' );
+		wp_set_script_translations( 'image-optimization-control', 'image-optimization' );
 
 		wp_localize_script(
-			'image-optimizer-control',
+			'image-optimization-control',
 			'imageOptimizerControlSettings',
 			[
 				'optimizeSingleImageNonce' => wp_create_nonce( Optimize_Single_Image::NONCE_NAME ),

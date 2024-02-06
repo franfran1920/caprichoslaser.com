@@ -1,9 +1,13 @@
 <?php
 
-namespace ImageOptimizer\Classes;
+namespace ImageOptimization\Classes;
 
-use \ReflectionClass;
-use \ReflectionException;
+use ReflectionClass;
+use ReflectionException;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 abstract class Basic_Enum {
 	private static array $entries = [];

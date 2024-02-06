@@ -1,9 +1,9 @@
 <?php
 
-namespace ImageOptimizer\Classes\Image;
+namespace ImageOptimization\Classes\Image;
 
-use ImageOptimizer\Classes\File_Utils;
-use ImageOptimizer\Classes\Image\Exceptions\Invalid_Image_Exception;
+use ImageOptimization\Classes\File_Utils;
+use ImageOptimization\Classes\Image\Exceptions\Invalid_Image_Exception;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -55,6 +55,28 @@ class WP_Image_Meta {
 	}
 
 	/**
+	 * Returns keys of sizes that have the same dimensions as the one provided.
+	 *
+	 * @param string $image_size The size of the image.
+	 *
+	 * @return array
+	 */
+	public function get_size_duplicates( string $image_size ): array {
+		$duplicates = [];
+
+		$width = $this->get_width( $image_size );
+		$height = $this->get_height( $image_size );
+
+		foreach ( $this->image_meta['sizes'] as $size_key => $size_data ) {
+			if ( $size_data['width'] === $width && $size_data['height'] === $height && $image_size !== $size_key ) {
+				$duplicates[] = $size_key;
+			}
+		}
+
+		return array_unique( $duplicates );
+	}
+
+	/**
 	 * Get the file size of the image.
 	 *
 	 * @param string $image_size The size of the image.
@@ -62,7 +84,7 @@ class WP_Image_Meta {
 	 */
 	public function get_file_size( string $image_size ): ?int {
 		if ( Image::SIZE_FULL === $image_size ) {
-			return $this->image_meta['filesize'];
+			return $this->image_meta['filesize'] ?? null;
 		}
 
 		if ( ! isset( $this->image_meta['sizes'][ $image_size ]['filesize'] ) ) {
@@ -113,6 +135,25 @@ class WP_Image_Meta {
 	}
 
 	/**
+	 * Get the width of the image.
+	 *
+	 * @param string $image_size The size of the image.
+	 *
+	 * @return int|null
+	 */
+	public function get_width( string $image_size ): ?int {
+		if ( Image::SIZE_FULL === $image_size ) {
+			return $this->image_meta['width'];
+		}
+
+		if ( ! isset( $this->image_meta['sizes'][ $image_size ]['width'] ) ) {
+			return null;
+		}
+
+		return $this->image_meta['sizes'][ $image_size ]['width'];
+	}
+
+	/**
 	 * Set the width of the image.
 	 *
 	 * @param string $image_size The size of the image.
@@ -130,6 +171,25 @@ class WP_Image_Meta {
 		$this->image_meta['sizes'][ $image_size ]['width'] = $width;
 
 		return $this;
+	}
+
+	/**
+	 * Get the height of the image.
+	 *
+	 * @param string $image_size The size of the image.
+	 *
+	 * @return int|null
+	 */
+	public function get_height( string $image_size ): ?int {
+		if ( Image::SIZE_FULL === $image_size ) {
+			return $this->image_meta['height'];
+		}
+
+		if ( ! isset( $this->image_meta['sizes'][ $image_size ]['height'] ) ) {
+			return null;
+		}
+
+		return $this->image_meta['sizes'][ $image_size ]['height'];
 	}
 
 	/**

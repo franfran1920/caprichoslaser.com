@@ -22,6 +22,7 @@ use ADP\BaseVersion\Includes\Core\Cart\CartItem\CartItemConverter;
 use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Container\ContainerCartItem;
 use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Free\FreeCartItem;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Core\Cart\Coupon\CouponCart;
 use ADP\BaseVersion\Includes\Core\Cart\Coupon\CouponCartItem;
 use ADP\BaseVersion\Includes\Core\CartCalculator;
@@ -680,10 +681,9 @@ class CartProcessor
 
         foreach ( $initialCoupons as $initialCoupon ) {
             wc_add_notice(
-                str_replace(
-                    "{{name}}",
-                    $initialCoupon,
-                    "Sorry, the coupon \"{{name}}\" is not valid."
+                sprintf(
+                    __( 'Sorry, it seems the coupon "%s" is invalid - it has now been removed from your order.', 'woocommerce' ),
+                    esc_html( $initialCoupon )
                 ),
                 'error'
             );
@@ -816,7 +816,7 @@ class CartProcessor
     /**
      * @param Cart $cart
      *
-     * @return array<int, BasicCartItem>
+     * @return array<int, ICartItem>
      */
     protected function getCommonItemsFromCart($cart)
     {

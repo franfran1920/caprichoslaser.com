@@ -3,10 +3,10 @@
  * Plugin Name: Image Optimizer by Elementor – Compress, Resize and Optimize Images
  * Description: Automatically compress and enhance your images, boosting your website speed, appearance, and SEO. Get Image Optimizer and optimize your images in seconds.
  * Plugin URI: https://go.elementor.com/wp-repo-description-tab-io-product-page/
- * Version: 1.0.2
+ * Version: 1.1.0
  * Author: Elementor.com
  * Author URI: https://go.elementor.com/wp-repo-description-tab-io-author-url/
- * Text Domain: image-optimizer
+ * Text Domain: image-optimization
  * License: GPL-3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  */
@@ -15,20 +15,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'IMAGE_OPTIMIZER_VERSION', '1.0.2' );
-define( 'IMAGE_OPTIMIZER_PATH', plugin_dir_path( __FILE__ ) );
-define( 'IMAGE_OPTIMIZER_URL', plugins_url( '/', __FILE__ ) );
-define( 'IMAGE_OPTIMIZER_ASSETS_PATH', IMAGE_OPTIMIZER_PATH . 'assets/' );
-define( 'IMAGE_OPTIMIZER_ASSETS_URL', IMAGE_OPTIMIZER_URL . 'assets/' );
-define( 'IMAGE_OPTIMIZER_PLUGIN_FILE', basename( __FILE__ ) );
+define( 'IMAGE_OPTIMIZATION_VERSION', '1.1.0' );
+define( 'IMAGE_OPTIMIZATION_PATH', plugin_dir_path( __FILE__ ) );
+define( 'IMAGE_OPTIMIZATION_URL', plugins_url( '/', __FILE__ ) );
+define( 'IMAGE_OPTIMIZATION_ASSETS_PATH', IMAGE_OPTIMIZATION_PATH . 'assets/' );
+define( 'IMAGE_OPTIMIZATION_ASSETS_URL', IMAGE_OPTIMIZATION_URL . 'assets/' );
+define( 'IMAGE_OPTIMIZATION_PLUGIN_FILE', basename( __FILE__ ) );
 
 /**
- *  ImageOptimizer Class
- *
+ * ImageOptimization Class
  */
-final class ImageOptimizer {
+final class ImageOptimization {
 	private const REQUIRED_EXTENSIONS = [
 		'exif',
+		'fileinfo',
+		'gd',
 	];
 
 	/**
@@ -53,13 +54,13 @@ final class ImageOptimizer {
 	 * @access public
 	 */
 	public function i18n() {
-		load_plugin_textdomain( 'image-optimizer' );
+		load_plugin_textdomain( 'image-optimization' );
 	}
 
 	public function insufficient_php_version() {
 		$message = sprintf(
 		/* translators: 1: `<h3>` opening tag, 2: `</h3>` closing tag, 3: PHP version. 4: Link opening tag, 5: Link closing tag. */
-			esc_html__( '%1$sImage Optimizer isn’t running because PHP is outdated.%2$s Update to PHP version %3$s and get back to optimizing! %4$sShow me how%5$s', 'image-optimizer' ),
+			esc_html__( '%1$sImage Optimizer isn’t running because PHP is outdated.%2$s Update to PHP version %3$s and get back to optimizing! %4$sShow me how%5$s', 'image-optimization' ),
 			'<h3>',
 			'</h3>',
 			'7.4',
@@ -87,7 +88,7 @@ final class ImageOptimizer {
 
 		$message = sprintf(
 		/* translators: 1: `<h3>` opening tag, 2: Missed extension names, 3: `</h3>` closing tag. */
-			esc_html__( '%1$sImage Optimizer isn’t running because the next required PHP extensions are missed: %2$s.%3$s', 'image-optimizer' ),
+			esc_html__( '%1$sImage Optimizer isn’t running because the next required PHP extensions are missed: %2$s.%3$s', 'image-optimization' ),
 			'<h3>',
 			implode( ', ', $missed_extensions ),
 			'</h3>',
@@ -122,5 +123,5 @@ final class ImageOptimizer {
 	}
 }
 
-// Instantiate ImageOptimizer..
-new ImageOptimizer();
+// Instantiate ImageOptimization..
+new ImageOptimization();

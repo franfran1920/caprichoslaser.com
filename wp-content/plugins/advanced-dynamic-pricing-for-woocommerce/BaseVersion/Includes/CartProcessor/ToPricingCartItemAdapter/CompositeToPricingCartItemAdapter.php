@@ -41,6 +41,10 @@ class CompositeToPricingCartItemAdapter extends SimpleToPricingCartItemAdapter i
             $item->addAttr(CartItemAttributeEnum::IMMUTABLE());
         }
 
+        if ($facade->isHasReadOnlyPrice()) {
+            $item->addAttr(CartItemAttributeEnum::READONLY_PRICE());
+        }
+
         $cart->addToCart($item);
 
         return true;

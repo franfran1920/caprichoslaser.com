@@ -1,27 +1,34 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Components;
+namespace ImageOptimization\Modules\Optimization\Components;
 
-use ImageOptimizer\Classes\Image\{
+use ImageOptimization\Classes\Image\{
 	Exceptions\Invalid_Image_Exception,
 	Image,
 	Image_Meta,
 	Image_Optimization_Error_Type,
 	Image_Status
 };
-use ImageOptimizer\Modules\Oauth\Components\{
+use ImageOptimization\Modules\Oauth\Components\{
 	Connect,
-	Exceptions\Auth_Exception,
+	Exceptions\Auth_Error,
 };
-use ImageOptimizer\Modules\Optimization\{
+use ImageOptimization\Modules\Optimization\{
 	Classes\Exceptions\Image_Validation_Error,
+	Classes\Optimization_Error_Message,
 	Classes\Validate_Image,
 	Module,
 };
-use ImageOptimizer\Modules\Oauth\Classes\Data;
-use ImageOptimizer\Modules\Settings\Classes\Settings;
-use ImageOptimizer\Modules\Stats\Classes\Optimization_Stats;
+use ImageOptimization\Classes\File_Utils;
+use ImageOptimization\Modules\Oauth\Classes\Data;
+use ImageOptimization\Modules\Settings\Classes\Settings;
+use ImageOptimization\Modules\Stats\Classes\Optimization_Stats;
+
 use Throwable;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * The class is responsible for rendering optimization control in all views.
@@ -42,7 +49,7 @@ class Media_Control {
 			return $columns;
 		}
 
-		$columns[ self::COLUMN_ID ] = esc_html__( 'Image optimization', 'image-optimizer' );
+		$columns[ self::COLUMN_ID ] = esc_html__( 'Image optimization', 'image-optimization' );
 
 		return $columns;
 	}
@@ -70,7 +77,7 @@ class Media_Control {
 	public function add_optimization_meta_box() {
 		add_meta_box(
 			self::META_BOX_ID,
-			__( 'Image optimization', 'image-optimizer' ),
+			__( 'Image optimization', 'image-optimization' ),
 			function( $post ) {
 				$this->render_optimization_control( 'meta-box', $post->ID );
 			},
@@ -131,7 +138,7 @@ class Media_Control {
 
 		try {
 			if ( ! Connect::is_connected() || ! Connect::is_activated() ) {
-				throw new Auth_Exception( 'You have to activate your license to use Image Optimizer' );
+				throw new Auth_Error( 'You have to activate your license to use Image Optimizer' );
 			}
 
 			Validate_Image::is_valid( $image_id );
@@ -139,9 +146,16 @@ class Media_Control {
 			$image = new Image( $image_id );
 			$meta = new Image_Meta( $image->get_id() );
 
-			$global_context['can_be_restored'] = Image_Status::OPTIMIZED === $meta->get_status()
-					? $image->can_be_restored()
-					: Settings::get( Settings::BACKUP_ORIGINAL_IMAGES_OPTION_NAME );
+			if ( Image_Status::OPTIMIZED === $meta->get_status() ) {
+				$global_context['can_be_restored'] = $image->can_be_restored();
+			} else {
+				$path = $image->get_file_path( Image::SIZE_FULL );
+				$is_webp = strtolower( File_Utils::get_extension( $path ) ) === 'webp';
+				$backups_enabled = Settings::get( Settings::BACKUP_ORIGINAL_IMAGES_OPTION_NAME );
+				$webp_conversion_enabled = Settings::get( Settings::CONVERT_TO_WEBP_OPTION_NAME );
+
+				$global_context['can_be_restored'] = ( ! $is_webp && $webp_conversion_enabled ) || $backups_enabled;
+			}
 
 			switch ( $meta->get_status() ) {
 				case Image_Status::OPTIMIZATION_IN_PROGRESS:
@@ -189,9 +203,7 @@ class Media_Control {
 
 				case Image_Status::OPTIMIZATION_FAILED:
 					$error_type = $meta->get_error_type() ?? Image_Optimization_Error_Type::GENERIC;
-					$error_message = Image_Optimization_Error_Type::QUOTA_EXCEEDED === $error_type
-						? esc_html__( 'Plan quota reached', 'image-optimizer' )
-						: esc_html__( 'Optimization error', 'image-optimizer' );
+					$error_message = Optimization_Error_Message::get_optimization_error_message( $error_type );
 					$images_left = Data::images_left();
 
 					Module::load_template( $context, 'error', array_merge(
@@ -208,9 +220,7 @@ class Media_Control {
 
 				case Image_Status::REOPTIMIZING_FAILED:
 					$error_type = $meta->get_error_type() ?? Image_Optimization_Error_Type::GENERIC;
-					$error_message = Image_Optimization_Error_Type::QUOTA_EXCEEDED === $error_type
-						? esc_html__( 'Plan quota reached', 'image-optimizer' )
-						: esc_html__( 'Image reoptimizing failed', 'image-optimizer' );
+					$error_message = Optimization_Error_Message::get_reoptimization_error_message( $error_type );
 					$images_left = Data::images_left();
 
 					Module::load_template( $context, 'error', array_merge(
@@ -228,7 +238,7 @@ class Media_Control {
 				case Image_Status::RESTORING_FAILED:
 					Module::load_template( $context, 'error', array_merge(
 						$global_context, [
-							'message' => esc_html__( 'Image restoring error', 'image-optimizer' ),
+							'message' => esc_html__( 'Image restoring error', 'image-optimization' ),
 							'allow_retry' => true,
 							'action' => 'restore',
 						]
@@ -247,11 +257,11 @@ class Media_Control {
 					'allow_retry' => false,
 				]
 			) );
-		} catch ( Auth_Exception $ae ) {
+		} catch ( Auth_Error $ae ) {
 			Module::load_template( $context, 'error', array_merge(
 				$global_context, [
 					'action' => 'error',
-					'message' => esc_html__( 'N/A', 'image-optimizer' ),
+					'message' => esc_html__( 'N/A', 'image-optimization' ),
 					'allow_retry' => false,
 				]
 			) );
@@ -259,7 +269,7 @@ class Media_Control {
 			Module::load_template( $context, 'error', array_merge(
 				$global_context, [
 					'action' => 'error',
-					'message' => esc_html__( 'Internal server error', 'image-optimizer' ),
+					'message' => esc_html__( 'Internal server error', 'image-optimization' ),
 					'allow_retry' => false,
 				]
 			) );

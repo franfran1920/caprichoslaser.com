@@ -553,7 +553,7 @@ class Context
 
     public function isShowBulkTablePricesIncludingCoupons()
     {
-        return apply_filters('adp_show_bulk_table_prices_including_coupons', false);
+        return apply_filters('adp_show_bulk_table_prices_including_coupons', true);
     }
 
     public function isToCompensateTrdPartAdjustmentForFixedPrice()

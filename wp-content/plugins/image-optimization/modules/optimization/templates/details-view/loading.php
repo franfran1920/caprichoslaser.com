@@ -9,17 +9,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 		data-image-optimization-action="<?php echo esc_attr( $args['action'] ); ?>"
 		data-image-optimization-image-id="<?php echo esc_attr( $args['image_id'] ); ?>"
 		data-image-optimization-can-be-restored="<?php echo esc_attr( $args['can_be_restored'] ); ?>">
-	<span class="setting image-optimizer-setting">
+	<span class="setting image-optimization-setting">
 		<span class="name image-optimization-control__property">
-			<?php esc_html_e( 'Status', 'image-optimizer' ); ?>:
+			<?php esc_html_e( 'Status', 'image-optimization' ); ?>:
 		</span>
 
 		<span class="image-optimization-control__property-value">
-			<?php esc_html_e( 'In Progress', 'image-optimizer' ); ?>
+			<?php esc_html_e( 'In Progress', 'image-optimization' ); ?>
 		</span>
 	</span>
 
-	<span class="setting image-optimizer-setting">
+	<span class="setting image-optimization-setting">
 		<span class="name image-optimization-control__property"></span>
 
 		<span class="image-optimization-control__property-value image-optimization-control__property-value--spinner">

@@ -1,13 +1,17 @@
 <?php
 
-namespace ImageOptimizer\Modules\Backups\Classes;
+namespace ImageOptimization\Modules\Backups\Classes;
 
-use ImageOptimizer\Classes\Async_Operation\{
+use ImageOptimization\Classes\Async_Operation\{
 	Async_Operation,
 	Async_Operation_Hook,
 	Async_Operation_Queue,
 };
-use ImageOptimizer\Classes\Image\Image_Query_Builder;
+use ImageOptimization\Classes\Image\Image_Query_Builder;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Remove_All_Backups {
 	private const CHUNK_SIZE = 100;

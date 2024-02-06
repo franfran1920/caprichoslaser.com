@@ -7,7 +7,7 @@ const notOptimizedTemplate = () => {
 	return `
 		<button type="button"
 					class="button button-primary image-optimization-control__button image-optimization-control__button--optimize">
-			${ __( 'Optimize now', 'image-optimizer' ) }
+			${ __( 'Optimize now', 'image-optimization' ) }
 		</button>
 	`;
 };
@@ -17,19 +17,19 @@ const loadingTemplate = ( action ) => {
 
 	switch ( action ) {
 		case 'restore':
-			buttonText = __( 'Restoring…', 'image-optimizer' );
+			buttonText = __( 'Restoring…', 'image-optimization' );
 			break;
 
 		case 'optimize':
-			buttonText = __( 'Optimizing…', 'image-optimizer' );
+			buttonText = __( 'Optimizing…', 'image-optimization' );
 			break;
 
 		case 'reoptimize':
-			buttonText = __( 'Reoptimizing…', 'image-optimizer' );
+			buttonText = __( 'Reoptimizing…', 'image-optimization' );
 			break;
 
 		default:
-			buttonText = __( 'Loading…', 'image-optimizer' );
+			buttonText = __( 'Loading…', 'image-optimization' );
 	}
 
 	return `
@@ -48,12 +48,12 @@ const errorTemplate = ( message, imagesLeft ) => {
 		? `<a class="button button-secondary button-large image-optimization-control__button"
 				 href="${ UPGRADE_LINK }"
 				 target="_blank" rel="noopener noreferrer">
- 				${ __( 'Upgrade', 'image-optimizer' ) }
+ 				${ __( 'Upgrade', 'image-optimization' ) }
 			</a>
 		` : `
 		<button class="button button-secondary button-large button-link-delete image-optimization-control__button image-optimization-control__button--try-again"
 						type="button">
-			${ __( 'Try again', 'image-optimizer' ) }
+			${ __( 'Try again', 'image-optimization' ) }
 		</button>` }
 	`;
 };
@@ -63,28 +63,28 @@ const optimizedTemplate = ( data ) => {
 
 	return `
 		<p class="image-optimization-control__property">
-			${ __( 'Image sizes optimized', 'image-optimizer' ) }:
+			${ __( 'Image sizes optimized', 'image-optimization' ) }:
 
 			<span>${ data?.sizesOptimized }</span>
 		</p>
 
 		<p class="image-optimization-control__property">
 			${ data?.saved?.absolute !== 0
-		? `${ __( 'Overall saving', 'image-optimizer' ) }: <span>${ data?.saved?.relative }% (${ absoluteValue })</span>`
-		: `<span>${ __( 'Image is fully optimized', 'image-optimizer' ) }</span>` }
+		? `${ __( 'Overall saving', 'image-optimization' ) }: <span>${ data?.saved?.relative }% (${ absoluteValue })</span>`
+		: `<span>${ __( 'Image is fully optimized', 'image-optimization' ) }</span>` }
 		</p>
 
 		<div class="image-optimization-control__buttons-wrapper">
 			${ data?.canBeRestored ? `
 				<button type="button"
 					class="button button-secondary image-optimization-control__button image-optimization-control__button--restore-original">
-					${ __( 'Restore original', 'image-optimizer' ) }
+					${ __( 'Restore original', 'image-optimization' ) }
 				</button>
 			` : '' }
 
 			<button type="button"
 				class="button button-secondary image-optimization-control__button image-optimization-control__button--reoptimize">
-				${ __( 'Reoptimize', 'image-optimizer' ) }
+				${ __( 'Reoptimize', 'image-optimization' ) }
 			</button>
 		</div>
 	`;

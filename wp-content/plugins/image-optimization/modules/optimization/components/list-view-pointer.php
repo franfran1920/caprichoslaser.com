@@ -1,8 +1,8 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Components;
+namespace ImageOptimization\Modules\Optimization\Components;
 
-use ImageOptimizer\Modules\Core\Components\Pointers;
+use ImageOptimization\Modules\Core\Components\Pointers;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -19,8 +19,8 @@ class List_View_Pointer {
 		wp_enqueue_script( 'wp-pointer' );
 		wp_enqueue_style( 'wp-pointer' );
 
-		$pointer_content = '<h3>' . esc_html__( 'Switch to list view', 'image-optimizer' ) . '</h3>';
-		$pointer_content .= '<p>' . esc_html__( 'Get the most out of your optimizing options. Use the List view to quickly optimize your uploaded images with Image Optimizer.', 'image-optimizer' ) . '</p>';
+		$pointer_content = '<h3>' . esc_html__( 'Switch to list view', 'image-optimization' ) . '</h3>';
+		$pointer_content .= '<p>' . esc_html__( 'Get the most out of your optimizing options. Use the List view to quickly optimize your uploaded images with Image Optimizer.', 'image-optimization' ) . '</p>';
 
 		$allowed_tags = [
 			'h3' => [],
@@ -32,7 +32,7 @@ class List_View_Pointer {
 				setTimeout(() => {
 					$( '#wp-media-grid div.media-toolbar.wp-filter' ).first().pointer( {
 						content: '<?php echo wp_kses( $pointer_content, $allowed_tags ); ?>',
-						pointerClass: 'image-optimizer-list-view-pointer',
+						pointerClass: 'image-optimization-list-view-pointer',
 						position: {
 							edge: 'top',
 							align: 'left'
@@ -42,7 +42,7 @@ class List_View_Pointer {
 								data: {
 									pointer: '<?php echo esc_attr( static::CURRENT_POINTER_SLUG ); ?>',
 								},
-								nonce: '<?php echo esc_attr( wp_create_nonce( 'image-optimizer-pointer-dismissed' ) ); ?>',
+								nonce: '<?php echo esc_attr( wp_create_nonce( 'image-optimization-pointer-dismissed' ) ); ?>',
 							} );
 						}
 					} ).pointer( 'open' );
@@ -51,7 +51,7 @@ class List_View_Pointer {
 		</script>
 
 		<style>
-			.image-optimizer-list-view-pointer .wp-pointer-arrow {
+			.image-optimization-list-view-pointer .wp-pointer-arrow {
 				left: 15px;
 			}
 		</style>

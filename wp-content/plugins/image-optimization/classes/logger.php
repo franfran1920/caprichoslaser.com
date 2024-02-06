@@ -1,6 +1,10 @@
 <?php
 
-namespace ImageOptimizer\Classes;
+namespace ImageOptimization\Classes;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Logger {
 	public const LEVEL_ERROR = 'error';

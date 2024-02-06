@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Dynamic Pricing for WooCommerce (Pro)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-16 05:53+0000\n"
+"POT-Creation-Date: 2024-02-05 05:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -133,8 +133,8 @@ msgstr ""
 msgid "Add collection"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:708
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:650
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:711
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:653
 msgid "Add condition"
 msgstr ""
 
@@ -333,8 +333,8 @@ msgstr ""
 msgid "Amount saved label"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:702
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:644
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:705
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:647
 msgid "AND"
 msgstr ""
 
@@ -755,8 +755,8 @@ msgstr ""
 msgid "Compatibility"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:700
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:642
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:703
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:645
 msgid "Conditions relationship"
 msgstr ""
 
@@ -1623,8 +1623,8 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:713
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:655
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:699
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:641
 msgid "Need more conditions?"
 msgstr ""
 
@@ -1752,8 +1752,8 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: BaseVersion/views/admin_page/tabs/rules/rule.php:704
-#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:646
+#: BaseVersion/views/admin_page/tabs/rules/rule.php:707
+#: BaseVersion/views/admin_page/tabs/rules/persistent_rule.php:649
 msgid "OR"
 msgstr ""
 

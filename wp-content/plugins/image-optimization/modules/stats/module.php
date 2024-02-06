@@ -1,7 +1,7 @@
 <?php
-namespace ImageOptimizer\Modules\Stats;
+namespace ImageOptimization\Modules\Stats;
 
-use ImageOptimizer\Classes\Module_Base;
+use ImageOptimization\Classes\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

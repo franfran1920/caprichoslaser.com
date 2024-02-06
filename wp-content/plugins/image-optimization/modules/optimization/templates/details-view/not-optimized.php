@@ -8,23 +8,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 		data-image-optimization-status="not-optimized"
 		data-image-optimization-image-id="<?php echo esc_attr( $args['image_id'] ); ?>"
 		data-image-optimization-can-be-restored="<?php echo esc_attr( $args['can_be_restored'] ); ?>">
-	<span class="setting image-optimizer-setting">
+	<span class="setting image-optimization-setting">
 		<span class="name image-optimization-control__property">
-			<?php esc_html_e( 'Status', 'image-optimizer' ); ?>:
+			<?php esc_html_e( 'Status', 'image-optimization' ); ?>:
 		</span>
 
 		<span class="image-optimization-control__property-value">
-			<?php esc_html_e( 'Not optimized', 'image-optimizer' ); ?>
+			<?php esc_html_e( 'Not optimized', 'image-optimization' ); ?>
 		</span>
 	</span>
 
-	<span class="setting image-optimizer-setting">
+	<span class="setting image-optimization-setting">
 		<span class="name image-optimization-control__property"></span>
 
 		<span class="image-optimization-control__property-value image-optimization-control__property-value--button">
 			<button type="button"
 							class="button button-primary image-optimization-control__button image-optimization-control__button--optimize">
-				<?php esc_html_e( 'Optimize now', 'image-optimizer' ); ?>
+				<?php esc_html_e( 'Optimize now', 'image-optimization' ); ?>
 			</button>
 		</span>
 	</span>

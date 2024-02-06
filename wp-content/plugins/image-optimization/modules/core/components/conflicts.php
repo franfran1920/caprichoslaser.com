@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageOptimizer\Modules\Core\Components;
+namespace ImageOptimization\Modules\Core\Components;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -25,19 +25,19 @@ class Conflicts {
 		$conflicting_plugins_names = $this->conflicting_plugins;
 
 		?>
-		<div class="notice notice-warning">
+		<div class="notice notice-warning image-optimizer__notice image-optimizer__notice--warning">
 			<p>
 				<b>
 					<?php esc_html_e(
-						'Image optimizer has detected multiple  active image optimization plugins.',
-						'image-optimizer'
+						'Image optimizer has detected multiple active image optimization plugins.',
+						'image-optimization'
 					); ?>
 				</b>
 
 				<span>
 					<?php esc_html_e(
 						'Having more than one may result in unexpected results.',
-						'image-optimizer'
+						'image-optimization'
 					); ?>
 				</span>
 			</p>
@@ -55,7 +55,7 @@ class Conflicts {
 
 				<input type="submit"
 							style="border:none;background-color:transparent;text-decoration:underline;cursor:pointer;font-size:13px;color:#135e96;"
-							value="<?php esc_html_e( 'Deactivate All', 'image-optimizer' ); ?>">
+							value="<?php esc_html_e( 'Deactivate All', 'image-optimization' ); ?>">
 			</form>
 		</div>
 		<?php

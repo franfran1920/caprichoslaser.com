@@ -4,7 +4,7 @@ Tags: image optimization, image compression, convert webp, resize images, perfor
 Requires at least: 6.2
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 License: GPL-3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -110,6 +110,18 @@ Yes, the Elementor team offers full support for image optimization questions. Yo
 3. Image Optimizer - Bulk Actions and Individual Actions in the Media Library
 
 == Changelog ==
+= 1.1.0 - 2024-02-06 =
+* Tweak: Design for quota reached in top bar
+* Tweak: Refresh bulk token if the current one is expired
+* Tweak: Rename all plugin assets, namespace and text-domain to image-optimization
+* Tweak: Replace hardcoded references in posts content when updating image type
+* Tweak: Added file checksum validation before updating an image
+* Tweak: Avoid overriding existing images with identical file names
+* Fix: Columns are not distributed properly on bulk optimization screen
+* Fix: Incorrect behavior when trying to optimize without enough credits
+* Fix: File is missing Error incorrectly shown
+* Fix: Clear local data on disconnect
+* Fix: Optimization error with broken image
 
 = 1.0.2 - 2024-01-16 =
 * Tweak: Added tooltip to explain compression level in settings

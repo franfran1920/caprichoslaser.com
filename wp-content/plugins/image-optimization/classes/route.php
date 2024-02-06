@@ -1,11 +1,15 @@
 <?php
 
-namespace ImageOptimizer\Classes;
+namespace ImageOptimization\Classes;
 
 use ReflectionClass;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 abstract class Route {
 
@@ -332,21 +336,21 @@ abstract class Route {
 		if ( ! isset( $data['message'] ) || ! isset( $data['code'] ) ) {
 			_doing_it_wrong(
 				__FUNCTION__,
-				esc_html__( 'Both `message` and `code` keys must be provided', 'image-optimizer' ),
+				esc_html__( 'Both `message` and `code` keys must be provided', 'image-optimization' ),
 				'1.0.0'
 			); // @codeCoverageIgnore
 		}
 
 		return new WP_Error(
 			$data['code'] ?? 'internal_server_error',
-			$data['message'] ?? esc_html__( 'Internal server error', 'image-optimizer' ),
+			$data['message'] ?? esc_html__( 'Internal server error', 'image-optimization' ),
 		);
 	}
 
 	public function verify_nonce( $nonce = '', $name = '' ) {
 		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $nonce ) ), $name ) ) {
 			return $this->respond_error_json([
-				'message' => esc_html__( 'Invalid nonce', 'image-optimizer' ),
+				'message' => esc_html__( 'Invalid nonce', 'image-optimization' ),
 				'code' => 'bad_request',
 			]);
 		}
@@ -357,7 +361,7 @@ abstract class Route {
 
 		if ( ! current_user_can( $capability ) ) {
 			return $this->respond_error_json([
-				'message' => esc_html__( 'You do not have sufficient permissions to access this data.', 'image-optimizer' ),
+				'message' => esc_html__( 'You do not have sufficient permissions to access this data.', 'image-optimization' ),
 				'code' => 'bad_request',
 			]);
 		}

@@ -1,9 +1,9 @@
 <?php
 
-namespace ImageOptimizer\Modules\Settings\Components;
+namespace ImageOptimization\Modules\Settings\Components;
 
-use ImageOptimizer\Modules\Core\Components\Pointers;
-use ImageOptimizer\Modules\Settings\Module;
+use ImageOptimization\Modules\Core\Components\Pointers;
+use ImageOptimization\Modules\Settings\Module;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -20,13 +20,13 @@ class Settings_Pointer {
 		wp_enqueue_script( 'wp-pointer' );
 		wp_enqueue_style( 'wp-pointer' );
 
-		$pointer_content = '<h3>' . esc_html__( 'Image Optimization settings', 'image-optimizer' ) . '</h3>';
-		$pointer_content .= '<p>' . esc_html__( 'Head over to the Image Optimization Settings to fine-tune how your media uploads are managed.', 'image-optimizer' ) . '</p>';
+		$pointer_content = '<h3>' . esc_html__( 'Image Optimization settings', 'image-optimization' ) . '</h3>';
+		$pointer_content .= '<p>' . esc_html__( 'Head over to the Image Optimization Settings to fine-tune how your media uploads are managed.', 'image-optimization' ) . '</p>';
 
 		$pointer_content .= sprintf(
-			'<p><a class="button button-primary image-optimizer-pointer-settings-link" href="%s">%s</a></p>',
+			'<p><a class="button button-primary image-optimization-pointer-settings-link" href="%s">%s</a></p>',
 			admin_url( 'admin.php?page=' . Module::SETTING_BASE_SLUG ),
-			esc_html__( 'Take me there', 'image-optimizer' )
+			esc_html__( 'Take me there', 'image-optimization' )
 		);
 		$allowed_tags = [
 			'h3' => [],
@@ -43,7 +43,7 @@ class Settings_Pointer {
 						data: {
 							pointer: '<?php echo esc_attr( static::CURRENT_POINTER_SLUG ); ?>',
 						},
-						nonce: '<?php echo esc_attr( wp_create_nonce( 'image-optimizer-pointer-dismissed' ) ); ?>',
+						nonce: '<?php echo esc_attr( wp_create_nonce( 'image-optimization-pointer-dismissed' ) ); ?>',
 					} );
 				}
 
@@ -57,7 +57,7 @@ class Settings_Pointer {
 							close: onClose
 						} ).pointer( 'open' );
 
-					$( '.image-optimizer-pointer-settings-link' ).first().on( 'click', function( e ) {
+					$( '.image-optimization-pointer-settings-link' ).first().on( 'click', function( e ) {
 						e.preventDefault();
 
 						$(this).attr( 'disabled', true );

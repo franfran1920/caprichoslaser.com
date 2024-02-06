@@ -1,28 +1,32 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Components;
+namespace ImageOptimization\Modules\Optimization\Components;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use ImageOptimizer\Modules\Backups\Classes\Restore_Images;
-use ImageOptimizer\Modules\Optimization\Classes\Single_Optimization as Single_Optimization_Controller;
+use ImageOptimization\Modules\Backups\Classes\Restore_Images;
+use ImageOptimization\Modules\Optimization\Classes\Single_Optimization as Single_Optimization_Controller;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Admin_Bulk_Actions {
 	public function add_bulk_actions( array $bulk_actions ): array {
-		$bulk_actions['image-optimizer-optimize'] = esc_html__( 'Optimize', 'image-optimizer' );
-		$bulk_actions['image-optimizer-restore'] = esc_html__( 'Restore original', 'image-optimizer' );
+		$bulk_actions['image-optimization-optimize'] = esc_html__( 'Optimize', 'image-optimization' );
+		$bulk_actions['image-optimization-restore'] = esc_html__( 'Restore original', 'image-optimization' );
 
 		return $bulk_actions;
 	}
 
 	public function handle_bulk_actions( $redirect_url, $action, $post_ids ): string {
-		if ( 'image-optimizer-optimize' === $action ) {
+		if ( 'image-optimization-optimize' === $action ) {
 			Single_Optimization_Controller::optimize_many( $post_ids );
 		}
 
-		if ( 'image-optimizer-restore' === $action ) {
+		if ( 'image-optimization-restore' === $action ) {
 			Restore_Images::find_and_schedule_restoring( $post_ids );
 		}
 

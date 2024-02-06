@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageOptimizer\Classes\Image;
+namespace ImageOptimization\Classes\Image;
 
 use WP_Query;
 
@@ -31,6 +31,11 @@ class Image_Query_Builder {
 			[
 				'compare' => 'LIKE',
 				'value' => '-failed";',
+				'key' => Image_Meta::IMAGE_OPTIMIZER_METADATA_KEY,
+			],
+			[
+				'compare' => 'LIKE',
+				'value' => ':"not-optimized";',
 				'key' => Image_Meta::IMAGE_OPTIMIZER_METADATA_KEY,
 			],
 		];

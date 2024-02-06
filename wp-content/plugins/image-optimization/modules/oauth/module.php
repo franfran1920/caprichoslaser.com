@@ -1,11 +1,11 @@
 <?php
 
-namespace ImageOptimizer\Modules\Oauth;
+namespace ImageOptimization\Modules\Oauth;
 
-use ImageOptimizer\Classes\Module_Base;
+use ImageOptimization\Classes\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -24,9 +24,9 @@ class Module extends Module_Base {
 
 	public static function routes_list() : array {
 		return [
-			'ConnectInit',
+			'Connect_Init',
 			'Disconnect',
-			'GetSubscriptions',
+			'Get_Subscriptions',
 			'Activate',
 			'Deactivate',
 		];

@@ -1,9 +1,13 @@
 <?php
 
-namespace ImageOptimizer\Modules\Stats\Classes;
+namespace ImageOptimization\Modules\Stats\Classes;
 
-use ImageOptimizer\Classes\Route;
+use ImageOptimization\Classes\Route;
 use WP_REST_Request;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Route_Base extends Route {
 	protected $auth = true;

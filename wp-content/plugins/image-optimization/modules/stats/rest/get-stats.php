@@ -1,12 +1,16 @@
 <?php
 
-namespace ImageOptimizer\Modules\Stats\Rest;
+namespace ImageOptimization\Modules\Stats\Rest;
 
-use ImageOptimizer\Modules\Stats\Classes\{
+use ImageOptimization\Modules\Stats\Classes\{
 	Route_Base,
 	Stats
 };
 use Throwable;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Get_Stats extends Route_Base {
 	protected string $path = '';

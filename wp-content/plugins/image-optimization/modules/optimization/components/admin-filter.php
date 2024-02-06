@@ -1,12 +1,16 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Components;
+namespace ImageOptimization\Modules\Optimization\Components;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use ImageOptimizer\Classes\Image\Image_Meta;
+use ImageOptimization\Classes\Image\Image_Meta;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Admin_Filter {
 	public function add_filter( string $post_type ) {
@@ -15,17 +19,17 @@ class Admin_Filter {
 		}
 
 		$options = [
-			'' => __( 'All Media Files', 'image-optimizer' ),
-			'optimized' => __( 'Optimized', 'image-optimizer' ),
-			'not-optimized' => __( 'Unoptimized', 'image-optimizer' ),
-			'in-progress' => __( 'In progress', 'image-optimizer' ),
-			'failed' => __( 'Errors', 'image-optimizer' ),
+			'' => __( 'All Media Files', 'image-optimization' ),
+			'optimized' => __( 'Optimized', 'image-optimization' ),
+			'not-optimized' => __( 'Unoptimized', 'image-optimization' ),
+			'in-progress' => __( 'In progress', 'image-optimization' ),
+			'failed' => __( 'Errors', 'image-optimization' ),
 		];
 
 		$current_value = $this->get_current_filter();
 		?>
 		<label class="screen-reader-text" for="image-optimization-filter">
-			<?php esc_html_e( 'Filter by optimization status', 'image-optimizer' ); ?>
+			<?php esc_html_e( 'Filter by optimization status', 'image-optimization' ); ?>
 		</label>
 
 		<select class="image-optimization-filter" id="image-optimization-filter" name="image-optimization-filter">

@@ -1,13 +1,21 @@
 <?php
 
-namespace ImageOptimizer\Modules\Oauth\Rest;
+namespace ImageOptimization\Modules\Oauth\Rest;
 
-use ImageOptimizer\Modules\Oauth\Classes\Route_Base;
-use ImageOptimizer\Modules\Oauth\Components\Connect;
+use ImageOptimization\Modules\Oauth\{
+	Classes\Route_Base,
+	Components\Connect,
+};
+
+use Throwable;
 use WP_REST_Request;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 class Disconnect extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-disconnect';
+	const NONCE_NAME = 'image-optimization-disconnect';
 
 	protected string $path = 'disconnect';
 
@@ -25,7 +33,14 @@ class Disconnect extends Route_Base {
 			self::NONCE_NAME
 		);
 
-		Connect::disconnect();
+		try {
+			Connect::disconnect();
+		} catch ( Throwable $t ) {
+			return $this->respond_error_json( [
+				'message' => $t->getMessage(),
+				'code' => 'internal_server_error',
+			] );
+		}
 
 		return $this->respond_success_json();
 	}

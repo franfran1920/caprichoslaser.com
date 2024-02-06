@@ -1,17 +1,20 @@
 <?php
 
-namespace ImageOptimizer\Modules\Oauth\Components;
+namespace ImageOptimization\Modules\Oauth\Components;
 
-use ImageOptimizer\Classes\{
-	Logger,
-	Utils
+use ImageOptimization\Modules\Oauth\{
+	Classes\Route_Base,
+	Components\Exceptions\Auth_Error,
+	Classes\Data,
 };
+use ImageOptimization\Classes\Logger;
+use ImageOptimization\Classes\Utils;
+use ImageOptimization\Modules\Settings\Module as Settings_Module;
 
-use ImageOptimizer\Modules\Oauth\Classes\Data;
-use ImageOptimizer\Modules\Settings\Module as Settings_Module;
+use Throwable;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -76,7 +79,7 @@ class Connect {
 
 		// validate nonce
 		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'nonce_actionget_token' ) ) {
-			wp_die( 'Nonce verification failed', 'image-optimizer' );
+			wp_die( 'Nonce verification failed', 'image-optimization' );
 		}
 
 		$token_response = wp_remote_request( self::API_URL . '/get_token', [
@@ -90,7 +93,7 @@ class Connect {
 		] );
 
 		if ( is_wp_error( $token_response ) ) {
-			wp_die( $token_response->get_error_message(), 'image-optimizer' );
+			wp_die( $token_response->get_error_message(), 'image-optimization' );
 		}
 
 		$data = json_decode( wp_remote_retrieve_body( $token_response ), true );
@@ -109,25 +112,193 @@ class Connect {
 	}
 
 	/**
-	 * disconnect
+	 * Gets required connection data from the service and generates a connect link.
+	 *
+	 * @return string User connect link
+	 *
+	 * @throws Auth_Error
 	 */
-	public static function disconnect() {
-		$response = wp_remote_request( self::API_URL . '/disconnect', [
-			'method' => 'POST',
-			'body' => [
-				'app' => 'library',
-				'home_url' => trailingslashit( home_url() ),
-				'client_id' => Data::get_client_id(),
-				'access_token' => Data::get_access_token(),
-			],
-		] );
+	public static function initialize_connect(): string {
+		try {
+			$response = wp_remote_request(
+				self::API_URL . '/library/get_client_id',
+				[
+					'method' => 'POST',
+					'body' => [
+						'local_id' => get_current_user_id(),
+						'site_key' => Data::get_site_key(),
+						'app' => 'library',
+						'home_url' => trailingslashit( home_url() ),
+						'source' => 'image-optimizer',
+					],
+				]
+			);
+		} catch ( Throwable $t ) {
+			Logger::log(
+				Logger::LEVEL_ERROR,
+				'Error while sending connection initialization request: ' . $t->getMessage()
+			);
 
-		if ( is_wp_error( $response ) ) {
-			wp_die( $response->get_error_message(), 'image-optimizer' );
+			throw new Auth_Error( $t->getMessage() );
 		}
 
+		$data = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if ( ! isset( $data->client_id ) || ! isset( $data->auth_secret ) ) {
+			Logger::log(
+				Logger::LEVEL_ERROR,
+				'Invalid response from server: client id or auth secret are undefined'
+			);
+
+			throw new Auth_Error( esc_html__( 'Invalid response from server', 'image-optimization' ) );
+		}
+
+		Data::set_client_data( $data->client_id, $data->auth_secret );
+
+		return add_query_arg( [
+			'utm_source'      => 'image-optimizer-panel',
+			'utm_campaign'    => 'image-optimizer',
+			'utm_medium'      => 'wp-dash',
+			'source'          => 'generic',
+			'action'          => 'authorize',
+			'response_type'   => 'code',
+			'client_id'       => $data->client_id,
+			'auth_secret'     => $data->auth_secret,
+			'state'           => Data::get_connect_state( true ),
+			'redirect_uri'    => rawurlencode( add_query_arg( [
+				'page'   => 'elementor-connect',
+				'app'    => 'library',
+				'action' => 'get_token',
+				'nonce'  => wp_create_nonce( 'nonce_action' . 'get_token' ),
+			], admin_url( 'admin.php' ) ) ),
+			'may_share_data'  => 0,
+			'reconnect_nonce' => wp_create_nonce( 'nonce_action' . 'reconnect' ),
+		], Route_Base::SITE_URL . 'library' );
+	}
+
+	/**
+	 * Disconnects a user and removes connection data from the DB.
+	 */
+	public static function disconnect() {
 		Data::reset();
+
 		do_action( Checkpoint::ON_DISCONNECT );
+
+		try {
+			return wp_remote_request( self::API_URL . '/disconnect', [
+				'method' => 'POST',
+				'body' => [
+					'app' => 'library',
+					'home_url' => trailingslashit( home_url() ),
+					'client_id' => Data::get_client_id(),
+					'access_token' => Data::get_access_token(),
+				],
+			] );
+		} catch ( Throwable $t ) {
+			Logger::log( Logger::LEVEL_ERROR, 'Error while sending disconnection request: ' . $t->getMessage() );
+
+			throw new Auth_Error( $t->getMessage() );
+		}
+	}
+
+	/**
+	 * Sends an activation request and stores activation data in the DB.
+	 *
+	 * @param $license_key string License key to activate with.
+	 * @return mixed
+	 *
+	 * @throws Auth_Error
+	 */
+	public static function activate( string $license_key ) {
+		try {
+			$response = Utils::get_api_client()->make_request(
+				'POST',
+				'activation/activate',
+				[],
+				[ 'key' => $license_key ]
+			);
+		} catch ( Throwable $t ) {
+			Logger::log( Logger::LEVEL_ERROR, 'Error while sending activation request: ' . $t->getMessage() );
+
+			throw new Auth_Error( $t->getMessage() );
+		}
+
+		if ( ! isset( $response->id ) ) {
+			Logger::log( Logger::LEVEL_ERROR, 'Invalid response from server' );
+
+			throw new Auth_Error( esc_html__( 'Invalid response from server', 'image-optimization' ) );
+		}
+
+		Data::set_activation_state( $license_key );
+
+		do_action( Checkpoint::ON_ACTIVATE, $license_key );
+
+		return $response;
+	}
+
+	/**
+	 * Deactivate specific license and remove activation data from the DB.
+	 *
+	 * @param $license_key string License key to deactivate.
+	 *
+	 * @return mixed
+	 *
+	 * @throws Auth_Error
+	 */
+	public static function deactivate( string $license_key ) {
+		Data::delete_activation_state();
+
+		do_action( Checkpoint::ON_DEACTIVATE, $license_key );
+
+		try {
+			$response = Utils::get_api_client()->make_request(
+				'POST',
+				'activation/deactivate',
+				[
+					'key' => $license_key,
+				]
+			);
+		} catch ( Throwable $t ) {
+			Logger::log( Logger::LEVEL_ERROR, 'Error while sending deactivation request: ' . $t->getMessage() );
+
+			throw new Auth_Error( $t->getMessage() );
+		}
+
+		if ( ! isset( $response->id ) ) {
+			Logger::log( Logger::LEVEL_ERROR, 'Invalid response from server' );
+
+			throw new Auth_Error( esc_html__( 'Invalid response from server', 'image-optimization' ) );
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Fetches and returns a list of available licenses for a specific user.
+	 *
+	 * @return array Available subscriptions or an empty array
+	 *
+	 * @throws Auth_Error
+	 */
+	public static function get_subscriptions(): array {
+		try {
+			$response = Utils::get_api_client()->make_request(
+				'POST',
+				'activation/get-subscriptions'
+			);
+		} catch ( Throwable $t ) {
+			Logger::log( Logger::LEVEL_ERROR, 'Error while fetching subscriptions: ' . $t->getMessage() );
+
+			throw new Auth_Error( $t->getMessage() );
+		}
+
+		if ( ! isset( $response->subscriptions ) ) {
+			Logger::log( Logger::LEVEL_ERROR, 'Invalid response from server' );
+
+			throw new Auth_Error( esc_html__( 'Invalid response from server', 'image-optimization' ) );
+		}
+
+		return $response->subscriptions;
 	}
 
 	public static function check_connect_status() {
@@ -137,15 +308,15 @@ class Connect {
 			return null;
 		}
 
-		$response = Utils::get_api_client()->make_request(
-			'POST',
-			'status/check'
-		);
-
-		if ( is_wp_error( $response ) ) {
+		try {
+			$response = Utils::get_api_client()->make_request(
+				'POST',
+				'status/check'
+			);
+		} catch ( Throwable $t ) {
 			Logger::log(
 				Logger::LEVEL_ERROR,
-				'Status check error. Reason: ' . $response->get_error_message()
+				'Status check error. Reason: ' . $t->getMessage()
 			);
 
 			return null;
@@ -158,10 +329,6 @@ class Connect {
 		}
 
 		return $response;
-	}
-
-	public static function get_connect_route_url( $endpoint ): string {
-		return rest_url( 'image-optimizer/v1/connect/' . $endpoint );
 	}
 
 	public function __construct() {

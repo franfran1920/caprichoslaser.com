@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageOptimizer\Classes;
+namespace ImageOptimization\Classes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -119,7 +119,7 @@ abstract class Module_Base {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'image-optimizer' ), '1.0.0' ); // @codeCoverageIgnore
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'image-optimization' ), '1.0.0' ); // @codeCoverageIgnore
 	}
 
 	/**
@@ -130,7 +130,7 @@ abstract class Module_Base {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'image-optimizer' ), '1.0.0' ); // @codeCoverageIgnore
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'image-optimization' ), '1.0.0' ); // @codeCoverageIgnore
 	}
 
 	/**
@@ -284,7 +284,7 @@ abstract class Module_Base {
 	 * @return string
 	 */
 	protected function get_assets_base_url(): string {
-		return IMAGE_OPTIMIZER_URL;
+		return IMAGE_OPTIMIZATION_URL;
 	}
 
 	/**

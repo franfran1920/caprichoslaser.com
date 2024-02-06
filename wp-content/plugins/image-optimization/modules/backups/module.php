@@ -1,8 +1,8 @@
 <?php
 
-namespace ImageOptimizer\Modules\Backups;
+namespace ImageOptimization\Modules\Backups;
 
-use ImageOptimizer\Classes\Module_Base;
+use ImageOptimization\Classes\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

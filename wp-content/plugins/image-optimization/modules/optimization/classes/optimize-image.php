@@ -1,28 +1,38 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Classes;
+namespace ImageOptimization\Modules\Optimization\Classes;
 
-use ImageOptimizer\Classes\File_Utils;
-use ImageOptimizer\Classes\Image\{
+use ImageOptimization\Classes\File_System\{
+	Exceptions\File_System_Operation_Error,
+	File_System,
+};
+use ImageOptimization\Classes\File_Utils;
+use ImageOptimization\Classes\Image\{
+	Exceptions\Image_Backup_Creation_Error,
 	Exceptions\Invalid_Image_Exception,
 	Image,
 	Image_Backup,
+	Image_DB_Update,
 	Image_Meta,
 	Image_Status,
 	WP_Image_Meta
 };
-use ImageOptimizer\Classes\Utils;
-use ImageOptimizer\Modules\Oauth\Classes\Exceptions\Quota_Exceeded_Error;
-use ImageOptimizer\Modules\Oauth\Components\Connect;
-use ImageOptimizer\Modules\Optimization\Classes\Exceptions\Image_Optimization_Error;
-use ImageOptimizer\Modules\Settings\Classes\Settings;
+use ImageOptimization\Classes\Logger;
+use ImageOptimization\Classes\Utils;
+use ImageOptimization\Modules\Oauth\Classes\Exceptions\Quota_Exceeded_Error;
+use ImageOptimization\Modules\Oauth\Components\Connect;
+use ImageOptimization\Modules\Optimization\Classes\{
+	Exceptions\Image_File_Already_Exists_Error,
+	Exceptions\Image_Optimization_Error,
+	Exceptions\Bulk_Token_Expired_Error,
+	Exceptions\Image_Already_Optimized_Error,
+};
+use ImageOptimization\Modules\Settings\Classes\Settings;
+use Throwable;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
-require_once ABSPATH . 'wp-admin/includes/file.php';
-WP_Filesystem();
 
 /**
  * The class is responsible for the optimization logic itself. It gets an image file, runs
@@ -40,9 +50,11 @@ class Optimize_Image {
 	private string $current_image_path;
 	private string $current_image_size;
 	private bool $convert_to_webp;
+	private bool $keep_backups;
+	private array $current_size_duplicates;
 
 	/**
-	 * @throws Image_Optimization_Error|Quota_Exceeded_Error
+	 * @throws Quota_Exceeded_Error|Bulk_Token_Expired_Error|Image_File_Already_Exists_Error|Image_Optimization_Error
 	 */
 	public function optimize(): void {
 		$sizes_enabled = Settings::get( Settings::CUSTOM_SIZES_OPTION_NAME );
@@ -66,52 +78,57 @@ class Optimize_Image {
 			}
 
 			if ( ! file_exists( $this->image->get_file_path( $size_exist ) ) ) {
-				throw new Image_Optimization_Error( esc_html__( 'File is missing. Verify the upload', 'image-optimizer' ) );
+				throw new Image_Optimization_Error( esc_html__( 'File is missing. Verify the upload', 'image-optimization' ) );
 			}
 
 			$this->current_image_size = $size_exist;
+			$this->current_size_duplicates = $this->wp_meta->get_size_duplicates( $size_exist );
 			$this->current_image_path = $this->image->get_file_path( $size_exist );
 
 			$this->optimize_current_size();
 
 			$this->current_image_size = '';
+			$this->current_size_duplicates = [];
 			$this->current_image_path = '';
 		}
 
 		$this->mark_as_optimized();
+
+		if ( ! $this->keep_backups ) {
+			Image_Backup::remove( $this->image->get_id() );
+		}
 	}
 
-	/**
-	 * @throws Image_Optimization_Error|Quota_Exceeded_Error
-	 */
 	private function optimize_current_size(): void {
-		$response = $this->send_file();
+		try {
+			$original_path = $this->current_image_path;
+			$response = $this->send_file();
 
-		if ( is_wp_error( $response ) ) {
-			if ( $response->get_error_message() === 'user reached limit' ) {
-				throw new Quota_Exceeded_Error( esc_html__( 'Plan quota reached', 'image-optimizer' ) );
+			$optimized_size = (int) $response->optimizedSize; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			$optimized_image_binary = base64_decode( $response->image, true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+
+			$this->replace_image_file( $optimized_image_binary );
+			$this->update_attachment_meta( $optimized_size );
+
+			if ( $original_path !== $this->current_image_path ) {
+				$this->update_posts( $original_path, $this->current_image_path );
 			}
 
-			if ( $response->get_error_message() === 'Image already optimized' ) {
-				$original_size = $this->wp_meta->get_file_size( $this->current_image_size );
+			// This should only be updated after meta
+			$this->update_attachment_post();
+		} catch ( Image_Already_Optimized_Error $iao ) {
+			// If we can't optimize it further, just file update the meta
+			$original_size = $this->wp_meta->get_file_size( $this->current_image_size )
+				?? File_System::size( $this->image->get_file_path( $this->current_image_size ) );
 
-				$this->update_attachment_meta( $original_size );
-				$this->update_attachment_post();
-
-				return;
-			}
-
-			throw new Image_Optimization_Error( $response->get_error_message() );
+			$this->update_attachment_meta( $original_size );
+			$this->update_attachment_post();
+		} catch ( Bulk_Token_Expired_Error | Quota_Exceeded_Error | Image_File_Already_Exists_Error $e ) {
+			throw $e;
+		} catch ( Throwable $t ) {
+			// In case of anything else
+			throw new Image_Optimization_Error( $t->getMessage() );
 		}
-
-		$optimized_size = (int) $response->optimizedSize; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-		$optimized_image_binary = base64_decode( $response->image, true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
-
-		$this->replace_image_file( $optimized_image_binary );
-		$this->update_attachment_meta( $optimized_size );
-
-		// This should only be updated after meta
-		$this->update_attachment_post();
 	}
 
 	private function send_file() {
@@ -134,12 +151,16 @@ class Optimize_Image {
 			$optimization_options['resize'] = Settings::get( Settings::RESIZE_LARGER_IMAGES_SIZE_OPTION_NAME );
 		}
 
-		return Utils::get_api_client()->make_request(
+		$image_key = wp_generate_password( 15, false );
+
+		$response = Utils::get_api_client()->make_request(
 			'POST',
 			self::IMAGE_OPTIMIZE_ENDPOINT,
 			[
 				'initiator' => $this->initiator,
 				'image_url' => $this->image->get_url( $this->current_image_size ),
+				'image_key' => $image_key,
+				'checksum' => md5_file( $this->current_image_path ),
 				'attachment_id' => $this->image->get_id(),
 				'attachment_parent_id' => Image::SIZE_FULL === $this->current_image_size ? 0 : $this->image->get_id(),
 				'image_optimization_settings' => base64_encode( wp_json_encode( $optimization_options ) ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
@@ -148,31 +169,71 @@ class Optimize_Image {
 			$this->current_image_path,
 			'image'
 		);
+
+		if ( ! isset( $response->imageKey ) || $image_key !== $response->imageKey ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			Logger::log(
+				Logger::LEVEL_ERROR,
+				"Image key must be $image_key, instead got $response->imageKey"
+			);
+
+			throw new Image_Optimization_Error( esc_html__( 'Service response is incorrect', 'image-optimization' ) );
+		}
+
+		$received_file_hash = md5( base64_decode( $response->image, true ) );
+
+		if ( ! isset( $response->checksum ) || $received_file_hash !== $response->checksum ) {
+			Logger::log(
+				Logger::LEVEL_ERROR,
+				"Image key must be $response->checksum, instead calculated $received_file_hash"
+			);
+
+			throw new Image_Optimization_Error( esc_html__( 'Service response is incorrect', 'image-optimization' ) );
+		}
+
+		return $response;
 	}
 
+	/**
+	 * @throws File_System_Operation_Error|Image_Backup_Creation_Error|Image_File_Already_Exists_Error
+	 */
 	private function replace_image_file( string $file_data ): void {
-		global $wp_filesystem;
-
 		$path = $this->current_image_path;
 
 		// If we have backups disabled, we want to make sure we can download and save new file before we
 		// remove an existing one.
 		$tmp_path = File_Utils::replace_extension( $path, 'tmp' );
 
-		$wp_filesystem->put_contents( $tmp_path, $file_data );
-
-		// The original file doesn't exist after any of these operations.
-		if ( Settings::get( Settings::BACKUP_ORIGINAL_IMAGES_OPTION_NAME ) ) {
-			Image_Backup::create( $this->image->get_id(), $this->current_image_size, $this->current_image_path );
-		} else {
-			$wp_filesystem->delete( $path, false, 'f' );
-		}
+		File_System::put_contents( $tmp_path, $file_data );
 
 		if ( $this->convert_to_webp ) {
-			$path = File_Utils::replace_extension( $tmp_path, 'webp' );
-		}
+			$webp_path = File_Utils::replace_extension( $tmp_path, 'webp' );
+			$original_file_is_webp = strtolower( $path ) === strtolower( $webp_path );
 
-		$wp_filesystem->move( $tmp_path, $path, true );
+			if ( ! $original_file_is_webp && File_System::exists( $webp_path ) ) {
+				throw new Image_File_Already_Exists_Error();
+			}
+
+			// We want to keep both original as a fallback and optimized webp to prevent 404s
+			if ( ! $original_file_is_webp ) {
+				$this->keep_backups = true;
+
+				( new Image_Meta( $this->image->get_id() ) )
+					->set_image_backup_path( $this->current_image_size, $this->current_image_path )
+					->save();
+			}
+
+			if ( $original_file_is_webp ) {
+				Image_Backup::create( $this->image->get_id(), $this->current_image_size, $this->current_image_path );
+			}
+
+			File_System::move( $tmp_path, $webp_path, true );
+
+			$path = $webp_path;
+		} else {
+			Image_Backup::create( $this->image->get_id(), $this->current_image_size, $this->current_image_path );
+
+			File_System::move( $tmp_path, $path, true );
+		}
 
 		if ( Image::SIZE_FULL === $this->current_image_size ) {
 			// Drop WP caches
@@ -216,24 +277,44 @@ class Optimize_Image {
 
 		list($width, $height) = getimagesize( $this->current_image_path );
 
-		$meta
-			->set_compression_level( Settings::get( Settings::COMPRESSION_LEVEL_OPTION_NAME ) )
-			->add_optimized_size( $this->current_image_size )
-			->add_original_data( $this->current_image_size, $this->wp_meta->get_size_data( $this->current_image_size ) );
+		$sizes_to_update = [ $this->current_image_size, ...$this->current_size_duplicates ];
 
-		$this->wp_meta
-			->set_width( $this->current_image_size, $width )
-			->set_height( $this->current_image_size, $height )
-			->set_file_size( $this->current_image_size, $optimized_size );
+		foreach ( $sizes_to_update as $size ) {
+			$meta
+				->set_compression_level( Settings::get( Settings::COMPRESSION_LEVEL_OPTION_NAME ) )
+				->add_optimized_size( $size )
+				->add_original_data( $size, $this->wp_meta->get_size_data( $size ) );
 
-		if ( $this->convert_to_webp ) {
 			$this->wp_meta
-				->set_file_path( $this->current_image_size, $this->current_image_path )
-				->set_mime_type( $this->current_image_size, 'image/webp' );
+				->set_width( $size, $width )
+				->set_height( $size, $height )
+				->set_file_size( $size, $optimized_size );
+
+			if ( $this->convert_to_webp ) {
+				$this->wp_meta
+					->set_file_path( $size, $this->current_image_path )
+					->set_mime_type( $size, 'image/webp' );
+			}
 		}
 
 		$meta->save();
 		$this->wp_meta->save();
+	}
+
+	/**
+	 * If we change an image extension, we should walk through the wp_posts table and update all the
+	 * hardcoded image links to prevent 404s.
+	 *
+	 * @param string $old_path Previous image path
+	 * @param string $new_path Current image path
+	 *
+	 * @return void
+	 */
+	private function update_posts( string $old_path, string $new_path ) {
+		Image_DB_Update::update_posts_table_urls(
+			File_Utils::get_url_from_path( $old_path ),
+			File_Utils::get_url_from_path( $new_path )
+		);
 	}
 
 	/**
@@ -257,5 +338,6 @@ class Optimize_Image {
 		$this->initiator = $initiator;
 		$this->bulk_token = $bulk_token;
 		$this->convert_to_webp = Settings::get( Settings::CONVERT_TO_WEBP_OPTION_NAME );
+		$this->keep_backups = Settings::get( Settings::BACKUP_ORIGINAL_IMAGES_OPTION_NAME );
 	}
 }

@@ -1,16 +1,20 @@
 <?php
 
-namespace ImageOptimizer\Modules\Backups\Rest;
+namespace ImageOptimization\Modules\Backups\Rest;
 
-use ImageOptimizer\Modules\Backups\Classes\{
+use ImageOptimization\Modules\Backups\Classes\{
 	Route_Base,
 	Remove_All_Backups,
 };
 use Throwable;
 use WP_REST_Request;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 class Remove_Backups extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-remove-backups';
+	const NONCE_NAME = 'image-optimization-remove-backups';
 
 	protected string $path = '';
 

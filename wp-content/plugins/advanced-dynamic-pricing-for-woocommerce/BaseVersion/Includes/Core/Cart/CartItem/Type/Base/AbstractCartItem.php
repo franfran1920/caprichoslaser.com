@@ -67,6 +67,14 @@ abstract class AbstractCartItem
         $this->attributes = clone $this->attributes;
     }
 
+    public function cleanAllAdjustments()
+    {
+        $this->priceAdjustments = [];
+        $this->price = $this->getOriginalPrice();
+
+        $this->recalculateHash();
+    }
+
     // addons methods
 
     /**

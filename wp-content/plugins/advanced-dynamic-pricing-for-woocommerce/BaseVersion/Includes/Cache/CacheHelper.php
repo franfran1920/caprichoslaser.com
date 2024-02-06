@@ -138,6 +138,54 @@ class CacheHelper
     }
 
     /**
+     * @param array<int, int> $ruleIds
+     * @param Context $context
+     *
+     * @return array<int, Rule>
+     */
+    public static function loadProductOnlyRules($ruleIds, Context $context = null)
+    {
+        $ruleIds = (array)$ruleIds;
+        $ruleIds = array_map('intval', $ruleIds);
+
+        if (count($ruleIds) === 0) {
+            return array();
+        }
+
+        $rules            = array();
+        $notCachedRuleIds = array();
+
+        foreach ($ruleIds as $ruleId) {
+            $rule = self::cacheGet($ruleId, self::GROUP_RULES_CACHE);
+
+            if ($rule instanceof Rule) {
+                $rules[$rule->getId()] = $rule;
+            } else {
+                $notCachedRuleIds[] = $ruleId;
+            }
+        }
+
+        if (count($notCachedRuleIds) === 0) {
+            return $rules;
+        }
+
+        if (is_null($context)) {
+            $context = new Context();
+        }
+
+        /** @var RuleStorage $storage */
+        $storage         = Factory::get("Database_RuleStorage");
+        $storage->withContext($context);
+        $ruleRepository = new RuleRepository();
+        $rows            = $ruleRepository->getRules(array('id' => $notCachedRuleIds));
+        $rulesCollection = $storage->buildPersistentRules($rows);
+        $rules           = $rulesCollection->getRules();
+        self::addRulesToCache($rules);
+
+        return $rules;
+    }
+
+    /**
      * @param array<int, Rule> $rules
      */
     protected static function addRulesToCache($rules)

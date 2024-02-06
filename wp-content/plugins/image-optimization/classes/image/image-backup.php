@@ -1,15 +1,16 @@
 <?php
 
-namespace ImageOptimizer\Classes\Image;
+namespace ImageOptimization\Classes\Image;
 
-use ImageOptimizer\Classes\File_Utils;
+use ImageOptimization\Classes\File_System\Exceptions\File_System_Operation_Error;
+use ImageOptimization\Classes\File_System\File_System;
+use ImageOptimization\Classes\File_Utils;
+use ImageOptimization\Classes\Image\Exceptions\Image_Backup_Creation_Error;
+use ImageOptimization\Classes\Logger;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
-require_once ABSPATH . 'wp-admin/includes/file.php';
-WP_Filesystem();
 
 /**
  * We're saving backup paths in meta even though the backup path could be dynamically generated.
@@ -25,21 +26,33 @@ WP_Filesystem();
  */
 class Image_Backup {
 	/**
-	 * Creates a backup of a file by moving it to a new file with the backup extension.
+	 * Creates a backup of a file by copying it to a new file with the backup extension.
 	 * Also, attaches a newly created backup to image's meta.
 	 *
 	 * @param int $image_id Attachment id.
 	 * @param string $image_size Image size (e.g. 'full', 'thumbnail', etc.).
 	 * @param string $image_path Path to an image we plan to back up.
-	 * @return string Backup path.
+	 *
+	 * @return string Backup path if successfully created, false otherwise.
+	 *
+	 * @throws Image_Backup_Creation_Error
 	 */
 	public static function create( int $image_id, string $image_size, string $image_path ): string {
-		global $wp_filesystem;
-
 		$extension = File_Utils::get_extension( $image_path );
 		$backup_path = File_Utils::replace_extension( $image_path, "backup.$extension" );
 
-		$wp_filesystem->move( $image_path, $backup_path, true );
+		try {
+			File_System::copy( $image_path, $backup_path, true );
+		} catch ( File_System_Operation_Error $e ) {
+			Logger::log(
+				Logger::LEVEL_ERROR,
+				"Error while creating a backup for image {$image_id} and size {$image_size}"
+			);
+
+			throw new Image_Backup_Creation_Error(
+				"Error while creating a backup for image {$image_id} and size {$image_size}"
+			);
+		}
 
 		$meta = new Image_Meta( $image_id );
 
@@ -68,11 +81,10 @@ class Image_Backup {
 	 *
 	 * @param int $image_id Attachment id.
 	 * @param string|null $image_size Image size (e.g. 'full', 'thumbnail', etc.). All backups will be removed if no size provided.
+	 *
 	 * @return bool Returns true if backups were removed successfully, false otherwise.
 	 */
 	public static function remove( int $image_id, ?string $image_size = null ): bool {
-		global $wp_filesystem;
-
 		$meta = new Image_Meta( $image_id );
 		$backups = $meta->get_image_backup_paths();
 
@@ -85,7 +97,15 @@ class Image_Backup {
 				return false;
 			}
 
-			$wp_filesystem->delete( $backups[ $image_size ], false, 'f' );
+			try {
+				File_System::delete( $backups[ $image_size ], false, 'f' );
+			} catch ( File_System_Operation_Error $e ) {
+				Logger::log(
+					Logger::LEVEL_ERROR,
+					"Error while removing a backup for image {$image_id} and size {$image_size}"
+				);
+			}
+
 			$meta->remove_image_backup_path( $image_size );
 			$meta->save();
 
@@ -93,7 +113,12 @@ class Image_Backup {
 		}
 
 		foreach ( $backups as $image_size => $backup_path ) {
-			$wp_filesystem->delete( $backup_path, false, 'f' );
+			try {
+				File_System::delete( $backup_path, false, 'f' );
+			} catch ( File_System_Operation_Error $e ) {
+				Logger::log( Logger::LEVEL_ERROR, "Error while removing backups {$image_id}" );
+			}
+
 			$meta->remove_image_backup_path( $image_size );
 		}
 

@@ -1,21 +1,22 @@
 <?php
 
-namespace ImageOptimizer\Classes\Image;
+namespace ImageOptimization\Classes\Image;
 
-use ImageOptimizer\Classes\Async_Operation\Exceptions\Async_Operation_Exception;
-use ImageOptimizer\Classes\File_Utils;
-use ImageOptimizer\Classes\Image\Exceptions\{
+use ImageOptimization\Classes\File_System\{
+	Exceptions\File_System_Operation_Error,
+	File_System,
+};
+use ImageOptimization\Classes\File_Utils;
+use ImageOptimization\Classes\Image\Exceptions\{
 	Image_Restoring_Exception,
 	Invalid_Image_Exception,
 };
+use ImageOptimization\Classes\Logger;
 use Throwable;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
-require_once ABSPATH . 'wp-admin/includes/file.php';
-WP_Filesystem();
 
 class Image_Restore {
 	public static function restore_many( array $image_ids, bool $keep_image_meta = false ): void {
@@ -23,6 +24,8 @@ class Image_Restore {
 			try {
 				self::restore( $image_id, $keep_image_meta );
 			} catch ( Throwable $t ) {
+				Logger::log( Logger::LEVEL_ERROR, 'Bulk images restoring error: ' . $t->getMessage() );
+
 				( new Image_Meta( $image_id ) )
 				->set_status( Image_Status::RESTORING_FAILED )
 				->save();
@@ -33,13 +36,9 @@ class Image_Restore {
 	}
 
 	/**
-	 * @throws Invalid_Image_Exception
-	 * @throws Image_Restoring_Exception
-	 * @throws Async_Operation_Exception
+	 * @throws Invalid_Image_Exception|Image_Restoring_Exception|File_System_Operation_Error
 	 */
 	public static function restore( int $image_id, bool $keep_image_meta = false ): void {
-		global $wp_filesystem;
-
 		$image = new Image( $image_id );
 
 		if ( ! $image->can_be_restored() ) {
@@ -56,10 +55,18 @@ class Image_Restore {
 			if ( $backup_path && $current_path ) {
 				$original_path = self::get_path_from_backup_path( $backup_path );
 
-				$wp_filesystem->move( $backup_path, $original_path, true );
+				if ( $original_path === $backup_path ) {
+					File_System::delete( $current_path, false, 'f' );
 
-				if ( $original_path !== $current_path ) {
-					$wp_filesystem->delete( $current_path, false, 'f' );
+					self::update_posts( $current_path, $original_path );
+				} else {
+					File_System::move( $backup_path, $original_path, $original_path === $current_path );
+
+					if ( $original_path !== $current_path ) {
+						File_System::delete( $current_path, false, 'f' );
+
+						self::update_posts( $current_path, $original_path );
+					}
 				}
 
 				$wp_meta
@@ -110,5 +117,21 @@ class Image_Restore {
 		$image->update_attachment( $post_update_query );
 
 		update_attached_file( $image->get_id(), $image_path );
+	}
+
+	/**
+	 * If we change an image extension, we should walk through the wp_posts table and update all the
+	 * hardcoded image links to prevent 404s.
+	 *
+	 * @param string $old_path Previous image path
+	 * @param string $new_path Current image path
+	 *
+	 * @return void
+	 */
+	private static function update_posts( string $old_path, string $new_path ) {
+		Image_DB_Update::update_posts_table_urls(
+			File_Utils::get_url_from_path( $old_path ),
+			File_Utils::get_url_from_path( $new_path )
+		);
 	}
 }

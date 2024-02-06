@@ -1,10 +1,14 @@
 <?php
 
-namespace ImageOptimizer\Classes\Async_Operation\Queries;
+namespace ImageOptimization\Classes\Async_Operation\Queries;
 
-use ImageOptimizer\Classes\Async_Operation\Async_Operation_Hook;
-use ImageOptimizer\Classes\Async_Operation\Interfaces\Operation_Query_Interface;
+use ImageOptimization\Classes\Async_Operation\Async_Operation_Hook;
+use ImageOptimization\Classes\Async_Operation\Interfaces\Operation_Query_Interface;
 use TypeError;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Operation_Query implements Operation_Query_Interface {
 	private array $query;

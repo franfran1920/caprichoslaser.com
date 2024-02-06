@@ -1,20 +1,22 @@
 <?php
 
-namespace ImageOptimizer\Modules\Oauth\Rest;
+namespace ImageOptimization\Modules\Oauth\Rest;
 
-use ImageOptimizer\Classes\Utils;
-use ImageOptimizer\Modules\Oauth\Classes\{
-	Data,
-	Route_Base
+use ImageOptimization\Modules\Oauth\{
+	Classes\Route_Base,
+	Components\Connect,
 };
-use ImageOptimizer\Modules\Oauth\Components\{
-	Checkpoint,
-	Connect
-};
+
+use Throwable;
 use WP_REST_Request;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 class Activate extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-activate-subscription';
+	const NONCE_NAME = 'image-optimization-activate-subscription';
+
 	protected string $path = 'activate';
 
 	public function get_name(): string {
@@ -33,51 +35,36 @@ class Activate extends Route_Base {
 
 		if ( ! Connect::is_connected() ) {
 			return $this->respond_error_json( [
-				'message' => esc_html__( 'Please connect first', 'image-optimizer' ),
+				'message' => esc_html__( 'Please connect first', 'image-optimization' ),
 				'code' => 'forbidden',
 			] );
 		}
 
 		if ( Connect::is_activated() ) {
 			return $this->respond_error_json( [
-				'message' => esc_html__( 'Already activated', 'image-optimizer' ),
+				'message' => esc_html__( 'Already activated', 'image-optimization' ),
 				'code' => 'bad_request',
 			] );
 		}
 
 		if ( ! $request->get_param( 'license_key' ) ) {
 			return $this->respond_error_json( [
-				'message' => esc_html__( 'Missing license key', 'image-optimizer' ),
+				'message' => esc_html__( 'Missing license key', 'image-optimization' ),
 				'code' => 'bad_request',
 			] );
 		}
 
-		$key = $request->get_param( 'license_key' );
+		$license_key = $request->get_param( 'license_key' );
 
-		$response = Utils::get_api_client()->make_request(
-			'POST',
-			'activation/activate',
-			[],
-			[ 'key' => $key ]
-		);
+		try {
+			Connect::activate( $license_key );
 
-		if ( is_wp_error( $response ) ) {
+			return $this->respond_success_json();
+		} catch ( Throwable $t ) {
 			return $this->respond_error_json( [
-				'message' => $response->get_error_message(),
+				'message' => $t->getMessage(),
 				'code' => 'internal_server_error',
 			] );
 		}
-
-		if ( ! isset( $response->id ) ) {
-			return $this->respond_error_json( [
-				'message' => esc_html__( 'Invalid response from server', 'image-optimizer' ),
-				'code' => 'internal_server_error',
-			] );
-		}
-
-		Data::set_activation_state( $key );
-
-		do_action( Checkpoint::ON_ACTIVATE, $key );
-	    return rest_ensure_response( [ 'success' => true ] );
-    }
+	}
 }

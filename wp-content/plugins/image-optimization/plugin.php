@@ -1,5 +1,5 @@
 <?php
-namespace ImageOptimizer;
+namespace ImageOptimization;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -73,7 +73,7 @@ class Plugin {
 					$class_to_load
 				)
 			);
-			$filename = IMAGE_OPTIMIZER_PATH . $filename . '.php';
+			$filename = IMAGE_OPTIMIZATION_PATH . $filename . '.php';
 
 			if ( is_readable( $filename ) ) {
 				include $filename;
@@ -86,7 +86,7 @@ class Plugin {
 	}
 
 	private function includes() {
-		require_once IMAGE_OPTIMIZER_PATH . 'includes/modules-manager.php';
+		require_once IMAGE_OPTIMIZATION_PATH . 'includes/modules-manager.php';
 		$this->modules_manager = new Manager();
 	}
 

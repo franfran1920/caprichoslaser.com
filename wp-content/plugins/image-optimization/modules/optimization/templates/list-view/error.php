@@ -32,12 +32,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<a class="button button-secondary button-large image-optimization-control__button"
 				 href="https://go.elementor.com/io-panel-upgrade/"
 				 target="_blank" rel="noopener noreferrer">
-				<?php esc_html_e( 'Upgrade', 'image-optimizer' ); ?>
+				<?php esc_html_e( 'Upgrade', 'image-optimization' ); ?>
 			</a>
 		<?php } else { ?>
 			<button class="button button-secondary button-large button-link-delete image-optimization-control__button image-optimization-control__button--try-again"
 							type="button">
-				<?php esc_html_e( 'Try again', 'image-optimizer' ); ?>
+				<?php esc_html_e( 'Try again', 'image-optimization' ); ?>
 			</button>
 		<?php } ?>
 	<?php } ?>

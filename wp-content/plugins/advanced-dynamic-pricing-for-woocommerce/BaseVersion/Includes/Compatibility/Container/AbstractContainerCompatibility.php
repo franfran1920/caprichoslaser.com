@@ -90,8 +90,12 @@ abstract class AbstractContainerCompatibility implements ContainerCompatibility
             $pos
         );
 
-        if (!$facade->isVisible()) {
+        if (!$facade->isVisible() || $facade->isImmutable()) {
             $containerItem->addAttr(CartItemAttributeEnum::IMMUTABLE());
+        }
+
+        if ($facade->isHasReadOnlyPrice()) {
+            $containerItem->addAttr(CartItemAttributeEnum::READONLY_PRICE());
         }
 
         return $containerItem;

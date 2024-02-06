@@ -5,6 +5,7 @@ namespace ADP\BaseVersion\Includes\Database\Repository;
 use ADP\BaseVersion\Includes\Cache\CacheHelper;
 use ADP\BaseVersion\Includes\CartProcessor\CartBuilder;
 use ADP\BaseVersion\Includes\Context;
+use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\ICartItem;
 use ADP\BaseVersion\Includes\Core\CartCalculatorPersistent;
 use ADP\BaseVersion\Includes\Core\Rule\PersistentRule;
 use ADP\BaseVersion\Includes\Core\Rule\Structures\Discount;
@@ -17,7 +18,6 @@ use ADP\BaseVersion\Includes\PriceDisplay\ProcessedGroupedProduct;
 use ADP\BaseVersion\Includes\PriceDisplay\ProcessedVariableProduct;
 use ADP\BaseVersion\Includes\PriceDisplay\Processor;
 use ADP\BaseVersion\Includes\Shortcodes\SqlGenerator;
-use ADP\BaseVersion\Includes\Core\Cart\CartItem\Type\Basic\BasicCartItem;
 use ADP\Factory;
 
 defined('ABSPATH') or exit;
@@ -39,7 +39,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
     }
 
     /**
-     * @param BasicCartItem $item
+     * @param ICartItem $item
      * @param float|null $qty
      *
      * @return array<int, PersistentRuleCacheObject>
@@ -51,10 +51,9 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
 
         $objects = CacheHelper::cacheGet($cacheKey, CacheHelper::GROUP_RULES_CACHE);
 
-        if ( ! $objects) {
-            if ($objects = $this->calculate($item, $qty)) {
-                CacheHelper::cacheSet($cacheKey, $objects, CacheHelper::GROUP_RULES_CACHE);
-            }
+        if ( ! is_array($objects) ) {
+            $objects = $this->calculate($item, $qty);
+            CacheHelper::cacheSet($cacheKey, $objects, CacheHelper::GROUP_RULES_CACHE);
         }
 
         return $objects;
@@ -72,10 +71,9 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
 
         $objects = CacheHelper::cacheGet($cacheKey, CacheHelper::GROUP_RULES_CACHE);
 
-        if ( ! $objects) {
-            if ($objects = $this->calculate($product)) {
-                CacheHelper::cacheSet($cacheKey, $objects, CacheHelper::GROUP_RULES_CACHE);
-            }
+        if ( ! is_array($objects) ) {
+            $objects = $this->calculate($product);
+            CacheHelper::cacheSet($cacheKey, $objects, CacheHelper::GROUP_RULES_CACHE);
         }
 
         return $objects;
@@ -316,7 +314,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
 
 
     /**
-     * @param BasicCartItem|\WC_Product $item
+     * @param ICartItem|\WC_Product $item
      * @param float|null $qty
      *
      * @return array<int, PersistentRuleCacheObject>
@@ -326,7 +324,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
     {
         $context = $this->context;
 
-        if ($item instanceof BasicCartItem) {
+        if ($item instanceof ICartItem) {
             $hash = $this->calculateDbHash($item);
             $qty  = ($qty !== null ? (float)$qty : $item->getQty());
         } elseif ($item instanceof \WC_Product) {
@@ -354,23 +352,15 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
         }
 
         $objects = [];
-        foreach ( $rows as $row ) {
+        foreach ($rows as $row) {
             $price = $row['price'];
 
-            $ruleRepository = new RuleRepository();
-            $ruleRows  = $ruleRepository->getRules(array('id' => $row['rule_id']));
-
-            if (count($ruleRows) === 0) {
-                return array();
+            $rules = CacheHelper::loadProductOnlyRules([$row['rule_id']]);
+            if (count($rules) === 0) {
+                return [];
             }
 
-            $ruleRow = reset($ruleRows);
-
-            /** @var RuleStorage $storage */
-            $storage         = Factory::get("Database_RuleStorage");
-            $rulesCollection = $storage->buildPersistentRules(array($ruleRow));
-            $rule            = $rulesCollection->getFirst();
-
+            $rule = reset($rules);
             if ($rule === null) {
                 continue;
             }
@@ -383,7 +373,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
 
 
     /**
-     * @param BasicCartItem $item
+     * @param ICartItem $item
      */
     protected function calculateDbHash($item)
     {
@@ -421,7 +411,7 @@ class PersistentRuleRepository implements PersistentRuleRepositoryInterface
     }
 
     /**
-     * @param BasicCartItem $item
+     * @param ICartItem $item
      * @param float|null $qty
      */
     protected function calculateCacheHash($item, $qty = null)

@@ -10,10 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		data-image-optimization-image-id="<?php echo esc_attr( $args['image_id'] ); ?>"
 		data-image-optimization-can-be-restored="<?php echo esc_attr( $args['can_be_restored'] ); ?>">
 	<p class="image-optimization-control__property">
-		<?php esc_html_e( 'Status', 'image-optimizer' ); ?>:
+		<?php esc_html_e( 'Status', 'image-optimization' ); ?>:
 
 		<span class="image-optimization-control__property-value">
-			<?php esc_html_e( 'In Progress', 'image-optimizer' ); ?>
+			<?php esc_html_e( 'In Progress', 'image-optimization' ); ?>
 		</span>
 	</p>
 

@@ -1,6 +1,10 @@
 <?php
 
-namespace ImageOptimizer\Classes\Async_Operation\Interfaces;
+namespace ImageOptimization\Classes\Async_Operation\Interfaces;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 interface Operation_Query_Interface {
 	public function get_query(): array;

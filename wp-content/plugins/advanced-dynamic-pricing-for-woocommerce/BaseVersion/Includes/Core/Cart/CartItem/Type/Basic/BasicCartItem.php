@@ -34,10 +34,6 @@ class BasicCartItem extends AbstractCartItem implements ICartItem
     public function __construct(WcCartItemFacade $wcCartItemFacade, $originalPrice, $qty, $pos = -1)
     {
         parent::__construct($wcCartItemFacade, (float)$originalPrice, $qty, $pos);
-        $this->wcItem = $wcCartItemFacade;
-
-        $this->price = $originalPrice;
-        $this->priceAdjustments = [];
 
         $this->recalculateHash();
     }

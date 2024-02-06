@@ -1,8 +1,9 @@
 <?php
 
-namespace ImageOptimizer\Classes;
+namespace ImageOptimization\Classes;
 
-use ImageOptimizer\Plugin;
+use ImageOptimization\Classes\Client\Client;
+use ImageOptimization\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -79,7 +80,7 @@ class Utils {
 	public static function is_plugin_page(): bool {
 		$current_screen = get_current_screen();
 
-		return str_contains( $current_screen->id, 'image-optimizer-' );
+		return str_contains( $current_screen->id, 'image-optimization-' );
 	}
 
 	public static function user_is_admin(): bool {

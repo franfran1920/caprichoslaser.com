@@ -5,7 +5,7 @@ Tags: woocommerce, discounts, deals, dynamic pricing, pricing deals, bulk discou
 Requires PHP: 7.0
 Requires at least: 4.8
 Tested up to: 6.4
-Stable tag: 4.6.0
+Stable tag: 4.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,17 @@ You should be PHP programmer to do it. [Please, review sample addon and adapt it
 
 
 == Changelog ==
+
+= 4.6.1 - 2024-02-05 =
+* Bug fixed -  PHP fatal error "undefined constant ATTR_TEMP"
+* Bug fixed -  incorrect calculations if a volume discount or cart adjustment discount was added as a coupon
+* Bug fixed -  same prices for all ranges in the bulk table if the discount amount was added as a coupon
+* Bug fixed -  prices were doubled if options were added to the product using the “Woocommerce Product Add-Ons” plugin
+* Bug fixed -  prices were doubled if the bundled product was created using the "Woocommerce Product Bundles" plugin
+* Bug fixed -  PHP error for role-based discounts (rare case)
+* Bug fixed -  "Products Only" rules were not cached
+* Bug fixed -  same rule was being applied multiple times to the same cart item when an order was created using the Phone Orders plugin
+* Bug fixed -  some phrases could not be translated
 
 = 4.6.0 - 2024-01-16 =
 * Fully recoded compatibility with the popular product bundle plugins

@@ -1,8 +1,12 @@
 <?php
 
-namespace ImageOptimizer\Classes\Async_Operation;
+namespace ImageOptimization\Classes\Async_Operation;
 
 use DateTime;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Async_Operation_Item {
 	private int $id;

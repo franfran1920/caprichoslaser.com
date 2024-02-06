@@ -16,19 +16,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		switch ( $args['action'] ) {
 			case 'restore':
-				esc_html_e( 'Restoring…', 'image-optimizer' );
+				esc_html_e( 'Restoring…', 'image-optimization' );
 				break;
 
 			case 'optimize':
-				esc_html_e( 'Optimizing…', 'image-optimizer' );
+				esc_html_e( 'Optimizing…', 'image-optimization' );
 				break;
 
 			case 'reoptimize':
-				esc_html_e( 'Reoptimizing…', 'image-optimizer' );
+				esc_html_e( 'Reoptimizing…', 'image-optimization' );
 				break;
 
 			default:
-				esc_html_e( 'Loading…', 'image-optimizer' );
+				esc_html_e( 'Loading…', 'image-optimization' );
 		}
 		?>
 	</button>

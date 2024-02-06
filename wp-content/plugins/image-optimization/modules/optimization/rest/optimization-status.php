@@ -1,9 +1,9 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Rest;
+namespace ImageOptimization\Modules\Optimization\Rest;
 
-use ImageOptimizer\Modules\Optimization\Classes\Optimization_Status as Optimization_Status_Controller;
-use ImageOptimizer\Modules\Optimization\Classes\Route_Base;
+use ImageOptimization\Modules\Optimization\Classes\Optimization_Status as Optimization_Status_Controller;
+use ImageOptimization\Modules\Optimization\Classes\Route_Base;
 use Throwable;
 use WP_REST_Request;
 

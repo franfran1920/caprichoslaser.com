@@ -1,18 +1,22 @@
 <?php
 
-namespace ImageOptimizer\Modules\Backups\Classes;
+namespace ImageOptimization\Modules\Backups\Classes;
 
-use ImageOptimizer\Classes\Async_Operation\{
+use ImageOptimization\Classes\Async_Operation\{
 	Async_Operation,
 	Async_Operation_Hook,
 	Async_Operation_Queue,
 };
-use ImageOptimizer\Classes\Image\{
+use ImageOptimization\Classes\Image\{
 	Image_Meta,
 	Image_Query_Builder,
 	Image_Status
 };
 use Throwable;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Restore_Images {
 	private const CHUNK_SIZE = 100;
@@ -23,7 +27,7 @@ class Restore_Images {
 	 * @param int $image_id
 	 * @return void
 	 * @throws Throwable
-	 * @throws \ImageOptimizer\Classes\Async_Operation\Exceptions\Async_Operation_Exception
+	 * @throws \ImageOptimization\Classes\Async_Operation\Exceptions\Async_Operation_Exception
 	 */
 	public static function schedule_single_restoring( int $image_id ): void {
 		$meta = new Image_Meta( $image_id );

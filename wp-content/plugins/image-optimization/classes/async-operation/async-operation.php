@@ -1,11 +1,13 @@
 <?php
 
-namespace ImageOptimizer\Classes\Async_Operation;
+namespace ImageOptimization\Classes\Async_Operation;
 
 use ActionScheduler;
-use ImageOptimizer\Classes\Async_Operation\Exceptions\Async_Operation_Exception;
-use ImageOptimizer\Classes\Async_Operation\Interfaces\Operation_Query_Interface;
-use ImageOptimizer\Classes\Logger;
+use ImageOptimization\Classes\Async_Operation\{
+	Exceptions\Async_Operation_Exception,
+	Interfaces\Operation_Query_Interface
+};
+use ImageOptimization\Classes\Logger;
 use Throwable;
 use TypeError;
 

@@ -1,24 +1,24 @@
 <?php
-namespace ImageOptimizer\Modules\Core;
+namespace ImageOptimization\Modules\Core;
 
-use ImageOptimizer\Modules\Oauth\{
+use ImageOptimization\Modules\Oauth\{
 	Classes\Data,
 	Components\Connect,
 	Rest\Activate,
-	Rest\ConnectInit,
+	Rest\Connect_Init,
 	Rest\Deactivate,
 	Rest\Disconnect,
-	Rest\GetSubscriptions,
+	Rest\Get_Subscriptions,
 };
-use ImageOptimizer\Modules\Optimization\{
+use ImageOptimization\Modules\Optimization\{
 	Rest\Cancel_Bulk_Optimization,
 	Rest\Optimize_Bulk,
 };
-use ImageOptimizer\Modules\Backups\Rest\{
+use ImageOptimization\Modules\Backups\Rest\{
 	Restore_All,
 	Remove_Backups,
 };
-use ImageOptimizer\Classes\{
+use ImageOptimization\Classes\{
 	Module_Base,
 	Utils,
 };
@@ -41,14 +41,47 @@ class Module extends Module_Base {
 
 	private function render_top_bar() {
 		?>
-		<div id="image-optimizer-top-bar"></div>
+		<div id="image-optimization-top-bar"></div>
 		<?php
 	}
 
 	private function render_app() {
 		?>
 		<div class="clear"></div>
-		<div id="image-optimizer-app"></div>
+		<div id="image-optimization-app"></div>
+		<?php
+	}
+
+	public function maybe_add_quota_reached_notice() {
+		if ( ! Connect::is_activated() || Data::images_left() > 0 ) {
+			return;
+		}
+
+		?>
+		<div class="notice notice-warning notice image-optimizer__notice image-optimizer__notice--warning">
+			<p>
+				<b>
+					<?php esc_html_e(
+						'You’ve reached your plan quota.',
+						'image-optimization'
+					); ?>
+				</b>
+
+				<span>
+					<?php esc_html_e(
+						'You have no images left to optimize in your current plan.',
+						'image-optimization'
+					); ?>
+
+					<a href="https://go.elementor.com/io-panel-upgrade/">
+						<?php esc_html_e(
+							'Upgrade plan now',
+							'image-optimization'
+						); ?>
+					</a>
+				</span>
+			</p>
+		</div>
 		<?php
 	}
 
@@ -60,24 +93,24 @@ class Module extends Module_Base {
 		$custom_links = [
 			'settings' => sprintf(
 				'<a href="%s">%s</a>',
-				admin_url( 'admin.php?page=' . \ImageOptimizer\Modules\Settings\Module::SETTING_BASE_SLUG ),
-				esc_html__( 'Settings', 'image-optimizer' )
+				admin_url( 'admin.php?page=' . \ImageOptimization\Modules\Settings\Module::SETTING_BASE_SLUG ),
+				esc_html__( 'Settings', 'image-optimization' )
 			),
 		];
 
 		if ( ! Connect::is_connected() ) {
 			$custom_links['connect'] = sprintf(
 				'<a href="%s" style="color: #524CFF; font-weight: 700;">%s</a>',
-				admin_url( 'admin.php?page=' . \ImageOptimizer\Modules\Settings\Module::SETTING_BASE_SLUG . '&action=connect' ),
-				esc_html__( 'Connect', 'image-optimizer' )
+				admin_url( 'admin.php?page=' . \ImageOptimization\Modules\Settings\Module::SETTING_BASE_SLUG . '&action=connect' ),
+				esc_html__( 'Connect', 'image-optimization' )
 			);
 		}
 
 		if ( Connect::is_connected() && ! Connect::is_activated() ) {
 			$custom_links['activate'] = sprintf(
 				'<a href="%s" style="color: #524CFF; font-weight: 700;">%s</a>',
-				admin_url( 'admin.php?page=' . \ImageOptimizer\Modules\Settings\Module::SETTING_BASE_SLUG ),
-				esc_html__( 'Activate', 'image-optimizer' )
+				admin_url( 'admin.php?page=' . \ImageOptimization\Modules\Settings\Module::SETTING_BASE_SLUG ),
+				esc_html__( 'Activate', 'image-optimization' )
 			);
 		}
 
@@ -93,7 +126,7 @@ class Module extends Module_Base {
 				$custom_links['upgrade'] = sprintf(
 					'<a href="%s" style="color: #524CFF; font-weight: 700;">%s</a>',
 					'https://go.elementor.com/io-panel-upgrade/',
-					esc_html__( 'Upgrade', 'image-optimizer' )
+					esc_html__( 'Upgrade', 'image-optimization' )
 				);
 			}
 		}
@@ -101,21 +134,19 @@ class Module extends Module_Base {
 		return array_merge( $custom_links, $links );
 	}
 
-	/**
-	 * Enqueue fonts
-	 */
-	public function enqueue_fonts() {
-		$screen = get_current_screen();
-
-		if ( ! $this->should_render() && ( 'attachment' !== $screen->id ) ) {
-			return;
-		}
-
+	public function enqueue_global_assets() {
 		wp_enqueue_style(
-			'image-optimizer-admin-fonts',
+			'image-optimization-admin-fonts',
 			'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap',
 			[],
-			IMAGE_OPTIMIZER_VERSION
+			IMAGE_OPTIMIZATION_VERSION
+		);
+
+		wp_enqueue_style(
+			'image-optimization-core-style-admin',
+			$this->get_css_assets_url( 'style-admin', '/assets/build/' ),
+			[],
+			IMAGE_OPTIMIZATION_VERSION,
 		);
 	}
 
@@ -123,22 +154,22 @@ class Module extends Module_Base {
 	 * Enqueue styles and scripts
 	 */
 	private function enqueue_scripts() {
-		$asset_file = include IMAGE_OPTIMIZER_ASSETS_PATH . 'build/admin.asset.php';
+		$asset_file = include IMAGE_OPTIMIZATION_ASSETS_PATH . 'build/admin.asset.php';
 
 		foreach ( $asset_file['dependencies'] as $style ) {
 			wp_enqueue_style( $style );
 		}
 
 		wp_enqueue_script(
-			'image-optimizer-admin',
+			'image-optimization-admin',
 			$this->get_js_assets_url( 'admin' ),
 			array_merge( $asset_file['dependencies'], [ 'wp-util' ] ),
-			IMAGE_OPTIMIZER_VERSION,
+			IMAGE_OPTIMIZATION_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'image-optimizer-admin',
+			'image-optimization-admin',
 			'imageOptimizerAppSettings',
 			[
 				'siteUrl' => wp_parse_url( get_site_url(), PHP_URL_HOST ),
@@ -150,7 +181,7 @@ class Module extends Module_Base {
 		$connect_data = Data::get_connect_data();
 
 		wp_localize_script(
-			'image-optimizer-admin',
+			'image-optimization-admin',
 			'imageOptimizerUserData',
 			[
 				'isConnected' => Connect::is_connected(),
@@ -163,10 +194,10 @@ class Module extends Module_Base {
 
 				'wpRestNonce' => wp_create_nonce( 'wp_rest' ),
 				'disconnect' => wp_create_nonce( 'wp_rest' ),
-				'authInitNonce' => wp_create_nonce( ConnectInit::NONCE_NAME ),
+				'authInitNonce' => wp_create_nonce( Connect_Init::NONCE_NAME ),
 				'authDisconnectNonce' => wp_create_nonce( Disconnect::NONCE_NAME ),
 				'authDeactivateNonce' => wp_create_nonce( Deactivate::NONCE_NAME ),
-				'authGetSubscriptionsNonce' => wp_create_nonce( GetSubscriptions::NONCE_NAME ),
+				'authGetSubscriptionsNonce' => wp_create_nonce( Get_Subscriptions::NONCE_NAME ),
 				'authActivateNonce' => wp_create_nonce( Activate::NONCE_NAME ),
 				'removeBackupsNonce' => wp_create_nonce( Remove_Backups::NONCE_NAME ),
 				'restoreAllImagesNonce' => wp_create_nonce( Restore_All::NONCE_NAME ),
@@ -175,7 +206,7 @@ class Module extends Module_Base {
 			]
 		);
 
-		wp_set_script_translations( 'image-optimizer-admin', 'image-optimizer' );
+		wp_set_script_translations( 'image-optimization-admin', 'image-optimization' );
 	}
 
 	private function should_render(): bool {
@@ -188,13 +219,15 @@ class Module extends Module_Base {
 	public function __construct() {
 		$this->register_components();
 
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_global_assets' ] );
 		add_filter( 'plugin_action_links', [ $this, 'add_plugin_links' ], 10, 2 );
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_fonts' ] );
 
 		add_action('current_screen', function () {
 			if ( ! $this->should_render() ) {
 				return;
 			}
+
+			add_action( 'admin_notices', [ $this, 'maybe_add_quota_reached_notice' ] );
 
 			if ( Utils::is_media_page() ) {
 				add_action('in_admin_header', function () {

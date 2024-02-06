@@ -1,8 +1,8 @@
 <?php
 
-namespace ImageOptimizer\Classes\Image;
+namespace ImageOptimization\Classes\Image;
 
-use ImageOptimizer\Classes\Image\Exceptions\Invalid_Image_Exception;
+use ImageOptimization\Classes\Image\Exceptions\Invalid_Image_Exception;
 use WP_Post;
 
 if ( ! defined( 'ABSPATH' ) ) {

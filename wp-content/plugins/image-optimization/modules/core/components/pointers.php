@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageOptimizer\Modules\Core\Components;
+namespace ImageOptimization\Modules\Core\Components;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -10,7 +10,7 @@ class Pointers {
 	const DISMISSED_POINTERS_META_KEY = 'image_optimizer_dismissed_pointers';
 
 	public function dismiss_pointers() {
-		if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'image-optimizer-pointer-dismissed' ) ) {
+		if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'image-optimization-pointer-dismissed' ) ) {
 			wp_send_json_error( [ 'message' => 'Invalid nonce' ] );
 		}
 

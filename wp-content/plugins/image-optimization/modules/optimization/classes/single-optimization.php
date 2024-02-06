@@ -1,19 +1,19 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Classes;
+namespace ImageOptimization\Modules\Optimization\Classes;
 
-use ImageOptimizer\Classes\Async_Operation\{
+use ImageOptimization\Classes\Async_Operation\{
 	Async_Operation,
 	Async_Operation_Hook,
 	Async_Operation_Queue,
 	Exceptions\Async_Operation_Exception,
 	Queries\Image_Optimization_Operation_Query
 };
-use ImageOptimizer\Classes\Image\{
+use ImageOptimization\Classes\Image\{
 	Image_Meta,
 	Image_Status,
 };
-use ImageOptimizer\Modules\Optimization\Classes\Exceptions\Image_Optimization_Already_In_Progress_Error;
+use ImageOptimization\Modules\Optimization\Classes\Exceptions\Image_Optimization_Already_In_Progress_Error;
 use Throwable;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -42,7 +42,7 @@ class Single_Optimization {
 	public static function schedule_single_optimization( int $image_id, bool $is_reoptimize = false ): void {
 		if ( self::is_optimization_in_progress( $image_id ) ) {
 			throw new Image_Optimization_Already_In_Progress_Error(
-				esc_html__( 'Optimization is already in progress', 'image-optimizer' )
+				esc_html__( 'Optimization is already in progress', 'image-optimization' )
 			);
 		}
 

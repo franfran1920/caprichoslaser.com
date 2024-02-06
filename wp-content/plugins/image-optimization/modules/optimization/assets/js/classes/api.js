@@ -32,7 +32,7 @@ class API {
 			data: {
 				imageId,
 				reoptimize,
-				'image-optimizer-optimize-image': window?.imageOptimizerControlSettings?.optimizeSingleImageNonce,
+				'image-optimization-optimize-image': window?.imageOptimizerControlSettings?.optimizeSingleImageNonce,
 			},
 		} );
 	}
@@ -41,7 +41,7 @@ class API {
 		return API.request( {
 			path: `${ v1Prefix }/backups/restore/${ imageId }`,
 			data: {
-				'image-optimizer-restore-single': window?.imageOptimizerControlSettings?.restoreSingleImageNonce,
+				'image-optimization-restore-single': window?.imageOptimizerControlSettings?.restoreSingleImageNonce,
 			},
 		} );
 	}

@@ -1,6 +1,10 @@
 <?php
 
-namespace ImageOptimizer\Modules\Settings\Classes;
+namespace ImageOptimization\Modules\Settings\Classes;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Settings {
 	public const COMPRESSION_LEVEL_OPTION_NAME = 'image_optimizer_compression_level';

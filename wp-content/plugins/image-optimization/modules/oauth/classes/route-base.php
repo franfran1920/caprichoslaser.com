@@ -1,8 +1,12 @@
 <?php
 
-namespace ImageOptimizer\Modules\Oauth\Classes;
+namespace ImageOptimization\Modules\Oauth\Classes;
 
-use ImageOptimizer\Classes\Route;
+use ImageOptimization\Classes\Route;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Route_Base extends Route {
 	const SITE_URL = 'https://my.elementor.com/connect/v1/';
@@ -33,7 +37,7 @@ class Route_Base extends Route {
 
 	public function verify_nonce( $nonce = '', $name = '' ) {
 		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $nonce ) ), $name ) ) {
-			wp_die( 'Invalid nonce', 'image-optimizer' );
+			wp_die( 'Invalid nonce', 'image-optimization' );
 		}
 	}
 

@@ -61,6 +61,17 @@ class ContainerCartItem extends AbstractCartItem implements ICartItem
         $this->recalculateHash();
     }
 
+    public function cleanAllAdjustments()
+    {
+        $this->price = $this->getOriginalPrice();
+        $this->priceAdjustments = [];
+
+        $this->basePrice = $this->getOriginalBasePrice();
+        $this->basePriceAdjustments = [];
+
+        $this->recalculateHash();
+    }
+
     public function getContainerPriceTypeEnum(): ContainerPriceTypeEnum
     {
         return $this->containerPriceTypeEnum;

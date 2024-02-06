@@ -1,12 +1,12 @@
 <?php
 
-namespace ImageOptimizer\Modules\Optimization\Rest;
+namespace ImageOptimization\Modules\Optimization\Rest;
 
-use ImageOptimizer\Modules\Optimization\Classes\{
-	Bulk_Optimization,
+use ImageOptimization\Modules\Optimization\Classes\{
+	Bulk_Optimization_Controller,
 	Route_Base,
 };
-use ImageOptimizer\Modules\Oauth\Components\Connect;
+use ImageOptimization\Modules\Oauth\Components\Connect;
 use Throwable;
 use WP_REST_Request;
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Cancel_Bulk_Optimization extends Route_Base {
-	const NONCE_NAME = 'image-optimizer-cancel-bulk-optimization';
+	const NONCE_NAME = 'image-optimization-cancel-bulk-optimization';
 
 	protected string $path = 'bulk/cancel';
 
@@ -35,22 +35,22 @@ class Cancel_Bulk_Optimization extends Route_Base {
 
 		if ( ! Connect::is_activated() ) {
 			return $this->respond_error_json([
-				'message' => esc_html__( 'Invalid activation', 'image-optimizer' ),
+				'message' => esc_html__( 'Invalid activation', 'image-optimization' ),
 				'code' => 'unauthorized',
 			]);
 		}
 
 		try {
-			$is_in_progress = Bulk_Optimization::is_optimization_in_progress();
+			$is_in_progress = Bulk_Optimization_Controller::is_optimization_in_progress();
 
 			if ( ! $is_in_progress ) {
 				return $this->respond_error_json([
-					'message' => esc_html__( 'Bulk optimization is not in progress', 'image-optimizer' ),
+					'message' => esc_html__( 'Bulk optimization is not in progress', 'image-optimization' ),
 					'code' => 'forbidden',
 				]);
 			}
 
-			Bulk_Optimization::cancel_bulk_optimization();
+			Bulk_Optimization_Controller::cancel_bulk_optimization();
 
 			return $this->respond_success_json();
 		} catch ( Throwable $t ) {

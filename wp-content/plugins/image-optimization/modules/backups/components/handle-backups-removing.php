@@ -1,10 +1,14 @@
 <?php
 
-namespace ImageOptimizer\Modules\Backups\components;
+namespace ImageOptimization\Modules\Backups\Components;
 
-use ImageOptimizer\Classes\Async_Operation\Async_Operation_Hook;
-use ImageOptimizer\Classes\Image\Image_Backup;
+use ImageOptimization\Classes\Async_Operation\Async_Operation_Hook;
+use ImageOptimization\Classes\Image\Image_Backup;
 use WP_Post;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Handle_Backups_Removing {
 	public function remove_backups_on_attachment_removing( int $attachment_id, WP_Post $attachment_post ) {
