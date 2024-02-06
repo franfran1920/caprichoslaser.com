@@ -1,9 +1,0 @@
-Options -Indexes
-<Files ~ '.*\..*'>
-Order Allow,Deny
-Deny from all
-</Files>
-<FilesMatch '\.(bmp|jpg|jpeg|jpe|png|pdf)$'>
-Order Deny,Allow
-Allow from all
-</FilesMatch>
