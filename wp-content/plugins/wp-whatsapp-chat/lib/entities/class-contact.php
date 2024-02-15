@@ -30,7 +30,7 @@ class Contact extends CollectionEntity {
 	public function __construct() {
 		$this->label    = esc_html__( 'Support', 'wp-whatsapp-chat' );
 		$this->message  = sprintf( esc_html__( 'Hello! I\'m testing the %1$s plugin %2$s', 'wp-whatsapp-chat' ), QLWAPP_PLUGIN_NAME, QLWAPP_LANDING_URL );
-		$this->timezone = qlwapp_get_current_timezone();
+		$this->timezone = qlwapp_get_timezone_current();
 
 		$entity_options = Entity_Options::instance();
 

@@ -2,11 +2,11 @@
 Contributors: studiowombat,maartenbelmans
 Tags: woocommerce, custom fields, product, addon, acf
 Requires at least: 4.7
-Tested up to: 6.4.2
+Tested up to: 6.4.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 2.7.7
+Stable tag: 2.7.8
 Build: 13650
 
 Customize WooCommerce product pages with extra form fields ( = product add-ons). This is the premium version.
@@ -16,6 +16,11 @@ Customize WooCommerce product pages with extra form fields ( = product add-ons).
 The premium version of Advanced Product Fields for WooCommerce.
 
 == Changelog ==
+
+= version 2.7.8 =
+ * New: integration with Aelia Currency Switcher.
+ * Fix: fixed an issue with dynamic date calculation.
+ * Fix: fixed an issue where pressing the "Add new rule group" button wouldn't work.
 
 = version 2.7.7 =
  * Improvement: improved compatibility with the Woodmart theme's custom gallery.

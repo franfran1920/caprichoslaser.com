@@ -1,5 +1,6 @@
 <script>
-	WAPF.Util.formulas['lookuptable'] = function(args,$parent) {
+
+    var wapfLtbl = function(args,$parent) {
         var findNearest = function(value,axis) {
             if(axis[''+value])
                 return value;
@@ -35,4 +36,11 @@
             return acc[curr];
         },lookuptable);
     };
+
+    if( window.WAPF) window.WAPF.Util.formulas['lookuptable'] = wapfLtbl;
+    else {
+        window.customFormulas = window.customFormulas || {};
+        window.customFormulas['lookuptable'] = wapfLtbl;
+    }
+
 </script>

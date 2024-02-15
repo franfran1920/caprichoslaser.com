@@ -13,25 +13,8 @@ class Helpers {
 	}
 
 	public function register_scripts() {
-		$helpers       = include QLWAPP_PLUGIN_DIR . 'build/helpers/js/index.asset.php';
-		$models_button = Models_Button::instance();
-		$button        = $models_button->get();
-
-		$timezone_html = wp_timezone_choice( $button['timezone'], get_user_locale() );
-
-		// Parsear el HTML para convertirlo en un array de objetos
-		preg_match_all( '/<option value="([^"]*)"( selected="selected")?>([^<]*)<\/option>/', $timezone_html, $matches, PREG_SET_ORDER );
-
-		$timezones = array_map(
-			function ( $match ) {
-			return array(
-				'value'    => $match[1],
-				'label'    => $match[3],
-				'selected' => ! empty( $match[2] ), // true si la opción está seleccionada
-			);
-			},
-			$matches
-		);
+		$helpers          = include QLWAPP_PLUGIN_DIR . 'build/helpers/js/index.asset.php';
+		$timezone_options = qlwapp_get_timezone_options();
 
 		/**
 		 * Register helpers assets
@@ -61,7 +44,7 @@ class Helpers {
 				'QLWAPP_SUPPORT_URL'          => QLWAPP_SUPPORT_URL,
 				'QLWAPP_DOCUMENTATION_URL'    => QLWAPP_DOCUMENTATION_URL,
 				'QLWAPP_GROUP_URL'            => QLWAPP_GROUP_URL,
-				'QLWAPP_TIMEZONE_OPTIONS'     => $timezones,
+				'QLWAPP_TIMEZONE_OPTIONS'     => $timezone_options,
 				'QLWAPP_MESSAGE_REPLACEMENTS' => qlwapp_get_replacements_text(),
 			)
 		);

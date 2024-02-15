@@ -17,6 +17,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 	        'YITH_Request_Quote'                                => 'Yith_RAQ',
 	        'WC_Subscriptions'                                  => 'WooCommerce_Subscriptions',
 	        'Wdr\App\Controllers\DiscountCalculator'            => 'Woo_Discount_Rules',
+	        'WC_Aelia_CurrencySwitcher'                         => 'Aelia',
         ];
 
         private $available_themes = [

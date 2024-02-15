@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'quadlayers/wp-whatsapp-chat',
-        'pretty_version' => 'v7.3.0',
-        'version' => '7.3.0.0',
-        'reference' => '2510e0338627d0cb05cd036f5bd0a1eccb7db716',
+        'pretty_version' => 'v7.3.1',
+        'version' => '7.3.1.0',
+        'reference' => '012a63dc26faf9bf65d34483acd71c01e2cb04ce',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,11 +13,11 @@
         'automattic/jetpack-assets' => array(
             'pretty_version' => 'dev-trunk',
             'version' => 'dev-trunk',
-            'reference' => 'c2a58fc1c65194dc9738a046a68461b73cca06b7',
+            'reference' => '68a0c02aa4df0c4bc6ed2bd6e8c706b8b0087c08',
             'type' => 'jetpack-library',
             'install_path' => __DIR__ . '/../../jetpack_vendor/automattic/jetpack-assets',
             'aliases' => array(
-                0 => '2.0.x-dev',
+                0 => '2.1.x-dev',
             ),
             'dev_requirement' => false,
         ),
@@ -46,7 +46,7 @@
         'franmastromarino/wp-orm' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd7e165369bbf28851520892e7283de16716157e6',
+            'reference' => '94ea51462e7c2a9790fc29f5c0293a03833388da',
             'type' => 'library',
             'install_path' => __DIR__ . '/../franmastromarino/wp-orm',
             'aliases' => array(
@@ -99,9 +99,9 @@
             'dev_requirement' => false,
         ),
         'quadlayers/wp-whatsapp-chat' => array(
-            'pretty_version' => 'v7.3.0',
-            'version' => '7.3.0.0',
-            'reference' => '2510e0338627d0cb05cd036f5bd0a1eccb7db716',
+            'pretty_version' => 'v7.3.1',
+            'version' => '7.3.1.0',
+            'reference' => '012a63dc26faf9bf65d34483acd71c01e2cb04ce',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

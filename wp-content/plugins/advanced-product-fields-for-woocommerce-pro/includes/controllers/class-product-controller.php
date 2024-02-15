@@ -61,7 +61,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 	        add_filter('woocommerce_add_order_again_cart_item',             [$this, 'calculate_prices_for_ordered_again_item'], 10, 2);
 
 	        add_action('wp_head',                                           [$this, 'add_lookup_tables']);
-	        add_action('wp_footer',                                         [$this, 'add_lookup_tables_code'], 30);
+	        add_action('wp_footer',                                         [$this, 'add_lookup_tables_code'] );
 
 	        add_action('woocommerce_after_cart_item_name',                  [$this, 'add_edit_link'],10, 2);
 	        add_filter('woocommerce_product_single_add_to_cart_text',       [$this, 'change_add_to_cart_button_text']);
@@ -616,7 +616,7 @@ namespace SW_WAPF_PRO\Includes\Controllers {
 		    if( ! $this->show_fieldgroup )
 			    return;
 
-		    echo '<script>jQuery(document).on(\'wapf/delete_var\',function(){if(jQuery.fn.wc_variations_image_update) jQuery.fn.wc_variations_image_update = function(){}; });</script>';
+		    echo '<script>document.addEventListener("wapf/delete_var", function(){ if(jQuery.fn) Object.defineProperty(jQuery.fn, "wc_variations_image_update", { value: function() {}, writable: false}) } )</script>';
 
 	    }
 

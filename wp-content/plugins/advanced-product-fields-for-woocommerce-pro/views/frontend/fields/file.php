@@ -14,6 +14,7 @@ if(File_Upload::can_upload()) {
 	        'dictFileTooBig'        => __('File is too big ({{filesize}}MB). Max filesize is {{maxFilesize}}MB.','sw-wapf'),
 	        'dictInvalidFileType'   => __("You can't upload files of this type.",'sw-wapf'),
 	        'dictMaxFilesExceeded'  => __("You can't upload any more files.",'sw-wapf'),
+	        'dictUploadCanceled'    => __("Upload canceled.",'sw-wapf'),
 	        'previewTemplate'       => '<div class="dz-preview"><div class="dz-filename" data-dz-name></div><div class="dz-left"><div class="dz-progress-wrapper"><div class="dz-progress"></div><div class="dz-upload" data-dz-uploadprogress></div></div><div class="dz-remove" data-dz-remove> <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 352 512"><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg></div></div>',
         ];
 
@@ -40,7 +41,8 @@ if(File_Upload::can_upload()) {
 
         <div class="wapf-dz-error wapf-dz-error-<?php echo $field_id;?>"></div>
         <script>
-            jQuery(function($) {
+            document.addEventListener( 'DOMContentLoaded', function() {
+                (function($) {
                 Dropzone.autoDiscover = false;
                 window.initWapfFileUpload = window.initWapfFileUpload || [];
                 if(!window.initWapfFileUpload['<?php echo $field_id; ?>'])
@@ -148,7 +150,7 @@ if(File_Upload::can_upload()) {
                         $clone.find('.wapf-dz-error').removeClass('wapf-dz-error-'+fieldId).addClass('wapf-dz-error-'+newId);
                         window.initWapfFileUpload['<?php echo $field_id;?>'](newId);
                     });
-
+                })(jQuery);
             });
         </script>
         <?php

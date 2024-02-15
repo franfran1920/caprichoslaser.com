@@ -24,13 +24,14 @@ $default_date = Helper::string_to_date( $model['field']->options['default'] );
 ?>
 <input inputmode="none" data-format="<?php echo $date_format;?>" value="<?php echo $default_date_string ? $default_date_string : ''?>" autocomplete="off" pattern="<?php echo $pattern;?>" type="text" <?php echo $model['field_attributes']; ?> />
 <script>
-    jQuery(function($) {
+    document.addEventListener( 'DOMContentLoaded', function() {
+        var fId = '<?php echo $field_id; ?>';
         window.initWapfDate = window.initWapfDate || [];
-        if(!window.initWapfDate['<?php echo $field_id; ?>']) {
-            window.initWapfDate['<?php echo $field_id; ?>'] = function (field) {
+        if(!window.initWapfDate[fId]) {
+            window.initWapfDate[fId] = function (field) {
                 var offset = <?php echo $offset;?>;
                 var today = new Date(wapf_config.today);
-                var $this = typeof field  === 'string' ? $('.input-' + field ) : field;
+                var $this = typeof field  === 'string' ? jQuery('.input-' + field ) : field;
 
                 $this.dp({
                     autoHide: true,
@@ -61,13 +62,15 @@ $default_date = Helper::string_to_date( $model['field']->options['default'] );
                 });
             };
         }
-        window.initWapfDate['<?php echo $field_id; ?>']('<?php echo $field_id; ?>');
-        $(document).on('wapf/cloned', function(e,fieldId,idx,$clone) {
-            var isSection = $('.field-'+fieldId).hasClass('wapf-section');
-            if(!isSection && fieldId !== '<?php echo $field_id;?>') return;
-            var $f = $clone.find((isSection ? '.field-<?php echo $field_id;?> ' : '')+'.wapf-input');
+
+        window.initWapfDate[fId](fId);
+
+        jQuery(document).on('wapf/cloned', function(e,fieldId,idx,$clone) {
+            var isSection = jQuery('.field-'+fieldId).hasClass('wapf-section');
+            if(!isSection) if(fieldId !== fId) return; // Some hosts decode "&&" so double IF instead.
+            var $f = $clone.find((isSection ? ( '.field-' + fId + ' ' ) : '')+'.wapf-input');
             $f.val('').data('selected',null).off('focus').data('wapf-dp',null);
-            window.initWapfDate['<?php echo $field_id;?>']($f);
+            window.initWapfDate[fId]($f);
         });
     });
 </script>

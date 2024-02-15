@@ -28,6 +28,6 @@ class WooCommerce extends SingleEntity {
 	public function __construct() {
 		$this->text     = esc_html__( 'How can I help you?', 'wp-whatsapp-chat' );
 		$this->message  = sprintf( esc_html__( 'Hello! I\'m testing the %1$s plugin %2$s', 'wp-whatsapp-chat' ), QLWAPP_PLUGIN_NAME, QLWAPP_LANDING_URL );
-		$this->timezone = qlwapp_get_current_timezone();
+		$this->timezone = qlwapp_get_timezone_current();
 	}
 }

@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-assets.git",
-                "reference": "c2a58fc1c65194dc9738a046a68461b73cca06b7"
+                "reference": "68a0c02aa4df0c4bc6ed2bd6e8c706b8b0087c08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-assets/zipball/c2a58fc1c65194dc9738a046a68461b73cca06b7",
-                "reference": "c2a58fc1c65194dc9738a046a68461b73cca06b7",
+                "url": "https://api.github.com/repos/Automattic/jetpack-assets/zipball/68a0c02aa4df0c4bc6ed2bd6e8c706b8b0087c08",
+                "reference": "68a0c02aa4df0c4bc6ed2bd6e8c706b8b0087c08",
                 "shasum": ""
             },
             "require": {
@@ -28,7 +28,7 @@
             "suggest": {
                 "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
             },
-            "time": "2024-01-26T13:53:08+00:00",
+            "time": "2024-02-12T20:37:56+00:00",
             "default-branch": true,
             "type": "jetpack-library",
             "extra": {
@@ -39,7 +39,7 @@
                     "link-template": "https://github.com/Automattic/jetpack-assets/compare/v${old}...v${new}"
                 },
                 "branch-alias": {
-                    "dev-trunk": "2.0.x-dev"
+                    "dev-trunk": "2.1.x-dev"
                 }
             },
             "installation-source": "dist",
@@ -184,12 +184,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/franmastromarino/wp-options-orm.git",
-                "reference": "d7e165369bbf28851520892e7283de16716157e6"
+                "reference": "94ea51462e7c2a9790fc29f5c0293a03833388da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/franmastromarino/wp-options-orm/zipball/d7e165369bbf28851520892e7283de16716157e6",
-                "reference": "d7e165369bbf28851520892e7283de16716157e6",
+                "url": "https://api.github.com/repos/franmastromarino/wp-options-orm/zipball/94ea51462e7c2a9790fc29f5c0293a03833388da",
+                "reference": "94ea51462e7c2a9790fc29f5c0293a03833388da",
                 "shasum": ""
             },
             "require": {
@@ -206,7 +206,7 @@
                 "squizlabs/php_codesniffer": "*",
                 "wp-coding-standards/wpcs": "^2.3.0"
             },
-            "time": "2024-01-25T13:12:49+00:00",
+            "time": "2024-02-09T18:33:02+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "dist",
@@ -304,12 +304,12 @@
             "version_normalized": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/quadlayers/wp-notice-plugin-promote.git",
+                "url": "https://github.com/franmastromarino/wp-notice-plugin-promote.git",
                 "reference": "f52240f7972d59a88bca17c061277b7ed12bdf17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/quadlayers/wp-notice-plugin-promote/zipball/f52240f7972d59a88bca17c061277b7ed12bdf17",
+                "url": "https://api.github.com/repos/franmastromarino/wp-notice-plugin-promote/zipball/f52240f7972d59a88bca17c061277b7ed12bdf17",
                 "reference": "f52240f7972d59a88bca17c061277b7ed12bdf17",
                 "shasum": ""
             },
@@ -351,8 +351,8 @@
                 "wordpress"
             ],
             "support": {
-                "issues": "https://github.com/quadlayers/wp-notice-plugin-promote/issues",
-                "source": "https://github.com/quadlayers/wp-notice-plugin-promote/tree/1.1.4"
+                "issues": "https://github.com/franmastromarino/wp-notice-plugin-promote/issues",
+                "source": "https://github.com/franmastromarino/wp-notice-plugin-promote/tree/1.1.4"
             },
             "install-path": "../../jetpack_vendor/quadlayers/wp-notice-plugin-promote"
         },

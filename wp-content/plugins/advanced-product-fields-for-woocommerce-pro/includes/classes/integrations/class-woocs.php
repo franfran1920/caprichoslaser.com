@@ -5,7 +5,7 @@ namespace SW_WAPF_PRO\Includes\Classes\Integrations {
 
 	class Woocs
     {
-        public function __construct($mode = 'public') {
+        public function __construct() {
 	        add_action('woocommerce_before_calculate_totals',   [$this, 'recalculate_pricing'],9);
 
 	        add_filter('wapf/html/pricing_hint/amount',         [$this, 'convert_pricing_hint'], 10, 4);

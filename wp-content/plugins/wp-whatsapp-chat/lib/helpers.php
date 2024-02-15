@@ -64,12 +64,10 @@ function qlwapp_get_timezone_offset( $timezone ) {
 	return $offset;
 }
 
-function qlwapp_get_current_timezone() {
-	// Get user settings
+function qlwapp_get_timezone_current() {
+	// Get user settings.
 	$current_offset = get_option( 'gmt_offset' );
 	$tzstring       = get_option( 'timezone_string' );
-
-	$check_zone_info = true;
 
 	// Remove old Etc mappings. Fallback to gmt_offset.
 	if ( false !== strpos( $tzstring, 'Etc/GMT' ) ) {
@@ -77,8 +75,7 @@ function qlwapp_get_current_timezone() {
 	}
 
 	if ( empty( $tzstring ) ) {
-		// Create a UTC+- zone if no timezone string exists
-		$check_zone_info = false;
+		// Create a UTC+- zone if no timezone string exists.
 		if ( 0 == $current_offset ) {
 			$tzstring = 'UTC+0';
 		} elseif ( $current_offset < 0 ) {
@@ -88,4 +85,31 @@ function qlwapp_get_current_timezone() {
 		}
 	}
 	return $tzstring;
+}
+
+function qlwapp_get_timezone_options() {
+
+	static $timezones;
+
+	if ( ! empty( $timezones ) ) {
+		return $timezones;
+	}
+
+	$timezone_html = wp_timezone_choice( null, get_user_locale() );
+
+	// Parsear el HTML para convertirlo en un array de objetos
+	preg_match_all( '/<option value="([^"]*)"( selected="selected")?>([^<]*)<\/option>/', $timezone_html, $matches, PREG_SET_ORDER );
+
+	$timezones = array_map(
+		function ( $match ) {
+			return array(
+				'value'    => $match[1],
+				'label'    => $match[3],
+				'selected' => ! empty( $match[2] ), // true si la opción está seleccionada
+			);
+		},
+		$matches
+	);
+
+	return $timezones;
 }

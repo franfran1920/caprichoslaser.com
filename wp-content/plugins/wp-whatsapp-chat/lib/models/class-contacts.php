@@ -15,9 +15,20 @@ class Contacts {
 
 	public function __construct() {
 		add_filter( 'sanitize_option_qlwapp_contacts', 'wp_unslash' );
-		$builder = ( new CollectionRepositoryBuilder() )
+		$models_button = Button::instance();
+		$button        = $models_button->get();
+		$builder       = ( new CollectionRepositoryBuilder() )
 		->setTable( 'qlwapp_contacts' )
 		->setEntity( Contact_Entity::class )
+		->setDefaultEntities(
+			array(
+				array(
+					'allowDelete' => false,
+					'phone'       => qlwapp_format_phone( $button['phone'] ),
+					'message'     => qlwapp_replacements_vars( $button['message'] ),
+				),
+			)
+		)
 		->setAutoIncrement( true );
 
 		$this->repository = $builder->getRepository();
@@ -101,22 +112,28 @@ class Contacts {
 		$button        = $models_button->get();
 		$entities      = $this->repository->findAll();
 
-		// TODO: Replace with a default contact from ORM
 		if ( ! $entities ) {
-			$defaults_contacts               = array();
-			$defaults_contacts[0]            = $this->get_args();
-			$defaults_contacts[0]['order']   = 1;
-			$defaults_contacts[0]['message'] = $button['message'];
-			$defaults_contacts[0]['phone']   = qlwapp_format_phone( $button['phone'] );
-			$entity                          = $this->create( $defaults_contacts[0] );
-			$defaults_contacts[0]['id']      = $entity['id'];
-
-			if ( ! is_admin() ) {
-				$defaults_contacts[0]['message'] = qlwapp_replacements_vars( $defaults_contacts[0]['message'] );
-			}
-
-			return $defaults_contacts;
+			return array();
 		}
+
+		// TODO: Replace with a default contact from ORM
+		// if ( ! $entities ) {
+		// $defaults_contacts               = array();
+		// $defaults_contacts[0]            = $this->get_args();
+		// $defaults_contacts[0]['order']   = 1;
+		// $defaults_contacts[0]['message'] = $button['message'];
+		// $defaults_contacts[0]['phone']   = qlwapp_format_phone( $button['phone'] );
+		// $entity                          = $this->create( $defaults_contacts[0] );
+		// $defaults_contacts[0]['id']      = $entity['id'];
+
+		// if ( ! is_admin() ) {
+		// $defaults_contacts[0]['message'] = qlwapp_replacements_vars( $defaults_contacts[0]['message'] );
+		// }
+
+		// return $defaults_contacts;
+		// }
+
+		// error_log( 'entities: ' . json_encode( $entities, JSON_PRETTY_PRINT ) );
 
 		$contacts = array();
 

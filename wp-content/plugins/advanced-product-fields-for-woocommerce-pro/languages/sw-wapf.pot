@@ -1,4 +1,4 @@
-# Copyright (C) 2023 sw-wapf
+# Copyright (C) 2024 sw-wapf
 # This file is distributed under the same license as the sw-wapf package.
 msgid ""
 msgstr ""
@@ -1742,6 +1742,9 @@ msgid "You can't upload files of this type."
 msgstr ""
 
 msgid "You can't upload any more files."
+msgstr ""
+
+msgid "Upload canceled."
 msgstr ""
 
 msgid "Drag files here or <span>browse</span>"
